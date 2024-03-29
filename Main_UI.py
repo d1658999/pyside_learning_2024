@@ -28,16 +28,22 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
             self.as_path_en.setChecked(False)
 
     def toolbox_index_set(self, index_dict):
-        self.toolBox.setCurrentIndex(index)
+        self.bands_toolBox.setCurrentIndex(index_dict['bands_toolBox_index'])
+        self.sync_path_toolBox.setCurrentIndex(index_dict['sync_path_toolBox_index'])
+        self.txrx_path_toolBox.setCurrentIndex(index_dict['txrx_path_toolBox_index'])
 
-    def toolbox_index_get(self):
-        return self.toolBox.currentIndex()
+    def toolbox_index_get(self, index_dict):
+        index_dict['bands_toolBox_index'] = self.bands_toolBox.currentIndex()
+        index_dict['sync_path_toolBox_index'] = self.sync_path_toolBox.currentIndex()
+        index_dict['txrx_path_toolBox_index'] = self.txrx_path_toolBox.currentIndex()
+        return index_dict
 
-    def tab_index_set(self, index):
-        self.tabWidget.setCurrentIndex(index)
+    def tab_index_set(self, index_dict):
+        self.tabWidget.setCurrentIndex(index_dict['tabWidget'])
 
-    def tab_index_get(self, index):
-        return self.tabWidget.currentIndex()
+    def tab_index_get(self, index_dict):
+        index_dict['tabWidget'] = self.tabWidget.currentIndex()
+        return index_dict
 
 
 

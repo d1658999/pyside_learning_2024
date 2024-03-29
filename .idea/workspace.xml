@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update requirements.txt">
-      <change afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Wave.ico" afterDir="false" />
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="megav2_2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/mega_v2_2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/mega_v2_2.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui_mega_v2_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui_mega_v2_2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711360507124</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="megav2_2">
+      <option name="closed" value="true" />
+      <created>1711718040575</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1711718040575</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -156,6 +165,7 @@
     <MESSAGE value="test" />
     <MESSAGE value="gitigore" />
     <MESSAGE value="update requirements.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="update requirements.txt" />
+    <MESSAGE value="megav2_2" />
+    <option name="LAST_COMMIT_MESSAGE" value="megav2_2" />
   </component>
 </project>

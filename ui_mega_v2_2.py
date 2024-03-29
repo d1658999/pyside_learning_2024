@@ -680,17 +680,17 @@ class Ui_MainWindow(object):
 
         self.tx_rx_path_group = QGroupBox(self.layoutWidget_10)
         self.tx_rx_path_group.setObjectName(u"tx_rx_path_group")
-        self.txrx_toolBox = QToolBox(self.tx_rx_path_group)
-        self.txrx_toolBox.setObjectName(u"txrx_toolBox")
-        self.txrx_toolBox.setGeometry(QRect(10, 20, 101, 331))
+        self.txrx_path_toolBox = QToolBox(self.tx_rx_path_group)
+        self.txrx_path_toolBox.setObjectName(u"txrx_path_toolBox")
+        self.txrx_path_toolBox.setGeometry(QRect(10, 20, 101, 331))
         self.tx_path = QWidget()
         self.tx_path.setObjectName(u"tx_path")
         self.tx_path.setGeometry(QRect(0, 0, 101, 271))
-        self.txrx_toolBox.addItem(self.tx_path, u"Tx Path")
+        self.txrx_path_toolBox.addItem(self.tx_path, u"Tx Path")
         self.rx_path = QWidget()
         self.rx_path.setObjectName(u"rx_path")
         self.rx_path.setGeometry(QRect(0, 0, 101, 271))
-        self.txrx_toolBox.addItem(self.rx_path, u"Rx Path")
+        self.txrx_path_toolBox.addItem(self.rx_path, u"Rx Path")
 
         self.verticalLayout_5.addWidget(self.tx_rx_path_group)
 
@@ -871,7 +871,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setCurrentIndex(0)
         self.bands_toolBox.setCurrentIndex(0)
         self.sync_path_toolBox.setCurrentIndex(0)
-        self.txrx_toolBox.setCurrentIndex(0)
+        self.txrx_path_toolBox.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -998,8 +998,8 @@ class Ui_MainWindow(object):
         self.sync_path_toolBox.setItemText(self.sync_path_toolBox.indexOf(self.general_sync), QCoreApplication.translate("MainWindow", u"General", None))
         self.sync_path_toolBox.setItemText(self.sync_path_toolBox.indexOf(self.endc_sync), QCoreApplication.translate("MainWindow", u"ENDC", None))
         self.tx_rx_path_group.setTitle(QCoreApplication.translate("MainWindow", u"Tx/Rx Path", None))
-        self.txrx_toolBox.setItemText(self.txrx_toolBox.indexOf(self.tx_path), QCoreApplication.translate("MainWindow", u"Tx Path", None))
-        self.txrx_toolBox.setItemText(self.txrx_toolBox.indexOf(self.rx_path), QCoreApplication.translate("MainWindow", u"Rx Path", None))
+        self.txrx_path_toolBox.setItemText(self.txrx_path_toolBox.indexOf(self.tx_path), QCoreApplication.translate("MainWindow", u"Tx Path", None))
+        self.txrx_path_toolBox.setItemText(self.txrx_path_toolBox.indexOf(self.rx_path), QCoreApplication.translate("MainWindow", u"Rx Path", None))
         self.tech_group.setTitle(QCoreApplication.translate("MainWindow", u"Tech", None))
         self.nr_tech.setText(QCoreApplication.translate("MainWindow", u"NR", None))
         self.lte_tech.setText(QCoreApplication.translate("MainWindow", u"LTE", None))

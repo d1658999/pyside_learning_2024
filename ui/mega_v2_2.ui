@@ -1132,7 +1132,7 @@ Disable</string>
        <property name="title">
         <string>Tx/Rx Path</string>
        </property>
-       <widget class="QToolBox" name="txrx_toolBox">
+       <widget class="QToolBox" name="txrx_path_toolBox">
         <property name="geometry">
          <rect>
           <x>10</x>

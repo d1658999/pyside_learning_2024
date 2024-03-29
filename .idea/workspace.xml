@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="gitigore" />
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update requirements.txt">
+      <change afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Wave.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,15 +38,22 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.Main_UI.executor": "Run",
+    "Python.ui_mega_v2_2.executor": "Run",
+    "Python.ui_test_v2_1.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/pricewu/Documents/pyside_learning",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+    "settings.editor.selected.configurable": "preferences.externalTools"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pricewu\Documents\pyside_learning" />
+      <recent name="C:\Users\pricewu\Documents\pyside_learning\ui" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\pricewu\Documents\pyside_learning" />
     </key>
   </component>
@@ -118,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711360202257</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update requirements.txt">
+      <option name="closed" value="true" />
+      <created>1711360507124</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711360507124</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -136,6 +155,7 @@
     <MESSAGE value="initial" />
     <MESSAGE value="test" />
     <MESSAGE value="gitigore" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitigore" />
+    <MESSAGE value="update requirements.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value="update requirements.txt" />
   </component>
 </project>

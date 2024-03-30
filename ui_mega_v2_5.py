@@ -761,11 +761,13 @@ class Ui_MainWindow(object):
         self.verticalLayout_ue.setContentsMargins(0, 0, 0, 0)
         self.ue_txmax = QCheckBox(self.layoutWidget_17)
         self.ue_txmax.setObjectName(u"ue_txmax")
+        self.ue_txmax.setChecked(True)
 
         self.verticalLayout_ue.addWidget(self.ue_txmax)
 
         self.ue_txlow = QCheckBox(self.layoutWidget_17)
         self.ue_txlow.setObjectName(u"ue_txlow")
+        self.ue_txlow.setChecked(True)
 
         self.verticalLayout_ue.addWidget(self.ue_txlow)
 
@@ -925,7 +927,7 @@ class Ui_MainWindow(object):
         self.test_items_toolBox.addItem(self.non_sig, u"Non-sig")
         self.sig = QWidget()
         self.sig.setObjectName(u"sig")
-        self.sig.setGeometry(QRect(0, 0, 131, 511))
+        self.sig.setGeometry(QRect(0, 0, 131, 381))
         self.layoutWidget_12 = QWidget(self.sig)
         self.layoutWidget_12.setObjectName(u"layoutWidget_12")
         self.layoutWidget_12.setGeometry(QRect(0, 0, 131, 74))

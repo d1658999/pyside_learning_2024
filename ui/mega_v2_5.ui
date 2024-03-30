@@ -1271,12 +1271,18 @@ Disable</string>
            <property name="text">
             <string>TxMax</string>
            </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="ue_txlow">
            <property name="text">
             <string>-10dBm</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1539,7 +1545,7 @@ Disable</string>
         <x>0</x>
         <y>0</y>
         <width>131</width>
-        <height>511</height>
+        <height>381</height>
        </rect>
       </property>
       <attribute name="label">

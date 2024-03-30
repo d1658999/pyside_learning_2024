@@ -1410,7 +1410,7 @@ Disable</string>
        <x>10</x>
        <y>20</y>
        <width>131</width>
-       <height>571</height>
+       <height>441</height>
       </rect>
      </property>
      <property name="currentIndex">
@@ -1422,7 +1422,7 @@ Disable</string>
         <x>0</x>
         <y>0</y>
         <width>131</width>
-        <height>511</height>
+        <height>381</height>
        </rect>
       </property>
       <attribute name="label">

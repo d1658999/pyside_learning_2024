@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mega_v2_2.ui'
+## Form generated from reading UI file 'mega_v2_4.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -9,44 +9,56 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-                            QMetaObject, QObject, QPoint, QRect,
-                            QSize, QTime, QUrl, Qt)
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
-                           QCursor, QFont, QFontDatabase, QGradient,
-                           QIcon, QImage, QKeySequence, QLinearGradient,
-                           QPainter, QPalette, QPixmap, QRadialGradient,
-                           QTransform)
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
-                               QGridLayout, QGroupBox, QHBoxLayout, QLabel,
-                               QLayout, QMainWindow, QMenu, QMenuBar,
-                               QPushButton, QSizePolicy, QSpacerItem, QSpinBox,
-                               QStatusBar, QTabWidget, QToolBox, QVBoxLayout,
-                               QWidget)
-
+    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
+    QLayout, QLineEdit, QMainWindow, QMenu,
+    QMenuBar, QPushButton, QRadioButton, QSizePolicy,
+    QSpinBox, QStatusBar, QTabWidget, QToolBox,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1491, 772)
+        MainWindow.setEnabled(True)
+        MainWindow.resize(1491, 776)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMaximumSize(QSize(1491, 776))
         icon = QIcon()
-        icon.addFile(u"./Wave.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"../Wave.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionLoad_file = QAction(MainWindow)
         self.actionLoad_file.setObjectName(u"actionLoad_file")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
+        self.centralwidget.setEnabled(True)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
+        self.centralwidget.setSizePolicy(sizePolicy1)
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(710, 0, 781, 721))
+        self.tabWidget.setGeometry(QRect(710, 0, 781, 731))
         self.bands = QWidget()
         self.bands.setObjectName(u"bands")
         self.bands_toolBox = QToolBox(self.bands)
         self.bands_toolBox.setObjectName(u"bands_toolBox")
-        self.bands_toolBox.setGeometry(QRect(0, 0, 1111, 681))
+        self.bands_toolBox.setGeometry(QRect(0, 0, 771, 701))
         self.page_nr = QWidget()
         self.page_nr.setObjectName(u"page_nr")
-        self.page_nr.setGeometry(QRect(0, 0, 1111, 561))
+        self.page_nr.setGeometry(QRect(0, 0, 771, 581))
         self.frame_band_nr = QFrame(self.page_nr)
         self.frame_band_nr.setObjectName(u"frame_band_nr")
         self.frame_band_nr.setGeometry(QRect(0, -10, 771, 581))
@@ -79,7 +91,7 @@ class Ui_MainWindow(object):
 
         self.n28_a_nr = QCheckBox(self.layoutWidget)
         self.n28_a_nr.setObjectName(u"n28_a_nr")
-        self.n28_a_nr.setEnabled(True)
+        self.n28_a_nr.setEnabled(False)
         self.n28_a_nr.setCheckable(True)
         self.n28_a_nr.setChecked(False)
 
@@ -130,6 +142,7 @@ class Ui_MainWindow(object):
         self.n28_b_nr.setChecked(False)
 
         self.gridLayout_2.addWidget(self.n28_b_nr, 1, 1, 1, 1)
+
 
         self.horizontalLayout.addWidget(self.groupBox_lb_nr)
 
@@ -184,7 +197,7 @@ class Ui_MainWindow(object):
 
         self.n39_nr = QCheckBox(self.layoutWidget1)
         self.n39_nr.setObjectName(u"n39_nr")
-        self.n39_nr.setEnabled(True)
+        self.n39_nr.setEnabled(False)
         self.n39_nr.setCheckable(True)
         self.n39_nr.setChecked(False)
 
@@ -235,6 +248,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.n66_nr, 7, 0, 1, 1)
 
+
         self.horizontalLayout.addWidget(self.groupBox_mb_nr)
 
         self.groupBox_uhb_nr = QGroupBox(self.frame_band_nr)
@@ -265,12 +279,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.n4_nr_2, 3, 0, 1, 1)
 
+
         self.horizontalLayout.addWidget(self.groupBox_uhb_nr)
 
         self.bands_toolBox.addItem(self.page_nr, u"NR")
         self.page_lte = QWidget()
         self.page_lte.setObjectName(u"page_lte")
-        self.page_lte.setGeometry(QRect(0, 0, 1111, 561))
+        self.page_lte.setGeometry(QRect(0, 0, 771, 581))
         self.frame_band_lte = QFrame(self.page_lte)
         self.frame_band_lte.setObjectName(u"frame_band_lte")
         self.frame_band_lte.setGeometry(QRect(0, -10, 771, 581))
@@ -303,7 +318,7 @@ class Ui_MainWindow(object):
 
         self.b28_a_lte = QCheckBox(self.layoutWidget2)
         self.b28_a_lte.setObjectName(u"b28_a_lte")
-        self.b28_a_lte.setEnabled(True)
+        self.b28_a_lte.setEnabled(False)
         self.b28_a_lte.setCheckable(True)
         self.b28_a_lte.setChecked(False)
 
@@ -370,6 +385,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_10.addWidget(self.b24_lte, 6, 1, 1, 1)
 
+
         self.horizontalLayout_2.addWidget(self.groupBox_lb_lte)
 
         self.groupBox_mb_lte = QGroupBox(self.frame_band_lte)
@@ -387,7 +403,7 @@ class Ui_MainWindow(object):
 
         self.b39_lte = QCheckBox(self.layoutWidget_4)
         self.b39_lte.setObjectName(u"b39_lte")
-        self.b39_lte.setEnabled(True)
+        self.b39_lte.setEnabled(False)
         self.b39_lte.setCheckable(True)
         self.b39_lte.setChecked(False)
 
@@ -454,6 +470,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_11.addWidget(self.b4_lte, 3, 0, 1, 1)
 
+
         self.horizontalLayout_2.addWidget(self.groupBox_mb_lte)
 
         self.groupBox_uhb_lte = QGroupBox(self.frame_band_lte)
@@ -474,12 +491,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_12.addWidget(self.b42_lte, 0, 0, 1, 1)
 
+
         self.horizontalLayout_2.addWidget(self.groupBox_uhb_lte)
 
         self.bands_toolBox.addItem(self.page_lte, u"LTE")
         self.page_wcdma = QWidget()
         self.page_wcdma.setObjectName(u"page_wcdma")
-        self.page_wcdma.setGeometry(QRect(0, 0, 1111, 561))
+        self.page_wcdma.setGeometry(QRect(0, 0, 771, 581))
         self.frame_band_wcdma = QFrame(self.page_wcdma)
         self.frame_band_wcdma.setObjectName(u"frame_band_wcdma")
         self.frame_band_wcdma.setGeometry(QRect(0, -10, 771, 581))
@@ -515,6 +533,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_13.addWidget(self.b19_wcdma, 3, 0, 1, 1)
 
+
         self.horizontalLayout_3.addWidget(self.groupBox_lb_wcdma)
 
         self.groupBox_mb_wcdma = QGroupBox(self.frame_band_wcdma)
@@ -540,12 +559,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_14.addWidget(self.b1_wcdma, 0, 0, 1, 1)
 
+
         self.horizontalLayout_3.addWidget(self.groupBox_mb_wcdma)
 
         self.bands_toolBox.addItem(self.page_wcdma, u"WCDMA")
         self.page_gsm = QWidget()
         self.page_gsm.setObjectName(u"page_gsm")
-        self.page_gsm.setGeometry(QRect(0, 0, 1111, 561))
+        self.page_gsm.setGeometry(QRect(0, 0, 771, 581))
         self.frame_band_gsm = QFrame(self.page_gsm)
         self.frame_band_gsm.setObjectName(u"frame_band_gsm")
         self.frame_band_gsm.setGeometry(QRect(0, -10, 771, 581))
@@ -571,6 +591,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_15.addWidget(self.gsm900, 1, 0, 1, 1)
 
+
         self.horizontalLayout_4.addWidget(self.groupBox_lb_gsm)
 
         self.groupBox_mb_gsm = QGroupBox(self.frame_band_gsm)
@@ -591,6 +612,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_16.addWidget(self.gsm1800, 0, 0, 1, 1)
 
+
         self.horizontalLayout_4.addWidget(self.groupBox_mb_gsm)
 
         self.bands_toolBox.addItem(self.page_gsm, u"GSM")
@@ -600,19 +622,16 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.bw, "")
         self.mcs_rb = QWidget()
         self.mcs_rb.setObjectName(u"mcs_rb")
-        self.mcs_rb.setEnabled(True)
+        self.mcs_rb.setEnabled(False)
         self.tabWidget.addTab(self.mcs_rb, "")
         self.temp_psu_tab = QWidget()
         self.temp_psu_tab.setObjectName(u"temp_psu_tab")
         self.tabWidget.addTab(self.temp_psu_tab, "")
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(0, 340, 141, 381))
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy)
+        self.frame.setGeometry(QRect(0, 350, 151, 381))
+        sizePolicy1.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy1)
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout = QVBoxLayout(self.frame)
@@ -620,74 +639,143 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.verticalLayout.setContentsMargins(9, 9, 9, 9)
-        self.therm_charge_dis = QPushButton(self.frame)
-        self.therm_charge_dis.setObjectName(u"therm_charge_dis")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.therm_charge_dis.sizePolicy().hasHeightForWidth())
-        self.therm_charge_dis.setSizePolicy(sizePolicy1)
+        self.therm_charge_dis_button = QPushButton(self.frame)
+        self.therm_charge_dis_button.setObjectName(u"therm_charge_dis_button")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.therm_charge_dis_button.sizePolicy().hasHeightForWidth())
+        self.therm_charge_dis_button.setSizePolicy(sizePolicy2)
 
-        self.verticalLayout.addWidget(self.therm_charge_dis)
+        self.verticalLayout.addWidget(self.therm_charge_dis_button)
 
-        self.run = QPushButton(self.frame)
-        self.run.setObjectName(u"run")
-        sizePolicy1.setHeightForWidth(self.run.sizePolicy().hasHeightForWidth())
-        self.run.setSizePolicy(sizePolicy1)
+        self.run_button = QPushButton(self.frame)
+        self.run_button.setObjectName(u"run_button")
+        sizePolicy2.setHeightForWidth(self.run_button.sizePolicy().hasHeightForWidth())
+        self.run_button.setSizePolicy(sizePolicy2)
 
-        self.verticalLayout.addWidget(self.run)
+        self.verticalLayout.addWidget(self.run_button)
 
-        self.stop = QPushButton(self.frame)
-        self.stop.setObjectName(u"stop")
-        sizePolicy1.setHeightForWidth(self.stop.sizePolicy().hasHeightForWidth())
-        self.stop.setSizePolicy(sizePolicy1)
+        self.stop_button = QPushButton(self.frame)
+        self.stop_button.setObjectName(u"stop_button")
+        sizePolicy2.setHeightForWidth(self.stop_button.sizePolicy().hasHeightForWidth())
+        self.stop_button.setSizePolicy(sizePolicy2)
 
-        self.verticalLayout.addWidget(self.stop)
+        self.verticalLayout.addWidget(self.stop_button)
 
         self.verticalLayout.setStretch(0, 4)
         self.verticalLayout.setStretch(1, 10)
         self.verticalLayout.setStretch(2, 2)
         self.layoutWidget_10 = QWidget(self.centralwidget)
         self.layoutWidget_10.setObjectName(u"layoutWidget_10")
-        self.layoutWidget_10.setGeometry(QRect(470, 0, 121, 721))
+        self.layoutWidget_10.setGeometry(QRect(440, 0, 151, 731))
         self.verticalLayout_5 = QVBoxLayout(self.layoutWidget_10)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.sync_group = QGroupBox(self.layoutWidget_10)
-        self.sync_group.setObjectName(u"sync_group")
-        self.sync_path_toolBox = QToolBox(self.sync_group)
-        self.sync_path_toolBox.setObjectName(u"sync_path_toolBox")
-        self.sync_path_toolBox.setGeometry(QRect(10, 20, 101, 331))
-        self.general_sync = QWidget()
-        self.general_sync.setObjectName(u"general_sync")
-        self.general_sync.setGeometry(QRect(0, 0, 101, 271))
-        self.sync_path_toolBox.addItem(self.general_sync, u"General")
-        self.endc_sync = QWidget()
-        self.endc_sync.setObjectName(u"endc_sync")
-        self.endc_sync.setGeometry(QRect(0, 0, 101, 271))
-        self.sync_path_toolBox.addItem(self.endc_sync, u"ENDC")
-
-        self.verticalLayout_5.addWidget(self.sync_group)
-
         self.tx_rx_path_group = QGroupBox(self.layoutWidget_10)
         self.tx_rx_path_group.setObjectName(u"tx_rx_path_group")
         self.txrx_path_toolBox = QToolBox(self.tx_rx_path_group)
         self.txrx_path_toolBox.setObjectName(u"txrx_path_toolBox")
-        self.txrx_path_toolBox.setGeometry(QRect(10, 20, 101, 331))
+        self.txrx_path_toolBox.setGeometry(QRect(10, 20, 131, 261))
         self.tx_path = QWidget()
         self.tx_path.setObjectName(u"tx_path")
-        self.tx_path.setGeometry(QRect(0, 0, 101, 271))
+        self.tx_path.setGeometry(QRect(0, 0, 131, 201))
+        self.layoutWidget_14 = QWidget(self.tx_path)
+        self.layoutWidget_14.setObjectName(u"layoutWidget_14")
+        self.layoutWidget_14.setGeometry(QRect(0, 0, 101, 74))
+        self.verticalLayout_14 = QVBoxLayout(self.layoutWidget_14)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.tx1 = QCheckBox(self.layoutWidget_14)
+        self.tx1.setObjectName(u"tx1")
+
+        self.verticalLayout_14.addWidget(self.tx1)
+
+        self.tx2 = QCheckBox(self.layoutWidget_14)
+        self.tx2.setObjectName(u"tx2")
+
+        self.verticalLayout_14.addWidget(self.tx2)
+
+        self.ulmimo = QCheckBox(self.layoutWidget_14)
+        self.ulmimo.setObjectName(u"ulmimo")
+
+        self.verticalLayout_14.addWidget(self.ulmimo)
+
         self.txrx_path_toolBox.addItem(self.tx_path, u"Tx Path")
         self.rx_path = QWidget()
         self.rx_path.setObjectName(u"rx_path")
-        self.rx_path.setGeometry(QRect(0, 0, 101, 271))
+        self.rx_path.setGeometry(QRect(0, 0, 131, 201))
+        self.layoutWidget_13 = QWidget(self.rx_path)
+        self.layoutWidget_13.setObjectName(u"layoutWidget_13")
+        self.layoutWidget_13.setGeometry(QRect(0, 0, 101, 178))
+        self.verticalLayout_13 = QVBoxLayout(self.layoutWidget_13)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.rx0 = QCheckBox(self.layoutWidget_13)
+        self.rx0.setObjectName(u"rx0")
+
+        self.verticalLayout_13.addWidget(self.rx0)
+
+        self.rx1 = QCheckBox(self.layoutWidget_13)
+        self.rx1.setObjectName(u"rx1")
+
+        self.verticalLayout_13.addWidget(self.rx1)
+
+        self.rx2 = QCheckBox(self.layoutWidget_13)
+        self.rx2.setObjectName(u"rx2")
+
+        self.verticalLayout_13.addWidget(self.rx2)
+
+        self.rx3 = QCheckBox(self.layoutWidget_13)
+        self.rx3.setObjectName(u"rx3")
+
+        self.verticalLayout_13.addWidget(self.rx3)
+
+        self.rx0_rx1 = QCheckBox(self.layoutWidget_13)
+        self.rx0_rx1.setObjectName(u"rx0_rx1")
+
+        self.verticalLayout_13.addWidget(self.rx0_rx1)
+
+        self.rx2_rx3 = QCheckBox(self.layoutWidget_13)
+        self.rx2_rx3.setObjectName(u"rx2_rx3")
+
+        self.verticalLayout_13.addWidget(self.rx2_rx3)
+
+        self.rx_all_path = QCheckBox(self.layoutWidget_13)
+        self.rx_all_path.setObjectName(u"rx_all_path")
+
+        self.verticalLayout_13.addWidget(self.rx_all_path)
+
         self.txrx_path_toolBox.addItem(self.rx_path, u"Rx Path")
 
         self.verticalLayout_5.addWidget(self.tx_rx_path_group)
 
+        self.ue_power = QGroupBox(self.layoutWidget_10)
+        self.ue_power.setObjectName(u"ue_power")
+        self.layoutWidget_17 = QWidget(self.ue_power)
+        self.layoutWidget_17.setObjectName(u"layoutWidget_17")
+        self.layoutWidget_17.setGeometry(QRect(10, 30, 131, 48))
+        self.verticalLayout_7 = QVBoxLayout(self.layoutWidget_17)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.lch_2 = QCheckBox(self.layoutWidget_17)
+        self.lch_2.setObjectName(u"lch_2")
+
+        self.verticalLayout_7.addWidget(self.lch_2)
+
+        self.mch_2 = QCheckBox(self.layoutWidget_17)
+        self.mch_2.setObjectName(u"mch_2")
+
+        self.verticalLayout_7.addWidget(self.mch_2)
+
+
+        self.verticalLayout_5.addWidget(self.ue_power)
+
+        self.verticalLayout_5.setStretch(0, 4)
+        self.verticalLayout_5.setStretch(1, 1)
         self.layoutWidget3 = QWidget(self.centralwidget)
         self.layoutWidget3.setObjectName(u"layoutWidget3")
-        self.layoutWidget3.setGeometry(QRect(594, 0, 111, 721))
+        self.layoutWidget3.setGeometry(QRect(594, 0, 111, 731))
         self.verticalLayout_2 = QVBoxLayout(self.layoutWidget3)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -724,6 +812,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.ulca_lte_tech)
 
+
         self.verticalLayout_2.addWidget(self.tech_group)
 
         self.channel_group = QGroupBox(self.layoutWidget3)
@@ -749,24 +838,225 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.hch)
 
+
         self.verticalLayout_2.addWidget(self.channel_group)
 
-        self.layoutWidget5 = QWidget(self.centralwidget)
+        self.test_items_groupBox = QGroupBox(self.centralwidget)
+        self.test_items_groupBox.setObjectName(u"test_items_groupBox")
+        self.test_items_groupBox.setGeometry(QRect(150, 0, 147, 731))
+        self.test_items_toolBox = QToolBox(self.test_items_groupBox)
+        self.test_items_toolBox.setObjectName(u"test_items_toolBox")
+        self.test_items_toolBox.setGeometry(QRect(10, 20, 131, 571))
+        self.non_sig = QWidget()
+        self.non_sig.setObjectName(u"non_sig")
+        self.non_sig.setGeometry(QRect(0, 0, 131, 511))
+        self.layoutWidget_11 = QWidget(self.non_sig)
+        self.layoutWidget_11.setObjectName(u"layoutWidget_11")
+        self.layoutWidget_11.setGeometry(QRect(0, 0, 131, 381))
+        self.verticalLayout_10 = QVBoxLayout(self.layoutWidget_11)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.tx_lmh_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_lmh_ns.setObjectName(u"tx_lmh_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_lmh_ns)
+
+        self.tx_level_sweep_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_level_sweep_ns.setObjectName(u"tx_level_sweep_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_level_sweep_ns)
+
+        self.tx_freq_sweep_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_freq_sweep_ns.setObjectName(u"tx_freq_sweep_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_freq_sweep_ns)
+
+        self.tx_1rb_sweep_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_1rb_sweep_ns.setObjectName(u"tx_1rb_sweep_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_1rb_sweep_ns)
+
+        self.tx_fcc_power_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_fcc_power_ns.setObjectName(u"tx_fcc_power_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_fcc_power_ns)
+
+        self.tx_ce_power_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_ce_power_ns.setObjectName(u"tx_ce_power_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_ce_power_ns)
+
+        self.tx_harmonics_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_harmonics_ns.setObjectName(u"tx_harmonics_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_harmonics_ns)
+
+        self.tx_cbe_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_cbe_ns.setObjectName(u"tx_cbe_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_cbe_ns)
+
+        self.tx_ulca_lte_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_ulca_lte_ns.setObjectName(u"tx_ulca_lte_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_ulca_lte_ns)
+
+        self.tx_ulca_lte_cbe_ns = QCheckBox(self.layoutWidget_11)
+        self.tx_ulca_lte_cbe_ns.setObjectName(u"tx_ulca_lte_cbe_ns")
+
+        self.verticalLayout_10.addWidget(self.tx_ulca_lte_cbe_ns)
+
+        self.rx_normal_ns = QCheckBox(self.layoutWidget_11)
+        self.rx_normal_ns.setObjectName(u"rx_normal_ns")
+
+        self.verticalLayout_10.addWidget(self.rx_normal_ns)
+
+        self.rx_quick_ns = QCheckBox(self.layoutWidget_11)
+        self.rx_quick_ns.setObjectName(u"rx_quick_ns")
+
+        self.verticalLayout_10.addWidget(self.rx_quick_ns)
+
+        self.rx_endc_desense_ns = QCheckBox(self.layoutWidget_11)
+        self.rx_endc_desense_ns.setObjectName(u"rx_endc_desense_ns")
+
+        self.verticalLayout_10.addWidget(self.rx_endc_desense_ns)
+
+        self.test_items_toolBox.addItem(self.non_sig, u"Non-sig")
+        self.sig = QWidget()
+        self.sig.setObjectName(u"sig")
+        self.sig.setGeometry(QRect(0, 0, 131, 511))
+        self.layoutWidget_12 = QWidget(self.sig)
+        self.layoutWidget_12.setObjectName(u"layoutWidget_12")
+        self.layoutWidget_12.setGeometry(QRect(0, 0, 131, 74))
+        self.verticalLayout_11 = QVBoxLayout(self.layoutWidget_12)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.tx_lmh_s = QCheckBox(self.layoutWidget_12)
+        self.tx_lmh_s.setObjectName(u"tx_lmh_s")
+
+        self.verticalLayout_11.addWidget(self.tx_lmh_s)
+
+        self.rx_normal_s = QCheckBox(self.layoutWidget_12)
+        self.rx_normal_s.setObjectName(u"rx_normal_s")
+
+        self.verticalLayout_11.addWidget(self.rx_normal_s)
+
+        self.rxs_sweep_s = QCheckBox(self.layoutWidget_12)
+        self.rxs_sweep_s.setObjectName(u"rxs_sweep_s")
+
+        self.verticalLayout_11.addWidget(self.rxs_sweep_s)
+
+        self.test_items_toolBox.addItem(self.sig, u"Sig")
+        self.level_sweep_groupBox = QGroupBox(self.centralwidget)
+        self.level_sweep_groupBox.setObjectName(u"level_sweep_groupBox")
+        self.level_sweep_groupBox.setGeometry(QRect(300, 420, 137, 131))
+        self.verticalLayout_9 = QVBoxLayout(self.level_sweep_groupBox)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.sync_path_label_4 = QLabel(self.level_sweep_groupBox)
+        self.sync_path_label_4.setObjectName(u"sync_path_label_4")
+        sizePolicy1.setHeightForWidth(self.sync_path_label_4.sizePolicy().hasHeightForWidth())
+        self.sync_path_label_4.setSizePolicy(sizePolicy1)
+        self.sync_path_label_4.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_9.addWidget(self.sync_path_label_4)
+
+        self.spinBox_2 = QSpinBox(self.level_sweep_groupBox)
+        self.spinBox_2.setObjectName(u"spinBox_2")
+        self.spinBox_2.setAlignment(Qt.AlignCenter)
+        self.spinBox_2.setMinimum(-30)
+        self.spinBox_2.setMaximum(30)
+        self.spinBox_2.setValue(-20)
+
+        self.verticalLayout_9.addWidget(self.spinBox_2)
+
+        self.sync_path_label_5 = QLabel(self.level_sweep_groupBox)
+        self.sync_path_label_5.setObjectName(u"sync_path_label_5")
+        self.sync_path_label_5.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_9.addWidget(self.sync_path_label_5)
+
+        self.spinBox_3 = QSpinBox(self.level_sweep_groupBox)
+        self.spinBox_3.setObjectName(u"spinBox_3")
+        self.spinBox_3.setAlignment(Qt.AlignCenter)
+        self.spinBox_3.setMinimum(-30)
+        self.spinBox_3.setMaximum(30)
+        self.spinBox_3.setValue(26)
+
+        self.verticalLayout_9.addWidget(self.spinBox_3)
+
+        self.level_sweep_groupBox_2 = QGroupBox(self.centralwidget)
+        self.level_sweep_groupBox_2.setObjectName(u"level_sweep_groupBox_2")
+        self.level_sweep_groupBox_2.setGeometry(QRect(300, 550, 137, 181))
+        self.verticalLayout_12 = QVBoxLayout(self.level_sweep_groupBox_2)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.freq_sweep_step = QLabel(self.level_sweep_groupBox_2)
+        self.freq_sweep_step.setObjectName(u"freq_sweep_step")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.freq_sweep_step.sizePolicy().hasHeightForWidth())
+        self.freq_sweep_step.setSizePolicy(sizePolicy3)
+        self.freq_sweep_step.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_12.addWidget(self.freq_sweep_step)
+
+        self.lineEdit = QLineEdit(self.level_sweep_groupBox_2)
+        self.lineEdit.setObjectName(u"lineEdit")
+        self.lineEdit.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_12.addWidget(self.lineEdit)
+
+        self.freq_sweep_start = QLabel(self.level_sweep_groupBox_2)
+        self.freq_sweep_start.setObjectName(u"freq_sweep_start")
+        sizePolicy3.setHeightForWidth(self.freq_sweep_start.sizePolicy().hasHeightForWidth())
+        self.freq_sweep_start.setSizePolicy(sizePolicy3)
+        self.freq_sweep_start.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_12.addWidget(self.freq_sweep_start)
+
+        self.lineEdit_2 = QLineEdit(self.level_sweep_groupBox_2)
+        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.lineEdit_2.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_12.addWidget(self.lineEdit_2)
+
+        self.freq_sweep_stop = QLabel(self.level_sweep_groupBox_2)
+        self.freq_sweep_stop.setObjectName(u"freq_sweep_stop")
+        sizePolicy3.setHeightForWidth(self.freq_sweep_stop.sizePolicy().hasHeightForWidth())
+        self.freq_sweep_stop.setSizePolicy(sizePolicy3)
+        self.freq_sweep_stop.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_12.addWidget(self.freq_sweep_stop)
+
+        self.lineEdit_3 = QLineEdit(self.level_sweep_groupBox_2)
+        self.lineEdit_3.setObjectName(u"lineEdit_3")
+        self.lineEdit_3.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_12.addWidget(self.lineEdit_3)
+
+        self.sync_group = QGroupBox(self.centralwidget)
+        self.sync_group.setObjectName(u"sync_group")
+        self.sync_group.setGeometry(QRect(300, 0, 137, 421))
+        self.sync_path_toolBox = QToolBox(self.sync_group)
+        self.sync_path_toolBox.setObjectName(u"sync_path_toolBox")
+        self.sync_path_toolBox.setGeometry(QRect(10, 20, 121, 391))
+        self.general_sync = QWidget()
+        self.general_sync.setObjectName(u"general_sync")
+        self.general_sync.setGeometry(QRect(0, 0, 121, 331))
+        self.layoutWidget5 = QWidget(self.general_sync)
         self.layoutWidget5.setObjectName(u"layoutWidget5")
-        self.layoutWidget5.setGeometry(QRect(360, 0, 104, 240))
-        self.verticalLayout_8 = QVBoxLayout(self.layoutWidget5)
-        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_7 = QVBoxLayout()
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.layoutWidget5.setGeometry(QRect(0, -1, 121, 331))
+        self.verticalLayout_6 = QVBoxLayout(self.layoutWidget5)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.sync_path_label = QLabel(self.layoutWidget5)
         self.sync_path_label.setObjectName(u"sync_path_label")
         self.sync_path_label.setEnabled(True)
-        sizePolicy.setHeightForWidth(self.sync_path_label.sizePolicy().hasHeightForWidth())
-        self.sync_path_label.setSizePolicy(sizePolicy)
-        self.sync_path_label.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        sizePolicy3.setHeightForWidth(self.sync_path_label.sizePolicy().hasHeightForWidth())
+        self.sync_path_label.setSizePolicy(sizePolicy3)
+        self.sync_path_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.verticalLayout_7.addWidget(self.sync_path_label)
+        self.verticalLayout_6.addWidget(self.sync_path_label)
 
         self.sync_path_comboBox = QComboBox(self.layoutWidget5)
         self.sync_path_comboBox.addItem("")
@@ -776,18 +1066,12 @@ class Ui_MainWindow(object):
         self.sync_path_comboBox.setObjectName(u"sync_path_comboBox")
         self.sync_path_comboBox.setLayoutDirection(Qt.LeftToRight)
 
-        self.verticalLayout_7.addWidget(self.sync_path_comboBox)
-
-        self.verticalLayout_8.addLayout(self.verticalLayout_7)
-
-        self.verticalSpacer = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_8.addItem(self.verticalSpacer)
+        self.verticalLayout_6.addWidget(self.sync_path_comboBox)
 
         self.as_path_en = QCheckBox(self.layoutWidget5)
         self.as_path_en.setObjectName(u"as_path_en")
 
-        self.verticalLayout_8.addWidget(self.as_path_en)
+        self.verticalLayout_6.addWidget(self.as_path_en)
 
         self.as_path_comboBox = QComboBox(self.layoutWidget5)
         self.as_path_comboBox.addItem("")
@@ -796,13 +1080,13 @@ class Ui_MainWindow(object):
         self.as_path_comboBox.setEnabled(False)
         self.as_path_comboBox.setLayoutDirection(Qt.LeftToRight)
 
-        self.verticalLayout_8.addWidget(self.as_path_comboBox)
+        self.verticalLayout_6.addWidget(self.as_path_comboBox)
 
         self.srs_path_en = QCheckBox(self.layoutWidget5)
         self.srs_path_en.setObjectName(u"srs_path_en")
         self.srs_path_en.setChecked(False)
 
-        self.verticalLayout_8.addWidget(self.srs_path_en)
+        self.verticalLayout_6.addWidget(self.srs_path_en)
 
         self.srs_path_comboBox = QComboBox(self.layoutWidget5)
         self.srs_path_comboBox.addItem("")
@@ -813,30 +1097,177 @@ class Ui_MainWindow(object):
         self.srs_path_comboBox.setEnabled(False)
         self.srs_path_comboBox.setLayoutDirection(Qt.LeftToRight)
 
-        self.verticalLayout_8.addWidget(self.srs_path_comboBox)
+        self.verticalLayout_6.addWidget(self.srs_path_comboBox)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.tx_level_nlw_label = QLabel(self.layoutWidget5)
+        self.tx_level_nlw_label.setObjectName(u"tx_level_nlw_label")
+        sizePolicy3.setHeightForWidth(self.tx_level_nlw_label.sizePolicy().hasHeightForWidth())
+        self.tx_level_nlw_label.setSizePolicy(sizePolicy3)
+        self.tx_level_nlw_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.verticalLayout_8.addItem(self.verticalSpacer_2)
+        self.verticalLayout_6.addWidget(self.tx_level_nlw_label)
 
-        self.verticalLayout_6 = QVBoxLayout()
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.sync_path_label_2 = QLabel(self.layoutWidget5)
-        self.sync_path_label_2.setObjectName(u"sync_path_label_2")
-        self.sync_path_label_2.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        self.tx_level_spinBox = QSpinBox(self.layoutWidget5)
+        self.tx_level_spinBox.setObjectName(u"tx_level_spinBox")
+        self.tx_level_spinBox.setAlignment(Qt.AlignCenter)
+        self.tx_level_spinBox.setMaximum(30)
+        self.tx_level_spinBox.setValue(26)
 
-        self.verticalLayout_6.addWidget(self.sync_path_label_2)
+        self.verticalLayout_6.addWidget(self.tx_level_spinBox)
 
-        self.spinBox = QSpinBox(self.layoutWidget5)
-        self.spinBox.setObjectName(u"spinBox")
-        self.spinBox.setAlignment(Qt.AlignCenter)
-        self.spinBox.setMaximum(30)
-        self.spinBox.setValue(26)
+        self.pcl_lb_label = QLabel(self.layoutWidget5)
+        self.pcl_lb_label.setObjectName(u"pcl_lb_label")
+        sizePolicy3.setHeightForWidth(self.pcl_lb_label.sizePolicy().hasHeightForWidth())
+        self.pcl_lb_label.setSizePolicy(sizePolicy3)
+        self.pcl_lb_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.verticalLayout_6.addWidget(self.spinBox)
+        self.verticalLayout_6.addWidget(self.pcl_lb_label)
 
-        self.verticalLayout_8.addLayout(self.verticalLayout_6)
+        self.pcl_lb_level_combo = QComboBox(self.layoutWidget5)
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.addItem("")
+        self.pcl_lb_level_combo.setObjectName(u"pcl_lb_level_combo")
+        self.pcl_lb_level_combo.setLayoutDirection(Qt.LeftToRight)
 
+        self.verticalLayout_6.addWidget(self.pcl_lb_level_combo)
+
+        self.pcl_mb_label = QLabel(self.layoutWidget5)
+        self.pcl_mb_label.setObjectName(u"pcl_mb_label")
+        sizePolicy3.setHeightForWidth(self.pcl_mb_label.sizePolicy().hasHeightForWidth())
+        self.pcl_mb_label.setSizePolicy(sizePolicy3)
+        self.pcl_mb_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_6.addWidget(self.pcl_mb_label)
+
+        self.pcl_mb_level_combo = QComboBox(self.layoutWidget5)
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.addItem("")
+        self.pcl_mb_level_combo.setObjectName(u"pcl_mb_level_combo")
+        self.pcl_mb_level_combo.setLayoutDirection(Qt.LeftToRight)
+
+        self.verticalLayout_6.addWidget(self.pcl_mb_level_combo)
+
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.gmsk_radioButton = QRadioButton(self.layoutWidget5)
+        self.gmsk_radioButton.setObjectName(u"gmsk_radioButton")
+        self.gmsk_radioButton.setChecked(True)
+
+        self.horizontalLayout_5.addWidget(self.gmsk_radioButton)
+
+        self.epsk_radioButton = QRadioButton(self.layoutWidget5)
+        self.epsk_radioButton.setObjectName(u"epsk_radioButton")
+        self.epsk_radioButton.setEnabled(True)
+        self.epsk_radioButton.setCheckable(True)
+
+        self.horizontalLayout_5.addWidget(self.epsk_radioButton)
+
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout_5)
+
+        self.sync_path_toolBox.addItem(self.general_sync, u"General")
+        self.endc_sync = QWidget()
+        self.endc_sync.setObjectName(u"endc_sync")
+        self.endc_sync.setGeometry(QRect(0, 0, 121, 331))
+        self.layoutWidget_18 = QWidget(self.endc_sync)
+        self.layoutWidget_18.setObjectName(u"layoutWidget_18")
+        self.layoutWidget_18.setGeometry(QRect(0, 0, 121, 221))
+        self.verticalLayout_8 = QVBoxLayout(self.layoutWidget_18)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.sync_path_label_endc = QLabel(self.layoutWidget_18)
+        self.sync_path_label_endc.setObjectName(u"sync_path_label_endc")
+        self.sync_path_label_endc.setEnabled(True)
+        sizePolicy3.setHeightForWidth(self.sync_path_label_endc.sizePolicy().hasHeightForWidth())
+        self.sync_path_label_endc.setSizePolicy(sizePolicy3)
+        self.sync_path_label_endc.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_8.addWidget(self.sync_path_label_endc)
+
+        self.sync_path_comboBox_endc = QComboBox(self.layoutWidget_18)
+        self.sync_path_comboBox_endc.addItem("")
+        self.sync_path_comboBox_endc.addItem("")
+        self.sync_path_comboBox_endc.addItem("")
+        self.sync_path_comboBox_endc.addItem("")
+        self.sync_path_comboBox_endc.setObjectName(u"sync_path_comboBox_endc")
+        self.sync_path_comboBox_endc.setLayoutDirection(Qt.LeftToRight)
+
+        self.verticalLayout_8.addWidget(self.sync_path_comboBox_endc)
+
+        self.as_path_en_endc = QCheckBox(self.layoutWidget_18)
+        self.as_path_en_endc.setObjectName(u"as_path_en_endc")
+
+        self.verticalLayout_8.addWidget(self.as_path_en_endc)
+
+        self.as_path_comboBox_endc = QComboBox(self.layoutWidget_18)
+        self.as_path_comboBox_endc.addItem("")
+        self.as_path_comboBox_endc.addItem("")
+        self.as_path_comboBox_endc.setObjectName(u"as_path_comboBox_endc")
+        self.as_path_comboBox_endc.setEnabled(False)
+        self.as_path_comboBox_endc.setLayoutDirection(Qt.LeftToRight)
+
+        self.verticalLayout_8.addWidget(self.as_path_comboBox_endc)
+
+        self.tx_level_lte_label_endc = QLabel(self.layoutWidget_18)
+        self.tx_level_lte_label_endc.setObjectName(u"tx_level_lte_label_endc")
+        sizePolicy3.setHeightForWidth(self.tx_level_lte_label_endc.sizePolicy().hasHeightForWidth())
+        self.tx_level_lte_label_endc.setSizePolicy(sizePolicy3)
+        self.tx_level_lte_label_endc.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_8.addWidget(self.tx_level_lte_label_endc)
+
+        self.tx_level_lte_spinBox_endc = QSpinBox(self.layoutWidget_18)
+        self.tx_level_lte_spinBox_endc.setObjectName(u"tx_level_lte_spinBox_endc")
+        self.tx_level_lte_spinBox_endc.setAlignment(Qt.AlignCenter)
+        self.tx_level_lte_spinBox_endc.setMaximum(30)
+        self.tx_level_lte_spinBox_endc.setValue(20)
+
+        self.verticalLayout_8.addWidget(self.tx_level_lte_spinBox_endc)
+
+        self.tx_level_nr_label_endc = QLabel(self.layoutWidget_18)
+        self.tx_level_nr_label_endc.setObjectName(u"tx_level_nr_label_endc")
+        sizePolicy3.setHeightForWidth(self.tx_level_nr_label_endc.sizePolicy().hasHeightForWidth())
+        self.tx_level_nr_label_endc.setSizePolicy(sizePolicy3)
+        self.tx_level_nr_label_endc.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_8.addWidget(self.tx_level_nr_label_endc)
+
+        self.tx_level_nr_spinBox_endc = QSpinBox(self.layoutWidget_18)
+        self.tx_level_nr_spinBox_endc.setObjectName(u"tx_level_nr_spinBox_endc")
+        self.tx_level_nr_spinBox_endc.setAlignment(Qt.AlignCenter)
+        self.tx_level_nr_spinBox_endc.setMaximum(30)
+        self.tx_level_nr_spinBox_endc.setValue(20)
+
+        self.verticalLayout_8.addWidget(self.tx_level_nr_spinBox_endc)
+
+        self.sync_path_toolBox.addItem(self.endc_sync, u"ENDC")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -854,14 +1285,16 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.as_path_en.toggled.connect(self.as_path_comboBox.setEnabled)
         self.srs_path_en.toggled.connect(self.srs_path_comboBox.setEnabled)
+        self.as_path_en_endc.toggled.connect(self.as_path_comboBox_endc.setEnabled)
 
         self.tabWidget.setCurrentIndex(0)
         self.bands_toolBox.setCurrentIndex(0)
-        self.sync_path_toolBox.setCurrentIndex(0)
         self.txrx_path_toolBox.setCurrentIndex(0)
+        self.test_items_toolBox.setCurrentIndex(0)
+        self.sync_path_toolBox.setCurrentIndex(0)
+
 
         QMetaObject.connectSlotsByName(MainWindow)
-
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -871,9 +1304,9 @@ class Ui_MainWindow(object):
         self.n24_nr.setText(QCoreApplication.translate("MainWindow", u"N24", None))
         self.n20_nr.setText(QCoreApplication.translate("MainWindow", u"N20", None))
         self.n12_nr.setText(QCoreApplication.translate("MainWindow", u"N12", None))
-        # if QT_CONFIG(statustip)
+#if QT_CONFIG(statustip)
         self.n28_a_nr.setStatusTip("")
-        # endif // QT_CONFIG(statustip)
+#endif // QT_CONFIG(statustip)
         self.n28_a_nr.setText(QCoreApplication.translate("MainWindow", u"N28_A", None))
         self.n8_nr.setText(QCoreApplication.translate("MainWindow", u"N8", None))
         self.n13_nr.setText(QCoreApplication.translate("MainWindow", u"N13", None))
@@ -893,9 +1326,9 @@ class Ui_MainWindow(object):
         self.n38_nr.setText(QCoreApplication.translate("MainWindow", u"N38", None))
         self.n3_nr.setText(QCoreApplication.translate("MainWindow", u"N3", None))
         self.n255_nr.setText(QCoreApplication.translate("MainWindow", u"N255", None))
-        # if QT_CONFIG(statustip)
+#if QT_CONFIG(statustip)
         self.n39_nr.setStatusTip("")
-        # endif // QT_CONFIG(statustip)
+#endif // QT_CONFIG(statustip)
         self.n39_nr.setText(QCoreApplication.translate("MainWindow", u"N39", None))
         self.n256_nr.setText(QCoreApplication.translate("MainWindow", u"N256", None))
         self.n2_nr.setText(QCoreApplication.translate("MainWindow", u"N2", None))
@@ -911,15 +1344,14 @@ class Ui_MainWindow(object):
         self.n1_nr_2.setText(QCoreApplication.translate("MainWindow", u"N77", None))
         self.n2_nr_2.setText(QCoreApplication.translate("MainWindow", u"N78", None))
         self.n4_nr_2.setText(QCoreApplication.translate("MainWindow", u"N79", None))
-        self.bands_toolBox.setItemText(self.bands_toolBox.indexOf(self.page_nr),
-                                       QCoreApplication.translate("MainWindow", u"NR", None))
+        self.bands_toolBox.setItemText(self.bands_toolBox.indexOf(self.page_nr), QCoreApplication.translate("MainWindow", u"NR", None))
         self.groupBox_lb_lte.setTitle(QCoreApplication.translate("MainWindow", u"LB", None))
         self.b5_lte.setText(QCoreApplication.translate("MainWindow", u"B5", None))
         self.b26_lte.setText(QCoreApplication.translate("MainWindow", u"B26", None))
         self.b8_lte.setText(QCoreApplication.translate("MainWindow", u"B8", None))
-        # if QT_CONFIG(statustip)
+#if QT_CONFIG(statustip)
         self.b28_a_lte.setStatusTip("")
-        # endif // QT_CONFIG(statustip)
+#endif // QT_CONFIG(statustip)
         self.b28_a_lte.setText(QCoreApplication.translate("MainWindow", u"B28_A", None))
         self.b12_lte.setText(QCoreApplication.translate("MainWindow", u"B12", None))
         self.b28_b_lte.setText(QCoreApplication.translate("MainWindow", u"B28_B", None))
@@ -935,9 +1367,9 @@ class Ui_MainWindow(object):
         self.b24_lte.setText(QCoreApplication.translate("MainWindow", u"B24", None))
         self.groupBox_mb_lte.setTitle(QCoreApplication.translate("MainWindow", u"MB", None))
         self.b38_lte.setText(QCoreApplication.translate("MainWindow", u"B38", None))
-        # if QT_CONFIG(statustip)
+#if QT_CONFIG(statustip)
         self.b39_lte.setStatusTip("")
-        # endif // QT_CONFIG(statustip)
+#endif // QT_CONFIG(statustip)
         self.b39_lte.setText(QCoreApplication.translate("MainWindow", u"B39", None))
         self.b66_lte.setText(QCoreApplication.translate("MainWindow", u"B66", None))
         self.b21_lte.setText(QCoreApplication.translate("MainWindow", u"B21", None))
@@ -954,8 +1386,7 @@ class Ui_MainWindow(object):
         self.groupBox_uhb_lte.setTitle(QCoreApplication.translate("MainWindow", u"UHB", None))
         self.n3_nr_8.setText(QCoreApplication.translate("MainWindow", u"B48", None))
         self.b42_lte.setText(QCoreApplication.translate("MainWindow", u"B42", None))
-        self.bands_toolBox.setItemText(self.bands_toolBox.indexOf(self.page_lte),
-                                       QCoreApplication.translate("MainWindow", u"LTE", None))
+        self.bands_toolBox.setItemText(self.bands_toolBox.indexOf(self.page_lte), QCoreApplication.translate("MainWindow", u"LTE", None))
         self.groupBox_lb_wcdma.setTitle(QCoreApplication.translate("MainWindow", u"LB", None))
         self.b5_wcdma.setText(QCoreApplication.translate("MainWindow", u"B5", None))
         self.b6_wcdma.setText(QCoreApplication.translate("MainWindow", u"B6", None))
@@ -965,40 +1396,40 @@ class Ui_MainWindow(object):
         self.b2_wcdma.setText(QCoreApplication.translate("MainWindow", u"B2", None))
         self.b4_wcdma.setText(QCoreApplication.translate("MainWindow", u"B4", None))
         self.b1_wcdma.setText(QCoreApplication.translate("MainWindow", u"B1", None))
-        self.bands_toolBox.setItemText(self.bands_toolBox.indexOf(self.page_wcdma),
-                                       QCoreApplication.translate("MainWindow", u"WCDMA", None))
+        self.bands_toolBox.setItemText(self.bands_toolBox.indexOf(self.page_wcdma), QCoreApplication.translate("MainWindow", u"WCDMA", None))
         self.groupBox_lb_gsm.setTitle(QCoreApplication.translate("MainWindow", u"LB", None))
         self.gsm850.setText(QCoreApplication.translate("MainWindow", u"GSM850", None))
         self.gsm900.setText(QCoreApplication.translate("MainWindow", u"GSM900", None))
         self.groupBox_mb_gsm.setTitle(QCoreApplication.translate("MainWindow", u"MB", None))
         self.gsm1900.setText(QCoreApplication.translate("MainWindow", u"GSM1900", None))
         self.gsm1800.setText(QCoreApplication.translate("MainWindow", u"GSM1800", None))
-        self.bands_toolBox.setItemText(self.bands_toolBox.indexOf(self.page_gsm),
-                                       QCoreApplication.translate("MainWindow", u"GSM", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.bands),
-                                  QCoreApplication.translate("MainWindow", u"Bands", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.bw),
-                                  QCoreApplication.translate("MainWindow", u"BW", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.mcs_rb),
-                                  QCoreApplication.translate("MainWindow", u"MCS_RB", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.temp_psu_tab),
-                                  QCoreApplication.translate("MainWindow", u"Temp_PSU", None))
-        self.therm_charge_dis.setText(QCoreApplication.translate("MainWindow", u"Thermal\n"
-                                                                               "Protect\n"
-                                                                               "Charge\n"
-                                                                               "Disable", None))
-        self.run.setText(QCoreApplication.translate("MainWindow", u"Run", None))
-        self.stop.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
-        self.sync_group.setTitle(QCoreApplication.translate("MainWindow", u"Sync/AS/SRS", None))
-        self.sync_path_toolBox.setItemText(self.sync_path_toolBox.indexOf(self.general_sync),
-                                           QCoreApplication.translate("MainWindow", u"General", None))
-        self.sync_path_toolBox.setItemText(self.sync_path_toolBox.indexOf(self.endc_sync),
-                                           QCoreApplication.translate("MainWindow", u"ENDC", None))
+        self.bands_toolBox.setItemText(self.bands_toolBox.indexOf(self.page_gsm), QCoreApplication.translate("MainWindow", u"GSM", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.bands), QCoreApplication.translate("MainWindow", u"Bands", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.bw), QCoreApplication.translate("MainWindow", u"BW", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.mcs_rb), QCoreApplication.translate("MainWindow", u"MCS_RB", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.temp_psu_tab), QCoreApplication.translate("MainWindow", u"Temp_PSU", None))
+        self.therm_charge_dis_button.setText(QCoreApplication.translate("MainWindow", u"Thermal\n"
+"Protect\n"
+"Charge\n"
+"Disable", None))
+        self.run_button.setText(QCoreApplication.translate("MainWindow", u"Run", None))
+        self.stop_button.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
         self.tx_rx_path_group.setTitle(QCoreApplication.translate("MainWindow", u"Tx/Rx Path", None))
-        self.txrx_path_toolBox.setItemText(self.txrx_path_toolBox.indexOf(self.tx_path),
-                                           QCoreApplication.translate("MainWindow", u"Tx Path", None))
-        self.txrx_path_toolBox.setItemText(self.txrx_path_toolBox.indexOf(self.rx_path),
-                                           QCoreApplication.translate("MainWindow", u"Rx Path", None))
+        self.tx1.setText(QCoreApplication.translate("MainWindow", u"Tx1", None))
+        self.tx2.setText(QCoreApplication.translate("MainWindow", u"Tx2", None))
+        self.ulmimo.setText(QCoreApplication.translate("MainWindow", u"MIMO", None))
+        self.txrx_path_toolBox.setItemText(self.txrx_path_toolBox.indexOf(self.tx_path), QCoreApplication.translate("MainWindow", u"Tx Path", None))
+        self.rx0.setText(QCoreApplication.translate("MainWindow", u"Rx0", None))
+        self.rx1.setText(QCoreApplication.translate("MainWindow", u"Rx1", None))
+        self.rx2.setText(QCoreApplication.translate("MainWindow", u"Rx2", None))
+        self.rx3.setText(QCoreApplication.translate("MainWindow", u"Rx3", None))
+        self.rx0_rx1.setText(QCoreApplication.translate("MainWindow", u"Rx0+Rx1", None))
+        self.rx2_rx3.setText(QCoreApplication.translate("MainWindow", u"Rx2+Rx3", None))
+        self.rx_all_path.setText(QCoreApplication.translate("MainWindow", u"ALL Path", None))
+        self.txrx_path_toolBox.setItemText(self.txrx_path_toolBox.indexOf(self.rx_path), QCoreApplication.translate("MainWindow", u"Rx Path", None))
+        self.ue_power.setTitle(QCoreApplication.translate("MainWindow", u"UE power(Rx Use)", None))
+        self.lch_2.setText(QCoreApplication.translate("MainWindow", u"TxMax", None))
+        self.mch_2.setText(QCoreApplication.translate("MainWindow", u"-10dBm", None))
         self.tech_group.setTitle(QCoreApplication.translate("MainWindow", u"Tech", None))
         self.nr_tech.setText(QCoreApplication.translate("MainWindow", u"NR", None))
         self.lte_tech.setText(QCoreApplication.translate("MainWindow", u"LTE", None))
@@ -1009,6 +1440,37 @@ class Ui_MainWindow(object):
         self.lch.setText(QCoreApplication.translate("MainWindow", u"L", None))
         self.mch.setText(QCoreApplication.translate("MainWindow", u"M", None))
         self.hch.setText(QCoreApplication.translate("MainWindow", u"H", None))
+        self.test_items_groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Test Items", None))
+        self.tx_lmh_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_LMH", None))
+        self.tx_level_sweep_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_level_sweep", None))
+        self.tx_freq_sweep_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_freq_sweep", None))
+        self.tx_1rb_sweep_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_1RB_sweep\n"
+"(only for NR)", None))
+        self.tx_fcc_power_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_FCC_power", None))
+        self.tx_ce_power_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_CE_power", None))
+        self.tx_harmonics_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_Harmonics", None))
+        self.tx_cbe_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_CBE", None))
+        self.tx_ulca_lte_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_ULCA_LTE", None))
+        self.tx_ulca_lte_cbe_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_ULCA_LTE_CBE", None))
+        self.rx_normal_ns.setText(QCoreApplication.translate("MainWindow", u"Rx_normal", None))
+        self.rx_quick_ns.setText(QCoreApplication.translate("MainWindow", u"Rx_quick", None))
+        self.rx_endc_desense_ns.setText(QCoreApplication.translate("MainWindow", u"Rx_ENDC_Desense", None))
+        self.test_items_toolBox.setItemText(self.test_items_toolBox.indexOf(self.non_sig), QCoreApplication.translate("MainWindow", u"Non-sig", None))
+        self.tx_lmh_s.setText(QCoreApplication.translate("MainWindow", u"Tx_LMH", None))
+        self.rx_normal_s.setText(QCoreApplication.translate("MainWindow", u"Rx_normal", None))
+        self.rxs_sweep_s.setText(QCoreApplication.translate("MainWindow", u"RxS_sweep", None))
+        self.test_items_toolBox.setItemText(self.test_items_toolBox.indexOf(self.sig), QCoreApplication.translate("MainWindow", u"Sig", None))
+        self.level_sweep_groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Level_Sweep", None))
+        self.sync_path_label_4.setText(QCoreApplication.translate("MainWindow", u"Start_level", None))
+        self.sync_path_label_5.setText(QCoreApplication.translate("MainWindow", u"Stop_level", None))
+        self.level_sweep_groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"Freq_Sweep(4/5G)", None))
+        self.freq_sweep_step.setText(QCoreApplication.translate("MainWindow", u"Step(KHz)", None))
+        self.lineEdit.setText(QCoreApplication.translate("MainWindow", u"1000", None))
+        self.freq_sweep_start.setText(QCoreApplication.translate("MainWindow", u"Start(KHz)", None))
+        self.lineEdit_2.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.freq_sweep_stop.setText(QCoreApplication.translate("MainWindow", u"Stop(KHz)", None))
+        self.lineEdit_3.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.sync_group.setTitle(QCoreApplication.translate("MainWindow", u"Sync/AS/SRS", None))
         self.sync_path_label.setText(QCoreApplication.translate("MainWindow", u"Sync Path", None))
         self.sync_path_comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Main", None))
         self.sync_path_comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"CA#1", None))
@@ -1025,6 +1487,58 @@ class Ui_MainWindow(object):
         self.srs_path_comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"2", None))
         self.srs_path_comboBox.setItemText(3, QCoreApplication.translate("MainWindow", u"3", None))
 
-        self.sync_path_label_2.setText(QCoreApplication.translate("MainWindow", u"TX Level for 3/4/5G", None))
+        self.tx_level_nlw_label.setText(QCoreApplication.translate("MainWindow", u"TX Level for 3/4/5G", None))
+        self.pcl_lb_label.setText(QCoreApplication.translate("MainWindow", u"PCL LB for 2G", None))
+        self.pcl_lb_level_combo.setItemText(0, QCoreApplication.translate("MainWindow", u"5", None))
+        self.pcl_lb_level_combo.setItemText(1, QCoreApplication.translate("MainWindow", u"6", None))
+        self.pcl_lb_level_combo.setItemText(2, QCoreApplication.translate("MainWindow", u"7", None))
+        self.pcl_lb_level_combo.setItemText(3, QCoreApplication.translate("MainWindow", u"8", None))
+        self.pcl_lb_level_combo.setItemText(4, QCoreApplication.translate("MainWindow", u"9", None))
+        self.pcl_lb_level_combo.setItemText(5, QCoreApplication.translate("MainWindow", u"10", None))
+        self.pcl_lb_level_combo.setItemText(6, QCoreApplication.translate("MainWindow", u"11", None))
+        self.pcl_lb_level_combo.setItemText(7, QCoreApplication.translate("MainWindow", u"12", None))
+        self.pcl_lb_level_combo.setItemText(8, QCoreApplication.translate("MainWindow", u"13", None))
+        self.pcl_lb_level_combo.setItemText(9, QCoreApplication.translate("MainWindow", u"14", None))
+        self.pcl_lb_level_combo.setItemText(10, QCoreApplication.translate("MainWindow", u"15", None))
+        self.pcl_lb_level_combo.setItemText(11, QCoreApplication.translate("MainWindow", u"16", None))
+        self.pcl_lb_level_combo.setItemText(12, QCoreApplication.translate("MainWindow", u"17", None))
+        self.pcl_lb_level_combo.setItemText(13, QCoreApplication.translate("MainWindow", u"18", None))
+        self.pcl_lb_level_combo.setItemText(14, QCoreApplication.translate("MainWindow", u"19", None))
+
+        self.pcl_mb_label.setText(QCoreApplication.translate("MainWindow", u"PCL MB for 2G", None))
+        self.pcl_mb_level_combo.setItemText(0, QCoreApplication.translate("MainWindow", u"0", None))
+        self.pcl_mb_level_combo.setItemText(1, QCoreApplication.translate("MainWindow", u"1", None))
+        self.pcl_mb_level_combo.setItemText(2, QCoreApplication.translate("MainWindow", u"2", None))
+        self.pcl_mb_level_combo.setItemText(3, QCoreApplication.translate("MainWindow", u"3", None))
+        self.pcl_mb_level_combo.setItemText(4, QCoreApplication.translate("MainWindow", u"4", None))
+        self.pcl_mb_level_combo.setItemText(5, QCoreApplication.translate("MainWindow", u"5", None))
+        self.pcl_mb_level_combo.setItemText(6, QCoreApplication.translate("MainWindow", u"6", None))
+        self.pcl_mb_level_combo.setItemText(7, QCoreApplication.translate("MainWindow", u"7", None))
+        self.pcl_mb_level_combo.setItemText(8, QCoreApplication.translate("MainWindow", u"8", None))
+        self.pcl_mb_level_combo.setItemText(9, QCoreApplication.translate("MainWindow", u"9", None))
+        self.pcl_mb_level_combo.setItemText(10, QCoreApplication.translate("MainWindow", u"10", None))
+        self.pcl_mb_level_combo.setItemText(11, QCoreApplication.translate("MainWindow", u"11", None))
+        self.pcl_mb_level_combo.setItemText(12, QCoreApplication.translate("MainWindow", u"12", None))
+        self.pcl_mb_level_combo.setItemText(13, QCoreApplication.translate("MainWindow", u"13", None))
+        self.pcl_mb_level_combo.setItemText(14, QCoreApplication.translate("MainWindow", u"14", None))
+        self.pcl_mb_level_combo.setItemText(15, QCoreApplication.translate("MainWindow", u"15", None))
+
+        self.gmsk_radioButton.setText(QCoreApplication.translate("MainWindow", u"GMSK", None))
+        self.epsk_radioButton.setText(QCoreApplication.translate("MainWindow", u"EPSK", None))
+        self.sync_path_toolBox.setItemText(self.sync_path_toolBox.indexOf(self.general_sync), QCoreApplication.translate("MainWindow", u"General", None))
+        self.sync_path_label_endc.setText(QCoreApplication.translate("MainWindow", u"Sync Path", None))
+        self.sync_path_comboBox_endc.setItemText(0, QCoreApplication.translate("MainWindow", u"Main", None))
+        self.sync_path_comboBox_endc.setItemText(1, QCoreApplication.translate("MainWindow", u"CA#1", None))
+        self.sync_path_comboBox_endc.setItemText(2, QCoreApplication.translate("MainWindow", u"CA#2", None))
+        self.sync_path_comboBox_endc.setItemText(3, QCoreApplication.translate("MainWindow", u"CA#3", None))
+
+        self.as_path_en_endc.setText(QCoreApplication.translate("MainWindow", u"AS Path", None))
+        self.as_path_comboBox_endc.setItemText(0, QCoreApplication.translate("MainWindow", u"0", None))
+        self.as_path_comboBox_endc.setItemText(1, QCoreApplication.translate("MainWindow", u"1", None))
+
+        self.tx_level_lte_label_endc.setText(QCoreApplication.translate("MainWindow", u"TX Level for 4G", None))
+        self.tx_level_nr_label_endc.setText(QCoreApplication.translate("MainWindow", u"TX Level for 5G", None))
+        self.sync_path_toolBox.setItemText(self.sync_path_toolBox.indexOf(self.endc_sync), QCoreApplication.translate("MainWindow", u"ENDC", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"Loss_file", None))
     # retranslateUi
+

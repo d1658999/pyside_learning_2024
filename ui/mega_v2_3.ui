@@ -1028,7 +1028,7 @@
       <number>9</number>
      </property>
      <item>
-      <widget class="QPushButton" name="therm_charge_dis">
+      <widget class="QPushButton" name="therm_charge_dis_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -1044,7 +1044,7 @@ Disable</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="run">
+      <widget class="QPushButton" name="run_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -1057,7 +1057,7 @@ Disable</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="stop">
+      <widget class="QPushButton" name="stop_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -1080,7 +1080,7 @@ Disable</string>
       <height>721</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_5">
+    <layout class="QVBoxLayout" name="verticalLayout_5" stretch="6,4,1">
      <item>
       <widget class="QGroupBox" name="sync_group">
        <property name="title">
@@ -1092,11 +1092,11 @@ Disable</string>
           <x>10</x>
           <y>20</y>
           <width>101</width>
-          <height>331</height>
+          <height>361</height>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="general_sync">
          <property name="geometry">
@@ -1104,7 +1104,7 @@ Disable</string>
            <x>0</x>
            <y>0</y>
            <width>101</width>
-           <height>271</height>
+           <height>301</height>
           </rect>
          </property>
          <attribute name="label">
@@ -1117,7 +1117,7 @@ Disable</string>
            <x>0</x>
            <y>0</y>
            <width>101</width>
-           <height>271</height>
+           <height>301</height>
           </rect>
          </property>
          <attribute name="label">
@@ -1138,7 +1138,7 @@ Disable</string>
           <x>10</x>
           <y>20</y>
           <width>101</width>
-          <height>331</height>
+          <height>231</height>
          </rect>
         </property>
         <property name="currentIndex">
@@ -1150,12 +1150,45 @@ Disable</string>
            <x>0</x>
            <y>0</y>
            <width>101</width>
-           <height>271</height>
+           <height>171</height>
           </rect>
          </property>
          <attribute name="label">
           <string>Tx Path</string>
          </attribute>
+         <widget class="QWidget" name="layoutWidget_14">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>101</width>
+            <height>74</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <item>
+            <widget class="QCheckBox" name="tx1">
+             <property name="text">
+              <string>Tx1</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="tx2">
+             <property name="text">
+              <string>Tx2</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="ulmimo">
+             <property name="text">
+              <string>MIMO</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
         <widget class="QWidget" name="rx_path">
          <property name="geometry">
@@ -1163,13 +1196,107 @@ Disable</string>
            <x>0</x>
            <y>0</y>
            <width>101</width>
-           <height>271</height>
+           <height>171</height>
           </rect>
          </property>
          <attribute name="label">
           <string>Rx Path</string>
          </attribute>
+         <widget class="QWidget" name="layoutWidget_13">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>101</width>
+            <height>171</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_13">
+           <item>
+            <widget class="QCheckBox" name="rx0">
+             <property name="text">
+              <string>Rx0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="rx1">
+             <property name="text">
+              <string>Rx1</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="rx2">
+             <property name="text">
+              <string>Rx2</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="rx3">
+             <property name="text">
+              <string>Rx3</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="rx0_rx1">
+             <property name="text">
+              <string>Rx0+Rx1</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="rx2_rx3">
+             <property name="text">
+              <string>Rx2+Rx3</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="rx_all_path">
+             <property name="text">
+              <string>ALL Path</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="ue_power">
+       <property name="title">
+        <string>UE power(Rx Use)</string>
+       </property>
+       <widget class="QWidget" name="layoutWidget_17">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>91</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="QCheckBox" name="lch_2">
+           <property name="text">
+            <string>TxMax</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="mch_2">
+           <property name="text">
+            <string>-10dBm</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
      </item>
@@ -1303,7 +1430,7 @@ Disable</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="non_sig">
       <property name="geometry">
@@ -1331,20 +1458,6 @@ Disable</string>
          <widget class="QCheckBox" name="tx_lmh_ns">
           <property name="text">
            <string>Tx_LMH</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="rx_normal_ns">
-          <property name="text">
-           <string>Rx_normal</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="rx_quick_ns">
-          <property name="text">
-           <string>Rx_quick</string>
           </property>
          </widget>
         </item>
@@ -1385,13 +1498,6 @@ Disable</string>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="rx_endc_desense_ns">
-          <property name="text">
-           <string>Rx_ENDC_Desense</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QCheckBox" name="tx_harmonics_ns">
           <property name="text">
            <string>Tx_Harmonics</string>
@@ -1416,6 +1522,27 @@ Disable</string>
          <widget class="QCheckBox" name="tx_ulca_lte_cbe_ns">
           <property name="text">
            <string>Tx_ULCA_LTE_CBE</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="rx_normal_ns">
+          <property name="text">
+           <string>Rx_normal</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="rx_quick_ns">
+          <property name="text">
+           <string>Rx_quick</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="rx_endc_desense_ns">
+          <property name="text">
+           <string>Rx_ENDC_Desense</string>
           </property>
          </widget>
         </item>
@@ -1473,208 +1600,395 @@ Disable</string>
    <widget class="QGroupBox" name="sync_groupBox">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>180</x>
       <y>0</y>
-      <width>127</width>
-      <height>271</height>
+      <width>137</width>
+      <height>391</height>
      </rect>
     </property>
     <property name="title">
      <string>Sync</string>
     </property>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>111</width>
-       <height>241</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_8">
-      <property name="spacing">
-       <number>6</number>
-      </property>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_7">
-        <item>
-         <widget class="QLabel" name="sync_path_label">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Sync Path</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="sync_path_comboBox">
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <item>
-           <property name="text">
-            <string>Main</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>CA#1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>CA#2</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>CA#3</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>5</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="as_path_en">
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <widget class="QLabel" name="sync_path_label">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Sync Path</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="sync_path_comboBox">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <item>
         <property name="text">
-         <string>AS Path</string>
+         <string>Main</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="as_path_comboBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <item>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>1</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="srs_path_en">
+       </item>
+       <item>
         <property name="text">
-         <string>SRS Path</string>
+         <string>CA#1</string>
         </property>
-        <property name="checked">
-         <bool>false</bool>
+       </item>
+       <item>
+        <property name="text">
+         <string>CA#2</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="srs_path_comboBox">
-        <property name="enabled">
-         <bool>false</bool>
+       </item>
+       <item>
+        <property name="text">
+         <string>CA#3</string>
         </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="as_path_en">
+       <property name="text">
+        <string>AS Path</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="as_path_comboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <item>
+        <property name="text">
+         <string>0</string>
         </property>
-        <item>
+       </item>
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="srs_path_en">
+       <property name="text">
+        <string>SRS Path</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="srs_path_comboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <item>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="tx_level_nlw_label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>TX Level for 3/4/5G</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="tx_level_spinBox">
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="maximum">
+        <number>30</number>
+       </property>
+       <property name="value">
+        <number>26</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="pcl_lb_label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>PCL LB for 2G</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="pcl_lb_level_combo">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <item>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>8</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>11</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>12</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>13</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>14</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>15</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>16</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>17</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>18</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>19</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="pcl_mb_label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>PCL MB for 2G</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="pcl_mb_level_combo">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <item>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>8</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>11</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>12</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>13</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>14</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>15</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QRadioButton" name="gmsk_radioButton">
          <property name="text">
-          <string>0</string>
+          <string>GMSK</string>
          </property>
-        </item>
-        <item>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="epsk_radioButton">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
-          <string>1</string>
+          <string>EPSK</string>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>2</string>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>3</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>10</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_6">
-        <item>
-         <widget class="QLabel" name="sync_path_label_2">
-          <property name="text">
-           <string>TX Level for 3/4/5G</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="spinBox">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="maximum">
-           <number>30</number>
-          </property>
-          <property name="value">
-           <number>26</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
    <widget class="QGroupBox" name="level_sweep_groupBox">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>270</y>
-      <width>127</width>
-      <height>159</height>
+      <x>180</x>
+      <y>390</y>
+      <width>137</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="title">
@@ -1708,22 +2022,6 @@ Disable</string>
       </widget>
      </item>
      <item>
-      <spacer name="verticalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>10</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QLabel" name="sync_path_label_5">
        <property name="text">
         <string>Stop_level</string>
@@ -1754,10 +2052,10 @@ Disable</string>
    <widget class="QGroupBox" name="level_sweep_groupBox_2">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>430</y>
-      <width>127</width>
-      <height>291</height>
+      <x>180</x>
+      <y>530</y>
+      <width>137</width>
+      <height>191</height>
      </rect>
     </property>
     <property name="title">
@@ -1791,22 +2089,6 @@ Disable</string>
       </widget>
      </item>
      <item>
-      <spacer name="verticalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QLabel" name="freq_sweep_start">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1831,22 +2113,6 @@ Disable</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-     </item>
-     <item>
-      <spacer name="verticalSpacer_5">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
      <item>
       <widget class="QLabel" name="freq_sweep_stop">

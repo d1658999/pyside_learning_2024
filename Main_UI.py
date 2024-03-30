@@ -9,6 +9,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+        self.init_show()
         self.custom_signal_slot()
 
     def custom_signal_slot(self):
@@ -17,6 +18,14 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         self.run_button.clicked.connect(self.run)
         self.therm_charge_dis_button.clicked.connect(self.therm_charge_dis)
         self.stop_button.clicked.connect(self.stop)
+        self.equipments_comboBox.currentTextChanged.connect(self.equipment_show)
+        self.tx_port_comboBox.currentTextChanged.connect(self.tx_port_show)
+        self.tx_port_endc_lte_comboBox.currentTextChanged.connect(self.tx_port_endc_lte_show)
+        self.rx_endc_desense_ns.stateChanged.connect(self.tx_port_endc_lte_state)
+
+    def init_show(self):
+        print(f'Equipment: {self.equipments_comboBox.currentText()}')
+        print(f'Tx port: {self.tx_port_comboBox.currentText()}')
 
     def srs_unchecked(self, checked):
         # if self.as_path_en.isChecked():
@@ -47,6 +56,22 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
     def tab_index_get(self, state_dict):
         state_dict['tabWidget'] = self.tabWidget.currentIndex()
         return state_dict
+
+    def tx_port_show(self):
+        print(f'Tx Port: {self.tx_port_comboBox.currentText()}')
+
+    def tx_port_endc_lte_show(self):
+        print(f'Endc LTE Tx Port: {self.tx_port_endc_lte_comboBox.currentText()}')
+
+    @staticmethod
+    def tx_port_endc_lte_state(checked):
+        if checked:
+            print(f'Endc LTE port Enabled')
+        else:
+            print(f'Endc LTE port Disabled')
+
+    def equipment_show(self):
+        print(f'Equipment: {self.equipments_comboBox.currentText()}')
 
     def run(self):
         print('run')

@@ -36,7 +36,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../Wave.ico</normaloff>../Wave.ico</iconset>
+    <normaloff>../../../.designer/Wave.ico</normaloff>../../../.designer/Wave.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="enabled">
@@ -74,7 +74,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_nr">
        <property name="geometry">
@@ -1126,7 +1126,7 @@ Disable</string>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tx_path">
          <property name="geometry">
@@ -1795,7 +1795,7 @@ Disable</string>
          <x>0</x>
          <y>-1</y>
          <width>121</width>
-         <height>331</height>
+         <height>332</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_genre">
@@ -2381,7 +2381,7 @@ Disable</string>
       <x>0</x>
       <y>93</y>
       <width>151</width>
-      <height>91</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="title">
@@ -2445,15 +2445,68 @@ Disable</string>
        </item>
       </widget>
      </item>
+     <item>
+      <widget class="QComboBox" name="tx_port_endc_lte_comboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>8</string>
+        </property>
+       </item>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QGroupBox" name="other_setting_groupBox">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>190</y>
+      <y>210</y>
       <width>151</width>
-      <height>241</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="title">
@@ -2532,11 +2585,11 @@ Disable</string>
    <hints>
     <hint type="sourcelabel">
      <x>333</x>
-     <y>133</y>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>333</x>
-     <y>152</y>
+     <y>169</y>
     </hint>
    </hints>
   </connection>
@@ -2548,11 +2601,11 @@ Disable</string>
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>191</y>
+     <y>195</y>
     </hint>
     <hint type="destinationlabel">
      <x>378</x>
-     <y>204</y>
+     <y>223</y>
     </hint>
    </hints>
   </connection>
@@ -2585,6 +2638,22 @@ Disable</string>
     <hint type="destinationlabel">
      <x>55</x>
      <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rx_endc_desense_ns</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>tx_port_endc_lte_comboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>433</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>124</x>
+     <y>212</y>
     </hint>
    </hints>
   </connection>

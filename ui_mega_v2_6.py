@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mega_v2_5.ui'
+## Form generated from reading UI file 'mega_v2_6.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QSize(1491, 790))
         MainWindow.setMaximumSize(QSize(1491, 790))
         icon = QIcon()
-        icon.addFile(u"./Wave.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"../../../.designer/Wave.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionLoad_file = QAction(MainWindow)
         self.actionLoad_file.setObjectName(u"actionLoad_file")
@@ -60,37 +60,36 @@ class Ui_MainWindow(object):
         self.page_nr = QWidget()
         self.page_nr.setObjectName(u"page_nr")
         self.page_nr.setGeometry(QRect(0, 0, 771, 581))
-        self.frame_band_nr = QFrame(self.page_nr)
-        self.frame_band_nr.setObjectName(u"frame_band_nr")
-        self.frame_band_nr.setGeometry(QRect(0, -10, 771, 581))
-        self.frame_band_nr.setFrameShape(QFrame.StyledPanel)
-        self.frame_band_nr.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout = QHBoxLayout(self.frame_band_nr)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.groupBox_lb_nr = QGroupBox(self.frame_band_nr)
+        self.widget = QWidget(self.page_nr)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(0, 0, 771, 581))
+        self.horizontalLayout_bnads_nr = QHBoxLayout(self.widget)
+        self.horizontalLayout_bnads_nr.setObjectName(u"horizontalLayout_bnads_nr")
+        self.horizontalLayout_bnads_nr.setContentsMargins(0, 0, 0, 0)
+        self.groupBox_lb_nr = QGroupBox(self.widget)
         self.groupBox_lb_nr.setObjectName(u"groupBox_lb_nr")
-        self.layoutWidget = QWidget(self.groupBox_lb_nr)
-        self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(10, 20, 231, 531))
-        self.gridLayout_lb_nr = QGridLayout(self.layoutWidget)
+        self.layoutWidget_30 = QWidget(self.groupBox_lb_nr)
+        self.layoutWidget_30.setObjectName(u"layoutWidget_30")
+        self.layoutWidget_30.setGeometry(QRect(10, 20, 231, 531))
+        self.gridLayout_lb_nr = QGridLayout(self.layoutWidget_30)
         self.gridLayout_lb_nr.setObjectName(u"gridLayout_lb_nr")
         self.gridLayout_lb_nr.setContentsMargins(0, 0, 0, 0)
-        self.n24_nr = QCheckBox(self.layoutWidget)
+        self.n24_nr = QCheckBox(self.layoutWidget_30)
         self.n24_nr.setObjectName(u"n24_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n24_nr, 6, 0, 1, 1)
 
-        self.n20_nr = QCheckBox(self.layoutWidget)
+        self.n20_nr = QCheckBox(self.layoutWidget_30)
         self.n20_nr.setObjectName(u"n20_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n20_nr, 5, 0, 1, 1)
 
-        self.n12_nr = QCheckBox(self.layoutWidget)
+        self.n12_nr = QCheckBox(self.layoutWidget_30)
         self.n12_nr.setObjectName(u"n12_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n12_nr, 2, 0, 1, 1)
 
-        self.n28_a_nr = QCheckBox(self.layoutWidget)
+        self.n28_a_nr = QCheckBox(self.layoutWidget_30)
         self.n28_a_nr.setObjectName(u"n28_a_nr")
         self.n28_a_nr.setEnabled(True)
         self.n28_a_nr.setCheckable(True)
@@ -98,105 +97,105 @@ class Ui_MainWindow(object):
 
         self.gridLayout_lb_nr.addWidget(self.n28_a_nr, 0, 1, 1, 1)
 
-        self.n8_nr = QCheckBox(self.layoutWidget)
+        self.n8_nr = QCheckBox(self.layoutWidget_30)
         self.n8_nr.setObjectName(u"n8_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n8_nr, 1, 0, 1, 1)
 
-        self.n13_nr = QCheckBox(self.layoutWidget)
+        self.n13_nr = QCheckBox(self.layoutWidget_30)
         self.n13_nr.setObjectName(u"n13_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n13_nr, 3, 0, 1, 1)
 
-        self.n5_nr = QCheckBox(self.layoutWidget)
+        self.n5_nr = QCheckBox(self.layoutWidget_30)
         self.n5_nr.setObjectName(u"n5_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n5_nr, 0, 0, 1, 1)
 
-        self.n14_nr = QCheckBox(self.layoutWidget)
+        self.n14_nr = QCheckBox(self.layoutWidget_30)
         self.n14_nr.setObjectName(u"n14_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n14_nr, 4, 0, 1, 1)
 
-        self.n26_nr = QCheckBox(self.layoutWidget)
+        self.n26_nr = QCheckBox(self.layoutWidget_30)
         self.n26_nr.setObjectName(u"n26_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n26_nr, 7, 0, 1, 1)
 
-        self.n71_nr = QCheckBox(self.layoutWidget)
+        self.n71_nr = QCheckBox(self.layoutWidget_30)
         self.n71_nr.setObjectName(u"n71_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n71_nr, 8, 0, 1, 1)
 
-        self.n32_nr = QCheckBox(self.layoutWidget)
+        self.n32_nr = QCheckBox(self.layoutWidget_30)
         self.n32_nr.setObjectName(u"n32_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n32_nr, 3, 1, 1, 1)
 
-        self.n29_nr = QCheckBox(self.layoutWidget)
+        self.n29_nr = QCheckBox(self.layoutWidget_30)
         self.n29_nr.setObjectName(u"n29_nr")
 
         self.gridLayout_lb_nr.addWidget(self.n29_nr, 2, 1, 1, 1)
 
-        self.n28_b_nr = QCheckBox(self.layoutWidget)
+        self.n28_b_nr = QCheckBox(self.layoutWidget_30)
         self.n28_b_nr.setObjectName(u"n28_b_nr")
         self.n28_b_nr.setChecked(False)
 
         self.gridLayout_lb_nr.addWidget(self.n28_b_nr, 1, 1, 1, 1)
 
 
-        self.horizontalLayout.addWidget(self.groupBox_lb_nr)
+        self.horizontalLayout_bnads_nr.addWidget(self.groupBox_lb_nr)
 
-        self.groupBox_mb_nr = QGroupBox(self.frame_band_nr)
+        self.groupBox_mb_nr = QGroupBox(self.widget)
         self.groupBox_mb_nr.setObjectName(u"groupBox_mb_nr")
-        self.layoutWidget1 = QWidget(self.groupBox_mb_nr)
-        self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(10, 20, 231, 531))
-        self.gridLayout_mb_nr = QGridLayout(self.layoutWidget1)
+        self.layoutWidget_29 = QWidget(self.groupBox_mb_nr)
+        self.layoutWidget_29.setObjectName(u"layoutWidget_29")
+        self.layoutWidget_29.setGeometry(QRect(10, 20, 231, 531))
+        self.gridLayout_mb_nr = QGridLayout(self.layoutWidget_29)
         self.gridLayout_mb_nr.setObjectName(u"gridLayout_mb_nr")
         self.gridLayout_mb_nr.setContentsMargins(0, 0, 0, 0)
-        self.n41_nr = QCheckBox(self.layoutWidget1)
+        self.n41_nr = QCheckBox(self.layoutWidget_29)
         self.n41_nr.setObjectName(u"n41_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n41_nr, 3, 1, 1, 1)
 
-        self.n25_nr = QCheckBox(self.layoutWidget1)
+        self.n25_nr = QCheckBox(self.layoutWidget_29)
         self.n25_nr.setObjectName(u"n25_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n25_nr, 6, 0, 1, 1)
 
-        self.n76_nr = QCheckBox(self.layoutWidget1)
+        self.n76_nr = QCheckBox(self.layoutWidget_29)
         self.n76_nr.setObjectName(u"n76_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n76_nr, 6, 1, 1, 1)
 
-        self.n40_nr = QCheckBox(self.layoutWidget1)
+        self.n40_nr = QCheckBox(self.layoutWidget_29)
         self.n40_nr.setObjectName(u"n40_nr")
         self.n40_nr.setChecked(False)
 
         self.gridLayout_mb_nr.addWidget(self.n40_nr, 1, 1, 1, 1)
 
-        self.n30_nr = QCheckBox(self.layoutWidget1)
+        self.n30_nr = QCheckBox(self.layoutWidget_29)
         self.n30_nr.setObjectName(u"n30_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n30_nr, 5, 0, 1, 1)
 
-        self.n38_nr = QCheckBox(self.layoutWidget1)
+        self.n38_nr = QCheckBox(self.layoutWidget_29)
         self.n38_nr.setObjectName(u"n38_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n38_nr, 2, 1, 1, 1)
 
-        self.n3_nr = QCheckBox(self.layoutWidget1)
+        self.n3_nr = QCheckBox(self.layoutWidget_29)
         self.n3_nr.setObjectName(u"n3_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n3_nr, 2, 0, 1, 1)
 
-        self.n255_nr = QCheckBox(self.layoutWidget1)
+        self.n255_nr = QCheckBox(self.layoutWidget_29)
         self.n255_nr.setObjectName(u"n255_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n255_nr, 7, 1, 1, 1)
 
-        self.n39_nr = QCheckBox(self.layoutWidget1)
+        self.n39_nr = QCheckBox(self.layoutWidget_29)
         self.n39_nr.setObjectName(u"n39_nr")
         self.n39_nr.setEnabled(True)
         self.n39_nr.setCheckable(True)
@@ -204,55 +203,55 @@ class Ui_MainWindow(object):
 
         self.gridLayout_mb_nr.addWidget(self.n39_nr, 0, 1, 1, 1)
 
-        self.n256_nr = QCheckBox(self.layoutWidget1)
+        self.n256_nr = QCheckBox(self.layoutWidget_29)
         self.n256_nr.setObjectName(u"n256_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n256_nr, 8, 1, 1, 1)
 
-        self.n2_nr = QCheckBox(self.layoutWidget1)
+        self.n2_nr = QCheckBox(self.layoutWidget_29)
         self.n2_nr.setObjectName(u"n2_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n2_nr, 1, 0, 1, 1)
 
-        self.n4_nr = QCheckBox(self.layoutWidget1)
+        self.n4_nr = QCheckBox(self.layoutWidget_29)
         self.n4_nr.setObjectName(u"n4_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n4_nr, 3, 0, 1, 1)
 
-        self.n34_nr = QCheckBox(self.layoutWidget1)
+        self.n34_nr = QCheckBox(self.layoutWidget_29)
         self.n34_nr.setObjectName(u"n34_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n34_nr, 4, 1, 1, 1)
 
-        self.n70_nr = QCheckBox(self.layoutWidget1)
+        self.n70_nr = QCheckBox(self.layoutWidget_29)
         self.n70_nr.setObjectName(u"n70_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n70_nr, 8, 0, 1, 1)
 
-        self.n1_nr = QCheckBox(self.layoutWidget1)
+        self.n1_nr = QCheckBox(self.layoutWidget_29)
         self.n1_nr.setObjectName(u"n1_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n1_nr, 0, 0, 1, 1)
 
-        self.n75_nr = QCheckBox(self.layoutWidget1)
+        self.n75_nr = QCheckBox(self.layoutWidget_29)
         self.n75_nr.setObjectName(u"n75_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n75_nr, 5, 1, 1, 1)
 
-        self.n7_nr = QCheckBox(self.layoutWidget1)
+        self.n7_nr = QCheckBox(self.layoutWidget_29)
         self.n7_nr.setObjectName(u"n7_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n7_nr, 4, 0, 1, 1)
 
-        self.n66_nr = QCheckBox(self.layoutWidget1)
+        self.n66_nr = QCheckBox(self.layoutWidget_29)
         self.n66_nr.setObjectName(u"n66_nr")
 
         self.gridLayout_mb_nr.addWidget(self.n66_nr, 7, 0, 1, 1)
 
 
-        self.horizontalLayout.addWidget(self.groupBox_mb_nr)
+        self.horizontalLayout_bnads_nr.addWidget(self.groupBox_mb_nr)
 
-        self.groupBox_uhb_nr = QGroupBox(self.frame_band_nr)
+        self.groupBox_uhb_nr = QGroupBox(self.widget)
         self.groupBox_uhb_nr.setObjectName(u"groupBox_uhb_nr")
         self.layoutWidget_2 = QWidget(self.groupBox_uhb_nr)
         self.layoutWidget_2.setObjectName(u"layoutWidget_2")
@@ -281,43 +280,42 @@ class Ui_MainWindow(object):
         self.gridLayout_uhb_nr.addWidget(self.n79_nr, 3, 0, 1, 1)
 
 
-        self.horizontalLayout.addWidget(self.groupBox_uhb_nr)
+        self.horizontalLayout_bnads_nr.addWidget(self.groupBox_uhb_nr)
 
         self.bands_toolBox.addItem(self.page_nr, u"NR")
         self.page_lte = QWidget()
         self.page_lte.setObjectName(u"page_lte")
         self.page_lte.setGeometry(QRect(0, 0, 771, 581))
-        self.frame_band_lte = QFrame(self.page_lte)
-        self.frame_band_lte.setObjectName(u"frame_band_lte")
-        self.frame_band_lte.setGeometry(QRect(0, -10, 771, 581))
-        self.frame_band_lte.setFrameShape(QFrame.StyledPanel)
-        self.frame_band_lte.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_2 = QHBoxLayout(self.frame_band_lte)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.groupBox_lb_lte = QGroupBox(self.frame_band_lte)
+        self.widget1 = QWidget(self.page_lte)
+        self.widget1.setObjectName(u"widget1")
+        self.widget1.setGeometry(QRect(0, 0, 771, 581))
+        self.horizontalLayout_bnads_lte = QHBoxLayout(self.widget1)
+        self.horizontalLayout_bnads_lte.setObjectName(u"horizontalLayout_bnads_lte")
+        self.horizontalLayout_bnads_lte.setContentsMargins(0, 0, 0, 0)
+        self.groupBox_lb_lte = QGroupBox(self.widget1)
         self.groupBox_lb_lte.setObjectName(u"groupBox_lb_lte")
-        self.layoutWidget2 = QWidget(self.groupBox_lb_lte)
-        self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.layoutWidget2.setGeometry(QRect(10, 20, 231, 531))
-        self.gridLayout_lb_lte = QGridLayout(self.layoutWidget2)
+        self.layoutWidget_31 = QWidget(self.groupBox_lb_lte)
+        self.layoutWidget_31.setObjectName(u"layoutWidget_31")
+        self.layoutWidget_31.setGeometry(QRect(10, 20, 231, 531))
+        self.gridLayout_lb_lte = QGridLayout(self.layoutWidget_31)
         self.gridLayout_lb_lte.setObjectName(u"gridLayout_lb_lte")
         self.gridLayout_lb_lte.setContentsMargins(0, 0, 0, 0)
-        self.b5_lte = QCheckBox(self.layoutWidget2)
+        self.b5_lte = QCheckBox(self.layoutWidget_31)
         self.b5_lte.setObjectName(u"b5_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b5_lte, 0, 0, 1, 1)
 
-        self.b26_lte = QCheckBox(self.layoutWidget2)
+        self.b26_lte = QCheckBox(self.layoutWidget_31)
         self.b26_lte.setObjectName(u"b26_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b26_lte, 0, 1, 1, 1)
 
-        self.b8_lte = QCheckBox(self.layoutWidget2)
+        self.b8_lte = QCheckBox(self.layoutWidget_31)
         self.b8_lte.setObjectName(u"b8_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b8_lte, 1, 0, 1, 1)
 
-        self.b28_a_lte = QCheckBox(self.layoutWidget2)
+        self.b28_a_lte = QCheckBox(self.layoutWidget_31)
         self.b28_a_lte.setObjectName(u"b28_a_lte")
         self.b28_a_lte.setEnabled(True)
         self.b28_a_lte.setCheckable(True)
@@ -325,71 +323,71 @@ class Ui_MainWindow(object):
 
         self.gridLayout_lb_lte.addWidget(self.b28_a_lte, 1, 1, 1, 1)
 
-        self.b12_lte = QCheckBox(self.layoutWidget2)
+        self.b12_lte = QCheckBox(self.layoutWidget_31)
         self.b12_lte.setObjectName(u"b12_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b12_lte, 2, 0, 1, 1)
 
-        self.b28_b_lte = QCheckBox(self.layoutWidget2)
+        self.b28_b_lte = QCheckBox(self.layoutWidget_31)
         self.b28_b_lte.setObjectName(u"b28_b_lte")
         self.b28_b_lte.setChecked(False)
 
         self.gridLayout_lb_lte.addWidget(self.b28_b_lte, 2, 1, 1, 1)
 
-        self.b13_lte = QCheckBox(self.layoutWidget2)
+        self.b13_lte = QCheckBox(self.layoutWidget_31)
         self.b13_lte.setObjectName(u"b13_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b13_lte, 3, 0, 1, 1)
 
-        self.b29_lte = QCheckBox(self.layoutWidget2)
+        self.b29_lte = QCheckBox(self.layoutWidget_31)
         self.b29_lte.setObjectName(u"b29_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b29_lte, 3, 1, 1, 1)
 
-        self.b14_lte = QCheckBox(self.layoutWidget2)
+        self.b14_lte = QCheckBox(self.layoutWidget_31)
         self.b14_lte.setObjectName(u"b14_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b14_lte, 4, 0, 1, 1)
 
-        self.b32_lte = QCheckBox(self.layoutWidget2)
+        self.b32_lte = QCheckBox(self.layoutWidget_31)
         self.b32_lte.setObjectName(u"b32_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b32_lte, 4, 1, 1, 1)
 
-        self.b17_lte = QCheckBox(self.layoutWidget2)
+        self.b17_lte = QCheckBox(self.layoutWidget_31)
         self.b17_lte.setObjectName(u"b17_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b17_lte, 5, 0, 1, 1)
 
-        self.b71_lte = QCheckBox(self.layoutWidget2)
+        self.b71_lte = QCheckBox(self.layoutWidget_31)
         self.b71_lte.setObjectName(u"b71_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b71_lte, 5, 1, 1, 1)
 
-        self.b18_lte = QCheckBox(self.layoutWidget2)
+        self.b18_lte = QCheckBox(self.layoutWidget_31)
         self.b18_lte.setObjectName(u"b18_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b18_lte, 6, 0, 1, 1)
 
-        self.b19_lte = QCheckBox(self.layoutWidget2)
+        self.b19_lte = QCheckBox(self.layoutWidget_31)
         self.b19_lte.setObjectName(u"b19_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b19_lte, 7, 0, 1, 1)
 
-        self.b20_lte = QCheckBox(self.layoutWidget2)
+        self.b20_lte = QCheckBox(self.layoutWidget_31)
         self.b20_lte.setObjectName(u"b20_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b20_lte, 8, 0, 1, 1)
 
-        self.b24_lte = QCheckBox(self.layoutWidget2)
+        self.b24_lte = QCheckBox(self.layoutWidget_31)
         self.b24_lte.setObjectName(u"b24_lte")
 
         self.gridLayout_lb_lte.addWidget(self.b24_lte, 6, 1, 1, 1)
 
 
-        self.horizontalLayout_2.addWidget(self.groupBox_lb_lte)
+        self.horizontalLayout_bnads_lte.addWidget(self.groupBox_lb_lte)
 
-        self.groupBox_mb_lte = QGroupBox(self.frame_band_lte)
+        self.groupBox_mb_lte = QGroupBox(self.widget1)
         self.groupBox_mb_lte.setObjectName(u"groupBox_mb_lte")
         self.layoutWidget_4 = QWidget(self.groupBox_mb_lte)
         self.layoutWidget_4.setObjectName(u"layoutWidget_4")
@@ -472,9 +470,9 @@ class Ui_MainWindow(object):
         self.gridLayout_mb_lte.addWidget(self.b4_lte, 3, 0, 1, 1)
 
 
-        self.horizontalLayout_2.addWidget(self.groupBox_mb_lte)
+        self.horizontalLayout_bnads_lte.addWidget(self.groupBox_mb_lte)
 
-        self.groupBox_uhb_lte = QGroupBox(self.frame_band_lte)
+        self.groupBox_uhb_lte = QGroupBox(self.widget1)
         self.groupBox_uhb_lte.setObjectName(u"groupBox_uhb_lte")
         self.layoutWidget_5 = QWidget(self.groupBox_uhb_lte)
         self.layoutWidget_5.setObjectName(u"layoutWidget_5")
@@ -493,20 +491,19 @@ class Ui_MainWindow(object):
         self.gridLayout_uhb_lte.addWidget(self.b42_lte, 0, 0, 1, 1)
 
 
-        self.horizontalLayout_2.addWidget(self.groupBox_uhb_lte)
+        self.horizontalLayout_bnads_lte.addWidget(self.groupBox_uhb_lte)
 
         self.bands_toolBox.addItem(self.page_lte, u"LTE")
         self.page_wcdma = QWidget()
         self.page_wcdma.setObjectName(u"page_wcdma")
         self.page_wcdma.setGeometry(QRect(0, 0, 771, 581))
-        self.frame_band_wcdma = QFrame(self.page_wcdma)
-        self.frame_band_wcdma.setObjectName(u"frame_band_wcdma")
-        self.frame_band_wcdma.setGeometry(QRect(0, -10, 771, 581))
-        self.frame_band_wcdma.setFrameShape(QFrame.StyledPanel)
-        self.frame_band_wcdma.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_3 = QHBoxLayout(self.frame_band_wcdma)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.groupBox_lb_wcdma = QGroupBox(self.frame_band_wcdma)
+        self.widget2 = QWidget(self.page_wcdma)
+        self.widget2.setObjectName(u"widget2")
+        self.widget2.setGeometry(QRect(0, 0, 771, 581))
+        self.horizontalLayout_bnads_wcdma = QHBoxLayout(self.widget2)
+        self.horizontalLayout_bnads_wcdma.setObjectName(u"horizontalLayout_bnads_wcdma")
+        self.horizontalLayout_bnads_wcdma.setContentsMargins(0, 0, 0, 0)
+        self.groupBox_lb_wcdma = QGroupBox(self.widget2)
         self.groupBox_lb_wcdma.setObjectName(u"groupBox_lb_wcdma")
         self.layoutWidget_3 = QWidget(self.groupBox_lb_wcdma)
         self.layoutWidget_3.setObjectName(u"layoutWidget_3")
@@ -535,9 +532,9 @@ class Ui_MainWindow(object):
         self.gridLayout_lb_wcdma.addWidget(self.b19_wcdma, 3, 0, 1, 1)
 
 
-        self.horizontalLayout_3.addWidget(self.groupBox_lb_wcdma)
+        self.horizontalLayout_bnads_wcdma.addWidget(self.groupBox_lb_wcdma)
 
-        self.groupBox_mb_wcdma = QGroupBox(self.frame_band_wcdma)
+        self.groupBox_mb_wcdma = QGroupBox(self.widget2)
         self.groupBox_mb_wcdma.setObjectName(u"groupBox_mb_wcdma")
         self.layoutWidget_6 = QWidget(self.groupBox_mb_wcdma)
         self.layoutWidget_6.setObjectName(u"layoutWidget_6")
@@ -561,20 +558,19 @@ class Ui_MainWindow(object):
         self.gridLayout_mb_wcdma.addWidget(self.b1_wcdma, 0, 0, 1, 1)
 
 
-        self.horizontalLayout_3.addWidget(self.groupBox_mb_wcdma)
+        self.horizontalLayout_bnads_wcdma.addWidget(self.groupBox_mb_wcdma)
 
         self.bands_toolBox.addItem(self.page_wcdma, u"WCDMA")
         self.page_gsm = QWidget()
         self.page_gsm.setObjectName(u"page_gsm")
         self.page_gsm.setGeometry(QRect(0, 0, 771, 581))
-        self.frame_band_gsm = QFrame(self.page_gsm)
-        self.frame_band_gsm.setObjectName(u"frame_band_gsm")
-        self.frame_band_gsm.setGeometry(QRect(0, -10, 771, 581))
-        self.frame_band_gsm.setFrameShape(QFrame.StyledPanel)
-        self.frame_band_gsm.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_4 = QHBoxLayout(self.frame_band_gsm)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.groupBox_lb_gsm = QGroupBox(self.frame_band_gsm)
+        self.widget3 = QWidget(self.page_gsm)
+        self.widget3.setObjectName(u"widget3")
+        self.widget3.setGeometry(QRect(0, 0, 771, 581))
+        self.horizontalLayout_bnads_gsm = QHBoxLayout(self.widget3)
+        self.horizontalLayout_bnads_gsm.setObjectName(u"horizontalLayout_bnads_gsm")
+        self.horizontalLayout_bnads_gsm.setContentsMargins(0, 0, 0, 0)
+        self.groupBox_lb_gsm = QGroupBox(self.widget3)
         self.groupBox_lb_gsm.setObjectName(u"groupBox_lb_gsm")
         self.layoutWidget_7 = QWidget(self.groupBox_lb_gsm)
         self.layoutWidget_7.setObjectName(u"layoutWidget_7")
@@ -593,9 +589,9 @@ class Ui_MainWindow(object):
         self.gridLayout_lb_gsm.addWidget(self.gsm900, 1, 0, 1, 1)
 
 
-        self.horizontalLayout_4.addWidget(self.groupBox_lb_gsm)
+        self.horizontalLayout_bnads_gsm.addWidget(self.groupBox_lb_gsm)
 
-        self.groupBox_mb_gsm = QGroupBox(self.frame_band_gsm)
+        self.groupBox_mb_gsm = QGroupBox(self.widget3)
         self.groupBox_mb_gsm.setObjectName(u"groupBox_mb_gsm")
         self.layoutWidget_8 = QWidget(self.groupBox_mb_gsm)
         self.layoutWidget_8.setObjectName(u"layoutWidget_8")
@@ -614,19 +610,19 @@ class Ui_MainWindow(object):
         self.gridLayout_mb_gsm.addWidget(self.gsm1800, 0, 0, 1, 1)
 
 
-        self.horizontalLayout_4.addWidget(self.groupBox_mb_gsm)
+        self.horizontalLayout_bnads_gsm.addWidget(self.groupBox_mb_gsm)
 
         self.bands_toolBox.addItem(self.page_gsm, u"GSM")
         self.tabWidget.addTab(self.bands, "")
         self.bw = QWidget()
         self.bw.setObjectName(u"bw")
-        self.widget = QWidget(self.bw)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(10, 10, 761, 511))
-        self.horizontalLayout_bw = QHBoxLayout(self.widget)
+        self.widget4 = QWidget(self.bw)
+        self.widget4.setObjectName(u"widget4")
+        self.widget4.setGeometry(QRect(10, 10, 761, 511))
+        self.horizontalLayout_bw = QHBoxLayout(self.widget4)
         self.horizontalLayout_bw.setObjectName(u"horizontalLayout_bw")
         self.horizontalLayout_bw.setContentsMargins(0, 0, 0, 0)
-        self.lte_bw_groupBox = QGroupBox(self.widget)
+        self.lte_bw_groupBox = QGroupBox(self.widget4)
         self.lte_bw_groupBox.setObjectName(u"lte_bw_groupBox")
         self.layoutWidget_15 = QWidget(self.lte_bw_groupBox)
         self.layoutWidget_15.setObjectName(u"layoutWidget_15")
@@ -667,7 +663,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_bw.addWidget(self.lte_bw_groupBox)
 
-        self.nr_bw_groupBox = QGroupBox(self.widget)
+        self.nr_bw_groupBox = QGroupBox(self.widget4)
         self.nr_bw_groupBox.setObjectName(u"nr_bw_groupBox")
         self.layoutWidget_16 = QWidget(self.nr_bw_groupBox)
         self.layoutWidget_16.setObjectName(u"layoutWidget_16")
@@ -753,90 +749,90 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_bw.addWidget(self.nr_bw_groupBox)
 
-        self.ulca_lte_bw_groupBox = QGroupBox(self.widget)
+        self.ulca_lte_bw_groupBox = QGroupBox(self.widget4)
         self.ulca_lte_bw_groupBox.setObjectName(u"ulca_lte_bw_groupBox")
-        self.widget1 = QWidget(self.ulca_lte_bw_groupBox)
-        self.widget1.setObjectName(u"widget1")
-        self.widget1.setGeometry(QRect(11, 30, 231, 261))
-        self.gridLayout_lte_ulca = QGridLayout(self.widget1)
+        self.widget5 = QWidget(self.ulca_lte_bw_groupBox)
+        self.widget5.setObjectName(u"widget5")
+        self.widget5.setGeometry(QRect(11, 30, 231, 261))
+        self.gridLayout_lte_ulca = QGridLayout(self.widget5)
         self.gridLayout_lte_ulca.setObjectName(u"gridLayout_lte_ulca")
         self.gridLayout_lte_ulca.setContentsMargins(0, 0, 0, 0)
-        self.bw20_5 = QCheckBox(self.widget1)
+        self.bw20_5 = QCheckBox(self.widget5)
         self.bw20_5.setObjectName(u"bw20_5")
 
         self.gridLayout_lte_ulca.addWidget(self.bw20_5, 0, 0, 1, 1)
 
-        self.bw5_20 = QCheckBox(self.widget1)
+        self.bw5_20 = QCheckBox(self.widget5)
         self.bw5_20.setObjectName(u"bw5_20")
 
         self.gridLayout_lte_ulca.addWidget(self.bw5_20, 0, 1, 1, 1)
 
-        self.bw20_10 = QCheckBox(self.widget1)
+        self.bw20_10 = QCheckBox(self.widget5)
         self.bw20_10.setObjectName(u"bw20_10")
 
         self.gridLayout_lte_ulca.addWidget(self.bw20_10, 1, 0, 1, 1)
 
-        self.bw10_20 = QCheckBox(self.widget1)
+        self.bw10_20 = QCheckBox(self.widget5)
         self.bw10_20.setObjectName(u"bw10_20")
 
         self.gridLayout_lte_ulca.addWidget(self.bw10_20, 1, 1, 1, 1)
 
-        self.bw20_15 = QCheckBox(self.widget1)
+        self.bw20_15 = QCheckBox(self.widget5)
         self.bw20_15.setObjectName(u"bw20_15")
 
         self.gridLayout_lte_ulca.addWidget(self.bw20_15, 2, 0, 1, 1)
 
-        self.bw15_20 = QCheckBox(self.widget1)
+        self.bw15_20 = QCheckBox(self.widget5)
         self.bw15_20.setObjectName(u"bw15_20")
 
         self.gridLayout_lte_ulca.addWidget(self.bw15_20, 2, 1, 1, 1)
 
-        self.bw20_20 = QCheckBox(self.widget1)
+        self.bw20_20 = QCheckBox(self.widget5)
         self.bw20_20.setObjectName(u"bw20_20")
 
         self.gridLayout_lte_ulca.addWidget(self.bw20_20, 3, 0, 1, 1)
 
-        self.bw15_15 = QCheckBox(self.widget1)
+        self.bw15_15 = QCheckBox(self.widget5)
         self.bw15_15.setObjectName(u"bw15_15")
 
         self.gridLayout_lte_ulca.addWidget(self.bw15_15, 4, 0, 1, 1)
 
-        self.bw15_10 = QCheckBox(self.widget1)
+        self.bw15_10 = QCheckBox(self.widget5)
         self.bw15_10.setObjectName(u"bw15_10")
 
         self.gridLayout_lte_ulca.addWidget(self.bw15_10, 5, 0, 1, 1)
 
-        self.bw10_15 = QCheckBox(self.widget1)
+        self.bw10_15 = QCheckBox(self.widget5)
         self.bw10_15.setObjectName(u"bw10_15")
 
         self.gridLayout_lte_ulca.addWidget(self.bw10_15, 5, 1, 1, 1)
 
-        self.bw5_10 = QCheckBox(self.widget1)
+        self.bw5_10 = QCheckBox(self.widget5)
         self.bw5_10.setObjectName(u"bw5_10")
 
         self.gridLayout_lte_ulca.addWidget(self.bw5_10, 6, 0, 1, 1)
 
-        self.bw10_5 = QCheckBox(self.widget1)
+        self.bw10_5 = QCheckBox(self.widget5)
         self.bw10_5.setObjectName(u"bw10_5")
 
         self.gridLayout_lte_ulca.addWidget(self.bw10_5, 6, 1, 1, 1)
 
-        self.bw10_10 = QCheckBox(self.widget1)
+        self.bw10_10 = QCheckBox(self.widget5)
         self.bw10_10.setObjectName(u"bw10_10")
 
         self.gridLayout_lte_ulca.addWidget(self.bw10_10, 7, 0, 1, 1)
 
-        self.bw5_15 = QCheckBox(self.widget1)
+        self.bw5_15 = QCheckBox(self.widget5)
         self.bw5_15.setObjectName(u"bw5_15")
 
         self.gridLayout_lte_ulca.addWidget(self.bw5_15, 8, 0, 1, 1)
 
-        self.bw15_5 = QCheckBox(self.widget1)
+        self.bw15_5 = QCheckBox(self.widget5)
         self.bw15_5.setObjectName(u"bw15_5")
 
         self.gridLayout_lte_ulca.addWidget(self.bw15_5, 8, 1, 1, 1)
 
-        self.bw40 = QCheckBox(self.widget1)
+        self.bw40 = QCheckBox(self.widget5)
         self.bw40.setObjectName(u"bw40")
         self.bw40.setEnabled(False)
 
@@ -849,13 +845,13 @@ class Ui_MainWindow(object):
         self.mcs_rb = QWidget()
         self.mcs_rb.setObjectName(u"mcs_rb")
         self.mcs_rb.setEnabled(True)
-        self.widget2 = QWidget(self.mcs_rb)
-        self.widget2.setObjectName(u"widget2")
-        self.widget2.setGeometry(QRect(10, 11, 761, 691))
-        self.gridLayout = QGridLayout(self.widget2)
+        self.widget6 = QWidget(self.mcs_rb)
+        self.widget6.setObjectName(u"widget6")
+        self.widget6.setGeometry(QRect(10, 11, 761, 691))
+        self.gridLayout = QGridLayout(self.widget6)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.mcs_lte_group = QGroupBox(self.widget2)
+        self.mcs_lte_group = QGroupBox(self.widget6)
         self.mcs_lte_group.setObjectName(u"mcs_lte_group")
         self.layoutWidget_21 = QWidget(self.mcs_lte_group)
         self.layoutWidget_21.setObjectName(u"layoutWidget_21")
@@ -886,7 +882,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.mcs_lte_group, 0, 0, 1, 1)
 
-        self.mcs_nr_group = QGroupBox(self.widget2)
+        self.mcs_nr_group = QGroupBox(self.widget6)
         self.mcs_nr_group.setObjectName(u"mcs_nr_group")
         self.layoutWidget_22 = QWidget(self.mcs_nr_group)
         self.layoutWidget_22.setObjectName(u"layoutWidget_22")
@@ -922,18 +918,18 @@ class Ui_MainWindow(object):
         self.groupBox_type_nr = QGroupBox(self.mcs_nr_group)
         self.groupBox_type_nr.setObjectName(u"groupBox_type_nr")
         self.groupBox_type_nr.setGeometry(QRect(10, 160, 120, 91))
-        self.widget3 = QWidget(self.groupBox_type_nr)
-        self.widget3.setObjectName(u"widget3")
-        self.widget3.setGeometry(QRect(10, 30, 71, 48))
-        self.verticalLayout_type_nr = QVBoxLayout(self.widget3)
+        self.widget7 = QWidget(self.groupBox_type_nr)
+        self.widget7.setObjectName(u"widget7")
+        self.widget7.setGeometry(QRect(10, 30, 71, 48))
+        self.verticalLayout_type_nr = QVBoxLayout(self.widget7)
         self.verticalLayout_type_nr.setObjectName(u"verticalLayout_type_nr")
         self.verticalLayout_type_nr.setContentsMargins(0, 0, 0, 0)
-        self.dfts_nr = QCheckBox(self.widget3)
+        self.dfts_nr = QCheckBox(self.widget7)
         self.dfts_nr.setObjectName(u"dfts_nr")
 
         self.verticalLayout_type_nr.addWidget(self.dfts_nr)
 
-        self.cp_nr = QCheckBox(self.widget3)
+        self.cp_nr = QCheckBox(self.widget7)
         self.cp_nr.setObjectName(u"cp_nr")
 
         self.verticalLayout_type_nr.addWidget(self.cp_nr)
@@ -941,35 +937,35 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.mcs_nr_group, 0, 1, 1, 1)
 
-        self.rb_lte_group = QGroupBox(self.widget2)
+        self.rb_lte_group = QGroupBox(self.widget6)
         self.rb_lte_group.setObjectName(u"rb_lte_group")
-        self.widget4 = QWidget(self.rb_lte_group)
-        self.widget4.setObjectName(u"widget4")
-        self.widget4.setGeometry(QRect(10, 30, 77, 126))
-        self.verticalLayout_rb_lte = QVBoxLayout(self.widget4)
+        self.widget8 = QWidget(self.rb_lte_group)
+        self.widget8.setObjectName(u"widget8")
+        self.widget8.setGeometry(QRect(10, 30, 77, 126))
+        self.verticalLayout_rb_lte = QVBoxLayout(self.widget8)
         self.verticalLayout_rb_lte.setObjectName(u"verticalLayout_rb_lte")
         self.verticalLayout_rb_lte.setContentsMargins(0, 0, 0, 0)
-        self.prb0_lte = QCheckBox(self.widget4)
+        self.prb0_lte = QCheckBox(self.widget8)
         self.prb0_lte.setObjectName(u"prb0_lte")
 
         self.verticalLayout_rb_lte.addWidget(self.prb0_lte)
 
-        self.prbmax_lte = QCheckBox(self.widget4)
+        self.prbmax_lte = QCheckBox(self.widget8)
         self.prbmax_lte.setObjectName(u"prbmax_lte")
 
         self.verticalLayout_rb_lte.addWidget(self.prbmax_lte)
 
-        self.frb_lte = QCheckBox(self.widget4)
+        self.frb_lte = QCheckBox(self.widget8)
         self.frb_lte.setObjectName(u"frb_lte")
 
         self.verticalLayout_rb_lte.addWidget(self.frb_lte)
 
-        self.one_rb_0_lte = QCheckBox(self.widget4)
+        self.one_rb_0_lte = QCheckBox(self.widget8)
         self.one_rb_0_lte.setObjectName(u"one_rb_0_lte")
 
         self.verticalLayout_rb_lte.addWidget(self.one_rb_0_lte)
 
-        self.one_rb_max_lte = QCheckBox(self.widget4)
+        self.one_rb_max_lte = QCheckBox(self.widget8)
         self.one_rb_max_lte.setObjectName(u"one_rb_max_lte")
 
         self.verticalLayout_rb_lte.addWidget(self.one_rb_max_lte)
@@ -977,7 +973,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.rb_lte_group, 1, 0, 1, 1)
 
-        self.rb_nr_group = QGroupBox(self.widget2)
+        self.rb_nr_group = QGroupBox(self.widget6)
         self.rb_nr_group.setObjectName(u"rb_nr_group")
         self.layoutWidget_20 = QWidget(self.rb_nr_group)
         self.layoutWidget_20.setObjectName(u"layoutWidget_20")
@@ -1031,13 +1027,13 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.mcs_rb, "")
         self.temp_psu_tab = QWidget()
         self.temp_psu_tab.setObjectName(u"temp_psu_tab")
-        self.widget5 = QWidget(self.temp_psu_tab)
-        self.widget5.setObjectName(u"widget5")
-        self.widget5.setGeometry(QRect(10, 10, 761, 701))
-        self.horizontalLayout_5 = QHBoxLayout(self.widget5)
+        self.widget9 = QWidget(self.temp_psu_tab)
+        self.widget9.setObjectName(u"widget9")
+        self.widget9.setGeometry(QRect(10, 10, 761, 701))
+        self.horizontalLayout_5 = QHBoxLayout(self.widget9)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.temp_chamber_psu_groupBox = QGroupBox(self.widget5)
+        self.temp_chamber_psu_groupBox = QGroupBox(self.widget9)
         self.temp_chamber_psu_groupBox.setObjectName(u"temp_chamber_psu_groupBox")
         self.layoutWidget_28 = QWidget(self.temp_chamber_psu_groupBox)
         self.layoutWidget_28.setObjectName(u"layoutWidget_28")
@@ -1060,54 +1056,54 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_11.addWidget(self.off_tmpchmb_pushButton)
 
-        self.widget6 = QWidget(self.temp_chamber_psu_groupBox)
-        self.widget6.setObjectName(u"widget6")
-        self.widget6.setGeometry(QRect(10, 30, 131, 152))
-        self.verticalLayout_tmpchb_psu = QVBoxLayout(self.widget6)
+        self.widget10 = QWidget(self.temp_chamber_psu_groupBox)
+        self.widget10.setObjectName(u"widget10")
+        self.widget10.setGeometry(QRect(10, 30, 131, 152))
+        self.verticalLayout_tmpchb_psu = QVBoxLayout(self.widget10)
         self.verticalLayout_tmpchb_psu.setObjectName(u"verticalLayout_tmpchb_psu")
         self.verticalLayout_tmpchb_psu.setContentsMargins(0, 0, 0, 0)
-        self.tmpchmb_en = QCheckBox(self.widget6)
+        self.tmpchmb_en = QCheckBox(self.widget10)
         self.tmpchmb_en.setObjectName(u"tmpchmb_en")
 
         self.verticalLayout_tmpchb_psu.addWidget(self.tmpchmb_en)
 
-        self.hthv_en = QCheckBox(self.widget6)
+        self.hthv_en = QCheckBox(self.widget10)
         self.hthv_en.setObjectName(u"hthv_en")
 
         self.verticalLayout_tmpchb_psu.addWidget(self.hthv_en)
 
-        self.htlv_en = QCheckBox(self.widget6)
+        self.htlv_en = QCheckBox(self.widget10)
         self.htlv_en.setObjectName(u"htlv_en")
 
         self.verticalLayout_tmpchb_psu.addWidget(self.htlv_en)
 
-        self.ntnv_en = QCheckBox(self.widget6)
+        self.ntnv_en = QCheckBox(self.widget10)
         self.ntnv_en.setObjectName(u"ntnv_en")
 
         self.verticalLayout_tmpchb_psu.addWidget(self.ntnv_en)
 
-        self.lthv_en = QCheckBox(self.widget6)
+        self.lthv_en = QCheckBox(self.widget10)
         self.lthv_en.setObjectName(u"lthv_en")
 
         self.verticalLayout_tmpchb_psu.addWidget(self.lthv_en)
 
-        self.ltlv_en = QCheckBox(self.widget6)
+        self.ltlv_en = QCheckBox(self.widget10)
         self.ltlv_en.setObjectName(u"ltlv_en")
 
         self.verticalLayout_tmpchb_psu.addWidget(self.ltlv_en)
 
-        self.widget7 = QWidget(self.temp_chamber_psu_groupBox)
-        self.widget7.setObjectName(u"widget7")
-        self.widget7.setGeometry(QRect(10, 210, 131, 46))
-        self.verticalLayout_5 = QVBoxLayout(self.widget7)
+        self.widget11 = QWidget(self.temp_chamber_psu_groupBox)
+        self.widget11.setObjectName(u"widget11")
+        self.widget11.setGeometry(QRect(10, 210, 131, 46))
+        self.verticalLayout_5 = QVBoxLayout(self.widget11)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.wait_time_label = QLabel(self.widget7)
+        self.wait_time_label = QLabel(self.widget11)
         self.wait_time_label.setObjectName(u"wait_time_label")
 
         self.verticalLayout_5.addWidget(self.wait_time_label)
 
-        self.wait_time_comboBox = QComboBox(self.widget7)
+        self.wait_time_comboBox = QComboBox(self.widget11)
         self.wait_time_comboBox.addItem("")
         self.wait_time_comboBox.addItem("")
         self.wait_time_comboBox.addItem("")
@@ -1121,30 +1117,30 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.temp_chamber_psu_groupBox)
 
-        self.psu_groupBox = QGroupBox(self.widget5)
+        self.psu_groupBox = QGroupBox(self.widget9)
         self.psu_groupBox.setObjectName(u"psu_groupBox")
-        self.widget8 = QWidget(self.psu_groupBox)
-        self.widget8.setObjectName(u"widget8")
-        self.widget8.setGeometry(QRect(7, 30, 131, 100))
-        self.verticalLayout_6 = QVBoxLayout(self.widget8)
+        self.widget12 = QWidget(self.psu_groupBox)
+        self.widget12.setObjectName(u"widget12")
+        self.widget12.setGeometry(QRect(7, 30, 131, 100))
+        self.verticalLayout_6 = QVBoxLayout(self.widget12)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.psu_en = QCheckBox(self.widget8)
+        self.psu_en = QCheckBox(self.widget12)
         self.psu_en.setObjectName(u"psu_en")
 
         self.verticalLayout_6.addWidget(self.psu_en)
 
-        self.hv_en = QCheckBox(self.widget8)
+        self.hv_en = QCheckBox(self.widget12)
         self.hv_en.setObjectName(u"hv_en")
 
         self.verticalLayout_6.addWidget(self.hv_en)
 
-        self.nv_en = QCheckBox(self.widget8)
+        self.nv_en = QCheckBox(self.widget12)
         self.nv_en.setObjectName(u"nv_en")
 
         self.verticalLayout_6.addWidget(self.nv_en)
 
-        self.lv_en = QCheckBox(self.widget8)
+        self.lv_en = QCheckBox(self.widget12)
         self.lv_en.setObjectName(u"lv_en")
 
         self.verticalLayout_6.addWidget(self.lv_en)
@@ -1152,7 +1148,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.psu_groupBox)
 
-        self.odpm_groupBox = QGroupBox(self.widget5)
+        self.odpm_groupBox = QGroupBox(self.widget9)
         self.odpm_groupBox.setObjectName(u"odpm_groupBox")
         self.odpm2_en = QCheckBox(self.odpm_groupBox)
         self.odpm2_en.setObjectName(u"odpm2_en")
@@ -1160,7 +1156,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.odpm_groupBox)
 
-        self.count_groupBox = QGroupBox(self.widget5)
+        self.count_groupBox = QGroupBox(self.widget9)
         self.count_groupBox.setObjectName(u"count_groupBox")
         self.count_spinBox = QSpinBox(self.count_groupBox)
         self.count_spinBox.setObjectName(u"count_spinBox")
@@ -1172,22 +1168,22 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.count_groupBox)
 
-        self.temp_arg_groupBox = QGroupBox(self.widget5)
+        self.temp_arg_groupBox = QGroupBox(self.widget9)
         self.temp_arg_groupBox.setObjectName(u"temp_arg_groupBox")
-        self.widget9 = QWidget(self.temp_arg_groupBox)
-        self.widget9.setObjectName(u"widget9")
-        self.widget9.setGeometry(QRect(10, 30, 131, 296))
-        self.verticalLayout_temp_arg = QVBoxLayout(self.widget9)
+        self.widget13 = QWidget(self.temp_arg_groupBox)
+        self.widget13.setObjectName(u"widget13")
+        self.widget13.setGeometry(QRect(10, 30, 131, 296))
+        self.verticalLayout_temp_arg = QVBoxLayout(self.widget13)
         self.verticalLayout_temp_arg.setObjectName(u"verticalLayout_temp_arg")
         self.verticalLayout_temp_arg.setContentsMargins(0, 0, 0, 0)
-        self.ht_label = QLabel(self.widget9)
+        self.ht_label = QLabel(self.widget13)
         self.ht_label.setObjectName(u"ht_label")
         sizePolicy2.setHeightForWidth(self.ht_label.sizePolicy().hasHeightForWidth())
         self.ht_label.setSizePolicy(sizePolicy2)
 
         self.verticalLayout_temp_arg.addWidget(self.ht_label)
 
-        self.ht_spinBox = QSpinBox(self.widget9)
+        self.ht_spinBox = QSpinBox(self.widget13)
         self.ht_spinBox.setObjectName(u"ht_spinBox")
         self.ht_spinBox.setAlignment(Qt.AlignCenter)
         self.ht_spinBox.setMinimum(-20)
@@ -1196,14 +1192,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_temp_arg.addWidget(self.ht_spinBox)
 
-        self.nt_label = QLabel(self.widget9)
+        self.nt_label = QLabel(self.widget13)
         self.nt_label.setObjectName(u"nt_label")
         sizePolicy2.setHeightForWidth(self.nt_label.sizePolicy().hasHeightForWidth())
         self.nt_label.setSizePolicy(sizePolicy2)
 
         self.verticalLayout_temp_arg.addWidget(self.nt_label)
 
-        self.nt_spinBox = QSpinBox(self.widget9)
+        self.nt_spinBox = QSpinBox(self.widget13)
         self.nt_spinBox.setObjectName(u"nt_spinBox")
         self.nt_spinBox.setAlignment(Qt.AlignCenter)
         self.nt_spinBox.setMinimum(-20)
@@ -1212,14 +1208,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_temp_arg.addWidget(self.nt_spinBox)
 
-        self.lt_label = QLabel(self.widget9)
+        self.lt_label = QLabel(self.widget13)
         self.lt_label.setObjectName(u"lt_label")
         sizePolicy2.setHeightForWidth(self.lt_label.sizePolicy().hasHeightForWidth())
         self.lt_label.setSizePolicy(sizePolicy2)
 
         self.verticalLayout_temp_arg.addWidget(self.lt_label)
 
-        self.lt_spinBox = QSpinBox(self.widget9)
+        self.lt_spinBox = QSpinBox(self.widget13)
         self.lt_spinBox.setObjectName(u"lt_spinBox")
         self.lt_spinBox.setAlignment(Qt.AlignCenter)
         self.lt_spinBox.setMinimum(-10)
@@ -1228,14 +1224,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_temp_arg.addWidget(self.lt_spinBox)
 
-        self.hv_label = QLabel(self.widget9)
+        self.hv_label = QLabel(self.widget13)
         self.hv_label.setObjectName(u"hv_label")
         sizePolicy2.setHeightForWidth(self.hv_label.sizePolicy().hasHeightForWidth())
         self.hv_label.setSizePolicy(sizePolicy2)
 
         self.verticalLayout_temp_arg.addWidget(self.hv_label)
 
-        self.hv_doubleSpinBox = QDoubleSpinBox(self.widget9)
+        self.hv_doubleSpinBox = QDoubleSpinBox(self.widget13)
         self.hv_doubleSpinBox.setObjectName(u"hv_doubleSpinBox")
         self.hv_doubleSpinBox.setAlignment(Qt.AlignCenter)
         self.hv_doubleSpinBox.setMinimum(3.600000000000000)
@@ -1245,14 +1241,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_temp_arg.addWidget(self.hv_doubleSpinBox)
 
-        self.nv_label = QLabel(self.widget9)
+        self.nv_label = QLabel(self.widget13)
         self.nv_label.setObjectName(u"nv_label")
         sizePolicy2.setHeightForWidth(self.nv_label.sizePolicy().hasHeightForWidth())
         self.nv_label.setSizePolicy(sizePolicy2)
 
         self.verticalLayout_temp_arg.addWidget(self.nv_label)
 
-        self.nv_doubleSpinBox = QDoubleSpinBox(self.widget9)
+        self.nv_doubleSpinBox = QDoubleSpinBox(self.widget13)
         self.nv_doubleSpinBox.setObjectName(u"nv_doubleSpinBox")
         self.nv_doubleSpinBox.setAlignment(Qt.AlignCenter)
         self.nv_doubleSpinBox.setDecimals(2)
@@ -1263,14 +1259,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_temp_arg.addWidget(self.nv_doubleSpinBox)
 
-        self.lv_label = QLabel(self.widget9)
+        self.lv_label = QLabel(self.widget13)
         self.lv_label.setObjectName(u"lv_label")
         sizePolicy2.setHeightForWidth(self.lv_label.sizePolicy().hasHeightForWidth())
         self.lv_label.setSizePolicy(sizePolicy2)
 
         self.verticalLayout_temp_arg.addWidget(self.lv_label)
 
-        self.lv_doubleSpinBox = QDoubleSpinBox(self.widget9)
+        self.lv_doubleSpinBox = QDoubleSpinBox(self.widget13)
         self.lv_doubleSpinBox.setObjectName(u"lv_doubleSpinBox")
         self.lv_doubleSpinBox.setAlignment(Qt.AlignCenter)
         self.lv_doubleSpinBox.setMinimum(3.600000000000000)
@@ -1288,18 +1284,18 @@ class Ui_MainWindow(object):
         self.groupBox = QGroupBox(self.sig_extra_setting)
         self.groupBox.setObjectName(u"groupBox")
         self.groupBox.setGeometry(QRect(10, 10, 151, 131))
-        self.widget10 = QWidget(self.groupBox)
-        self.widget10.setObjectName(u"widget10")
-        self.widget10.setGeometry(QRect(10, 20, 131, 96))
-        self.verticalLayout_14 = QVBoxLayout(self.widget10)
+        self.widget14 = QWidget(self.groupBox)
+        self.widget14.setObjectName(u"widget14")
+        self.widget14.setGeometry(QRect(10, 20, 131, 96))
+        self.verticalLayout_14 = QVBoxLayout(self.widget14)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
         self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
-        self.inpur_level_sig_label = QLabel(self.widget10)
+        self.inpur_level_sig_label = QLabel(self.widget14)
         self.inpur_level_sig_label.setObjectName(u"inpur_level_sig_label")
 
         self.verticalLayout_14.addWidget(self.inpur_level_sig_label)
 
-        self.input_level_sig_anritsu_spinBox = QSpinBox(self.widget10)
+        self.input_level_sig_anritsu_spinBox = QSpinBox(self.widget14)
         self.input_level_sig_anritsu_spinBox.setObjectName(u"input_level_sig_anritsu_spinBox")
         self.input_level_sig_anritsu_spinBox.setAlignment(Qt.AlignCenter)
         self.input_level_sig_anritsu_spinBox.setMinimum(-10)
@@ -1308,12 +1304,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_14.addWidget(self.input_level_sig_anritsu_spinBox)
 
-        self.rfout_port_sig_label = QLabel(self.widget10)
+        self.rfout_port_sig_label = QLabel(self.widget14)
         self.rfout_port_sig_label.setObjectName(u"rfout_port_sig_label")
 
         self.verticalLayout_14.addWidget(self.rfout_port_sig_label)
 
-        self.rfout_port_sig_anritsu_comboBox = QComboBox(self.widget10)
+        self.rfout_port_sig_anritsu_comboBox = QComboBox(self.widget14)
         self.rfout_port_sig_anritsu_comboBox.addItem("")
         self.rfout_port_sig_anritsu_comboBox.addItem("")
         self.rfout_port_sig_anritsu_comboBox.setObjectName(u"rfout_port_sig_anritsu_comboBox")
@@ -1469,13 +1465,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_path_ue.setStretch(0, 4)
         self.verticalLayout_path_ue.setStretch(1, 1)
-        self.layoutWidget3 = QWidget(self.centralwidget)
-        self.layoutWidget3.setObjectName(u"layoutWidget3")
-        self.layoutWidget3.setGeometry(QRect(594, 0, 111, 741))
-        self.verticalLayout_tech_ch = QVBoxLayout(self.layoutWidget3)
+        self.layoutWidget = QWidget(self.centralwidget)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(594, 0, 111, 741))
+        self.verticalLayout_tech_ch = QVBoxLayout(self.layoutWidget)
         self.verticalLayout_tech_ch.setObjectName(u"verticalLayout_tech_ch")
         self.verticalLayout_tech_ch.setContentsMargins(0, 0, 0, 0)
-        self.tech_group = QGroupBox(self.layoutWidget3)
+        self.tech_group = QGroupBox(self.layoutWidget)
         self.tech_group.setObjectName(u"tech_group")
         self.layoutWidget_9 = QWidget(self.tech_group)
         self.layoutWidget_9.setObjectName(u"layoutWidget_9")
@@ -1524,25 +1520,25 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_tech_ch.addWidget(self.tech_group)
 
-        self.channel_group = QGroupBox(self.layoutWidget3)
+        self.channel_group = QGroupBox(self.layoutWidget)
         self.channel_group.setObjectName(u"channel_group")
-        self.layoutWidget4 = QWidget(self.channel_group)
-        self.layoutWidget4.setObjectName(u"layoutWidget4")
-        self.layoutWidget4.setGeometry(QRect(10, 30, 91, 81))
-        self.verticalLayout_ch = QVBoxLayout(self.layoutWidget4)
+        self.layoutWidget1 = QWidget(self.channel_group)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.layoutWidget1.setGeometry(QRect(10, 30, 91, 81))
+        self.verticalLayout_ch = QVBoxLayout(self.layoutWidget1)
         self.verticalLayout_ch.setObjectName(u"verticalLayout_ch")
         self.verticalLayout_ch.setContentsMargins(0, 0, 0, 0)
-        self.lch = QCheckBox(self.layoutWidget4)
+        self.lch = QCheckBox(self.layoutWidget1)
         self.lch.setObjectName(u"lch")
 
         self.verticalLayout_ch.addWidget(self.lch)
 
-        self.mch = QCheckBox(self.layoutWidget4)
+        self.mch = QCheckBox(self.layoutWidget1)
         self.mch.setObjectName(u"mch")
 
         self.verticalLayout_ch.addWidget(self.mch)
 
-        self.hch = QCheckBox(self.layoutWidget4)
+        self.hch = QCheckBox(self.layoutWidget1)
         self.hch.setObjectName(u"hch")
 
         self.verticalLayout_ch.addWidget(self.hch)
@@ -1749,13 +1745,13 @@ class Ui_MainWindow(object):
         self.general_sync = QWidget()
         self.general_sync.setObjectName(u"general_sync")
         self.general_sync.setGeometry(QRect(0, 0, 121, 331))
-        self.layoutWidget5 = QWidget(self.general_sync)
-        self.layoutWidget5.setObjectName(u"layoutWidget5")
-        self.layoutWidget5.setGeometry(QRect(0, -1, 121, 332))
-        self.verticalLayout_genre = QVBoxLayout(self.layoutWidget5)
+        self.layoutWidget2 = QWidget(self.general_sync)
+        self.layoutWidget2.setObjectName(u"layoutWidget2")
+        self.layoutWidget2.setGeometry(QRect(0, -1, 121, 332))
+        self.verticalLayout_genre = QVBoxLayout(self.layoutWidget2)
         self.verticalLayout_genre.setObjectName(u"verticalLayout_genre")
         self.verticalLayout_genre.setContentsMargins(0, 0, 0, 0)
-        self.sync_path_label = QLabel(self.layoutWidget5)
+        self.sync_path_label = QLabel(self.layoutWidget2)
         self.sync_path_label.setObjectName(u"sync_path_label")
         self.sync_path_label.setEnabled(True)
         sizePolicy2.setHeightForWidth(self.sync_path_label.sizePolicy().hasHeightForWidth())
@@ -1764,7 +1760,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.sync_path_label)
 
-        self.sync_path_comboBox = QComboBox(self.layoutWidget5)
+        self.sync_path_comboBox = QComboBox(self.layoutWidget2)
         self.sync_path_comboBox.addItem("")
         self.sync_path_comboBox.addItem("")
         self.sync_path_comboBox.addItem("")
@@ -1774,12 +1770,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.sync_path_comboBox)
 
-        self.as_path_en = QCheckBox(self.layoutWidget5)
+        self.as_path_en = QCheckBox(self.layoutWidget2)
         self.as_path_en.setObjectName(u"as_path_en")
 
         self.verticalLayout_genre.addWidget(self.as_path_en)
 
-        self.as_path_comboBox = QComboBox(self.layoutWidget5)
+        self.as_path_comboBox = QComboBox(self.layoutWidget2)
         self.as_path_comboBox.addItem("")
         self.as_path_comboBox.addItem("")
         self.as_path_comboBox.setObjectName(u"as_path_comboBox")
@@ -1788,13 +1784,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.as_path_comboBox)
 
-        self.srs_path_en = QCheckBox(self.layoutWidget5)
+        self.srs_path_en = QCheckBox(self.layoutWidget2)
         self.srs_path_en.setObjectName(u"srs_path_en")
         self.srs_path_en.setChecked(False)
 
         self.verticalLayout_genre.addWidget(self.srs_path_en)
 
-        self.srs_path_comboBox = QComboBox(self.layoutWidget5)
+        self.srs_path_comboBox = QComboBox(self.layoutWidget2)
         self.srs_path_comboBox.addItem("")
         self.srs_path_comboBox.addItem("")
         self.srs_path_comboBox.addItem("")
@@ -1805,7 +1801,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.srs_path_comboBox)
 
-        self.tx_level_nlw_label = QLabel(self.layoutWidget5)
+        self.tx_level_nlw_label = QLabel(self.layoutWidget2)
         self.tx_level_nlw_label.setObjectName(u"tx_level_nlw_label")
         sizePolicy2.setHeightForWidth(self.tx_level_nlw_label.sizePolicy().hasHeightForWidth())
         self.tx_level_nlw_label.setSizePolicy(sizePolicy2)
@@ -1813,7 +1809,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.tx_level_nlw_label)
 
-        self.tx_level_spinBox = QSpinBox(self.layoutWidget5)
+        self.tx_level_spinBox = QSpinBox(self.layoutWidget2)
         self.tx_level_spinBox.setObjectName(u"tx_level_spinBox")
         self.tx_level_spinBox.setAlignment(Qt.AlignCenter)
         self.tx_level_spinBox.setMaximum(30)
@@ -1821,7 +1817,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.tx_level_spinBox)
 
-        self.pcl_lb_label = QLabel(self.layoutWidget5)
+        self.pcl_lb_label = QLabel(self.layoutWidget2)
         self.pcl_lb_label.setObjectName(u"pcl_lb_label")
         sizePolicy2.setHeightForWidth(self.pcl_lb_label.sizePolicy().hasHeightForWidth())
         self.pcl_lb_label.setSizePolicy(sizePolicy2)
@@ -1829,7 +1825,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.pcl_lb_label)
 
-        self.pcl_lb_level_combo = QComboBox(self.layoutWidget5)
+        self.pcl_lb_level_combo = QComboBox(self.layoutWidget2)
         self.pcl_lb_level_combo.addItem("")
         self.pcl_lb_level_combo.addItem("")
         self.pcl_lb_level_combo.addItem("")
@@ -1850,7 +1846,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.pcl_lb_level_combo)
 
-        self.pcl_mb_label = QLabel(self.layoutWidget5)
+        self.pcl_mb_label = QLabel(self.layoutWidget2)
         self.pcl_mb_label.setObjectName(u"pcl_mb_label")
         sizePolicy2.setHeightForWidth(self.pcl_mb_label.sizePolicy().hasHeightForWidth())
         self.pcl_mb_label.setSizePolicy(sizePolicy2)
@@ -1858,7 +1854,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_genre.addWidget(self.pcl_mb_label)
 
-        self.pcl_mb_level_combo = QComboBox(self.layoutWidget5)
+        self.pcl_mb_level_combo = QComboBox(self.layoutWidget2)
         self.pcl_mb_level_combo.addItem("")
         self.pcl_mb_level_combo.addItem("")
         self.pcl_mb_level_combo.addItem("")
@@ -1882,13 +1878,13 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_gsm_mod = QHBoxLayout()
         self.horizontalLayout_gsm_mod.setObjectName(u"horizontalLayout_gsm_mod")
-        self.gmsk_radioButton = QRadioButton(self.layoutWidget5)
+        self.gmsk_radioButton = QRadioButton(self.layoutWidget2)
         self.gmsk_radioButton.setObjectName(u"gmsk_radioButton")
         self.gmsk_radioButton.setChecked(True)
 
         self.horizontalLayout_gsm_mod.addWidget(self.gmsk_radioButton)
 
-        self.epsk_radioButton = QRadioButton(self.layoutWidget5)
+        self.epsk_radioButton = QRadioButton(self.layoutWidget2)
         self.epsk_radioButton.setObjectName(u"epsk_radioButton")
         self.epsk_radioButton.setEnabled(True)
         self.epsk_radioButton.setCheckable(True)
@@ -2121,7 +2117,7 @@ class Ui_MainWindow(object):
 
         self.tabWidget.setCurrentIndex(0)
         self.bands_toolBox.setCurrentIndex(0)
-        self.txrx_path_toolBox.setCurrentIndex(1)
+        self.txrx_path_toolBox.setCurrentIndex(0)
         self.test_items_toolBox.setCurrentIndex(0)
         self.sync_path_toolBox.setCurrentIndex(0)
 

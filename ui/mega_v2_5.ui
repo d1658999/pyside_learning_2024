@@ -1835,7 +1835,7 @@
          <property name="title">
           <string>ODPM2</string>
          </property>
-         <widget class="QCheckBox" name="checkBox_11">
+         <widget class="QCheckBox" name="odpm2_en">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -1845,7 +1845,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>ODPM_en</string>
+           <string>ODPM2_en</string>
           </property>
          </widget>
         </widget>
@@ -2118,7 +2118,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="input_level_sig_spinBox">
+         <widget class="QSpinBox" name="input_level_sig_anritsu_spinBox">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
@@ -2141,7 +2141,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="rfout_port_sig_comboBox">
+         <widget class="QComboBox" name="rfout_port_sig_anritsu_comboBox">
           <item>
            <property name="text">
             <string>MAIN</string>
@@ -2268,7 +2268,7 @@ Disable</string>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tx_path">
          <property name="geometry">
@@ -2322,7 +2322,7 @@ Disable</string>
            <x>0</x>
            <y>0</y>
            <width>131</width>
-           <height>201</height>
+           <height>491</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3771,7 +3771,7 @@ Disable</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="freq_sweep_start_2">
+      <widget class="QLineEdit" name="cbe_margin">
        <property name="text">
         <string>1.5</string>
        </property>

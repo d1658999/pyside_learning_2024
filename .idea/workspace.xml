@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update test version v2_5 for endc lte">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_5 for temp odpm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/mega_v2_5.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/mega_v2_5.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui_mega_v2_5.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui_mega_v2_5.py" afterDir="false" />
     </list>
@@ -226,7 +227,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711804588963</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="update ui test version v2_5 for temp odpm">
+      <option name="closed" value="true" />
+      <created>1711814908490</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1711814908490</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -249,6 +258,7 @@
     <MESSAGE value="update ui" />
     <MESSAGE value="update test version v2_5" />
     <MESSAGE value="update test version v2_5 for endc lte" />
-    <option name="LAST_COMMIT_MESSAGE" value="update test version v2_5 for endc lte" />
+    <MESSAGE value="update ui test version v2_5 for temp odpm" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_5 for temp odpm" />
   </component>
 </project>

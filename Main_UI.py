@@ -24,20 +24,27 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         self.tx_port_endc_lte_comboBox.currentTextChanged.connect(self.tx_port_endc_lte_show)
         self.rx_endc_desense_ns.stateChanged.connect(self.tx_port_endc_lte_state)
         self.equipments_comboBox.textActivated.connect(self.showout_en)
-        self.run_button.clicked.connect(lambda _: print(f'NR bands: {self.nr_bands_show()}'))
-        self.run_button.clicked.connect(lambda _: print(f'LTE bands: {self.lte_bands_show()}'))
-        self.run_button.clicked.connect(lambda _: print(f'WCDMA bands: {self.wcdma_bands_show()}'))
-        self.run_button.clicked.connect(lambda _: print(f'GSM bands: {self.gsm_bands_show()}'))
-        self.run_button.clicked.connect(lambda _: print(f'ULCA bands: {self.ulca_lte_bands_show()}'))
+        self.run_button.clicked.connect(self.selected_show)
 
     def init_show(self):
         print(f'Equipment: {self.equipments_comboBox.currentText()}')
         print(f'Tx port: {self.tx_port_comboBox.currentText()}')
-        print(f'NR bands: {self.nr_bands_show()}')
-        print(f'LTE bands: {self.lte_bands_show()}')
-        print(f'WCDMA bands: {self.wcdma_bands_show()}')
-        print(f'GSM bands: {self.gsm_bands_show()}')
-        print(f'ULCA LTE bands: {self.ulca_lte_bands_show()}')
+        print(f'NR bands: {self.nr_bands_selected()}')
+        print(f'LTE bands: {self.lte_bands_selected()}')
+        print(f'WCDMA bands: {self.wcdma_bands_selected()}')
+        print(f'GSM bands: {self.gsm_bands_selected()}')
+        print(f'ULCA LTE bands: {self.ulca_lte_bands_selected()}')
+        print(f'NR BWs: {self.nr_bw_selected()}')
+        print(f'LTE BWs: {self.lte_bw_selected()}')
+        print(f'ULCA LTE BWs: {self.ulca_lte_bw_selected()}')
+        print(f'NR RB allocation: {self.nr_rb_allocation_selected()}')
+        print(f'NR TYPE: {self.nr_type_selected()}')
+        print(f'NR MCS: {self.nr_mcs_selected()}')
+        print(f'LTE RB allocation: {self.lte_rb_allocation_selected()}')
+        print(f'LTE MCS: {self.lte_mcs_selected()}')
+        print(f'ULCA LTE RB allocation: {self.ulca_lte_rb_allocation_selected()}')
+        print(f'ULCA LTE MCS: {self.lte_mcs_selected()}')
+        print(f'ULCA LTE criteria: {self.ulca_lte_critera_selected()}')
 
     def init_hidden(self):
         match self.equipments_comboBox.currentText():
@@ -68,6 +75,24 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
                 self.hsupa_tech.setChecked(False)
                 self.hsdpa_tech.setChecked(False)
 
+    def selected_show(self):
+        print(f'NR bands: {self.nr_bands_selected()}')
+        print(f'LTE bands: {self.lte_bands_selected()}')
+        print(f'WCDMA bands: {self.wcdma_bands_selected()}')
+        print(f'GSM bands: {self.gsm_bands_selected()}')
+        print(f'ULCA LTE bands: {self.ulca_lte_bands_selected()}')
+        print(f'NR BWs: {self.nr_bw_selected()}')
+        print(f'LTE BWs: {self.lte_bw_selected()}')
+        print(f'ULCA LTE BWs: {self.ulca_lte_bw_selected()}')
+        print(f'NR RB allocation: {self.nr_rb_allocation_selected()}')
+        print(f'NR TYPE: {self.nr_type_selected()}')
+        print(f'NR MCS: {self.nr_mcs_selected()}')
+        print(f'LTE RB allocation: {self.lte_rb_allocation_selected()}')
+        print(f'LTE MCS: {self.lte_mcs_selected()}')
+        print(f'ULCA LTE RB allocation: {self.ulca_lte_rb_allocation_selected()}')
+        print(f'ULCA LTE MCS: {self.lte_mcs_selected()}')
+        print(f'ULCA LTE criteria: {self.ulca_lte_critera_selected()}')
+
     def srs_unchecked(self, checked):
         # if self.as_path_en.isChecked():
         #     self.srs_path_en.setChecked(False)
@@ -79,12 +104,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         #     self.as_path_en.setChecked(False)
         if checked:
             self.as_path_en.setChecked(False)
-
-    def toolbox_index_set(self, state_dict):
-        self.bands_toolBox.setCurrentIndex(state_dict['bands_toolBox_index'])
-        self.sync_path_toolBox.setCurrentIndex(state_dict['sync_path_toolBox_index'])
-        self.txrx_path_toolBox.setCurrentIndex(state_dict['txrx_path_toolBox_index'])
-        self.tabWidget.setCurrentIndex((state_dict['tabWidget_index']))
 
     def gui_state_get(self, state_dict):
         state_dict['equipment'] = self.equipments_comboBox.currentText()
@@ -657,7 +676,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
     def equipment_show(self):
         print(f'Equipment: {self.equipments_comboBox.currentText()}')
 
-    def nr_bands_show(self):
+    def nr_bands_selected(self):
         nr_bands_list = []
         if self.n5_nr.isChecked():
             nr_bands_list.append(5)
@@ -732,7 +751,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
 
         # print(f'NR bands: {nr_bands_list}')
         return nr_bands_list
-    def lte_bands_show(self):
+    def lte_bands_selected(self):
         lte_bands_list = []
         if self.b5_lte.isChecked():
             lte_bands_list.append(5)
@@ -802,7 +821,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         # print(f'LTE bands: {lte_bands_list}')
         return lte_bands_list
 
-    def wcdma_bands_show(self):
+    def wcdma_bands_selected(self):
         wcdma_bands_list = []
         if self.b5_wcdma.isChecked():
             wcdma_bands_list.append(5)
@@ -822,7 +841,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         # print(f'WCDMA bands: {wcdma_bands_list}')
         return wcdma_bands_list
 
-    def gsm_bands_show(self):
+    def gsm_bands_selected(self):
         gsm_bands_list = []
         if self.gsm850.isChecked():
             gsm_bands_list.append(850)
@@ -836,7 +855,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         # print(f'GSM bands: {gsm_bands_list}')
         return gsm_bands_list
 
-    def ulca_lte_bands_show(self):
+    def ulca_lte_bands_selected(self):
         ulca_lte_bands_list = []
         if self.ulca_5b.isChecked():
             ulca_lte_bands_list.append('5b')
@@ -864,14 +883,190 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         # print(f'ULCA LTE bands: {ulca_lte_bands_list}')
         return ulca_lte_bands_list
 
-    def bw_nr_show(self):
-        pass
+    def nr_bw_selected(self):
+        bw_nr_list = []
+        if self.bw5_nr.isChecked():
+            bw_nr_list.append(5)
+        if self.bw10_nr.isChecked():
+            bw_nr_list.append(10)
+        if self.bw15_nr.isChecked():
+            bw_nr_list.append(15)
+        if self.bw20_nr.isChecked():
+            bw_nr_list.append(20)
+        if self.bw25_nr.isChecked():
+            bw_nr_list.append(25)
+        if self.bw30_nr.isChecked():
+            bw_nr_list.append(30)
+        if self.bw40_nr.isChecked():
+            bw_nr_list.append(40)
+        if self.bw50_nr.isChecked():
+            bw_nr_list.append(50)
+        if self.bw60_nr.isChecked():
+            bw_nr_list.append(60)
+        if self.bw80_nr.isChecked():
+            bw_nr_list.append(80)
+        if self.bw90_nr.isChecked():
+            bw_nr_list.append(90)
+        if self.bw100_nr.isChecked():
+            bw_nr_list.append(100)
+        if self.bw70_nr.isChecked():
+            bw_nr_list.append(70)
+        if self.bw35_nr.isChecked():
+            bw_nr_list.append(35)
+        if self.bw45_nr.isChecked():
+            bw_nr_list.append(45)
 
-    def bw_lte_show(self):
-        pass
+        return bw_nr_list
 
-    def bw_ulca_lte_show(self):
-        pass
+    def lte_bw_selected(self):
+        bw_lte_list = []
+        if self.bw1p4_lte.isChecked():
+            bw_lte_list.append(1.4)
+        if self.bw3_lte.isChecked():
+            bw_lte_list.append(3)
+        if self.bw5_lte.isChecked():
+            bw_lte_list.append(5)
+        if self.bw10_lte.isChecked():
+            bw_lte_list.append(10)
+        if self.bw15_lte.isChecked():
+            bw_lte_list.append(15)
+        if self.bw20_lte.isChecked():
+            bw_lte_list.append(20)
+
+        return bw_lte_list
+
+    def ulca_lte_bw_selected(self):
+        bw_ulca_lte_list = []
+        if self.bw20_5.isChecked():
+            bw_ulca_lte_list.append('20+5')
+        if self.bw5_20.isChecked():
+            bw_ulca_lte_list.append('5+20')
+        if self.bw20_10.isChecked():
+            bw_ulca_lte_list.append('20+10')
+        if self.bw10_20.isChecked():
+            bw_ulca_lte_list.append('10+20')
+        if self.bw20_15.isChecked():
+            bw_ulca_lte_list.append('20+15')
+        if self.bw15_20.isChecked():
+            bw_ulca_lte_list.append('15+20')
+        if self.bw20_20.isChecked():
+            bw_ulca_lte_list.append('20+20')
+        if self.bw15_15.isChecked():
+            bw_ulca_lte_list.append('15+15')
+        if self.bw15_10.isChecked():
+            bw_ulca_lte_list.append('15+10')
+        if self.bw10_15.isChecked():
+            bw_ulca_lte_list.append('10+5')
+        if self.bw5_10.isChecked():
+            bw_ulca_lte_list.append('5+10')
+        if self.bw10_5.isChecked():
+            bw_ulca_lte_list.append('10+5')
+        if self.bw10_10.isChecked():
+            bw_ulca_lte_list.append('10+10')
+        if self.bw5_15.isChecked():
+            bw_ulca_lte_list.append('5+15')
+        if self.bw15_5.isChecked():
+            bw_ulca_lte_list.append('15+5')
+        if self.bw40.isChecked():
+            bw_ulca_lte_list.append('40')
+
+        return bw_ulca_lte_list
+
+    def nr_mcs_selected(self):
+        mcs_nr_list = []
+        if self.qpsk_nr.isChecked():
+            mcs_nr_list.append('QPSK')
+        if self.q16_nr.isChecked():
+            mcs_nr_list.append('Q16')
+        if self.q64_nr.isChecked():
+            mcs_nr_list.append('Q64')
+        if self.q256_nr.isChecked():
+            mcs_nr_list.append('Q256')
+        if self.bpsk_nr.isChecked():
+            mcs_nr_list.append('BPSK')
+
+        return mcs_nr_list
+
+    def nr_type_selected(self):
+        type_nr_list = []
+        if self.dfts_nr.isChecked():
+            type_nr_list.append('DFTS')
+        if self.cp_nr.isChecked():
+            type_nr_list.append('CP')
+
+        return type_nr_list
+
+    def lte_mcs_selected(self):
+        mcs_lte_list = []
+        if self.qpsk_lte.isChecked():
+            mcs_lte_list.append('QPSK')
+        if self.q16_lte.isChecked():
+            mcs_lte_list.append('Q16')
+        if self.q64_lte.isChecked():
+            mcs_lte_list.append('Q64')
+        if self.q256_lte.isChecked():
+            mcs_lte_list.append('Q256')
+
+        return mcs_lte_list
+
+    def nr_rb_allocation_selected(self):
+        allocation_nr_list = []
+        if self.inner_full_nr.isChecked():
+            allocation_nr_list.append('INNER_FULL')
+        if self.outer_full_nr.isChecked():
+            allocation_nr_list.append('OUTER_FULL')
+        if self.inner_1rb_left_nr.isChecked():
+            allocation_nr_list.append('INNER_1RB_LEFT')
+        if self.inner_1rb_right_nr.isChecked():
+            allocation_nr_list.append('INNER_1RB_RIGHT')
+        if self.edge_1rb_left_nr.isChecked():
+            allocation_nr_list.append('EDGE_1RB_LEFT')
+        if self.edge_1rb_right_nr.isChecked():
+            allocation_nr_list.append('EDGE_1RB_RIGHT')
+        if self.edge_full_left_nr.isChecked():
+            allocation_nr_list.append('EDGE_FULL_LEFT')
+        if self.edge_full_right_nr.isChecked():
+            allocation_nr_list.append('EDGE_FULL_RIGHT')
+
+        return allocation_nr_list
+
+    def lte_rb_allocation_selected(self):
+        allocation_lte_list = []
+        if self.prb0_lte.isChecked():
+            allocation_lte_list.append('PRB_0')
+        if self.prb0_lte.isChecked():
+            allocation_lte_list.append('PRB_MAX')
+        if self.prb0_lte.isChecked():
+            allocation_lte_list.append('FRB')
+        if self.prb0_lte.isChecked():
+            allocation_lte_list.append('1RB_0')
+        if self.prb0_lte.isChecked():
+            allocation_lte_list.append('1RB_MAX')
+
+        return allocation_lte_list
+
+    def ulca_lte_rb_allocation_selected(self):
+        allocation_ulca_lte_list = []
+        if self.one_rb0_null.isChecked():
+            allocation_ulca_lte_list.append('1PRB_N')
+        if self.prb0_null.isChecked():
+            allocation_ulca_lte_list.append('PRB_N')
+        if self.frb_null.isChecked():
+            allocation_ulca_lte_list.append('FRB_N')
+        if self.frb_frb.isChecked():
+            allocation_ulca_lte_list.append('FRB_FRB')
+        if self.one_rb0_one_rbmax.isChecked():
+            allocation_ulca_lte_list.append('1RB0_1RBmax')
+        if self.one_rbmax_one_rb0.isChecked():
+            allocation_ulca_lte_list.append('1RBmax_1RB0')
+
+        return allocation_ulca_lte_list
+
+    def ulca_lte_critera_selected(self):
+        if self.criteria_ulca_lte_fcc_radioButton.isChecked():
+            return 'FCC'
+        elif self.criteria_ulca_lte_3gpp_radioButton.isChecked():
+            return '3GPP'
 
     def run(self):
         print('run')

@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_7">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_7 for bands show">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/mega_v2_7.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/mega_v2_7.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711964344571</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="update ui test version v2_7 for bands show">
+      <option name="closed" value="true" />
+      <created>1711970009153</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1711970009153</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -284,6 +293,7 @@
     <MESSAGE value="update ui test version v2_5 for signaling tab" />
     <MESSAGE value="update ui test version v2_6 and Main_UI.py for gui state set/get, next step to add ULCA LTE band combo" />
     <MESSAGE value="update ui test version v2_7" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_7" />
+    <MESSAGE value="update ui test version v2_7 for bands show" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_7 for bands show" />
   </component>
 </project>

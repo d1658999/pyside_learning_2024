@@ -1317,7 +1317,7 @@ class Ui_MainWindow(object):
         self.odpm_groupBox.setObjectName(u"odpm_groupBox")
         self.odpm2_en = QCheckBox(self.odpm_groupBox)
         self.odpm2_en.setObjectName(u"odpm2_en")
-        self.odpm2_en.setGeometry(QRect(10, 30, 76, 20))
+        self.odpm2_en.setGeometry(QRect(10, 30, 101, 20))
 
         self.horizontalLayout_5.addWidget(self.odpm_groupBox)
 

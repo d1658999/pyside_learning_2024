@@ -24,10 +24,20 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         self.tx_port_endc_lte_comboBox.currentTextChanged.connect(self.tx_port_endc_lte_show)
         self.rx_endc_desense_ns.stateChanged.connect(self.tx_port_endc_lte_state)
         self.equipments_comboBox.textActivated.connect(self.showout_en)
+        self.run_button.clicked.connect(lambda _: print(f'NR bands: {self.nr_bands_show()}'))
+        self.run_button.clicked.connect(lambda _: print(f'LTE bands: {self.lte_bands_show()}'))
+        self.run_button.clicked.connect(lambda _: print(f'WCDMA bands: {self.wcdma_bands_show()}'))
+        self.run_button.clicked.connect(lambda _: print(f'GSM bands: {self.gsm_bands_show()}'))
+        self.run_button.clicked.connect(lambda _: print(f'ULCA bands: {self.ulca_lte_bands_show()}'))
 
     def init_show(self):
         print(f'Equipment: {self.equipments_comboBox.currentText()}')
         print(f'Tx port: {self.tx_port_comboBox.currentText()}')
+        print(f'NR bands: {self.nr_bands_show()}')
+        print(f'LTE bands: {self.lte_bands_show()}')
+        print(f'WCDMA bands: {self.wcdma_bands_show()}')
+        print(f'GSM bands: {self.gsm_bands_show()}')
+        print(f'ULCA LTE bands: {self.ulca_lte_bands_show()}')
 
     def init_hidden(self):
         match self.equipments_comboBox.currentText():
@@ -335,8 +345,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         return state_dict
 
     def gui_state_set(self, state_dict):
-        self.tabWidget.setCurrentIndex(state_dict['tabWidget'])
-
         self.equipments_comboBox.setCurrentText(state_dict['equipment'])
         self.port_table_en.setChecked(state_dict['tx_port_table_en'])
         self.tx_port_comboBox.setCurrentText(state_dict['tx_port'])
@@ -648,6 +656,222 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
 
     def equipment_show(self):
         print(f'Equipment: {self.equipments_comboBox.currentText()}')
+
+    def nr_bands_show(self):
+        nr_bands_list = []
+        if self.n5_nr.isChecked():
+            nr_bands_list.append(5)
+        if self.n8_nr.isChecked():
+            nr_bands_list.append(8)
+        if self.n12_nr.isChecked():
+            nr_bands_list.append(12)
+        if self.n13_nr.isChecked():
+            nr_bands_list.append(13)
+        if self.n14_nr.isChecked():
+            nr_bands_list.append(14)
+        if self.n20_nr.isChecked():
+            nr_bands_list.append(20)
+        if self.n24_nr.isChecked():
+            nr_bands_list.append(24)
+        if self.n26_nr.isChecked():
+            nr_bands_list.append(26)
+        if self.n71_nr.isChecked():
+            nr_bands_list.append(71)
+        if self.n28_a_nr.isChecked():
+            nr_bands_list.append('28_a')
+        if self.n28_b_nr.isChecked():
+            nr_bands_list.append('28_b')
+        if self.n29_nr.isChecked():
+            nr_bands_list.append(29)
+        if self.n32_nr.isChecked():
+            nr_bands_list.append(32)
+        if self.n1_nr.isChecked():
+            nr_bands_list.append(1)
+        if self.n2_nr.isChecked():
+            nr_bands_list.append(2)
+        if self.n3_nr.isChecked():
+            nr_bands_list.append(3)
+        if self.n4_nr.isChecked():
+            nr_bands_list.append(4)
+        if self.n7_nr.isChecked():
+            nr_bands_list.append(7)
+        if self.n30_nr.isChecked():
+            nr_bands_list.append(30)
+        if self.n25_nr.isChecked():
+            nr_bands_list.append(25)
+        if self.n66_nr.isChecked():
+            nr_bands_list.append(66)
+        if self.n70_nr.isChecked():
+            nr_bands_list.append(70)
+        if self.n39_nr.isChecked():
+            nr_bands_list.append(39)
+        if self.n40_nr.isChecked():
+            nr_bands_list.append(40)
+        if self.n38_nr.isChecked():
+            nr_bands_list.append(38)
+        if self.n41_nr.isChecked():
+            nr_bands_list.append(41)
+        if self.n34_nr.isChecked():
+            nr_bands_list.append(34)
+        if self.n75_nr.isChecked():
+            nr_bands_list.append(75)
+        if self.n76_nr.isChecked():
+            nr_bands_list.append(76)
+        if self.n255_nr.isChecked():
+            nr_bands_list.append(255)
+        if self.n256_nr.isChecked():
+            nr_bands_list.append(256)
+        if self.n48_nr.isChecked():
+            nr_bands_list.append(48)
+        if self.n77_nr.isChecked():
+            nr_bands_list.append(77)
+        if self.n78_nr.isChecked():
+            nr_bands_list.append(78)
+        if self.n79_nr.isChecked():
+            nr_bands_list.append(79)
+
+        # print(f'NR bands: {nr_bands_list}')
+        return nr_bands_list
+    def lte_bands_show(self):
+        lte_bands_list = []
+        if self.b5_lte.isChecked():
+            lte_bands_list.append(5)
+        if self.b8_lte.isChecked():
+            lte_bands_list.append(8)
+        if self.b12_lte.isChecked():
+            lte_bands_list.append(12)
+        if self.b13_lte.isChecked():
+            lte_bands_list.append(13)
+        if self.b14_lte.isChecked():
+            lte_bands_list.append(14)
+        if self.b17_lte.isChecked():
+            lte_bands_list.append(17)
+        if self.b18_lte.isChecked():
+            lte_bands_list.append(18)
+        if self.b19_lte.isChecked():
+            lte_bands_list.append(19)
+        if self.b20_lte.isChecked():
+            lte_bands_list.append(20)
+        if self.b26_lte.isChecked():
+            lte_bands_list.append(26)
+        if self.b28_a_lte.isChecked():
+            lte_bands_list.append('28_a')
+        if self.b28_b_lte.isChecked():
+            lte_bands_list.append('28_b')
+        if self.b29_lte.isChecked():
+            lte_bands_list.append(29)
+        if self.b32_lte.isChecked():
+            lte_bands_list.append(32)
+        if self.b71_lte.isChecked():
+            lte_bands_list.append(71)
+        if self.b24_lte.isChecked():
+            lte_bands_list.append(24)
+        if self.b1_lte.isChecked():
+            lte_bands_list.append(1)
+        if self.b2_lte.isChecked():
+            lte_bands_list.append(2)
+        if self.b3_lte.isChecked():
+            lte_bands_list.append(3)
+        if self.b4_lte.isChecked():
+            lte_bands_list.append(4)
+        if self.b7_lte.isChecked():
+            lte_bands_list.append(7)
+        if self.b30_lte.isChecked():
+            lte_bands_list.append(30)
+        if self.b25_lte.isChecked():
+            lte_bands_list.append(25)
+        if self.b66_lte.isChecked():
+            lte_bands_list.append(66)
+        if self.b21_lte.isChecked():
+            lte_bands_list.append(21)
+        if self.b39_lte.isChecked():
+            lte_bands_list.append(39)
+        if self.b40_lte.isChecked():
+            lte_bands_list.append(40)
+        if self.b38_lte.isChecked():
+            lte_bands_list.append(38)
+        if self.b41_lte.isChecked():
+            lte_bands_list.append(41)
+        if self.b23_lte.isChecked():
+            lte_bands_list.append(23)
+        if self.b42_lte.isChecked():
+            lte_bands_list.append(42)
+        if self.b48_lte.isChecked():
+            lte_bands_list.append(48)
+
+        # print(f'LTE bands: {lte_bands_list}')
+        return lte_bands_list
+
+    def wcdma_bands_show(self):
+        wcdma_bands_list = []
+        if self.b5_wcdma.isChecked():
+            wcdma_bands_list.append(5)
+        if self.b8_wcdma.isChecked():
+            wcdma_bands_list.append(8)
+        if self.b6_wcdma.isChecked():
+            wcdma_bands_list.append(6)
+        if self.b19_wcdma.isChecked():
+            wcdma_bands_list.append(19)
+        if self.b1_wcdma.isChecked():
+            wcdma_bands_list.append(1)
+        if self.b2_wcdma.isChecked():
+            wcdma_bands_list.append(2)
+        if self.b4_wcdma.isChecked():
+            wcdma_bands_list.append(4)
+
+        # print(f'WCDMA bands: {wcdma_bands_list}')
+        return wcdma_bands_list
+
+    def gsm_bands_show(self):
+        gsm_bands_list = []
+        if self.gsm850.isChecked():
+            gsm_bands_list.append(850)
+        if self.gsm900.isChecked():
+            gsm_bands_list.append(900)
+        if self.gsm1800.isChecked():
+            gsm_bands_list.append(1800)
+        if self.gsm1900.isChecked():
+            gsm_bands_list.append(1900)
+
+        # print(f'GSM bands: {gsm_bands_list}')
+        return gsm_bands_list
+
+    def ulca_lte_bands_show(self):
+        ulca_lte_bands_list = []
+        if self.ulca_5b.isChecked():
+            ulca_lte_bands_list.append('5b')
+        if self.ulca_1c.isChecked():
+            ulca_lte_bands_list.append('1c')
+        if self.ulca_3c.isChecked():
+            ulca_lte_bands_list.append('3c')
+        if self.ulca_7c.isChecked():
+            ulca_lte_bands_list.append('7c')
+        if self.ulca_66b.isChecked():
+            ulca_lte_bands_list.append('66b')
+        if self.ulca_66c.isChecked():
+            ulca_lte_bands_list.append('66c')
+        if self.ulca_40c.isChecked():
+            ulca_lte_bands_list.append('40c')
+        if self.ulca_38c.isChecked():
+            ulca_lte_bands_list.append('38c')
+        if self.ulca_41c.isChecked():
+            ulca_lte_bands_list.append('41c')
+        if self.ulca_42c.isChecked():
+            ulca_lte_bands_list.append('42c')
+        if self.ulca_48c.isChecked():
+            ulca_lte_bands_list.append('48c')
+
+        # print(f'ULCA LTE bands: {ulca_lte_bands_list}')
+        return ulca_lte_bands_list
+
+    def bw_nr_show(self):
+        pass
+
+    def bw_lte_show(self):
+        pass
+
+    def bw_ulca_lte_show(self):
+        pass
 
     def run(self):
         print('run')

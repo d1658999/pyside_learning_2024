@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_6 and Main_UI.py for gui state set/get, next step to add ULCA LTE band combo">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_7">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
     </list>
@@ -249,7 +249,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711893675067</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="update ui test version v2_7">
+      <option name="closed" value="true" />
+      <created>1711964344571</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1711964344571</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -275,6 +283,7 @@
     <MESSAGE value="update ui test version v2_5 for temp odpm" />
     <MESSAGE value="update ui test version v2_5 for signaling tab" />
     <MESSAGE value="update ui test version v2_6 and Main_UI.py for gui state set/get, next step to add ULCA LTE band combo" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_6 and Main_UI.py for gui state set/get, next step to add ULCA LTE band combo" />
+    <MESSAGE value="update ui test version v2_7" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_7" />
   </component>
 </project>

@@ -1,22 +1,24 @@
 from PySide6.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, QStyleFactory, QFileDialog
 from PySide6.QtCore import QThread, Slot, QSize
 import sys
+import time
+import threading
 
 from ui_mega_v2_7 import Ui_MainWindow
 
-
-class MainWindow(QMainWindow, Ui_MainWindow, QThread):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
         self.init_show()
         self.init_hidden()
         self.custom_signal_slot()
+        self.measured_counts = None
 
     def custom_signal_slot(self):
         self.as_path_en.toggled.connect(self.srs_unchecked)
         self.srs_path_en.toggled.connect(self.as_unchecked)
-        self.run_button.clicked.connect(self.run)
+        self.run_button.clicked.connect(self.run_start)
         self.therm_charge_dis_button.clicked.connect(self.therm_charge_dis)
         self.stop_button.clicked.connect(self.stop)
         self.equipments_comboBox.currentTextChanged.connect(self.equipment_show)
@@ -128,7 +130,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         state_dict['tx_ulca_lte_cbe_ns'] = self.tx_ulca_lte_cbe_ns.isChecked()
         state_dict['rx_normal_ns'] = self.rx_normal_ns.isChecked()
         state_dict['rx_quick_ns'] = self.rx_quick_ns.isChecked()
-        state_dict['rx_endc_desense'] = self.rx_endc_desense_ns.isChecked()
+        state_dict['rx_endc_desense_ns'] = self.rx_endc_desense_ns.isChecked()
         state_dict['tx_lmh_s'] = self.tx_lmh_s.isChecked()
         state_dict['rx_normal_s'] = self.rx_normal_s.isChecked()
         state_dict['rxs_sweep_s'] = self.rxs_sweep_s.isChecked()
@@ -386,7 +388,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         self.tx_ulca_lte_cbe_ns.setChecked(state_dict['tx_ulca_lte_cbe_ns'])
         self.rx_normal_ns.setChecked(state_dict['rx_normal_ns'])
         self.rx_quick_ns.setChecked(state_dict['rx_quick_ns'])
-        self.rx_endc_desense_ns.setChecked(state_dict['rx_endc_desense'])
+        self.rx_endc_desense_ns.setChecked(state_dict['rx_endc_desense_ns'])
         self.tx_lmh_s.setChecked(state_dict['tx_lmh_s'])
         self.rx_normal_s.setChecked(state_dict['rx_normal_s'])
         self.rxs_sweep_s.setChecked(state_dict['rxs_sweep_s'])
@@ -751,6 +753,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
 
         # print(f'NR bands: {nr_bands_list}')
         return nr_bands_list
+
     def lte_bands_selected(self):
         lte_bands_list = []
         if self.b5_lte.isChecked():
@@ -1068,8 +1071,73 @@ class MainWindow(QMainWindow, Ui_MainWindow, QThread):
         elif self.criteria_ulca_lte_3gpp_radioButton.isChecked():
             return '3GPP'
 
-    def run(self):
+    def measure(self):
+        self.run_button.setEnabled(False)
+        # self.progressBar.setMaximum(78)
+        # for i in range(78):
+        #     print(i)
+        #     self.progressBar.setValue(i+1)
+        #     time.sleep(1)
+        self.measure_base()
+        self.run_button.setEnabled(True)
+
+    def measure_base(self, state_dict=None):
+        print('measure...')
+        # match state_dict['equipment']:
+        #     case 'Cmw100':
+        #         # import somthing
+        #         if state_dict['tx_lmh_ns']:
+        #             ...
+        #         if state_dict['tx_level_sweep_ns']:
+        #             ...
+        #         if state_dict['tx_freq_sweep_ns']:
+        #             ...
+        #         if state_dict['tx_1rb_sweep_ns']:
+        #             ...
+        #         if state_dict['tx_fcc_power_ns']:
+        #             ...
+        #         if state_dict['tx_ce_power_ns']:
+        #             ...
+        #
+        #         if state_dict['tx_ulca_lte_ns']:
+        #             ...
+        #         if state_dict['rx_normal_ns']:
+        #             ...
+        #         if state_dict['rx_quick_ns']:
+        #             ...
+        #         if state_dict['rx_endc_desense_ns']:
+        #             ...
+        #
+        #     case 'Cmw100+Fsw':
+        #         # import somthing
+        #         if state_dict['tx_harmonics_ns']:
+        #             ...
+        #         if state_dict['tx_cbe_ns']:
+        #             ...
+        #         if state_dict['tx_ulca_lte_cbe_ns']:
+        #             ...
+        #
+        #     case 'Anritsu8820':
+        #         # import somthing
+        #         if state_dict['tx_lmh_s']:
+        #             ...
+        #         if state_dict['rx_normal_s']:
+        #             ...
+        #         if state_dict['rxs_sweep_s']:
+        #             ...
+        #     case 'Anritsu8821':
+        #         # import somthing
+        #         if state_dict['tx_lmh_s']:
+        #             ...
+        #         if state_dict['rx_normal_s']:
+        #             ...
+        #         if state_dict['rxs_sweep_s']:
+        #             ...
+
+    def run_start(self):
         print('run')
+        t = threading.Thread(target=self.measure, daemon=True)
+        t.start()
 
     def therm_charge_dis(self):
         print('therm dis')

@@ -19,9 +19,10 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox,
     QFrame, QGridLayout, QGroupBox, QHBoxLayout,
     QLabel, QLayout, QLineEdit, QMainWindow,
-    QMenu, QMenuBar, QPushButton, QRadioButton,
-    QSizePolicy, QSpacerItem, QSpinBox, QStatusBar,
-    QTabWidget, QToolBox, QVBoxLayout, QWidget)
+    QMenu, QMenuBar, QProgressBar, QPushButton,
+    QRadioButton, QSizePolicy, QSpacerItem, QSpinBox,
+    QStatusBar, QTabWidget, QToolBox, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -1494,6 +1495,13 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.verticalLayout.setContentsMargins(9, 9, 9, 9)
+        self.progressBar = QProgressBar(self.frame_button)
+        self.progressBar.setObjectName(u"progressBar")
+        self.progressBar.setValue(0)
+        self.progressBar.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout.addWidget(self.progressBar)
+
         self.therm_charge_dis_button = QPushButton(self.frame_button)
         self.therm_charge_dis_button.setObjectName(u"therm_charge_dis_button")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
@@ -1506,6 +1514,7 @@ class Ui_MainWindow(object):
 
         self.run_button = QPushButton(self.frame_button)
         self.run_button.setObjectName(u"run_button")
+        self.run_button.setEnabled(True)
         sizePolicy3.setHeightForWidth(self.run_button.sizePolicy().hasHeightForWidth())
         self.run_button.setSizePolicy(sizePolicy3)
 
@@ -1518,9 +1527,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.stop_button)
 
-        self.verticalLayout.setStretch(0, 4)
-        self.verticalLayout.setStretch(1, 10)
-        self.verticalLayout.setStretch(2, 2)
+        self.verticalLayout.setStretch(1, 4)
+        self.verticalLayout.setStretch(2, 10)
+        self.verticalLayout.setStretch(3, 2)
         self.layoutWidget_10 = QWidget(self.centralwidget)
         self.layoutWidget_10.setObjectName(u"layoutWidget_10")
         self.layoutWidget_10.setGeometry(QRect(440, 0, 151, 741))

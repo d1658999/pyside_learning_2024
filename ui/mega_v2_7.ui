@@ -2434,7 +2434,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="4,10,2">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,4,10,2">
      <property name="spacing">
       <number>9</number>
      </property>
@@ -2454,6 +2454,16 @@
       <number>9</number>
      </property>
      <item>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="therm_charge_dis_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -2471,6 +2481,9 @@ Disable</string>
      </item>
      <item>
       <widget class="QPushButton" name="run_button">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>

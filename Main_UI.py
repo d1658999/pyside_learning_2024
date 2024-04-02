@@ -377,6 +377,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['lv_value'] = self.lv_doubleSpinBox.value()
         state_dict['input_level_sig_anritsu'] = self.input_level_sig_anritsu_spinBox.value()
         state_dict['rfout_port_sig_anritsu'] = self.rfout_port_sig_anritsu_comboBox.currentText()
+        state_dict['progress_bar'] = 0  # special item for input and output small funciton
 
         return state_dict
 

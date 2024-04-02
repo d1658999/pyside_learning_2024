@@ -744,10 +744,10 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.b5_n78, 1, 1, 1, 1)
 
-        self.b66_b77 = QCheckBox(self.widget)
-        self.b66_b77.setObjectName(u"b66_b77")
+        self.b66_n77 = QCheckBox(self.widget)
+        self.b66_n77.setObjectName(u"b66_n77")
 
-        self.gridLayout_2.addWidget(self.b66_b77, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.b66_n77, 2, 0, 1, 1)
 
         self.b28_n78 = QCheckBox(self.widget)
         self.b28_n78.setObjectName(u"b28_n78")
@@ -2421,9 +2421,9 @@ class Ui_MainWindow(object):
 
         self.tabWidget.setCurrentIndex(0)
         self.bands_toolBox.setCurrentIndex(0)
-        self.txrx_path_toolBox.setCurrentIndex(2)
+        self.txrx_path_toolBox.setCurrentIndex(0)
         self.test_items_toolBox.setCurrentIndex(0)
-        self.sync_path_toolBox.setCurrentIndex(1)
+        self.sync_path_toolBox.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -2559,7 +2559,7 @@ class Ui_MainWindow(object):
         self.b12_n78.setText(QCoreApplication.translate("MainWindow", u"B12_N78", None))
         self.b2_n77.setText(QCoreApplication.translate("MainWindow", u"B2_N77", None))
         self.b5_n78.setText(QCoreApplication.translate("MainWindow", u"B5_N78", None))
-        self.b66_b77.setText(QCoreApplication.translate("MainWindow", u"B66_N77", None))
+        self.b66_n77.setText(QCoreApplication.translate("MainWindow", u"B66_N77", None))
         self.b28_n78.setText(QCoreApplication.translate("MainWindow", u"B28_N78", None))
         self.b66_n2.setText(QCoreApplication.translate("MainWindow", u"B66_N2", None))
         self.b5_n77.setText(QCoreApplication.translate("MainWindow", u"B5_N77", None))

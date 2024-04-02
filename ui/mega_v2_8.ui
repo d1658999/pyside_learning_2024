@@ -1193,7 +1193,7 @@
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QCheckBox" name="b66_b77">
+              <widget class="QCheckBox" name="b66_n77">
                <property name="text">
                 <string>B66_N77</string>
                </property>
@@ -2641,7 +2641,7 @@ Disable</string>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tx_path">
          <property name="geometry">
@@ -3439,7 +3439,7 @@ Disable</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="general_sync">
       <property name="geometry">

@@ -4,7 +4,8 @@ import sys
 import time
 import threading
 
-from ui_mega_v2_7 import Ui_MainWindow
+from ui_mega_v2_8 import Ui_MainWindow
+
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -13,7 +14,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.init_show()
         self.init_hidden()
         self.custom_signal_slot()
-        self.measured_counts = None
 
     def custom_signal_slot(self):
         self.as_path_en.toggled.connect(self.srs_unchecked)
@@ -61,8 +61,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.hsupa_tech.setChecked(False)
                 self.hsdpa_tech.setChecked(False)
             case 'Anritsu8820':
+                self.nr_tech.setHidden(True)
+                self.nr_tech.setChecked(False)
                 self.hsupa_tech.setHidden(False)
                 self.hsdpa_tech.setHidden(False)
+                self.gsm_tech.setChecked(False)
             case 'Anritsu8821':
                 self.nr_tech.setHidden(True)
                 self.wcdma_tech.setHidden(True)
@@ -107,10 +110,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if checked:
             self.as_path_en.setChecked(False)
 
-    def gui_state_get(self, state_dict):
+    def gui_state_get(self, state_dict=None):
+        if state_dict is None:
+            state_dict = dict()
         state_dict['equipment'] = self.equipments_comboBox.currentText()
         state_dict['tx_port_table_en'] = self.port_table_en.isChecked()
-        state_dict['tx_port'] = self.tx_port_comboBox.CurrentText()
+        state_dict['tx_port'] = self.tx_port_comboBox.currentText()
         state_dict['tx_port_endc_lte'] = self.tx_port_endc_lte_comboBox.currentText()
         state_dict['volt_mipi_en'] = self.volt_mipi_en.isChecked()
         state_dict['get_temp_en'] = self.get_temp_en.isChecked()
@@ -259,7 +264,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['b2_wcdma'] = self.b2_wcdma.isChecked()
         state_dict['b4_wcdma'] = self.b4_wcdma.isChecked()
         state_dict['gsm850'] = self.gsm850.isChecked()
-        state_dict['gsm900'] = self.gsm850.isChecked()
+        state_dict['gsm900'] = self.gsm900.isChecked()
         state_dict['gsm1800'] = self.gsm1800.isChecked()
         state_dict['gsm1900'] = self.gsm1900.isChecked()
         state_dict['ulca_5b'] = self.ulca_5b.isChecked()
@@ -273,12 +278,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['ulca_41c'] = self.ulca_41c.isChecked()
         state_dict['ulca_42c'] = self.ulca_42c.isChecked()
         state_dict['ulca_48c'] = self.ulca_48c.isChecked()
+        state_dict['b3_78'] = self.b3_n78.isChecked()
+        state_dict['b2_77'] = self.b2_n77.isChecked()
+        state_dict['b66_77'] = self.b66_n77.isChecked()
+        state_dict['b66_n2'] = self.b66_n2.isChecked()
+        state_dict['b66_n5'] = self.b66_n5.isChecked()
+        state_dict['b12_n78'] = self.b12_n78.isChecked()
+        state_dict['b5_n78'] = self.b5_n78.isChecked()
+        state_dict['b28_78'] = self.b28_n78.isChecked()
+        state_dict['b5_n77'] = self.b5_n77.isChecked()
+        state_dict['b13_n5'] = self.b13_n5.isChecked()
         state_dict['bw1p4_lte'] = self.bw1p4_lte.isChecked()
-        state_dict['bw3_lte'] = self.bw1p4_lte.isChecked()
-        state_dict['bw5_lte'] = self.bw1p4_lte.isChecked()
-        state_dict['bw10_lte'] = self.bw1p4_lte.isChecked()
-        state_dict['bw15_lte'] = self.bw1p4_lte.isChecked()
-        state_dict['bw20_lte'] = self.bw1p4_lte.isChecked()
+        state_dict['bw3_lte'] = self.bw3_lte.isChecked()
+        state_dict['bw5_lte'] = self.bw5_lte.isChecked()
+        state_dict['bw10_lte'] = self.bw10_lte.isChecked()
+        state_dict['bw15_lte'] = self.bw15_lte.isChecked()
+        state_dict['bw20_lte'] = self.bw20_lte.isChecked()
         state_dict['bw5_nr'] = self.bw5_nr.isChecked()
         state_dict['bw10_nr'] = self.bw10_nr.isChecked()
         state_dict['bw15_nr'] = self.bw15_nr.isChecked()
@@ -326,7 +341,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['frb_lte'] = self.frb_lte.isChecked()
         state_dict['one_rb_0_lte'] = self.one_rb_0_lte.isChecked()
         state_dict['one_rb_max_lte'] = self.one_rb_max_lte.isChecked()
-        state_dict['one_rb0_null'] = self.one_rb0_null.setChecked()
+        state_dict['one_rb0_null'] = self.one_rb0_null.isChecked()
         state_dict['prb0_null'] = self.prb0_null.isChecked()
         state_dict['frb_null'] = self.frb_null.isChecked()
         state_dict['frb_frb'] = self.frb_frb.isChecked()
@@ -361,7 +376,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['nv_value'] = self.nv_doubleSpinBox.value()
         state_dict['lv_value'] = self.lv_doubleSpinBox.value()
         state_dict['input_level_sig_anritsu'] = self.input_level_sig_anritsu_spinBox.value()
-        state_dict['rfout_port_sig_anritsu'] = self.rfout_port_sig_anritsu_comboBox.value()
+        state_dict['rfout_port_sig_anritsu'] = self.rfout_port_sig_anritsu_comboBox.currentText()
 
         return state_dict
 
@@ -369,7 +384,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.equipments_comboBox.setCurrentText(state_dict['equipment'])
         self.port_table_en.setChecked(state_dict['tx_port_table_en'])
         self.tx_port_comboBox.setCurrentText(state_dict['tx_port'])
-        self.tx_port_endc_lte_comboBox.setcurrentText(state_dict['tx_port_endc_lte'])
+        self.tx_port_endc_lte_comboBox.setCurrentText(state_dict['tx_port_endc_lte'])
         self.volt_mipi_en.setChecked(state_dict['volt_mipi_en'])
         self.get_temp_en.setChecked(state_dict['get_temp_en'])
         self.fdc_en.setChecked(state_dict['fdc_en'])
@@ -568,6 +583,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bw5_15.setChecked(state_dict['bw5_15'])
         self.bw15_5.setChecked(state_dict['bw15_5'])
         self.bw40.setChecked(state_dict['bw40'])
+        self.b3_n78.setChecked(state_dict['b3_78'])
+        self.b2_n77.setChecked(state_dict['b2_77'])
+        self.b66_n77.setChecked(state_dict['b66_77'])
+        self.b66_n2.setChecked(state_dict['b66_n2'])
+        self.b66_n5.setChecked(state_dict['b66_n5'])
+        self.b12_n78.setChecked(state_dict['b12_n78'])
+        self.b5_n78.setChecked(state_dict['b5_n78'])
+        self.b28_n78.setChecked(state_dict['b28_78'])
+        self.b5_n77.setChecked(state_dict['b5_n77'])
+        self.b13_n5.setChecked(state_dict['b13_n5'])
         self.qpsk_lte.setChecked(state_dict['qpsk_lte'])
         self.q16_lte.setChecked(state_dict['q16_lte'])
         self.q64_lte.setChecked(state_dict['q64_lte'])
@@ -619,7 +644,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.nv_doubleSpinBox.setValue(state_dict['nv_value'])
         self.lv_doubleSpinBox.setValue(state_dict['lv_value'])
         self.input_level_sig_anritsu_spinBox.setValue(state_dict['input_level_sig_anritsu'])
-        self.rfout_port_sig_anritsu_comboBox.setValue(state_dict['rfout_port_sig_anritsu'])
+        self.rfout_port_sig_anritsu_comboBox.setCurrentText(state_dict['rfout_port_sig_anritsu'])
 
     def tx_port_show(self):
         print(f'Tx Port: {self.tx_port_comboBox.currentText()}')
@@ -655,12 +680,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.hsupa_tech.setChecked(False)
                 self.hsdpa_tech.setChecked(False)
             case 'Anritsu8820':
-                self.nr_tech.setHidden(False)
+                self.nr_tech.setHidden(True)
                 self.wcdma_tech.setHidden(False)
-                self.gsm_tech.setHidden(False)
+                self.gsm_tech.setHidden(True)
                 self.ulca_lte_tech.setHidden(False)
                 self.hsupa_tech.setHidden(False)
                 self.hsdpa_tech.setHidden(False)
+                self.nr_tech.setChecked(False)
+                self.gsm_tech.setChecked(False)
             case 'Anritsu8821':
                 self.nr_tech.setHidden(True)
                 self.wcdma_tech.setHidden(True)
@@ -1037,13 +1064,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         allocation_lte_list = []
         if self.prb0_lte.isChecked():
             allocation_lte_list.append('PRB_0')
-        if self.prb0_lte.isChecked():
+        if self.prbmax_lte.isChecked():
             allocation_lte_list.append('PRB_MAX')
-        if self.prb0_lte.isChecked():
+        if self.frb_lte.isChecked():
             allocation_lte_list.append('FRB')
-        if self.prb0_lte.isChecked():
+        if self.one_rb_0_lte.isChecked():
             allocation_lte_list.append('1RB_0')
-        if self.prb0_lte.isChecked():
+        if self.one_rb_max_lte.isChecked():
             allocation_lte_list.append('1RB_MAX')
 
         return allocation_lte_list
@@ -1071,68 +1098,580 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         elif self.criteria_ulca_lte_3gpp_radioButton.isChecked():
             return '3GPP'
 
+    @staticmethod
+    def items_counts(state_dict):
+        tx_test_items_ns_count_nr = 0
+        tx_test_items_ns_count_lte = 0
+        tx_test_items_ns_count_wcdma = 0
+        tx_test_items_ns_count_gsm = 0
+        tx_test_items_ns_count_ulca_lte = 0
+        rx_test_items_ns_count_nr = 0
+        rx_test_items_ns_count_lte = 0
+        rx_test_items_ns_count_wcdma = 0
+        rx_test_items_ns_count_gsm = 0
+        rx_test_items_endc_ns_count = 0  # only for Rx_ENDC_Desense
+        tx_test_items_s_count = 0
+        rx_test_items_s_count = 0
+        tx_path_count = 0
+        rx_path_count = 0
+        ue_power_count = 0
+        nr_tech_count = 0
+        lte_tech_count = 0
+        wcdma_tech_count = 0
+        gsm_tech_count = 0
+        ulca_lte_tech_count = 0
+        hsupa_tech_count = 0
+        hsdpa_tech_count = 0
+        channel_count = 0
+        band_nr_count = 0
+        band_lte_count = 0
+        band_wcdma_count = 0
+        band_gsm_count = 0
+        band_ulca_lte_count = 0
+        band_endc_desense_count = 0
+        bw_nr_count = 0
+        bw_lte_count = 0
+        bw_ulca_lte_count = 0
+        mcs_nr_count = 0
+        mcs_lte_count = 0
+        type_nr_count = 0
+        rb_nr_count = 0
+        rb_lte_count = 0
+        rb_ulca_lte_count = 0
+        temp_volt_count = 0
+        volt_count = 0
+
+        for key, value in state_dict.items():
+            if key == 'tx_lmh_ns' and value is True:
+                tx_test_items_ns_count_nr += 1
+                tx_test_items_ns_count_lte += 1
+                tx_test_items_ns_count_wcdma += 1
+                tx_test_items_ns_count_gsm += 1
+            if key == 'tx_level_sweep_ns' and value:
+                tx_test_items_ns_count_nr += 1
+                tx_test_items_ns_count_lte += 1
+                tx_test_items_ns_count_wcdma += 1
+                tx_test_items_ns_count_gsm += 1
+            if key == 'tx_freq_sweep_ns' and value:
+                tx_test_items_ns_count_nr += 1
+                tx_test_items_ns_count_lte += 1
+                tx_test_items_ns_count_wcdma += 1
+                tx_test_items_ns_count_gsm += 1
+            if key == 'tx_1rb_sweep_ns' and value:
+                tx_test_items_ns_count_nr += 1
+                tx_test_items_ns_count_lte += 1
+                tx_test_items_ns_count_wcdma += 1
+                tx_test_items_ns_count_gsm += 1
+            if key == 'tx_fcc_power_ns' and value:
+                tx_test_items_ns_count_nr += 1
+                tx_test_items_ns_count_lte += 1
+                tx_test_items_ns_count_wcdma += 1
+                tx_test_items_ns_count_gsm += 1
+            if key == 'tx_ce_power_ns' and value:
+                tx_test_items_ns_count_nr += 1
+                tx_test_items_ns_count_lte += 1
+                tx_test_items_ns_count_wcdma += 1
+                tx_test_items_ns_count_gsm += 1
+            if key == 'tx_harmonics_ns' and value:
+                tx_test_items_ns_count_nr += 1
+                tx_test_items_ns_count_lte += 1
+                tx_test_items_ns_count_wcdma += 1
+                tx_test_items_ns_count_gsm += 1
+            if key == 'tx_cbe_ns' and value:
+                tx_test_items_ns_count_nr += 1
+                tx_test_items_ns_count_lte += 1
+                tx_test_items_ns_count_wcdma += 1
+                tx_test_items_ns_count_gsm += 1
+            if key == 'tx_ulca_lte_ns' and value:
+                tx_test_items_ns_count_ulca_lte += 1
+            if key == 'tx_ulca_lte_cbe_ns' and value:
+                tx_test_items_ns_count_ulca_lte += 1
+            if key == 'rx_normal_ns' and value:
+                rx_test_items_ns_count_nr += 1
+                rx_test_items_ns_count_lte += 1
+                rx_test_items_ns_count_wcdma += 1
+                rx_test_items_ns_count_gsm += 1
+            if key == 'rx_quick_ns' and value:
+                rx_test_items_ns_count_nr += 1
+                rx_test_items_ns_count_lte += 1
+            if key == 'rx_endc_desense_ns' and value:
+                rx_test_items_endc_ns_count += 1
+            if key == 'tx_lmh_s' and value:
+                tx_test_items_s_count += 1
+            if key == 'rx_normal_s' and value:
+                rx_test_items_s_count += 1
+            if key == 'rxs_sweep_s' and value:
+                rx_test_items_s_count += 1
+            if key == 'tx1' and value:
+                tx_path_count += 1
+            if key == 'tx2' and value:
+                tx_path_count += 1
+            if key == 'mimo' and value:
+                tx_path_count += 1
+            if key == 'rx0' and value:
+                rx_path_count += 1
+            if key == 'rx1' and value:
+                rx_path_count += 1
+            if key == 'rx2' and value:
+                rx_path_count += 1
+            if key == 'rx3' and value:
+                rx_path_count += 1
+            if key == 'rx0rx1' and value:
+                rx_path_count += 1
+            if key == 'rx2rx3' and value:
+                rx_path_count += 1
+            if key == 'rx_all_path' and value:
+                rx_path_count += 1
+            if key == 'ue_txmax' and value:
+                ue_power_count += 1
+            if key == 'ue_txlow' and value:
+                ue_power_count += 1
+            if key == 'nr_tech' and value:
+                nr_tech_count += 1
+            if key == 'lte_tech' and value:
+                lte_tech_count += 1
+            if key == 'wcdma_tech' and value:
+                wcdma_tech_count += 1
+            if key == 'gsm_tech' and value:
+                gsm_tech_count += 1
+            if key == 'ulca_lte_tech' and value:
+                ulca_lte_tech_count += 1
+            if key == 'hsupa_tech' and value:
+                hsupa_tech_count += 1
+            if key == 'hsdpa_tech' and value:
+                hsdpa_tech_count += 1
+            if key == 'lch' and value:
+                channel_count += 1
+            if key == 'mch' and value:
+                channel_count += 1
+            if key == 'hch' and value:
+                channel_count += 1
+            if key == 'n5_nr' and value:
+                band_nr_count += 1
+            if key == 'n8_nr' and value:
+                band_nr_count += 1
+            if key == 'n12_nr' and value:
+                band_nr_count += 1
+            if key == 'n13_nr' and value:
+                band_nr_count += 1
+            if key == 'n14_nr' and value:
+                band_nr_count += 1
+            if key == 'n20_nr' and value:
+                band_nr_count += 1
+            if key == 'n24_nr' and value:
+                band_nr_count += 1
+            if key == 'n26_nr' and value:
+                band_nr_count += 1
+            if key == 'n71_nr' and value:
+                band_nr_count += 1
+            if key == 'n28_a_nr' and value:
+                band_nr_count += 1
+            if key == 'n28_b_nr' and value:
+                band_nr_count += 1
+            if key == 'n29_nr' and value:
+                band_nr_count += 1
+            if key == 'n32_nr' and value:
+                band_nr_count += 1
+            if key == 'n1_nr' and value:
+                band_nr_count += 1
+            if key == 'n2_nr' and value:
+                band_nr_count += 1
+            if key == 'n3_nr' and value:
+                band_nr_count += 1
+            if key == 'n4_nr' and value:
+                band_nr_count += 1
+            if key == 'n7_nr' and value:
+                band_nr_count += 1
+            if key == 'n30_nr' and value:
+                band_nr_count += 1
+            if key == 'n25_nr' and value:
+                band_nr_count += 1
+            if key == 'n66_nr' and value:
+                band_nr_count += 1
+            if key == 'n70_nr' and value:
+                band_nr_count += 1
+            if key == 'n39_nr' and value:
+                band_nr_count += 1
+            if key == 'n40_nr' and value:
+                band_nr_count += 1
+            if key == 'n38_nr' and value:
+                band_nr_count += 1
+            if key == 'n41_nr' and value:
+                band_nr_count += 1
+            if key == 'n34_nr' and value:
+                band_nr_count += 1
+            if key == 'n75_nr' and value:
+                band_nr_count += 1
+            if key == 'n76_nr' and value:
+                band_nr_count += 1
+            if key == 'n255_nr' and value:
+                band_nr_count += 1
+            if key == 'n256_nr' and value:
+                band_nr_count += 1
+            if key == 'n77_nr' and value:
+                band_nr_count += 1
+            if key == 'n78_nr' and value:
+                band_nr_count += 1
+            if key == 'n48_nr' and value:
+                band_nr_count += 1
+            if key == 'n79_nr' and value:
+                band_nr_count += 1
+            if key == 'b5_lte' and value:
+                band_lte_count += 1
+            if key == 'b8_lte' and value:
+                band_lte_count += 1
+            if key == 'b12_lte' and value:
+                band_lte_count += 1
+            if key == 'b13_lte' and value:
+                band_lte_count += 1
+            if key == 'b14_lte' and value:
+                band_lte_count += 1
+            if key == 'b17_lte' and value:
+                band_lte_count += 1
+            if key == 'b18_lte' and value:
+                band_lte_count += 1
+            if key == 'b19_lte' and value:
+                band_lte_count += 1
+            if key == 'b20_lte' and value:
+                band_lte_count += 1
+            if key == 'b26_lte' and value:
+                band_lte_count += 1
+            if key == 'b28_a_lte' and value:
+                band_lte_count += 1
+            if key == 'b28_b_lte' and value:
+                band_lte_count += 1
+            if key == 'b29_lte' and value:
+                band_lte_count += 1
+            if key == 'b32_lte' and value:
+                band_lte_count += 1
+            if key == 'b71_lte' and value:
+                band_lte_count += 1
+            if key == 'b24_lte' and value:
+                band_lte_count += 1
+            if key == 'b1_lte' and value:
+                band_lte_count += 1
+            if key == 'b2_lte' and value:
+                band_lte_count += 1
+            if key == 'b3_lte' and value:
+                band_lte_count += 1
+            if key == 'b4_lte' and value:
+                band_lte_count += 1
+            if key == 'b7_lte' and value:
+                band_lte_count += 1
+            if key == 'b30_lte' and value:
+                band_lte_count += 1
+            if key == 'b39_lte' and value:
+                band_lte_count += 1
+            if key == 'b40_lte' and value:
+                band_lte_count += 1
+            if key == 'b38_lte' and value:
+                band_lte_count += 1
+            if key == 'b41_lte' and value:
+                band_lte_count += 1
+            if key == 'b23_lte' and value:
+                band_lte_count += 1
+            if key == 'b42_lte' and value:
+                band_lte_count += 1
+            if key == 'b48_lte' and value:
+                band_lte_count += 1
+            if key == 'b5_wcdma' and value:
+                band_wcdma_count += 1
+            if key == 'b8_wcdma' and value:
+                band_wcdma_count += 1
+            if key == 'b6_wcdma' and value:
+                band_wcdma_count += 1
+            if key == 'b19_wcdma' and value:
+                band_wcdma_count += 1
+            if key == 'b1_wcdma' and value:
+                band_wcdma_count += 1
+            if key == 'b2_wcdma' and value:
+                band_wcdma_count += 1
+            if key == 'b4_wcdma' and value:
+                band_wcdma_count += 1
+            if key == 'gsm850' and value:
+                band_gsm_count += 1
+            if key == 'gsm900' and value:
+                band_gsm_count += 1
+            if key == 'gsm1800' and value:
+                band_gsm_count += 1
+            if key == 'gsm1900' and value:
+                band_gsm_count += 1
+            if key == 'ulca_5b' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_1c' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_3c' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_7c' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_66b' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_66c' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_40c' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_38c' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_41c' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_42c' and value:
+                band_ulca_lte_count += 1
+            if key == 'ulca_48c' and value:
+                band_ulca_lte_count += 1
+            if key == 'b3_n78' and value:
+                band_endc_desense_count += 1
+            if key == 'b2_n77' and value:
+                band_endc_desense_count += 1
+            if key == 'b66_n77' and value:
+                band_endc_desense_count += 1
+            if key == 'b66_n2' and value:
+                band_endc_desense_count += 1
+            if key == 'b66_n5' and value:
+                band_endc_desense_count += 1
+            if key == 'b12_n78' and value:
+                band_endc_desense_count += 1
+            if key == 'b5_n78' and value:
+                band_endc_desense_count += 1
+            if key == 'b28_n78' and value:
+                band_endc_desense_count += 1
+            if key == 'b5_n77' and value:
+                band_endc_desense_count += 1
+            if key == 'b13_n5' and value:
+                band_endc_desense_count += 1
+            if key == 'bw5_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw10_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw15_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw20_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw25_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw30_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw40_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw50_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw60_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw80_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw90_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw100_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw70_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw35_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw45_nr' and value:
+                bw_nr_count += 1
+            if key == 'bw1p4_lte' and value:
+                bw_lte_count += 1
+            if key == 'bw3_lte' and value:
+                bw_lte_count += 1
+            if key == 'bw5_lte' and value:
+                bw_lte_count += 1
+            if key == 'bw10_lte' and value:
+                bw_lte_count += 1
+            if key == 'bw15_lte' and value:
+                bw_lte_count += 1
+            if key == 'bw20_lte' and value:
+                bw_lte_count += 1
+            if key == 'bw20_5' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw5_20' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw20_10' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw10_20' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw20_15' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw15_20' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw20_20' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw15_15' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw15_10' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw10_15' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw5_10' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw10_5' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw10_10' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw5_15' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw15_5' and value:
+                bw_ulca_lte_count += 1
+            if key == 'bw40' and value:
+                bw_ulca_lte_count += 1
+            if key == 'qpsk_nr' and value:
+                mcs_nr_count += 1
+            if key == 'q16_nr' and value:
+                mcs_nr_count += 1
+            if key == 'q64_nr' and value:
+                mcs_nr_count += 1
+            if key == 'q256_nr' and value:
+                mcs_nr_count += 1
+            if key == 'bpsk_nr' and value:
+                mcs_nr_count += 1
+            if key == 'dfts_nr' and value:
+                type_nr_count += 1
+            if key == 'cp_nr' and value:
+                type_nr_count += 1
+            if key == 'qpsk_lte' and value:
+                mcs_lte_count += 1
+            if key == 'q16_lte' and value:
+                mcs_lte_count += 1
+            if key == 'q64_lte' and value:
+                mcs_lte_count += 1
+            if key == 'q256_lte' and value:
+                mcs_lte_count += 1
+            if key == 'inner_full_nr' and value:
+                rb_nr_count += 1
+            if key == 'outer_full_nr' and value:
+                rb_nr_count += 1
+            if key == 'inner_1rb_left_nr' and value:
+                rb_nr_count += 1
+            if key == 'inner_1rb_right_nr' and value:
+                rb_nr_count += 1
+            if key == 'edge_1rb_left_nr' and value:
+                rb_nr_count += 1
+            if key == 'edge_1rb_right_nr' and value:
+                rb_nr_count += 1
+            if key == 'edge_full_left_nr' and value:
+                rb_nr_count += 1
+            if key == 'edge_full_right_nr' and value:
+                rb_nr_count += 1
+            if key == 'prb0_lte' and value:
+                rb_lte_count += 1
+            if key == 'prbmax_lte' and value:
+                rb_lte_count += 1
+            if key == 'frb_lte' and value:
+                rb_lte_count += 1
+            if key == 'one_rb_0_lte' and value:
+                rb_lte_count += 1
+            if key == 'one_rb_max_lte' and value:
+                rb_lte_count += 1
+            if key == 'one_rb0_null' and value:
+                rb_ulca_lte_count += 1
+            if key == 'prb0_null' and value:
+                rb_ulca_lte_count += 1
+            if key == 'frb_null' and value:
+                rb_ulca_lte_count += 1
+            if key == 'frb_frb' and value:
+                rb_ulca_lte_count += 1
+            if key == 'one_rb0_one_rbmax' and value:
+                rb_ulca_lte_count += 1
+            if key == 'one_rbmax_one_rb0' and value:
+                rb_ulca_lte_count += 1
+            if key == 'hthv' and value:
+                temp_volt_count += 1
+            if key == 'htlv' and value:
+                temp_volt_count += 1
+            if key == 'ntnv' and value:
+                temp_volt_count += 1
+            if key == 'lthv' and value:
+                temp_volt_count += 1
+            if key == 'ltlv' and value:
+                temp_volt_count += 1
+            if key == 'hv' and value:
+                volt_count += 1
+            if key == 'nv' and value:
+                volt_count += 1
+            if key == 'lv' and value:
+                volt_count += 1
+
+        count_total = tx_test_items_ns_count_nr * tx_path_count * nr_tech_count * channel_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count * rb_nr_count + \
+                      tx_test_items_ns_count_lte * tx_path_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count * mcs_lte_count * rb_nr_count + \
+                      tx_test_items_ns_count_wcdma * wcdma_tech_count * channel_count * band_wcdma_count + \
+                      tx_test_items_ns_count_gsm * gsm_tech_count * channel_count * band_gsm_count + \
+                      tx_test_items_ns_count_ulca_lte * ulca_lte_tech_count * channel_count * band_ulca_lte_count * bw_ulca_lte_count + \
+                      rx_test_items_ns_count_nr * rx_path_count * channel_count * band_nr_count * bw_nr_count * ue_power_count + \
+                      rx_test_items_ns_count_lte * rx_path_count * channel_count * band_lte_count * bw_lte_count * ue_power_count + \
+                      rx_test_items_ns_count_wcdma * rx_path_count * channel_count * band_wcdma_count * ue_power_count + \
+                      rx_test_items_ns_count_gsm * rx_path_count * channel_count * band_gsm_count + \
+                      rx_test_items_endc_ns_count * band_endc_desense_count * ue_power_count + \
+                      tx_test_items_s_count * lte_tech_count * channel_count * band_lte_count + \
+                      tx_test_items_s_count * wcdma_tech_count * channel_count * band_wcdma_count + \
+                      tx_test_items_s_count * hsupa_tech_count * channel_count * band_wcdma_count + \
+                      tx_test_items_s_count * hsdpa_tech_count * channel_count * band_wcdma_count + \
+                      rx_test_items_s_count * channel_count * band_lte_count * ue_power_count + \
+                      rx_test_items_s_count * channel_count * band_wcdma_count * ue_power_count
+
+        return count_total
+
     def measure(self):
         self.run_button.setEnabled(False)
-        # self.progressBar.setMaximum(78)
+        state_dict = self.gui_state_get()
+        self.counts = self.items_counts(state_dict)
+        self.progressBar.setMaximum(self.counts)
         # for i in range(78):
         #     print(i)
         #     self.progressBar.setValue(i+1)
         #     time.sleep(1)
-        self.measure_base()
+        self.measure_base(state_dict)
         self.run_button.setEnabled(True)
 
-    def measure_base(self, state_dict=None):
+    def measure_base(self, state_dict):
         print('measure...')
-        # match state_dict['equipment']:
-        #     case 'Cmw100':
-        #         # import somthing
-        #         if state_dict['tx_lmh_ns']:
-        #             ...
-        #         if state_dict['tx_level_sweep_ns']:
-        #             ...
-        #         if state_dict['tx_freq_sweep_ns']:
-        #             ...
-        #         if state_dict['tx_1rb_sweep_ns']:
-        #             ...
-        #         if state_dict['tx_fcc_power_ns']:
-        #             ...
-        #         if state_dict['tx_ce_power_ns']:
-        #             ...
-        #
-        #         if state_dict['tx_ulca_lte_ns']:
-        #             ...
-        #         if state_dict['rx_normal_ns']:
-        #             ...
-        #         if state_dict['rx_quick_ns']:
-        #             ...
-        #         if state_dict['rx_endc_desense_ns']:
-        #             ...
-        #
-        #     case 'Cmw100+Fsw':
-        #         # import somthing
-        #         if state_dict['tx_harmonics_ns']:
-        #             ...
-        #         if state_dict['tx_cbe_ns']:
-        #             ...
-        #         if state_dict['tx_ulca_lte_cbe_ns']:
-        #             ...
-        #
-        #     case 'Anritsu8820':
-        #         # import somthing
-        #         if state_dict['tx_lmh_s']:
-        #             ...
-        #         if state_dict['rx_normal_s']:
-        #             ...
-        #         if state_dict['rxs_sweep_s']:
-        #             ...
-        #     case 'Anritsu8821':
-        #         # import somthing
-        #         if state_dict['tx_lmh_s']:
-        #             ...
-        #         if state_dict['rx_normal_s']:
-        #             ...
-        #         if state_dict['rxs_sweep_s']:
-        #             ...
+        match state_dict['equipment']:
+            case 'Cmw100':
+                # import somthing
+
+                if state_dict['tx_lmh_ns']:
+                    ...
+                if state_dict['tx_level_sweep_ns']:
+                    print('tx_level_sweep_ns')
+                if state_dict['tx_freq_sweep_ns']:
+                    ...
+                if state_dict['tx_1rb_sweep_ns']:
+                    ...
+                if state_dict['tx_fcc_power_ns']:
+                    ...
+                if state_dict['tx_ce_power_ns']:
+                    ...
+                if state_dict['tx_ulca_lte_ns']:
+                    ...
+                if state_dict['rx_normal_ns']:
+                    ...
+                if state_dict['rx_quick_ns']:
+                    ...
+                if state_dict['rx_endc_desense_ns']:
+                    ...
+
+            case 'Cmw100+Fsw':
+                # import somthing
+                if state_dict['tx_harmonics_ns']:
+                    ...
+                if state_dict['tx_cbe_ns']:
+                    ...
+                if state_dict['tx_ulca_lte_cbe_ns']:
+                    ...
+
+            case 'Anritsu8820':
+                # import somthing
+                if state_dict['tx_lmh_s']:
+                    ...
+                if state_dict['rx_normal_s']:
+                    ...
+                if state_dict['rxs_sweep_s']:
+                    ...
+            case 'Anritsu8821':
+                # import somthing
+                if state_dict['tx_lmh_s']:
+                    ...
+                if state_dict['rx_normal_s']:
+                    ...
+                if state_dict['rxs_sweep_s']:
+                    ...
 
     def run_start(self):
         print('run')

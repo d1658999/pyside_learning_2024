@@ -4,13 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_8 update layout">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ui_mega_v2_5.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ui_mega_v2_6.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_mega_v2_8.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui_mega_v2_8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec_limits/Sens_fdd_fr1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/spec_limits/Sens_fdd_nr.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec_limits/power_limits_fr1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/spec_limits/power_limits_nr.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec_limits/spec_limit_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/spec_limits/spec_limit_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_power_fcc_ce.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_power_fcc_ce.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/mega_v2_8.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/mega_v2_8.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/adb_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/adb_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/channel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/channel_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/excel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/excel_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/parameters/ce.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/ce.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/parameters/external_paramters.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/external_paramters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/parameters/fcc.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/fcc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/parameters/rb_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/rb_parameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/port_table_txas_0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/port_table_txas_0.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,31 +40,31 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2eAsUfx67BjVbeAoxJg7Fj2oxIa" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Main_UI.executor": "Debug",
-    "Python.ui_mega_v2_2.executor": "Run",
-    "Python.ui_test_v2_1.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/pricewu/Documents/pyside_learning/ui",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Main_UI.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ui_mega_v2_2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ui_test_v2_1.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pricewu/Documents/pyside_learning&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\pricewu\Documents\pyside_learning\ui" />
       <recent name="C:\Users\pricewu\Documents\pyside_learning" />
+      <recent name="C:\Users\pricewu\Documents\pyside_learning\ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\pricewu\Documents\pyside_learning" />
@@ -301,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712052796836</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="update ui test version v2_8 transplant meta tool files to mega tool, need to fix some problems, milestone: excel handler needs to be correct">
+      <option name="closed" value="true" />
+      <created>1712115107799</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1712115107799</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -333,45 +351,66 @@
     <MESSAGE value="update ui test version v2_7 for progressbar" />
     <MESSAGE value="update ui test version v2_8 for endc bands" />
     <MESSAGE value="update ui test version v2_8 update layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_8 update layout" />
+    <MESSAGE value="update ui test version v2_8 transplant meta tool files to mega tool, need to fix some problems, milestone: excel handler needs to be correct" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_8 transplant meta tool files to mega tool, need to fix some problems, milestone: excel handler needs to be correct" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1746</line>
+          <line>1851</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1750</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1721</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1699</line>
+          <line>1766</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1716</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py</url>
-          <line>274</line>
+          <line>273</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
-          <line>1029</line>
-          <option name="timeStamp" value="23" />
+          <line>3631</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
+          <line>468</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
+          <line>556</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
+          <line>699</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
+          <line>788</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
+          <line>696</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py</url>
+          <line>592</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
+          <line>1236</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

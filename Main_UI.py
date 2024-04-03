@@ -1,3 +1,4 @@
+import datetime
 from PySide6.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, QStyleFactory, QFileDialog
 from PySide6.QtCore import QThread, Slot, QSize
 import sys
@@ -14,15 +15,36 @@ from utils.excel_handler import excel_folder_create
 from equipments.power_supply import Psu
 from equipments.temp_chamber import TempChamber
 from utils.regy_handler import regy_replace, regy_extract, regy_extract_2
+from utils.log_init import log_set, log_clear
+
+
+logger = log_set('GUI')
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
+
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.volt = None
+        self.condition = None
+        self.psu = None
+        self.tmpcmb = None
+        log_clear()
         self.setupUi(self)
         self.init_show()
         self.init_hidden()
         self.custom_signal_slot()
+        self.import_gui_setting_yaml()
+        self.temp_dict = {
+            'HT': self.ht_spinBox.value(),
+            'NT': self.nt_spinBox.value(),
+            'LT': self.lt_spinBox.value(),
+        }
+        self.volts_dict = {
+            'HV': self.hv_doubleSpinBox.value(),
+            'NV': self.nv_doubleSpinBox.value(),
+            'LV': self.lv_doubleSpinBox.value(),
+        }
 
     def custom_signal_slot(self):
         self.as_path_en.toggled.connect(self.srs_unchecked)
@@ -38,28 +60,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.run_button.clicked.connect(self.selected_show)
 
     def init_show(self):
-        print(f'Equipment: {self.equipments_comboBox.currentText()}')
-        print(f'Tx port: {self.tx_port_comboBox.currentText()}')
-        print(f'Techs: {self.tech_selected()}')
-        print(f'Channels: {self.channel_selected()}')
-        print(f'NR bands: {self.nr_bands_selected()}')
-        print(f'LTE bands: {self.lte_bands_selected()}')
-        print(f'WCDMA bands: {self.wcdma_bands_selected()}')
-        print(f'GSM bands: {self.gsm_bands_selected()}')
-        print(f'ULCA LTE bands: {self.ulca_lte_bands_selected()}')
-        print(f'NR BWs: {self.nr_bw_selected()}')
-        print(f'LTE BWs: {self.lte_bw_selected()}')
-        print(f'ULCA LTE BWs: {self.ulca_lte_bw_selected()}')
-        print(f'NR RB allocation: {self.nr_rb_allocation_selected()}')
-        print(f'NR TYPE: {self.nr_type_selected()}')
-        print(f'NR MCS: {self.nr_mcs_selected()}')
-        print(f'LTE RB allocation: {self.lte_rb_allocation_selected()}')
-        print(f'LTE MCS: {self.lte_mcs_selected()}')
-        print(f'GSM modulation: {self.gsm_modulation_switch()}')
-        print(f'ULCA LTE RB allocation: {self.ulca_lte_rb_allocation_selected()}')
-        print(f'ULCA LTE MCS: {self.lte_mcs_selected()}')
-        print(f'ULCA LTE criteria: {self.ulca_lte_critera_switch()}')
-
+        logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
+        logger.info(f'Tx port: {self.tx_port_comboBox.currentText()}')
+        logger.info(f'Techs: {self.tech_selected()}')
+        logger.info(f'Channels: {self.channel_selected()}')
+        logger.info(f'NR bands: {self.nr_bands_selected()}')
+        logger.info(f'LTE bands: {self.lte_bands_selected()}')
+        logger.info(f'WCDMA bands: {self.wcdma_bands_selected()}')
+        logger.info(f'GSM bands: {self.gsm_bands_selected()}')
+        logger.info(f'ULCA LTE bands: {self.ulca_lte_bands_selected()}')
+        logger.info(f'NR BWs: {self.nr_bw_selected()}')
+        logger.info(f'LTE BWs: {self.lte_bw_selected()}')
+        logger.info(f'ULCA LTE BWs: {self.ulca_lte_bw_selected()}')
+        logger.info(f'NR RB allocation: {self.nr_rb_allocation_selected()}')
+        logger.info(f'NR TYPE: {self.nr_type_selected()}')
+        logger.info(f'NR MCS: {self.nr_mcs_selected()}')
+        logger.info(f'LTE RB allocation: {self.lte_rb_allocation_selected()}')
+        logger.info(f'LTE MCS: {self.lte_mcs_selected()}')
+        logger.info(f'GSM modulation: {self.gsm_modulation_switch()}')
+        logger.info(f'ULCA LTE RB allocation: {self.ulca_lte_rb_allocation_selected()}')
+        logger.info(f'ULCA LTE MCS: {self.lte_mcs_selected()}')
+        logger.info(f'ULCA LTE criteria: {self.ulca_lte_critera_switch()}')
 
     def init_hidden(self):
         match self.equipments_comboBox.currentText():
@@ -94,27 +115,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.hsdpa_tech.setChecked(False)
 
     def selected_show(self):
-        print(f'Equipment: {self.equipments_comboBox.currentText()}')
-        print(f'Tx port: {self.tx_port_comboBox.currentText()}')
-        print(f'Techs: {self.tech_selected()}')
-        print(f'Channels: {self.channel_selected()}')
-        print(f'NR bands: {self.nr_bands_selected()}')
-        print(f'LTE bands: {self.lte_bands_selected()}')
-        print(f'WCDMA bands: {self.wcdma_bands_selected()}')
-        print(f'GSM bands: {self.gsm_bands_selected()}')
-        print(f'ULCA LTE bands: {self.ulca_lte_bands_selected()}')
-        print(f'NR BWs: {self.nr_bw_selected()}')
-        print(f'LTE BWs: {self.lte_bw_selected()}')
-        print(f'ULCA LTE BWs: {self.ulca_lte_bw_selected()}')
-        print(f'NR RB allocation: {self.nr_rb_allocation_selected()}')
-        print(f'NR TYPE: {self.nr_type_selected()}')
-        print(f'NR MCS: {self.nr_mcs_selected()}')
-        print(f'LTE RB allocation: {self.lte_rb_allocation_selected()}')
-        print(f'LTE MCS: {self.lte_mcs_selected()}')
-        print(f'GSM modulation: {self.gsm_modulation_switch()}')
-        print(f'ULCA LTE RB allocation: {self.ulca_lte_rb_allocation_selected()}')
-        print(f'ULCA LTE MCS: {self.lte_mcs_selected()}')
-        print(f'ULCA LTE criteria: {self.ulca_lte_critera_switch()}')
+        logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
+        logger.info(f'Tx port: {self.tx_port_comboBox.currentText()}')
+        logger.info(f'Techs: {self.tech_selected()}')
+        logger.info(f'Channels: {self.channel_selected()}')
+        logger.info(f'NR bands: {self.nr_bands_selected()}')
+        logger.info(f'LTE bands: {self.lte_bands_selected()}')
+        logger.info(f'WCDMA bands: {self.wcdma_bands_selected()}')
+        logger.info(f'GSM bands: {self.gsm_bands_selected()}')
+        logger.info(f'ULCA LTE bands: {self.ulca_lte_bands_selected()}')
+        logger.info(f'NR BWs: {self.nr_bw_selected()}')
+        logger.info(f'LTE BWs: {self.lte_bw_selected()}')
+        logger.info(f'ULCA LTE BWs: {self.ulca_lte_bw_selected()}')
+        logger.info(f'NR RB allocation: {self.nr_rb_allocation_selected()}')
+        logger.info(f'NR TYPE: {self.nr_type_selected()}')
+        logger.info(f'NR MCS: {self.nr_mcs_selected()}')
+        logger.info(f'LTE RB allocation: {self.lte_rb_allocation_selected()}')
+        logger.info(f'LTE MCS: {self.lte_mcs_selected()}')
+        logger.info(f'GSM modulation: {self.gsm_modulation_switch()}')
+        logger.info(f'ULCA LTE RB allocation: {self.ulca_lte_rb_allocation_selected()}')
+        logger.info(f'ULCA LTE MCS: {self.lte_mcs_selected()}')
+        logger.info(f'ULCA LTE criteria: {self.ulca_lte_critera_switch()}')
 
     def srs_unchecked(self, checked):
         # if self.as_path_en.isChecked():
@@ -127,6 +148,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #     self.as_path_en.setChecked(False)
         if checked:
             self.as_path_en.setChecked(False)
+
+    def export_gui_setting_yaml(self):
+        logger.info('Export ui setting')
+        yaml_file = 'gui_init.yaml'
+        content = self.gui_state_get()
+        with open(yaml_file, 'w', encoding='utf-8') as outfile:
+            yaml.dump(content, outfile, default_flow_style=False, encoding='utf-8', allow_unicode=True)
+
+    def import_gui_setting_yaml(self):
+        logger.info('Import the last setting')
+        with open('gui_init.yaml', 'r') as s:
+            ui_init = yaml.safe_load(s)
+
+        self.gui_state_set(ui_init)
 
     def gui_state_get(self, state_dict=None):
         if state_dict is None:
@@ -158,6 +193,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['rx_normal_s'] = self.rx_normal_s.isChecked()
         state_dict['rxs_sweep_s'] = self.rxs_sweep_s.isChecked()
         state_dict['cbe_margin'] = float(self.cbe_margin.text())
+        state_dict['pn_name'] = self.pn_lineEdit.text()
         state_dict['sync_path_toolBox_index'] = self.sync_path_toolBox.currentIndex()
         state_dict['sync_path'] = self.sync_path_comboBox.currentText()
         state_dict['as_path_en'] = self.as_path_en.isChecked()
@@ -418,6 +454,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['nr_type_list'] = self.nr_type_selected()
         state_dict['gsm_modulation'] = self.gsm_modulation_switch()
         state_dict['ulca_lte_criteria'] = self.ulca_lte_critera_switch()
+        state_dict['temp_volts_list'] = self.temp_volts_selected()
+        state_dict['volts_list'] = self.volts_selected()
+        state_dict['devices_serial'] = get_serial_devices()
+        state_dict['condition'] = self.condition
+        state_dict['volt_type'] = self.volt
 
         return state_dict
 
@@ -448,7 +489,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tx_lmh_s.setChecked(state_dict['tx_lmh_s'])
         self.rx_normal_s.setChecked(state_dict['rx_normal_s'])
         self.rxs_sweep_s.setChecked(state_dict['rxs_sweep_s'])
-        self.cbe_margin.setText((state_dict['cbe_margin']))
+        self.cbe_margin.setText(str(state_dict['cbe_margin']))
         self.sync_path_toolBox.setCurrentIndex(state_dict['sync_path_toolBox_index'])
         self.sync_path_comboBox.setCurrentText(state_dict['sync_path'])
         self.as_path_en.setChecked(state_dict['as_path_en'])
@@ -691,17 +732,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rfout_port_sig_anritsu_comboBox.setCurrentText(state_dict['rfout_port_sig_anritsu'])
 
     def tx_port_show(self):
-        print(f'Tx Port: {self.tx_port_comboBox.currentText()}')
+        logger.info(f'Tx Port: {self.tx_port_comboBox.currentText()}')
 
     def tx_port_endc_lte_show(self):
-        print(f'Endc LTE Tx Port: {self.tx_port_endc_lte_comboBox.currentText()}')
+        logger.info(f'Endc LTE Tx Port: {self.tx_port_endc_lte_comboBox.currentText()}')
 
     @staticmethod
     def tx_port_endc_lte_state(checked):
         if checked:
-            print(f'Endc LTE port Enabled')
+            logger.info(f'Endc LTE port Enabled')
         else:
-            print(f'Endc LTE port Disabled')
+            logger.info(f'Endc LTE port Disabled')
 
     def showout_en(self):
         match self.equipments_comboBox.currentText():
@@ -747,7 +788,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.hsdpa_tech.setChecked(False)
 
     def equipment_show(self):
-        print(f'Equipment: {self.equipments_comboBox.currentText()}')
+        logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
+
+    def temp_volts_selected(self):
+        temp_volts_list = []
+        if self.hthv_en.isChecked():
+            temp_volts_list .append('HTHV')
+        if self.htlv_en.isChecked():
+            temp_volts_list .append('HTLV')
+        if self.ntnv_en.isChecked():
+            temp_volts_list .append('NTNV')
+        if self.lthv_en.isChecked():
+            temp_volts_list .append('LTHV')
+        if self.ltlv_en.isChecked():
+            temp_volts_list .append('LTLV')
+
+        return temp_volts_list
+
+    def volts_selected(self):
+        volts_list = []
+        if self.hv_en.isChecked():
+            volts_list.append('HV')
+        if self.nv_en.isChecked():
+            volts_list.append('NV')
+        if self.lv_en.isChecked():
+            volts_list.append('LV')
+
+        return volts_list
 
     def tx_path_selected(self):
         tx_path_list = []
@@ -880,7 +947,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.n79_nr.isChecked():
             nr_bands_list.append(79)
 
-        # print(f'NR bands: {nr_bands_list}')
+        # logger.info(f'NR bands: {nr_bands_list}')
         return nr_bands_list
 
     def lte_bands_selected(self):
@@ -950,7 +1017,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.b48_lte.isChecked():
             lte_bands_list.append(48)
 
-        # print(f'LTE bands: {lte_bands_list}')
+        # logger.info(f'LTE bands: {lte_bands_list}')
         return lte_bands_list
 
     def wcdma_bands_selected(self):
@@ -970,7 +1037,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.b4_wcdma.isChecked():
             wcdma_bands_list.append(4)
 
-        # print(f'WCDMA bands: {wcdma_bands_list}')
+        # logger.info(f'WCDMA bands: {wcdma_bands_list}')
         return wcdma_bands_list
 
     def gsm_bands_selected(self):
@@ -984,7 +1051,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.gsm1900.isChecked():
             gsm_bands_list.append(1900)
 
-        # print(f'GSM bands: {gsm_bands_list}')
+        # logger.info(f'GSM bands: {gsm_bands_list}')
         return gsm_bands_list
 
     def ulca_lte_bands_selected(self):
@@ -1012,7 +1079,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.ulca_48c.isChecked():
             ulca_lte_bands_list.append('48c')
 
-        # print(f'ULCA LTE bands: {ulca_lte_bands_list}')
+        # logger.info(f'ULCA LTE bands: {ulca_lte_bands_list}')
         return ulca_lte_bands_list
 
     def nr_bw_selected(self):
@@ -1213,6 +1280,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tx_test_items_ns_count_wcdma = 0
         tx_test_items_ns_count_gsm = 0
         tx_test_items_ns_count_ulca_lte = 0
+        tx_test_items_ns_count_nr_fcc = 0
+        tx_test_items_ns_count_nr_ce = 0
         rx_test_items_ns_count_nr = 0
         rx_test_items_ns_count_lte = 0
         rx_test_items_ns_count_wcdma = 0
@@ -1271,15 +1340,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 tx_test_items_ns_count_wcdma += 1
                 tx_test_items_ns_count_gsm += 1
             if key == 'tx_fcc_power_ns' and value:
-                tx_test_items_ns_count_nr += 1
-                tx_test_items_ns_count_lte += 1
-                tx_test_items_ns_count_wcdma += 1
-                tx_test_items_ns_count_gsm += 1
+                tx_test_items_ns_count_nr_fcc += 1
             if key == 'tx_ce_power_ns' and value:
-                tx_test_items_ns_count_nr += 1
-                tx_test_items_ns_count_lte += 1
-                tx_test_items_ns_count_wcdma += 1
-                tx_test_items_ns_count_gsm += 1
+                tx_test_items_ns_count_nr_ce += 1
             if key == 'tx_harmonics_ns' and value:
                 tx_test_items_ns_count_nr += 1
                 tx_test_items_ns_count_lte += 1
@@ -1712,25 +1775,65 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       tx_test_items_s_count * hsupa_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_s_count * hsdpa_tech_count * channel_count * band_wcdma_count + \
                       rx_test_items_s_count * channel_count * band_lte_count * ue_power_count + \
-                      rx_test_items_s_count * channel_count * band_wcdma_count * ue_power_count
+                      rx_test_items_s_count * channel_count * band_wcdma_count * ue_power_count  + \
+                      tx_test_items_ns_count_nr_fcc * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count + \
+                      tx_test_items_ns_count_nr_ce * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count
 
         return count_total
 
     def measure(self):
+        start = datetime.datetime.now()
+
         self.run_button.setEnabled(False)
-        state_dict = self.gui_state_get()
-        self.counts = self.items_counts(state_dict)
-        self.progressBar.reset()
-        self.progressBar.setMaximum(self.counts)
-        # for i in range(78):
-        #     print(i)
-        #     self.progressBar.setValue(i+1)
-        #     time.sleep(1)
-        self.measure_base(state_dict)
+
+        if self.tmpchmb_en.isChecked():  # with temp chamber and PSU
+            self.tmpcmb = TempChamber()
+            self.psu = Psu()
+            for temp_volt in self.temp_volts_selected():
+                self.condition = temp_volt
+                temp = self.temp_dict[temp_volt[:2]]
+                volt = self.volt = self.volts_dict[temp_volt[2:]]
+                wait = int(self.wait_time_comboBox.currentText())
+                self.tmpcmb.tpchb_init(temp, wait)
+                self.psu.psu_init(volt)
+
+                self.measure_process()
+
+        elif self.psu_en.isChecked():  # with only PSU
+            self.psu = Psu()
+            for volt in self.volts_selected():
+                self.condition = volt  # HV, NV, LV
+                self.psu.psu_init(self.volts_dict[volt])
+                self.volt = self.volts_dict[volt]
+
+                self.measure_process()
+
+        else:  # wtihout temp chamber and psu controlled
+            self.condition = None
+            self.volt = 3.8
+
+            self.measure_process()
+
         self.run_button.setEnabled(True)
 
+        stop = datetime.datetime.now()
+        logger.info(f'Timer: {stop - start}')
+
+    def measure_process(self):
+        import utils.excel_handler as excel_hdl
+        import utils.adb_handler as adb_hdl
+
+        self.export_gui_setting_yaml()  # export state_dict to yaml file
+        state_dict = self.gui_state_get()
+        adb_hdl.STATE_ADB = excel_hdl.STATE_DICT_EXCEL = state_dict
+        counts_total = self.items_counts(state_dict)
+        self.progressBar.reset()
+        if counts_total != 0:
+            self.progressBar.setMaximum(counts_total)
+        self.measure_base(state_dict)
+
     def measure_base(self, state_dict):
-        print('measure...')
+        logger.info('Measure...')
         match state_dict['equipment']:
             case 'Cmw100':
                 from test_scripts.cmw100_items.tx_lmh import TxTestGenre
@@ -1758,12 +1861,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if state_dict['tx_1rb_sweep_ns']:
                     ...
                 if state_dict['tx_fcc_power_ns']:
-                    inst = TxTestFccCe()
+                    inst = TxTestFccCe(state_dict, self.progressBar)
                     inst.run_fcc()
                     inst.ser.com_close()
 
                 if state_dict['tx_ce_power_ns']:
-                    inst = TxTestFccCe()
+                    inst = TxTestFccCe(state_dict, self.progressBar)
                     inst.run_ce()
                     inst.ser.com_close()
 

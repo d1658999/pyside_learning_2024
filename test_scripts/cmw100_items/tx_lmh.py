@@ -22,11 +22,11 @@ logger = log_set('tx_lmh_ns')
 
 
 class TxTestGenre(AtCmd, CMW100):
-    def __init__(self, state_dict, obj_progressBar):
+    def __init__(self, state_dict, obj_progressbar):
         AtCmd.__init__(self)
         CMW100.__init__(self)
         self.state_dict = state_dict
-        self.progressBar = obj_progressBar
+        self.progressBar = obj_progressbar
         self.sa_nsa_mode = 0
         self.tx_path_mimo = None
         self.data_freq = None
@@ -61,7 +61,6 @@ class TxTestGenre(AtCmd, CMW100):
 
             if self.state_dict['tx_port_table_en'] and tx_path in ['TX1', 'TX2']:
                 self.port_tx = int(self.port_table[tx_path][str(band)])
-
 
             elif self.state_dict['tx_port_table_en'] and tx_path in ['MIMO']:
                 self.port_mimo_tx1 = int(self.port_table['MIMO_TX1'][str(band)])
@@ -306,7 +305,6 @@ class TxTestGenre(AtCmd, CMW100):
                 }
                 self.file_path = tx_power_relative_test_export_excel_ftm(data_freq, self.parameters)
 
-
         self.set_test_end_lte()
 
     def tx_power_aclr_evm_lmh_process_wcdma(self):
@@ -523,7 +521,7 @@ class TxTestGenre(AtCmd, CMW100):
             try:
                 file_name = select_file_name_genre_tx_ftm(bw, 'NR', 'lmh')
                 file_path = Path(excel_folder_path()) / Path(file_name)
-                txp_aclr_evm_current_plot_ftm(file_path, {'script': 'GENERAL', 'tech': 'NR'})
+                txp_aclr_evm_current_plot_ftm(file_path, {'tech': 'NR'})
                 color_format_clear(file_path)
                 color_format_nr_aclr_ftm(file_path)
                 color_format_nr_evm_ftm(file_path)
@@ -567,7 +565,7 @@ class TxTestGenre(AtCmd, CMW100):
             try:
                 file_name = select_file_name_genre_tx_ftm(bw, 'LTE', 'lmh')
                 file_path = Path(excel_folder_path()) / Path(file_name)
-                txp_aclr_evm_current_plot_ftm(file_path, {'script': 'GENERAL', 'tech': 'LTE'})
+                txp_aclr_evm_current_plot_ftm(file_path, {'tech': 'LTE'})
                 color_format_clear(file_path)
                 color_format_lte_aclr_ftm(file_path)
                 color_format_lte_evm_ftm(file_path)
@@ -607,7 +605,7 @@ class TxTestGenre(AtCmd, CMW100):
             if tech == 'GSM' and self.state_dict['gsm_bands_list'] != []:
                 self.tech = 'GSM'
                 for band in self.state_dict['gsm_bands_list']:
-                    self.pcl = self.state_dict['pcl_lb_level'] if band in [850, 900] else self.state_dict['pcl_lb_level']
+                    self.pcl = self.state_dict['pcl_lb_level'] if band in [850, 900] else self.state_dict['pcl_mb_level']
                     self.band_gsm = band
                     self.port_table_selector(self.band_gsm)  # this is determined if using port table
                     self.tx_power_aclr_evm_lmh_process_gsm()

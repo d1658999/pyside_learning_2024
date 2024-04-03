@@ -7,7 +7,7 @@ import math
 logger = log_set('spec_limits')
 
 TDD_BAND = [42, 48, 38, 39, 40, 41, 75, 77, 78, 79]
-CSV_PWR_FILE_FR1 = 'power_limits_fr1.csv'
+CSV_PWR_FILE_NR = 'power_limits_nr.csv'
 CSV_PWR_FILE_LTE = 'power_limits_lte.csv'
 CSV_PWR_FILE_WCDMA = 'power_limits_wcdma.csv'
 CSV_PWR_FILE_GSM = 'power_limits_gsm.csv'
@@ -16,7 +16,7 @@ ACLR_LIMITS_YAML_NAME = 'aclr_color_code.yaml'
 EVM_LIMITS_YAML_NAME = 'evm_color_code.yaml'
 SENS_LIMITS_YAML_NAME = 'sensitivity_color_code.yaml'
 
-CSV_PWR_PATH_FR1 = Path('spec_limits') / Path(CSV_PWR_FILE_FR1)
+CSV_PWR_PATH_NR = Path('spec_limits') / Path(CSV_PWR_FILE_NR)
 CSV_PWR_PATH_LTE = Path('spec_limits') / Path(CSV_PWR_FILE_LTE)
 CSV_PWR_PATH_WCDMA = Path('spec_limits') / Path(CSV_PWR_FILE_WCDMA)
 CSV_PWR_PATH_GSM = Path('spec_limits') / Path(CSV_PWR_FILE_GSM)
@@ -24,18 +24,18 @@ PWR_LIMITS_YAML_PATH = Path('spec_limits') / PWR_LIMITS_YAML_NAME
 ACLR_LIMITS_YAML_PATH = Path('spec_limits') / ACLR_LIMITS_YAML_NAME
 EVM_LIMITS_YAML_PATH = Path('spec_limits') / EVM_LIMITS_YAML_NAME
 SENS_LIMITS_YAML = Path('spec_limits') / SENS_LIMITS_YAML_NAME
-SENS_FDD_FR1_PATH = Path('spec_limits') / 'Sens_fdd_fr1.csv'
+SENS_FDD_NR_PATH = Path('spec_limits') / 'Sens_fdd_nr.csv'
 SENS_LTE_PATH = Path('spec_limits') / 'Sens_lte.csv'
-SENS_FDD_FR1_YAML = Path('spec_limits') / 'Sens_fdd_fr1.yaml'
-SENS_TDD_FR1_YAML = Path('spec_limits') / 'Sens_tdd_fr1.yaml'
+SENS_FDD_NR_YAML = Path('spec_limits') / 'Sens_fdd_nr.yaml'
+SENS_TDD_NR_YAML = Path('spec_limits') / 'Sens_tdd_nr.yaml'
 SENS_LTE_YAML = Path('spec_limits') / 'Sens_lte.yaml'
 SENS_WCDMA_YAML = Path('spec_limits') / 'Sens_wcdma.yaml'
 SENS_GSM_YAML = Path('spec_limits') / 'Sens_gsm.yaml'
 
 
-TECHs = ['FR1', 'LTE', 'WCDMA', 'GSM']
+TECHs = ['NR', 'LTE', 'WCDMA', 'GSM']
 
-TDD_NRB_FR1 = {
+TDD_NRB_NR = {
     15:
         {
             5: 25,
@@ -86,6 +86,7 @@ TDD_NRB_FR1 = {
         },
 }
 
+
 def power_limits_csv2yaml():
     """
     tech -> modultation -> band -> rb_state
@@ -93,9 +94,9 @@ def power_limits_csv2yaml():
     logger.info('tranfer spec_limits csv file to yaml')
     with open(PWR_LIMITS_YAML_PATH, 'w', encoding='utf-8') as outfile:
         contents = {}
-        for tech in TECHs:  # FR1, LTE, WCDMA, GSM
-            if tech == 'FR1':
-                with open(CSV_PWR_PATH_FR1, 'r') as csvfile:
+        for tech in TECHs:  # NR, LTE, WCDMA, GSM
+            if tech == 'NR':
+                with open(CSV_PWR_PATH_NR, 'r') as csvfile:
                     rows = csv.reader(csvfile)
                     next(rows)  # skip the title
                     for row in list(rows):
@@ -180,7 +181,7 @@ def import_sens_limits():
         return spec_sens_limits
 
 
-def csv_to_yaml_fr1(csv_file_path, yaml_file_path, has_header=True):  # generate fdd sensitivity criteria
+def csv_to_yaml_nr(csv_file_path, yaml_file_path, has_header=True):  # generate fdd sensitivity criteria
     """
     Converts a CSV file to a YAML file:
     - First column becomes the first tier.
@@ -243,17 +244,17 @@ def csv_to_yaml_lte(csv_file_path, yaml_file_path, has_header=True):  # generate
 
 
 
-def sensitivity_criteria_fr1(band, scs, bw):
+def sensitivity_criteria_nr(band, scs, bw):
     if band in TDD_BAND:
-        with open(SENS_TDD_FR1_YAML, 'r') as s:
+        with open(SENS_TDD_NR_YAML, 'r') as s:
             sens = yaml.safe_load(s)
 
-        formula = sens[str(band)][str(scs)].replace('N', str(TDD_NRB_FR1[scs][bw]))
+        formula = sens[str(band)][str(scs)].replace('N', str(TDD_NRB_NR[scs][bw]))
 
         return eval(formula)
 
     else:
-        with open(SENS_FDD_FR1_YAML, 'r') as s:
+        with open(SENS_FDD_NR_YAML, 'r') as s:
             sens = yaml.safe_load(s)
 
         return float(sens[str(band)][str(scs)][f'BW{bw}'])
@@ -288,6 +289,6 @@ def main():  # test use
 if __name__ == '__main__':
     # main()
     # print(sensitivity_criteria_ftm(77, 30, 100))
-    # csv_to_yaml(SENS_FDD_FR1_PATH, SENS_FDD_FR1_YAML)  # tranfer csv to yaml for fdd sens
+    # csv_to_yaml(SENS_FDD_NR_PATH, SENS_FDD_NR_YAML)  # tranfer csv to yaml for fdd sens
     # csv_to_yaml_lte(SENS_LTE_PATH, SENS_LTE_YAML)
     pass

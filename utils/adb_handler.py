@@ -1,11 +1,11 @@
 import subprocess as sp
 import re
 from time import sleep
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 from utils.log_init import log_set
 
 logger = log_set('Adb')
-
+STATE_ADB = {}
 
 # cat_cmd = SHL + CAT + CD + PMIC + grep
 
@@ -19,7 +19,7 @@ class RecordCurrent:
     def __init__(self):
         self.shl = 'adb shell '
         self.cat = '"cat" '
-        self.cd = '/sys/bus/iio/devices/iio\:'
+        self.cd = r'/sys/bus/iio/devices/iio:'
         self.pmic_search = 'device*/energy_value '
         self.grep = '"| grep" '
         self.device_num = None
@@ -55,7 +55,7 @@ class RecordCurrent:
         # cpu2_rail = 7
         # cpu3_rail = 5
         time = 1
-        vol_typ = ext_pmt.vol_typ
+        vol_typ = STATE_ADB['volt_type']
         avg_count = count
 
         # start to the main process the current calculation progress

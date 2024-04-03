@@ -973,6 +973,14 @@
        </widget>
       </widget>
       <widget class="QWidget" name="page_ulca_lte">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>771</width>
+         <height>521</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>ULCA_LTE</string>
        </attribute>
@@ -1136,6 +1144,14 @@
        </widget>
       </widget>
       <widget class="QWidget" name="page_endc_desense">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>771</width>
+         <height>521</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>ENDC_desense</string>
        </attribute>
@@ -1154,7 +1170,7 @@
            <property name="title">
             <string>LB</string>
            </property>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -1816,7 +1832,7 @@
          <property name="title">
           <string>RB(LTE)</string>
          </property>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -1939,7 +1955,7 @@
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="">
+             <widget class="QWidget" name="layoutWidget">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -2641,7 +2657,7 @@ Disable</string>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tx_path">
          <property name="geometry">
@@ -2764,6 +2780,14 @@ Disable</string>
          </widget>
         </widget>
         <widget class="QWidget" name="encc_path">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>131</width>
+           <height>461</height>
+          </rect>
+         </property>
          <attribute name="label">
           <string>Endc Path</string>
          </attribute>

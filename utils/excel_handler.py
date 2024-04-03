@@ -2,6 +2,7 @@ import logging
 import openpyxl
 from openpyxl.chart import LineChart, Reference, BarChart, Series
 from pathlib import Path
+import yaml
 
 from utils.log_init import log_set
 import utils.parameters.common_parameters_ftm as cm_pmt_ftm
@@ -13,10 +14,11 @@ from openpyxl.styles import PatternFill, Font, Color
 from openpyxl.formatting.rule import CellIsRule, FormulaRule, ColorScaleRule
 from openpyxl.formatting.formatting import ConditionalFormattingList
 from spec_limits.spec_limit_handler import import_aclr_limits, import_evm_limits, import_sens_limits
-from spec_limits.spec_limit_handler import sensitivity_criteria_fr1, sensitivity_criteria_lte
+from spec_limits.spec_limit_handler import sensitivity_criteria_nr, sensitivity_criteria_lte
 
 
 logger = log_set('excel_hdl')
+STATE_DICT_EXCEL = {}
 
 rx_path_gsm_dict = {
     2: 'RX0',
@@ -55,26 +57,25 @@ rx_path_fr1_dict = {
     15: 'ALL PATH',
 }
 
-
 def select_file_name_endc_ftm():
-    if ext_pmt.part_number == "":
+    if STATE_DICT_EXCEL['pn_name'] == "":
         return f'Sensitivty_ENDC.xlsx'
     else:
-        return f'Sensitivty_ENDC_{ext_pmt.part_number}.xlsx'
+        return f'Sensitivty_ENDC_{STATE_DICT_EXCEL['pn_name']}.xlsx'
 
 
 def select_file_name_fcc_ce_ftm(script, tech):
-    if ext_pmt.part_number == "":
+    if STATE_DICT_EXCEL['pn_name'] == "":
         return f'Power_{script}_{tech}.xlsx'
     else:
-        return f'Power_{script}_{tech}_{ext_pmt.part_number}.xlsx'
+        return f'Power_{script}_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
 
 
 def select_file_name_rx_ftm(bw, tech):
-    if ext_pmt.part_number == "":
+    if STATE_DICT_EXCEL['pn_name'] == "":
         return f'Sensitivty_{bw}MHZ_{tech}_LMH.xlsx'
     else:
-        return f'Sensitivty_{bw}MHZ_{tech}_LMH_{ext_pmt.part_number}.xlsx'
+        return f'Sensitivty_{bw}MHZ_{tech}_LMH_{STATE_DICT_EXCEL['pn_name']}.xlsx'
 
 
 def select_file_name_genre_tx_ftm(bw, tech, test_item='lmh'):
@@ -86,7 +87,7 @@ def select_file_name_genre_tx_ftm(bw, tech, test_item='lmh'):
         1rb_sweep
         harmonics
     """
-    if ext_pmt.part_number == "":
+    if STATE_DICT_EXCEL['pn_name'] == "":
         if test_item == 'level_sweep':
             return f'Tx_level_sweep_{bw}MHZ_{tech}.xlsx'
         elif test_item == 'lmh':
@@ -104,40 +105,40 @@ def select_file_name_genre_tx_ftm(bw, tech, test_item='lmh'):
 
     else:
         if test_item == 'level_sweep':
-            return f'Tx_level_sweep_{bw}MHZ_{tech}_{ext_pmt.part_number}.xlsx'
+            return f'Tx_level_sweep_{bw}MHZ_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif test_item == 'lmh':
-            return f'Tx_Pwr_ACLR_EVM_{bw}MHZ_{tech}_LMH_{ext_pmt.part_number}.xlsx'
+            return f'Tx_Pwr_ACLR_EVM_{bw}MHZ_{tech}_LMH_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif test_item == 'freq_sweep':
-            return f'Tx_freq_sweep_{bw}MHZ_{tech}_{ext_pmt.part_number}.xlsx'
+            return f'Tx_freq_sweep_{bw}MHZ_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif test_item == '1rb_sweep':
-            return f'Tx_1RB_sweep_{bw}MHZ_{tech}_{ext_pmt.part_number}.xlsx'
+            return f'Tx_1RB_sweep_{bw}MHZ_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif test_item == 'harmonics':
-            return f'Tx_harmonics_{bw}MHZ_{tech}_{ext_pmt.part_number}.xlsx'
+            return f'Tx_harmonics_{bw}MHZ_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif test_item == 'cbe':
-            return f'Tx_cbe_{bw}MHZ_{tech}_{ext_pmt.part_number}.xlsx'
+            return f'Tx_cbe_{bw}MHZ_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif test_item == 'apt_sweep':
-            return f'Tx_apt_sweep_candidate_{bw}MHZ_{tech}_{ext_pmt.part_number}.xlsx'
+            return f'Tx_apt_sweep_candidate_{bw}MHZ_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
 
 
 def select_file_name_rx_sig(bw, tech):
-    if ext_pmt.part_number == "":
+    if STATE_DICT_EXCEL['pn_name'] == "":
         return f'Sensitivty_sig_{bw}MHZ_{tech}_LMH.xlsx'
     else:
-        return f'Sensitivty_sig_{bw}MHZ_{tech}_LMH_{ext_pmt.part_number}.xlsx'
+        return f'Sensitivty_sig_{bw}MHZ_{tech}_LMH_{STATE_DICT_EXCEL['pn_name']}.xlsx'
 
 
 def select_file_name_rx_freq_sweep_sig(bw, tech):
-    if ext_pmt.part_number == "":
+    if STATE_DICT_EXCEL['pn_name'] == "":
         return f'Sensitivty_Freq_Sweep_sig_{bw}MHZ_{tech}_LMH.xlsx'
     else:
-        return f'Sensitivty_Freq_Sweep_sig_{bw}MHZ_{tech}_LMH_{ext_pmt.part_number}.xlsx'
+        return f'Sensitivty_Freq_Sweep_sig_{bw}MHZ_{tech}_LMH_{STATE_DICT_EXCEL['pn_name']}.xlsx'
 
 
 def select_file_name_genre_tx_sig(bw, standard, chcoding=None):
     """
     this is for signaling on Tx
     """
-    if ext_pmt.part_number == "":
+    if STATE_DICT_EXCEL['pn_name'] == "":
         if standard == 'LTE':
             return f'Tx_sig_{bw}MHZ_{standard}.xlsx'
         elif standard == 'WCDMA' and chcoding == 'REFMEASCH':  # WCDMA
@@ -148,13 +149,13 @@ def select_file_name_genre_tx_sig(bw, standard, chcoding=None):
             return f'Tx_sig_HSDPA.xlsx'
     else:
         if standard == 'LTE':
-            return f'Tx_sig_{bw}MHZ_{standard}_{ext_pmt.part_number}.xlsx'
+            return f'Tx_sig_{bw}MHZ_{standard}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif standard == 'WCDMA' and chcoding == 'REFMEASCH':  # WCDMA
-            return f'Tx_sig_WCDMA_{ext_pmt.part_number}.xlsx'
+            return f'Tx_sig_WCDMA_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif standard == 'WCDMA' and chcoding == 'EDCHTEST':  # HSUPA
-            return f'Tx_sig_HSUPA_{ext_pmt.part_number}.xlsx'
+            return f'Tx_sig_HSUPA_{STATE_DICT_EXCEL['pn_name']}.xlsx'
         elif standard == 'WCDMA' and chcoding == 'FIXREFCH':  # HSDPA
-            return f'Tx_sig_HSDPA_{ext_pmt.part_number}.xlsx'
+            return f'Tx_sig_HSDPA_{STATE_DICT_EXCEL['pn_name']}.xlsx'
 
 
 def excel_folder_create():
@@ -165,7 +166,7 @@ def excel_folder_create():
 
 
 def excel_folder_path():
-    path = Path('output') / Path(ext_pmt.devices_serial)
+    path = Path('output') / Path(STATE_DICT_EXCEL['devices_serial'])
     logger.info(f'========== folder path: {path}==========')
     return path
 
@@ -238,14 +239,14 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
 
     # filename choosen
     filename = None
-    if ext_pmt.part_number == "" and sub_info['test_item'] != 'cbe':
+    if STATE_DICT_EXCEL['pn_name'] == "" and sub_info['test_item'] != 'cbe':
         filename = f'Tx_ulca_{tech}.xlsx'
-    elif ext_pmt.part_number != "" and sub_info['test_item'] != 'cbe':
-        filename = f'Tx_ulca_{tech}_{ext_pmt.part_number}.xlsx'
-    elif ext_pmt.part_number == "" and sub_info['test_item'] == 'cbe':
-        filename = f'Tx_ulca_cbe_{tech}_{ext_pmt.part_number}.xlsx'
-    elif ext_pmt.part_number != "" and sub_info['test_item'] == 'cbe':
-        filename = f'Tx_ulca_cbe_{tech}_{ext_pmt.part_number}.xlsx'
+    elif STATE_DICT_EXCEL['pn_name'] != "" and sub_info['test_item'] != 'cbe':
+        filename = f'Tx_ulca_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
+    elif STATE_DICT_EXCEL['pn_name'] == "" and sub_info['test_item'] == 'cbe':
+        filename = f'Tx_ulca_cbe_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
+    elif STATE_DICT_EXCEL['pn_name'] != "" and sub_info['test_item'] == 'cbe':
+        filename = f'Tx_ulca_cbe_{tech}_{STATE_DICT_EXCEL['pn_name']}.xlsx'
 
     # file path by combinating the path and filename
     file_path = Path(excel_folder_path()) / Path(filename)
@@ -314,7 +315,7 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
                 else:  # to pass the dashboard
                     pass
 
-        # elif tech == 'FR1':  # this is not used for ulca
+        # elif tech == 'NR':  # this is not used for ulca
         #     # create dashboard
         #     for _ in ['QPSK', 'Q16', 'Q64', 'Q256', 'BPSK']:  # some cmw100 might not have licesnse of Q256
         #         wb.create_sheet(f'Dashboard_{_}')
@@ -370,7 +371,7 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
     if tech == 'LTE':
         mcs = data[27]
         ws = wb[f'Raw_Data_{mcs}']
-    # elif tech == 'FR1':  this is not use for ULCA
+    # elif tech == 'NR':  this is not use for ULCA
     #     ws = wb[f'Raw_Data_{mcs}']
 
     if tech == 'LTE':
@@ -379,7 +380,7 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
 
         ws.cell(row, 1).value = data[0]  # band
         ws.cell(row, 2).value = data[1]  # chan_lmh
-        ws.cell(row, 3).value = ext_pmt.tx_level  # Tx_level
+        ws.cell(row, 3).value = STATE_DICT_EXCEL['tx_level']  # Tx_level
         ws.cell(row, 4).value = data[2]  # cc1_bw
         ws.cell(row, 5).value = data[3]  # cc2_bw
         ws.cell(row, 6).value = data[4]  # cc1_channel
@@ -416,7 +417,7 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
         ws.cell(row, 37).value = sub_info['temp0']  # Temp0
         ws.cell(row, 38).value = sub_info['temp1']  # Temp1
 
-    # elif tech == 'FR1':  # this is not for FR1
+    # elif tech == 'NR':  # this is not for FR1
     #     max_row = ws.max_row
     #     row = max_row + 1
     #
@@ -447,7 +448,7 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
     #         ws.cell(row, 23).value = sync_path
     #         ws.cell(row, 24).value = asw_srs_path
     #         ws.cell(row, 25).value = measured_data[10] if test_item == 'lmh' else None
-    #         ws.cell(row, 26).value = ext_pmt.condition if test_item == 'lmh' else None
+    #         ws.cell(row, 26).value = STATE_DICT['condition'] if test_item == 'lmh' else None
     #         ws.cell(row, 27).value = measured_data[11] if test_item == 'lmh' else None
     #         ws.cell(row, 28).value = measured_data[12] if test_item == 'lmh' else None
     #         ws.cell(row, 29).value = measured_data[13][1] if test_item == 'harmonics' else None  # 2f0
@@ -465,7 +466,6 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
     data is dict like:
     tx_level: [ U_-2, U_-1, E_-1, Pwr, E_+1, U_+1, U_+2, EVM, Freq_Err, IQ_OFFSET]
     """
-    script = parameters_dict['script']
     tech = parameters_dict['tech']
     band = parameters_dict['band']
     bw = parameters_dict['bw']
@@ -483,534 +483,533 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
     test_item = parameters_dict['test_item']
     logger.info('----------save to excel----------')
     filename = None
-    if script in ['GENERAL', 'CSE', 'APT']:
-        if tx_freq_level >= 100:
-            filename = select_file_name_genre_tx_ftm(bw, tech, test_item)
-        elif tx_freq_level <= 100:
-            filename = select_file_name_genre_tx_ftm(bw, tech, test_item)
 
-        file_path = Path(excel_folder_path()) / Path(filename)
+    if tx_freq_level >= 100:
+        filename = select_file_name_genre_tx_ftm(bw, tech, test_item)
+    elif tx_freq_level <= 100:
+        filename = select_file_name_genre_tx_ftm(bw, tech, test_item)
 
-        if Path(file_path).exists() is False:
-            logger.info('----------file does not exist----------')
-            wb = openpyxl.Workbook()
-            wb.remove(wb['Sheet'])
-            # to create sheet
-            if tech == 'LTE':
-                # create dashboard
-                for _ in ['QPSK', 'Q16', 'Q64', 'Q256']:  # some cmw100 might not have licesnse of Q256
-                    wb.create_sheet(f'Dashboard_{_}')
-                    # wb.create_sheet(f'Dashboard_{_}_PRB')
-                    # wb.create_sheet(f'Dashboard_{_}_FRB')
+    file_path = Path(excel_folder_path()) / Path(filename)
 
-                # create the Raw data sheets
-                for _ in ['QPSK', 'Q16', 'Q64', 'Q256']:  # some cmw100 might not have licesnse of Q256
-                    wb.create_sheet(f'Raw_Data_{_}')
-                    # wb.create_sheet(f'Raw_Data_{_}_PRB')
-                    # wb.create_sheet(f'Raw_Data_{_}_FRB')
-
-                # create the title for every sheets
-                for sheetname in wb.sheetnames:
-                    if 'Raw_Data' in sheetname:
-                        ws = wb[sheetname]
-                        ws['A1'] = 'Band'
-                        ws['B1'] = 'BW'
-                        ws['C1'] = 'Tx_Freq'
-                        ws['D1'] = 'Chan'
-                        ws['E1'] = 'Tx_level'
-                        ws['F1'] = 'Measured_Power'
-                        ws['G1'] = 'E_-1'
-                        ws['H1'] = 'E_+1'
-                        ws['I1'] = 'U_-1'
-                        ws['J1'] = 'U_+1'
-                        ws['K1'] = 'U_-2'
-                        ws['L1'] = 'U_+2'
-                        ws['M1'] = 'EVM'
-                        ws['N1'] = 'Freq_Err'
-                        ws['O1'] = 'IQ_OFFSET'
-                        ws['P1'] = 'RB_num'
-                        ws['Q1'] = 'RB_start'
-                        ws['R1'] = 'MCS'
-                        ws['S1'] = 'Tx_Path'
-                        ws['T1'] = 'RB_STATE'
-                        ws['U1'] = 'Sync_Path'
-                        ws['V1'] = 'AS_Path'
-                        ws['W1'] = 'Current(mA)'
-                        ws['X1'] = 'Condition'
-                        ws['Y1'] = 'Temp0'
-                        ws['Z1'] = 'Temp1'
-                        if test_item == 'harmonics':
-                            ws['AA1'] = '2f0'
-                            ws['AB1'] = '3f0'
-                        elif test_item in ['lmh', 'level_sweep']:
-                            ws['AA1'] = 'Voltage'
-                            ws['AB1'] = 'FBRX power'
-                            ws['AC1'] = 'MIPI read'
-
-                        elif test_item in ['apt_sweep']:
-                            ws['AA1'] = 'Vcc'
-                            ws['AB1'] = 'Bias0'
-                            ws['AC1'] = 'Bias1'
-                    else:  # to pass the dashboard
-                        pass
-
-            elif tech == 'FR1':
-                # create dashboard
-                for _ in ['QPSK', 'Q16', 'Q64', 'Q256', 'BPSK']:  # some cmw100 might not have licesnse of Q256
-                    wb.create_sheet(f'Dashboard_{_}')
-
-                # create the Raw data sheets
-                for _ in ['QPSK', 'Q16', 'Q64', 'Q256', 'BPSK']:  # some cmw100 might not have licesnse of Q256
-                    wb.create_sheet(f'Raw_Data_{_}')
-
-                # create the title for every sheets
-                for sheetname in wb.sheetnames:
-                    if 'Raw_Data' in sheetname:
-                        ws = wb[sheetname]
-                        ws['A1'] = 'Band'
-                        ws['B1'] = 'BW'
-                        ws['C1'] = 'Tx_Freq'
-                        ws['D1'] = 'Chan'
-                        ws['E1'] = 'Tx_level'
-                        ws['F1'] = 'Measured_Power'
-                        ws['G1'] = 'E_-1'
-                        ws['H1'] = 'E_+1'
-                        ws['I1'] = 'U_-1'
-                        ws['J1'] = 'U_+1'
-                        ws['K1'] = 'U_-2'
-                        ws['L1'] = 'U_+2'
-                        ws['M1'] = 'EVM'
-                        ws['N1'] = 'Freq_Err'
-                        ws['O1'] = 'IQ_OFFSET'
-                        ws['P1'] = 'RB_num'
-                        ws['Q1'] = 'RB_start'
-                        ws['R1'] = 'MCS'
-                        ws['S1'] = 'Type'
-                        ws['T1'] = 'Tx_Path'
-                        ws['U1'] = 'SCS(KHz)'
-                        ws['V1'] = 'RB_STATE'
-                        ws['W1'] = 'Sync_Path'
-                        ws['X1'] = 'AS_SRS_Path'
-                        ws['Y1'] = 'Current(mA)'
-                        ws['Z1'] = 'Condition'
-                        ws['AA1'] = 'Temp0'
-                        ws['AB1'] = 'Temp1'
-                        if test_item == 'harmonics':
-                            ws['AC1'] = '2f0'
-                            ws['AD1'] = '3f0'
-                        elif test_item in ['lmh', 'level_sweep']:
-                            ws['AC1'] = 'Voltage_mipi'
-                            ws['AD1'] = 'FBRX power'
-                            ws['AE1'] = 'MIPI read'
-                        elif test_item in ['apt_sweep']:
-                            ws['AC1'] = 'Vcc'
-                            ws['AD1'] = 'Bias0'
-                            ws['AE1'] = 'Bias1'
-                    else:  # to pass the dashboard
-                        pass
-
-            elif tech == 'WCDMA':
-                # create dashboard
-                wb.create_sheet(f'Dashboard')
-
-                # create the Raw data sheets
-                wb.create_sheet(f'Raw_Data')
-
-                # create the title for every sheets
-                for sheetname in wb.sheetnames:
-                    if 'Raw_Data' in sheetname:
-                        ws = wb[sheetname]
-                        ws['A1'] = 'Band'
-                        ws['B1'] = 'Channel'
-                        ws['C1'] = 'Chan'
-                        ws['D1'] = 'Tx_Freq'
-                        ws['E1'] = 'Tx_level'
-                        ws['F1'] = 'Measured_Power'
-                        ws['G1'] = 'U_-1'
-                        ws['H1'] = 'U_+1'
-                        ws['I1'] = 'U_-2'
-                        ws['J1'] = 'U_+2'
-                        ws['K1'] = 'OBW'
-                        ws['L1'] = 'EVM'
-                        ws['M1'] = 'Freq_Err'
-                        ws['N1'] = 'IQ_OFFSET'
-                        ws['O1'] = 'Tx_Path'
-                        ws['P1'] = 'AS_Path'
-                        ws['Q1'] = 'Current(mA)'
-                        ws['R1'] = 'Condition'
-                        ws['S1'] = 'Temp0'
-                        ws['T1'] = 'Temp1'
-                        if test_item == 'harmonics':
-                            ws['U1'] = '2f0'
-                            ws['V1'] = '3f0'
-                        elif test_item in ['lmh', 'level_sweep']:
-                            ws['U1'] = 'Voltage_mipi'
-                            ws['V1'] = 'MIPI read'
-                    else:  # to pass the dashboard
-                        pass
-
-            elif tech == 'GSM':
-                # create dashboard
-                wb.create_sheet(f'Dashboard_GMSK')
-                wb.create_sheet(f'Dashboard_EPSK')
-
-                # create the Raw data sheets
-                wb.create_sheet(f'Raw_Data_GMSK')
-                wb.create_sheet(f'Raw_Data_EPSK')
-
-                # creat the title for every sheets
-                for sheetname in wb.sheetnames:
-                    if 'Raw_Data' in sheetname:
-                        ws = wb[sheetname]
-                        ws['A1'] = 'Band'
-                        ws['B1'] = 'Channel'
-                        ws['C1'] = 'Chan'
-                        ws['D1'] = 'Rx_Freq'
-                        ws['E1'] = 'Tx_PCL'
-                        ws['F1'] = 'Measured_Power'
-                        ws['G1'] = 'Phase_rms'
-                        ws['H1'] = 'EVM_rms'
-                        ws['I1'] = 'Ferr'
-                        ws['J1'] = 'ORFS_MOD_-200'
-                        ws['K1'] = 'ORFS_MOD_+200'
-                        ws['L1'] = 'ORFS_MOD_-400'
-                        ws['M1'] = 'ORFS_MOD_+400'
-                        ws['N1'] = 'ORFS_MOD_-600'
-                        ws['O1'] = 'ORFS_MOD_+600'
-                        ws['P1'] = 'ORFS_SW_-400'
-                        ws['Q1'] = 'ORFS_SW_+400'
-                        ws['R1'] = 'ORFS_SW_-600'
-                        ws['S1'] = 'ORFS_SW_+600'
-                        ws['T1'] = 'ORFS_SW_-1200'
-                        ws['U1'] = 'ORFS_SW_+1200'
-                        ws['V1'] = 'AS_Path'
-                        ws['W1'] = 'Current(mA)'
-                        ws['X1'] = 'Condition'
-                        ws['Y1'] = 'Temp0'
-                        ws['Z1'] = 'Temp1'
-                        ws['AA1'] = '2f0' if test_item == 'harmonics' else None
-                        ws['AB1'] = '3f0' if test_item == 'harmonics' else None
-                    else:  # to pass the dashboard
-                        pass
-
-            # save and close file
-            wb.save(file_path)
-            wb.close()
-
-        logger.info('----------file exist----------')
-        wb = openpyxl.load_workbook(file_path)
-        ws = None
+    if Path(file_path).exists() is False:
+        logger.info('----------file does not exist----------')
+        wb = openpyxl.Workbook()
+        wb.remove(wb['Sheet'])
+        # to create sheet
         if tech == 'LTE':
-            ws = wb[f'Raw_Data_{mcs}']
-        elif tech == 'FR1':
-            ws = wb[f'Raw_Data_{mcs}']
-        elif tech == 'WCDMA':
-            ws = wb[f'Raw_Data']
-        elif tech == 'GSM':
-            ws = wb[f'Raw_Data_{mod}']
+            # create dashboard
+            for _ in ['QPSK', 'Q16', 'Q64', 'Q256']:  # some cmw100 might not have licesnse of Q256
+                wb.create_sheet(f'Dashboard_{_}')
+                # wb.create_sheet(f'Dashboard_{_}_PRB')
+                # wb.create_sheet(f'Dashboard_{_}_FRB')
 
-        if tech == 'LTE':
-            max_row = ws.max_row
-            row = max_row + 1
-            if tx_freq_level >= 100:  # level_sweep
-                for tx_level, measured_data in data.items():
-                    chan = chan_judge_lte(band, bw, tx_freq_level)
-                    ws.cell(row, 1).value = band
-                    ws.cell(row, 2).value = bw
-                    ws.cell(row, 3).value = tx_freq_level  # this freq_lte
-                    ws.cell(row, 4).value = chan  # LMH
-                    ws.cell(row, 5).value = tx_level
-                    ws.cell(row, 6).value = measured_data[3]
-                    ws.cell(row, 7).value = measured_data[2]
-                    ws.cell(row, 8).value = measured_data[4]
-                    ws.cell(row, 9).value = measured_data[1]
-                    ws.cell(row, 10).value = measured_data[5]
-                    ws.cell(row, 11).value = measured_data[0]
-                    ws.cell(row, 12).value = measured_data[6]
-                    ws.cell(row, 13).value = measured_data[7]
-                    ws.cell(row, 14).value = measured_data[8]
-                    ws.cell(row, 15).value = measured_data[9]
-                    ws.cell(row, 16).value = rb_size
-                    ws.cell(row, 17).value = rb_start
-                    ws.cell(row, 18).value = mcs
-                    ws.cell(row, 19).value = tx_path
-                    ws.cell(row, 20).value = rb_state
-                    ws.cell(row, 21).value = sync_path
-                    ws.cell(row, 22).value = asw_srs_path
-                    ws.cell(row, 23).value = measured_data[10]
-                    ws.cell(row, 24).value = ext_pmt.condition
-                    ws.cell(row, 25).value = measured_data[11]
-                    ws.cell(row, 26).value = measured_data[12]
-                    ws.cell(row, 27).value = measured_data[13] if ext_pmt.volt_mipi_en else None  # volt_mipi
-                    ws.cell(row, 28).value = measured_data[14] if ext_pmt.fbrx_en else None  # fbrx_power
-                    ws.cell(row, 29).value = measured_data[15] if ext_pmt.mipi_read_en else None  # mipi_read
-                    row += 1
+            # create the Raw data sheets
+            for _ in ['QPSK', 'Q16', 'Q64', 'Q256']:  # some cmw100 might not have licesnse of Q256
+                wb.create_sheet(f'Raw_Data_{_}')
+                # wb.create_sheet(f'Raw_Data_{_}_PRB')
+                # wb.create_sheet(f'Raw_Data_{_}_FRB')
 
-            elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep, cbe
-                for tx_freq, measured_data in data.items():
-                    chan = chan_judge_lte(band, bw, tx_freq) if test_item != 'freq_sweep' else None
-                    ws.cell(row, 1).value = band
-                    ws.cell(row, 2).value = bw
-                    ws.cell(row, 3).value = tx_freq
-                    ws.cell(row, 4).value = chan  # LMH
-                    ws.cell(row, 5).value = tx_freq_level  # this tx_level
-                    ws.cell(row, 6).value = measured_data[3]
-                    ws.cell(row, 7).value = measured_data[2]
-                    ws.cell(row, 8).value = measured_data[4]
-                    ws.cell(row, 9).value = measured_data[1]
-                    ws.cell(row, 10).value = measured_data[5]
-                    ws.cell(row, 11).value = measured_data[0]
-                    ws.cell(row, 12).value = measured_data[6]
-                    ws.cell(row, 13).value = measured_data[7]
-                    ws.cell(row, 14).value = measured_data[8]
-                    ws.cell(row, 15).value = measured_data[9]
-                    ws.cell(row, 16).value = rb_size
-                    ws.cell(row, 17).value = rb_start
-                    ws.cell(row, 18).value = mcs
-                    ws.cell(row, 19).value = tx_path
-                    ws.cell(row, 20).value = rb_state
-                    ws.cell(row, 21).value = sync_path
-                    ws.cell(row, 22).value = asw_srs_path
-                    ws.cell(row, 23).value = measured_data[10] if test_item == 'lmh' else None
-                    ws.cell(row, 24).value = ext_pmt.condition if test_item == 'lmh' else None
-                    ws.cell(row, 25).value = measured_data[11] if test_item in ['lmh', 'cbe'] else None
-                    ws.cell(row, 26).value = measured_data[12] if test_item in ['lmh', 'cbe'] else None
-                    if test_item != 'harmonics':
-                        ws.cell(row, 27).value = measured_data[13] if ext_pmt.volt_mipi_en else None  # volt_mipi
-                        ws.cell(row, 28).value = measured_data[14] if ext_pmt.fbrx_en else None  # fbrx_power
-                        ws.cell(row, 29).value = measured_data[15] if ext_pmt.mipi_read_en else None  # mipi_read
+            # create the title for every sheets
+            for sheetname in wb.sheetnames:
+                if 'Raw_Data' in sheetname:
+                    ws = wb[sheetname]
+                    ws['A1'] = 'Band'
+                    ws['B1'] = 'BW'
+                    ws['C1'] = 'Tx_Freq'
+                    ws['D1'] = 'Chan'
+                    ws['E1'] = 'Tx_level'
+                    ws['F1'] = 'Measured_Power'
+                    ws['G1'] = 'E_-1'
+                    ws['H1'] = 'E_+1'
+                    ws['I1'] = 'U_-1'
+                    ws['J1'] = 'U_+1'
+                    ws['K1'] = 'U_-2'
+                    ws['L1'] = 'U_+2'
+                    ws['M1'] = 'EVM'
+                    ws['N1'] = 'Freq_Err'
+                    ws['O1'] = 'IQ_OFFSET'
+                    ws['P1'] = 'RB_num'
+                    ws['Q1'] = 'RB_start'
+                    ws['R1'] = 'MCS'
+                    ws['S1'] = 'Tx_Path'
+                    ws['T1'] = 'RB_STATE'
+                    ws['U1'] = 'Sync_Path'
+                    ws['V1'] = 'AS_Path'
+                    ws['W1'] = 'Current(mA)'
+                    ws['X1'] = 'Condition'
+                    ws['Y1'] = 'Temp0'
+                    ws['Z1'] = 'Temp1'
+                    if test_item == 'harmonics':
+                        ws['AA1'] = '2f0'
+                        ws['AB1'] = '3f0'
+                    elif test_item in ['lmh', 'level_sweep']:
+                        ws['AA1'] = 'Voltage'
+                        ws['AB1'] = 'FBRX power'
+                        ws['AC1'] = 'MIPI read'
 
-                    elif test_item == 'harmonics':
-                        ws.cell(row, 27).value = measured_data[13][1]  # 2f0
-                        ws.cell(row, 28).value = measured_data[14][1]  # 3f0
+                    elif test_item in ['apt_sweep']:
+                        ws['AA1'] = 'Vcc'
+                        ws['AB1'] = 'Bias0'
+                        ws['AC1'] = 'Bias1'
+                else:  # to pass the dashboard
+                    pass
 
-                    row += 1
+        elif tech == 'NR':
+            # create dashboard
+            for _ in ['QPSK', 'Q16', 'Q64', 'Q256', 'BPSK']:  # some cmw100 might not have licesnse of Q256
+                wb.create_sheet(f'Dashboard_{_}')
 
-        elif tech == 'FR1':
-            max_row = ws.max_row
-            row = max_row + 1
-            if tx_freq_level >= 100:  # level_sweep
-                for tx_level, measured_data in data.items():
-                    chan = chan_judge_fr1(band, bw, tx_freq_level)
-                    ws.cell(row, 1).value = band
-                    ws.cell(row, 2).value = bw
-                    ws.cell(row, 3).value = tx_freq_level  # this freq_fr1
-                    ws.cell(row, 4).value = chan  # LMH
-                    ws.cell(row, 5).value = tx_level
-                    ws.cell(row, 6).value = measured_data[3]
-                    ws.cell(row, 7).value = measured_data[2]
-                    ws.cell(row, 8).value = measured_data[4]
-                    ws.cell(row, 9).value = measured_data[1]
-                    ws.cell(row, 10).value = measured_data[5]
-                    ws.cell(row, 11).value = measured_data[0]
-                    ws.cell(row, 12).value = measured_data[6]
-                    ws.cell(row, 13).value = measured_data[7]
-                    ws.cell(row, 14).value = measured_data[8]
-                    ws.cell(row, 15).value = measured_data[9]
-                    ws.cell(row, 16).value = rb_size
-                    ws.cell(row, 17).value = rb_start
-                    ws.cell(row, 18).value = mcs
-                    ws.cell(row, 19).value = type_
-                    ws.cell(row, 20).value = tx_path
-                    ws.cell(row, 21).value = scs
-                    ws.cell(row, 22).value = rb_state
-                    ws.cell(row, 23).value = sync_path
-                    ws.cell(row, 24).value = asw_srs_path
-                    ws.cell(row, 25).value = measured_data[10]
-                    ws.cell(row, 26).value = ext_pmt.condition
-                    ws.cell(row, 27).value = measured_data[11]
-                    ws.cell(row, 28).value = measured_data[12]
-                    if parameters_dict['test_item'] != 'apt_sweep':
-                        ws.cell(row, 29).value = measured_data[13] if ext_pmt.volt_mipi_en else None  # volt_mipi
-                        ws.cell(row, 30).value = measured_data[14] if ext_pmt.fbrx_en else None  # fbrx_power
-                        ws.cell(row, 31).value = measured_data[15] if ext_pmt.mipi_read_en else None  # mipi_read
-                    elif parameters_dict['test_item'] == 'apt_sweep':
-                        ws.cell(row, 29).value = measured_data[11]  # vcc
-                        ws.cell(row, 30).value = measured_data[12]  # bias0
-                        ws.cell(row, 31).value = measured_data[13]  # bias1
+            # create the Raw data sheets
+            for _ in ['QPSK', 'Q16', 'Q64', 'Q256', 'BPSK']:  # some cmw100 might not have licesnse of Q256
+                wb.create_sheet(f'Raw_Data_{_}')
 
-                    row += 1
-
-            elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep, cbe
-                for tx_freq, measured_data in data.items():
-                    chan = chan_judge_fr1(band, bw, tx_freq) if test_item != 'freq_sweep' else None
-                    ws.cell(row, 1).value = band
-                    ws.cell(row, 2).value = bw
-                    ws.cell(row, 3).value = tx_freq
-                    ws.cell(row, 4).value = chan  # LMH
-                    ws.cell(row, 5).value = tx_freq_level  # this tx_level
-                    ws.cell(row, 6).value = measured_data[3]
-                    ws.cell(row, 7).value = measured_data[2]
-                    ws.cell(row, 8).value = measured_data[4]
-                    ws.cell(row, 9).value = measured_data[1]
-                    ws.cell(row, 10).value = measured_data[5]
-                    ws.cell(row, 11).value = measured_data[0]
-                    ws.cell(row, 12).value = measured_data[6]
-                    ws.cell(row, 13).value = measured_data[7]
-                    ws.cell(row, 14).value = measured_data[8]
-                    ws.cell(row, 15).value = measured_data[9]
-                    ws.cell(row, 16).value = rb_size
-                    ws.cell(row, 17).value = rb_start
-                    ws.cell(row, 18).value = mcs
-                    ws.cell(row, 19).value = type_
-                    ws.cell(row, 20).value = tx_path
-                    ws.cell(row, 21).value = scs
-                    ws.cell(row, 22).value = rb_state
-                    ws.cell(row, 23).value = sync_path
-                    ws.cell(row, 24).value = asw_srs_path
-                    ws.cell(row, 25).value = measured_data[10] if test_item == 'lmh' else None
-                    ws.cell(row, 26).value = ext_pmt.condition if test_item == 'lmh' else None
-                    ws.cell(row, 27).value = measured_data[11] if test_item in ['lmh', 'cbe'] else None
-                    ws.cell(row, 28).value = measured_data[12] if test_item in ['lmh', 'cbe'] else None
-                    if test_item != 'harmonics':
-                        ws.cell(row, 29).value = measured_data[13] if ext_pmt.volt_mipi_en else None  # volt_mipi
-                        ws.cell(row, 30).value = measured_data[14] if ext_pmt.fbrx_en else None  # fbrx_power
-                        ws.cell(row, 31).value = measured_data[15] if ext_pmt.mipi_read_en else None  # mipi_read
-                    elif test_item == 'harmonics':
-                        ws.cell(row, 29).value = measured_data[13][1]  # 2f0
-                        ws.cell(row, 30).value = measured_data[14][1]  # 3f0
-
-                    row += 1
+            # create the title for every sheets
+            for sheetname in wb.sheetnames:
+                if 'Raw_Data' in sheetname:
+                    ws = wb[sheetname]
+                    ws['A1'] = 'Band'
+                    ws['B1'] = 'BW'
+                    ws['C1'] = 'Tx_Freq'
+                    ws['D1'] = 'Chan'
+                    ws['E1'] = 'Tx_level'
+                    ws['F1'] = 'Measured_Power'
+                    ws['G1'] = 'E_-1'
+                    ws['H1'] = 'E_+1'
+                    ws['I1'] = 'U_-1'
+                    ws['J1'] = 'U_+1'
+                    ws['K1'] = 'U_-2'
+                    ws['L1'] = 'U_+2'
+                    ws['M1'] = 'EVM'
+                    ws['N1'] = 'Freq_Err'
+                    ws['O1'] = 'IQ_OFFSET'
+                    ws['P1'] = 'RB_num'
+                    ws['Q1'] = 'RB_start'
+                    ws['R1'] = 'MCS'
+                    ws['S1'] = 'Type'
+                    ws['T1'] = 'Tx_Path'
+                    ws['U1'] = 'SCS(KHz)'
+                    ws['V1'] = 'RB_STATE'
+                    ws['W1'] = 'Sync_Path'
+                    ws['X1'] = 'AS_SRS_Path'
+                    ws['Y1'] = 'Current(mA)'
+                    ws['Z1'] = 'Condition'
+                    ws['AA1'] = 'Temp0'
+                    ws['AB1'] = 'Temp1'
+                    if test_item == 'harmonics':
+                        ws['AC1'] = '2f0'
+                        ws['AD1'] = '3f0'
+                    elif test_item in ['lmh', 'level_sweep']:
+                        ws['AC1'] = 'Voltage_mipi'
+                        ws['AD1'] = 'FBRX power'
+                        ws['AE1'] = 'MIPI read'
+                    elif test_item in ['apt_sweep']:
+                        ws['AC1'] = 'Vcc'
+                        ws['AD1'] = 'Bias0'
+                        ws['AE1'] = 'Bias1'
+                else:  # to pass the dashboard
+                    pass
 
         elif tech == 'WCDMA':
-            max_row = ws.max_row
-            row = max_row + 1
-            if tx_freq_level >= 100:  # level_sweep
-                for tx_level, measured_data in data.items():
-                    chan = chan_judge_wcdma(band, tx_freq_level)
-                    ws.cell(row, 1).value = band
-                    # this channel
-                    ws.cell(row, 2).value = cm_pmt_ftm.transfer_freq2chan_wcdma(band, tx_freq_level, 'tx')
-                    ws.cell(row, 3).value = chan  # LMH
-                    ws.cell(row, 4).value = tx_freq_level  # this tx_freq_wcdma
-                    ws.cell(row, 5).value = tx_level
-                    ws.cell(row, 6).value = measured_data[5]
-                    ws.cell(row, 7).value = measured_data[0]
-                    ws.cell(row, 8).value = measured_data[1]
-                    ws.cell(row, 9).value = measured_data[2]
-                    ws.cell(row, 10).value = measured_data[3]
-                    ws.cell(row, 11).value = measured_data[4]
-                    ws.cell(row, 12).value = measured_data[6]
-                    ws.cell(row, 13).value = measured_data[7]
-                    ws.cell(row, 14).value = measured_data[8]
-                    ws.cell(row, 15).value = tx_path
-                    ws.cell(row, 16).value = asw_srs_path
-                    ws.cell(row, 17).value = measured_data[9]
-                    ws.cell(row, 18).value = ext_pmt.condition
-                    ws.cell(row, 19).value = measured_data[10]
-                    ws.cell(row, 20).value = measured_data[11]
-                    ws.cell(row, 21).value = measured_data[12] if ext_pmt.volt_mipi_en else None  # volt_mipi
-                    ws.cell(row, 22).value = measured_data[13] if ext_pmt.mipi_read_en else None  # mipi_read
-                    row += 1
+            # create dashboard
+            wb.create_sheet(f'Dashboard')
 
-            elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep
-                for tx_freq, measured_data in data.items():
-                    chan = chan_judge_wcdma(band, tx_freq) if test_item != 'freq_sweep' else None
-                    ws.cell(row, 1).value = band
-                    ws.cell(row, 2).value = cm_pmt_ftm.transfer_freq2chan_wcdma(band, tx_freq, 'tx')  # this channel
-                    ws.cell(row, 3).value = chan  # LMH
-                    ws.cell(row, 4).value = tx_freq
-                    ws.cell(row, 5).value = tx_freq_level  # this tx_level
-                    ws.cell(row, 6).value = measured_data[5]
-                    ws.cell(row, 7).value = measured_data[0]
-                    ws.cell(row, 8).value = measured_data[1]
-                    ws.cell(row, 9).value = measured_data[2]
-                    ws.cell(row, 10).value = measured_data[3]
-                    ws.cell(row, 11).value = measured_data[4]
-                    ws.cell(row, 12).value = measured_data[6]
-                    ws.cell(row, 13).value = measured_data[7]
-                    ws.cell(row, 14).value = measured_data[8]
-                    ws.cell(row, 15).value = tx_path
-                    ws.cell(row, 16).value = asw_srs_path
-                    ws.cell(row, 17).value = measured_data[9] if test_item == 'lmh' else None
-                    ws.cell(row, 18).value = ext_pmt.condition if test_item == 'lmh' else None
-                    ws.cell(row, 19).value = measured_data[10] if test_item == 'lmh' else None
-                    ws.cell(row, 20).value = measured_data[11] if test_item == 'lmh' else None
-                    if test_item != 'harmonics':
-                        ws.cell(row, 21).value = measured_data[12] if ext_pmt.volt_mipi_en else None  # volt_mipi
-                        ws.cell(row, 22).value = measured_data[13] if ext_pmt.mipi_read_en else None  # mipi_read
-                    elif test_item == 'harmonics':
-                        ws.cell(row, 21).value = measured_data[12][1]  # 2f0
-                        ws.cell(row, 22).value = measured_data[13][1]  # 3f0
+            # create the Raw data sheets
+            wb.create_sheet(f'Raw_Data')
 
-                    row += 1
+            # create the title for every sheets
+            for sheetname in wb.sheetnames:
+                if 'Raw_Data' in sheetname:
+                    ws = wb[sheetname]
+                    ws['A1'] = 'Band'
+                    ws['B1'] = 'Channel'
+                    ws['C1'] = 'Chan'
+                    ws['D1'] = 'Tx_Freq'
+                    ws['E1'] = 'Tx_level'
+                    ws['F1'] = 'Measured_Power'
+                    ws['G1'] = 'U_-1'
+                    ws['H1'] = 'U_+1'
+                    ws['I1'] = 'U_-2'
+                    ws['J1'] = 'U_+2'
+                    ws['K1'] = 'OBW'
+                    ws['L1'] = 'EVM'
+                    ws['M1'] = 'Freq_Err'
+                    ws['N1'] = 'IQ_OFFSET'
+                    ws['O1'] = 'Tx_Path'
+                    ws['P1'] = 'AS_Path'
+                    ws['Q1'] = 'Current(mA)'
+                    ws['R1'] = 'Condition'
+                    ws['S1'] = 'Temp0'
+                    ws['T1'] = 'Temp1'
+                    if test_item == 'harmonics':
+                        ws['U1'] = '2f0'
+                        ws['V1'] = '3f0'
+                    elif test_item in ['lmh', 'level_sweep']:
+                        ws['U1'] = 'Voltage_mipi'
+                        ws['V1'] = 'MIPI read'
+                else:  # to pass the dashboard
+                    pass
 
         elif tech == 'GSM':
-            max_row = ws.max_row
-            row = max_row + 1
-            if tx_freq_level >= 100:  # level_sweep
-                for tx_pcl, measured_data in data.items():
-                    chan = chan_judge_gsm(band, tx_freq_level)
-                    ws.cell(row, 1).value = band
-                    ws.cell(row, 2).value = cm_pmt_ftm.transfer_freq2chan_gsm(band, tx_freq_level)  # channel
-                    ws.cell(row, 3).value = chan  # LMH
-                    ws.cell(row, 4).value = tx_freq_level  # this rx_freq_gsm
-                    ws.cell(row, 5).value = tx_pcl
-                    ws.cell(row, 6).value = measured_data[0]
-                    ws.cell(row, 7).value = measured_data[1]
-                    ws.cell(row, 8).value = measured_data[2]
-                    ws.cell(row, 9).value = measured_data[3]
-                    ws.cell(row, 10).value = measured_data[4]
-                    ws.cell(row, 11).value = measured_data[5]
-                    ws.cell(row, 12).value = measured_data[6]
-                    ws.cell(row, 13).value = measured_data[7]
-                    ws.cell(row, 14).value = measured_data[8]
-                    ws.cell(row, 15).value = measured_data[9]
-                    ws.cell(row, 16).value = measured_data[10]
-                    ws.cell(row, 17).value = measured_data[11]
-                    ws.cell(row, 18).value = measured_data[12]
-                    ws.cell(row, 19).value = measured_data[13]
-                    ws.cell(row, 20).value = measured_data[14]
-                    ws.cell(row, 21).value = measured_data[15]
-                    ws.cell(row, 22).value = asw_srs_path
-                    ws.cell(row, 23).value = measured_data[16]
-                    ws.cell(row, 24).value = ext_pmt.condition
-                    ws.cell(row, 25).value = measured_data[17]
-                    ws.cell(row, 26).value = measured_data[18]
+            # create dashboard
+            wb.create_sheet(f'Dashboard_GMSK')
+            wb.create_sheet(f'Dashboard_EPSK')
 
-                    row += 1
+            # create the Raw data sheets
+            wb.create_sheet(f'Raw_Data_GMSK')
+            wb.create_sheet(f'Raw_Data_EPSK')
 
-            elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep
-                for rx_freq, measured_data in data.items():
-                    chan = chan_judge_gsm(band, rx_freq) if test_item != 'freq_sweep' else None
-                    ws.cell(row, 1).value = band
-                    ws.cell(row, 2).value = cm_pmt_ftm.transfer_freq2chan_gsm(band, rx_freq)
-                    ws.cell(row, 3).value = chan  # LMH
-                    ws.cell(row, 4).value = rx_freq  # this rx_freq_gsm
-                    ws.cell(row, 5).value = tx_freq_level  # this pcl
-                    ws.cell(row, 6).value = measured_data[0]
-                    ws.cell(row, 7).value = measured_data[1]
-                    ws.cell(row, 8).value = measured_data[2]
-                    ws.cell(row, 9).value = measured_data[3]
-                    ws.cell(row, 10).value = measured_data[4]
-                    ws.cell(row, 11).value = measured_data[5]
-                    ws.cell(row, 12).value = measured_data[6]
-                    ws.cell(row, 13).value = measured_data[7]
-                    ws.cell(row, 14).value = measured_data[8]
-                    ws.cell(row, 15).value = measured_data[9]
-                    ws.cell(row, 16).value = measured_data[10]
-                    ws.cell(row, 17).value = measured_data[11]
-                    ws.cell(row, 18).value = measured_data[12]
-                    ws.cell(row, 19).value = measured_data[13]
-                    ws.cell(row, 20).value = measured_data[14]
-                    ws.cell(row, 21).value = measured_data[15]
-                    ws.cell(row, 22).value = asw_srs_path
-                    ws.cell(row, 23).value = measured_data[16] if test_item == 'lmh' else None
-                    ws.cell(row, 24).value = ext_pmt.condition if test_item == 'lmh' else None
-                    ws.cell(row, 25).value = measured_data[17] if test_item == 'lmh' else None
-                    ws.cell(row, 26).value = measured_data[18] if test_item == 'lmh' else None
-                    ws.cell(row, 27).value = measured_data[19][1] if test_item == 'harmonics' else None  # 2f0
-                    ws.cell(row, 28).value = measured_data[20][1] if test_item == 'harmonics' else None  # 3f0
-                    row += 1
+            # creat the title for every sheets
+            for sheetname in wb.sheetnames:
+                if 'Raw_Data' in sheetname:
+                    ws = wb[sheetname]
+                    ws['A1'] = 'Band'
+                    ws['B1'] = 'Channel'
+                    ws['C1'] = 'Chan'
+                    ws['D1'] = 'Rx_Freq'
+                    ws['E1'] = 'Tx_PCL'
+                    ws['F1'] = 'Measured_Power'
+                    ws['G1'] = 'Phase_rms'
+                    ws['H1'] = 'EVM_rms'
+                    ws['I1'] = 'Ferr'
+                    ws['J1'] = 'ORFS_MOD_-200'
+                    ws['K1'] = 'ORFS_MOD_+200'
+                    ws['L1'] = 'ORFS_MOD_-400'
+                    ws['M1'] = 'ORFS_MOD_+400'
+                    ws['N1'] = 'ORFS_MOD_-600'
+                    ws['O1'] = 'ORFS_MOD_+600'
+                    ws['P1'] = 'ORFS_SW_-400'
+                    ws['Q1'] = 'ORFS_SW_+400'
+                    ws['R1'] = 'ORFS_SW_-600'
+                    ws['S1'] = 'ORFS_SW_+600'
+                    ws['T1'] = 'ORFS_SW_-1200'
+                    ws['U1'] = 'ORFS_SW_+1200'
+                    ws['V1'] = 'AS_Path'
+                    ws['W1'] = 'Current(mA)'
+                    ws['X1'] = 'Condition'
+                    ws['Y1'] = 'Temp0'
+                    ws['Z1'] = 'Temp1'
+                    ws['AA1'] = '2f0' if test_item == 'harmonics' else None
+                    ws['AB1'] = '3f0' if test_item == 'harmonics' else None
+                else:  # to pass the dashboard
+                    pass
 
+        # save and close file
         wb.save(file_path)
         wb.close()
 
-        return file_path
+    logger.info('----------file exist----------')
+    wb = openpyxl.load_workbook(file_path)
+    ws = None
+    if tech == 'LTE':
+        ws = wb[f'Raw_Data_{mcs}']
+    elif tech == 'NR':
+        ws = wb[f'Raw_Data_{mcs}']
+    elif tech == 'WCDMA':
+        ws = wb[f'Raw_Data']
+    elif tech == 'GSM':
+        ws = wb[f'Raw_Data_{mod}']
+
+    if tech == 'LTE':
+        max_row = ws.max_row
+        row = max_row + 1
+        if tx_freq_level >= 100:  # level_sweep
+            for tx_level, measured_data in data.items():
+                chan = chan_judge_lte(band, bw, tx_freq_level)
+                ws.cell(row, 1).value = band
+                ws.cell(row, 2).value = bw
+                ws.cell(row, 3).value = tx_freq_level  # this freq_lte
+                ws.cell(row, 4).value = chan  # LMH
+                ws.cell(row, 5).value = tx_level
+                ws.cell(row, 6).value = measured_data[3]
+                ws.cell(row, 7).value = measured_data[2]
+                ws.cell(row, 8).value = measured_data[4]
+                ws.cell(row, 9).value = measured_data[1]
+                ws.cell(row, 10).value = measured_data[5]
+                ws.cell(row, 11).value = measured_data[0]
+                ws.cell(row, 12).value = measured_data[6]
+                ws.cell(row, 13).value = measured_data[7]
+                ws.cell(row, 14).value = measured_data[8]
+                ws.cell(row, 15).value = measured_data[9]
+                ws.cell(row, 16).value = rb_size
+                ws.cell(row, 17).value = rb_start
+                ws.cell(row, 18).value = mcs
+                ws.cell(row, 19).value = tx_path
+                ws.cell(row, 20).value = rb_state
+                ws.cell(row, 21).value = sync_path
+                ws.cell(row, 22).value = asw_srs_path
+                ws.cell(row, 23).value = measured_data[10]
+                ws.cell(row, 24).value = STATE_DICT_EXCEL['condition']
+                ws.cell(row, 25).value = measured_data[11]
+                ws.cell(row, 26).value = measured_data[12]
+                ws.cell(row, 27).value = measured_data[13] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                ws.cell(row, 28).value = measured_data[14] if STATE_DICT_EXCEL['fbrx_en'] else None  # fbrx_power
+                ws.cell(row, 29).value = measured_data[15] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                row += 1
+
+        elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep, cbe
+            for tx_freq, measured_data in data.items():
+                chan = chan_judge_lte(band, bw, tx_freq) if test_item != 'freq_sweep' else None
+                ws.cell(row, 1).value = band
+                ws.cell(row, 2).value = bw
+                ws.cell(row, 3).value = tx_freq
+                ws.cell(row, 4).value = chan  # LMH
+                ws.cell(row, 5).value = tx_freq_level  # this tx_level
+                ws.cell(row, 6).value = measured_data[3]
+                ws.cell(row, 7).value = measured_data[2]
+                ws.cell(row, 8).value = measured_data[4]
+                ws.cell(row, 9).value = measured_data[1]
+                ws.cell(row, 10).value = measured_data[5]
+                ws.cell(row, 11).value = measured_data[0]
+                ws.cell(row, 12).value = measured_data[6]
+                ws.cell(row, 13).value = measured_data[7]
+                ws.cell(row, 14).value = measured_data[8]
+                ws.cell(row, 15).value = measured_data[9]
+                ws.cell(row, 16).value = rb_size
+                ws.cell(row, 17).value = rb_start
+                ws.cell(row, 18).value = mcs
+                ws.cell(row, 19).value = tx_path
+                ws.cell(row, 20).value = rb_state
+                ws.cell(row, 21).value = sync_path
+                ws.cell(row, 22).value = asw_srs_path
+                ws.cell(row, 23).value = measured_data[10] if test_item == 'lmh' else None
+                ws.cell(row, 24).value = STATE_DICT_EXCEL['condition'] if test_item == 'lmh' else None
+                ws.cell(row, 25).value = measured_data[11] if test_item in ['lmh', 'cbe'] else None
+                ws.cell(row, 26).value = measured_data[12] if test_item in ['lmh', 'cbe'] else None
+                if test_item != 'harmonics':
+                    ws.cell(row, 27).value = measured_data[13] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                    ws.cell(row, 28).value = measured_data[14] if STATE_DICT_EXCEL['fbrx_en'] else None  # fbrx_power
+                    ws.cell(row, 29).value = measured_data[15] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+
+                elif test_item == 'harmonics':
+                    ws.cell(row, 27).value = measured_data[13][1]  # 2f0
+                    ws.cell(row, 28).value = measured_data[14][1]  # 3f0
+
+                row += 1
+
+    elif tech == 'NR':
+        max_row = ws.max_row
+        row = max_row + 1
+        if tx_freq_level >= 100:  # level_sweep
+            for tx_level, measured_data in data.items():
+                chan = chan_judge_fr1(band, bw, tx_freq_level)
+                ws.cell(row, 1).value = band
+                ws.cell(row, 2).value = bw
+                ws.cell(row, 3).value = tx_freq_level  # this freq_fr1
+                ws.cell(row, 4).value = chan  # LMH
+                ws.cell(row, 5).value = tx_level
+                ws.cell(row, 6).value = measured_data[3]
+                ws.cell(row, 7).value = measured_data[2]
+                ws.cell(row, 8).value = measured_data[4]
+                ws.cell(row, 9).value = measured_data[1]
+                ws.cell(row, 10).value = measured_data[5]
+                ws.cell(row, 11).value = measured_data[0]
+                ws.cell(row, 12).value = measured_data[6]
+                ws.cell(row, 13).value = measured_data[7]
+                ws.cell(row, 14).value = measured_data[8]
+                ws.cell(row, 15).value = measured_data[9]
+                ws.cell(row, 16).value = rb_size
+                ws.cell(row, 17).value = rb_start
+                ws.cell(row, 18).value = mcs
+                ws.cell(row, 19).value = type_
+                ws.cell(row, 20).value = tx_path
+                ws.cell(row, 21).value = scs
+                ws.cell(row, 22).value = rb_state
+                ws.cell(row, 23).value = sync_path
+                ws.cell(row, 24).value = asw_srs_path
+                ws.cell(row, 25).value = measured_data[10]
+                ws.cell(row, 26).value = STATE_DICT_EXCEL['condition']
+                ws.cell(row, 27).value = measured_data[11]
+                ws.cell(row, 28).value = measured_data[12]
+                if parameters_dict['test_item'] != 'apt_sweep':
+                    ws.cell(row, 29).value = measured_data[13] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                    ws.cell(row, 30).value = measured_data[14] if STATE_DICT_EXCEL['fbrx_en'] else None  # fbrx_power
+                    ws.cell(row, 31).value = measured_data[15] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                elif parameters_dict['test_item'] == 'apt_sweep':
+                    ws.cell(row, 29).value = measured_data[11]  # vcc
+                    ws.cell(row, 30).value = measured_data[12]  # bias0
+                    ws.cell(row, 31).value = measured_data[13]  # bias1
+
+                row += 1
+
+        elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep, cbe
+            for tx_freq, measured_data in data.items():
+                chan = chan_judge_fr1(band, bw, tx_freq) if test_item != 'freq_sweep' else None
+                ws.cell(row, 1).value = band
+                ws.cell(row, 2).value = bw
+                ws.cell(row, 3).value = tx_freq
+                ws.cell(row, 4).value = chan  # LMH
+                ws.cell(row, 5).value = tx_freq_level  # this tx_level
+                ws.cell(row, 6).value = measured_data[3]
+                ws.cell(row, 7).value = measured_data[2]
+                ws.cell(row, 8).value = measured_data[4]
+                ws.cell(row, 9).value = measured_data[1]
+                ws.cell(row, 10).value = measured_data[5]
+                ws.cell(row, 11).value = measured_data[0]
+                ws.cell(row, 12).value = measured_data[6]
+                ws.cell(row, 13).value = measured_data[7]
+                ws.cell(row, 14).value = measured_data[8]
+                ws.cell(row, 15).value = measured_data[9]
+                ws.cell(row, 16).value = rb_size
+                ws.cell(row, 17).value = rb_start
+                ws.cell(row, 18).value = mcs
+                ws.cell(row, 19).value = type_
+                ws.cell(row, 20).value = tx_path
+                ws.cell(row, 21).value = scs
+                ws.cell(row, 22).value = rb_state
+                ws.cell(row, 23).value = sync_path
+                ws.cell(row, 24).value = asw_srs_path
+                ws.cell(row, 25).value = measured_data[10] if test_item == 'lmh' else None
+                ws.cell(row, 26).value = STATE_DICT_EXCEL['condition'] if test_item == 'lmh' else None
+                ws.cell(row, 27).value = measured_data[11] if test_item in ['lmh', 'cbe'] else None
+                ws.cell(row, 28).value = measured_data[12] if test_item in ['lmh', 'cbe'] else None
+                if test_item != 'harmonics':
+                    ws.cell(row, 29).value = measured_data[13] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                    ws.cell(row, 30).value = measured_data[14] if STATE_DICT_EXCEL['fbrx_en'] else None  # fbrx_power
+                    ws.cell(row, 31).value = measured_data[15] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                elif test_item == 'harmonics':
+                    ws.cell(row, 29).value = measured_data[13][1]  # 2f0
+                    ws.cell(row, 30).value = measured_data[14][1]  # 3f0
+
+                row += 1
+
+    elif tech == 'WCDMA':
+        max_row = ws.max_row
+        row = max_row + 1
+        if tx_freq_level >= 100:  # level_sweep
+            for tx_level, measured_data in data.items():
+                chan = chan_judge_wcdma(band, tx_freq_level)
+                ws.cell(row, 1).value = band
+                # this channel
+                ws.cell(row, 2).value = cm_pmt_ftm.transfer_freq2chan_wcdma(band, tx_freq_level, 'tx')
+                ws.cell(row, 3).value = chan  # LMH
+                ws.cell(row, 4).value = tx_freq_level  # this tx_freq_wcdma
+                ws.cell(row, 5).value = tx_level
+                ws.cell(row, 6).value = measured_data[5]
+                ws.cell(row, 7).value = measured_data[0]
+                ws.cell(row, 8).value = measured_data[1]
+                ws.cell(row, 9).value = measured_data[2]
+                ws.cell(row, 10).value = measured_data[3]
+                ws.cell(row, 11).value = measured_data[4]
+                ws.cell(row, 12).value = measured_data[6]
+                ws.cell(row, 13).value = measured_data[7]
+                ws.cell(row, 14).value = measured_data[8]
+                ws.cell(row, 15).value = tx_path
+                ws.cell(row, 16).value = asw_srs_path
+                ws.cell(row, 17).value = measured_data[9]
+                ws.cell(row, 18).value = STATE_DICT_EXCEL['condition']
+                ws.cell(row, 19).value = measured_data[10]
+                ws.cell(row, 20).value = measured_data[11]
+                ws.cell(row, 21).value = measured_data[12] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                ws.cell(row, 22).value = measured_data[13] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                row += 1
+
+        elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep
+            for tx_freq, measured_data in data.items():
+                chan = chan_judge_wcdma(band, tx_freq) if test_item != 'freq_sweep' else None
+                ws.cell(row, 1).value = band
+                ws.cell(row, 2).value = cm_pmt_ftm.transfer_freq2chan_wcdma(band, tx_freq, 'tx')  # this channel
+                ws.cell(row, 3).value = chan  # LMH
+                ws.cell(row, 4).value = tx_freq
+                ws.cell(row, 5).value = tx_freq_level  # this tx_level
+                ws.cell(row, 6).value = measured_data[5]
+                ws.cell(row, 7).value = measured_data[0]
+                ws.cell(row, 8).value = measured_data[1]
+                ws.cell(row, 9).value = measured_data[2]
+                ws.cell(row, 10).value = measured_data[3]
+                ws.cell(row, 11).value = measured_data[4]
+                ws.cell(row, 12).value = measured_data[6]
+                ws.cell(row, 13).value = measured_data[7]
+                ws.cell(row, 14).value = measured_data[8]
+                ws.cell(row, 15).value = tx_path
+                ws.cell(row, 16).value = asw_srs_path
+                ws.cell(row, 17).value = measured_data[9] if test_item == 'lmh' else None
+                ws.cell(row, 18).value = STATE_DICT_EXCEL['condition'] if test_item == 'lmh' else None
+                ws.cell(row, 19).value = measured_data[10] if test_item == 'lmh' else None
+                ws.cell(row, 20).value = measured_data[11] if test_item == 'lmh' else None
+                if test_item != 'harmonics':
+                    ws.cell(row, 21).value = measured_data[12] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                    ws.cell(row, 22).value = measured_data[13] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                elif test_item == 'harmonics':
+                    ws.cell(row, 21).value = measured_data[12][1]  # 2f0
+                    ws.cell(row, 22).value = measured_data[13][1]  # 3f0
+
+                row += 1
+
+    elif tech == 'GSM':
+        max_row = ws.max_row
+        row = max_row + 1
+        if tx_freq_level >= 100:  # level_sweep
+            for tx_pcl, measured_data in data.items():
+                chan = chan_judge_gsm(band, tx_freq_level)
+                ws.cell(row, 1).value = band
+                ws.cell(row, 2).value = cm_pmt_ftm.transfer_freq2chan_gsm(band, tx_freq_level)  # channel
+                ws.cell(row, 3).value = chan  # LMH
+                ws.cell(row, 4).value = tx_freq_level  # this rx_freq_gsm
+                ws.cell(row, 5).value = tx_pcl
+                ws.cell(row, 6).value = measured_data[0]
+                ws.cell(row, 7).value = measured_data[1]
+                ws.cell(row, 8).value = measured_data[2]
+                ws.cell(row, 9).value = measured_data[3]
+                ws.cell(row, 10).value = measured_data[4]
+                ws.cell(row, 11).value = measured_data[5]
+                ws.cell(row, 12).value = measured_data[6]
+                ws.cell(row, 13).value = measured_data[7]
+                ws.cell(row, 14).value = measured_data[8]
+                ws.cell(row, 15).value = measured_data[9]
+                ws.cell(row, 16).value = measured_data[10]
+                ws.cell(row, 17).value = measured_data[11]
+                ws.cell(row, 18).value = measured_data[12]
+                ws.cell(row, 19).value = measured_data[13]
+                ws.cell(row, 20).value = measured_data[14]
+                ws.cell(row, 21).value = measured_data[15]
+                ws.cell(row, 22).value = asw_srs_path
+                ws.cell(row, 23).value = measured_data[16]
+                ws.cell(row, 24).value = STATE_DICT_EXCEL['condition']
+                ws.cell(row, 25).value = measured_data[17]
+                ws.cell(row, 26).value = measured_data[18]
+
+                row += 1
+
+        elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep
+            for rx_freq, measured_data in data.items():
+                chan = chan_judge_gsm(band, rx_freq) if test_item != 'freq_sweep' else None
+                ws.cell(row, 1).value = band
+                ws.cell(row, 2).value = cm_pmt_ftm.transfer_freq2chan_gsm(band, rx_freq)
+                ws.cell(row, 3).value = chan  # LMH
+                ws.cell(row, 4).value = rx_freq  # this rx_freq_gsm
+                ws.cell(row, 5).value = tx_freq_level  # this pcl
+                ws.cell(row, 6).value = measured_data[0]
+                ws.cell(row, 7).value = measured_data[1]
+                ws.cell(row, 8).value = measured_data[2]
+                ws.cell(row, 9).value = measured_data[3]
+                ws.cell(row, 10).value = measured_data[4]
+                ws.cell(row, 11).value = measured_data[5]
+                ws.cell(row, 12).value = measured_data[6]
+                ws.cell(row, 13).value = measured_data[7]
+                ws.cell(row, 14).value = measured_data[8]
+                ws.cell(row, 15).value = measured_data[9]
+                ws.cell(row, 16).value = measured_data[10]
+                ws.cell(row, 17).value = measured_data[11]
+                ws.cell(row, 18).value = measured_data[12]
+                ws.cell(row, 19).value = measured_data[13]
+                ws.cell(row, 20).value = measured_data[14]
+                ws.cell(row, 21).value = measured_data[15]
+                ws.cell(row, 22).value = asw_srs_path
+                ws.cell(row, 23).value = measured_data[16] if test_item == 'lmh' else None
+                ws.cell(row, 24).value = STATE_DICT_EXCEL['condition'] if test_item == 'lmh' else None
+                ws.cell(row, 25).value = measured_data[17] if test_item == 'lmh' else None
+                ws.cell(row, 26).value = measured_data[18] if test_item == 'lmh' else None
+                ws.cell(row, 27).value = measured_data[19][1] if test_item == 'harmonics' else None  # 2f0
+                ws.cell(row, 28).value = measured_data[20][1] if test_item == 'harmonics' else None  # 3f0
+                row += 1
+
+    wb.save(file_path)
+    wb.close()
+
+    return file_path
 
 
 def txp_aclr_evm_current_plot_ftm(file_path, parameters_dict):
-    script = parameters_dict['script']
     tech = parameters_dict['tech']
     # band = parameters_dict['band']
     # bw = parameters_dict['bw']
@@ -1031,66 +1030,417 @@ def txp_aclr_evm_current_plot_ftm(file_path, parameters_dict):
     except Exception:
         raise FileNotFoundException(f'Cannot find {file_path}')
 
-    if script in ['GENERAL', 'CSE', 'APT']:
-        if tech == 'LTE':
-            for ws_name in wb.sheetnames:
-                if 'Raw_Data' in ws_name:
-                    logger.info(f'========={ws_name}==========')
-                    ws = wb[ws_name]
-                    ws_dashboard = wb['Dashboard_' + ws_name[9:]]
+    if tech == 'LTE':
+        for ws_name in wb.sheetnames:
+            if 'Raw_Data' in ws_name:
+                logger.info(f'========={ws_name}==========')
+                ws = wb[ws_name]
+                ws_dashboard = wb['Dashboard_' + ws_name[9:]]
 
-                    if ws_dashboard._charts:  # if there is charts, delete it
-                        ws_dashboard._charts.clear()
+                if ws_dashboard._charts:  # if there is charts, delete it
+                    ws_dashboard._charts.clear()
 
-                    logger.info('----------Power---------')
+                logger.info('----------Power---------')
+                chart = LineChart()
+                chart.title = 'Power'
+                chart.y_axis.title = 'Power(dBm)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=6, min_row=1, max_col=6, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A1")
+
+                logger.info('----------ACLR---------')
+                chart = LineChart()
+                chart.title = 'ACLR'
+                chart.y_axis.title = 'ACLR(dB)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+                chart.y_axis.scaling.min = -60
+                chart.y_axis.scaling.max = -20
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=7, min_row=1, max_col=12, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'triangle'  # for EUTRA_-1
+                chart.series[0].marker.size = 10
+                chart.series[1].marker.symbol = 'circle'  # for EUTRA_+1
+                chart.series[1].marker.size = 10
+                chart.series[2].graphicalProperties.line.width = 50000  # for UTRA_-1
+                chart.series[3].graphicalProperties.line.width = 50000  # for UTRA_+1
+                chart.series[4].graphicalProperties.line.dashStyle = 'dash'  # for UTRA_-2
+                chart.series[5].graphicalProperties.line.dashStyle = 'dash'  # for UTRA_+2
+
+                ws_dashboard.add_chart(chart, "A41")
+
+                logger.info('----------EVM---------')
+                chart = LineChart()
+                chart.title = 'EVM'
+                chart.y_axis.title = 'EVM(%)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=13, min_row=1, max_col=13, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A81")
+
+                logger.info('----------Current---------')
+                chart = LineChart()
+                chart.title = 'Current'
+                chart.y_axis.title = 'Current(mA)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=23, min_row=1, max_col=23, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A121")
+            else:
+                pass
+
+        wb.save(file_path)
+        wb.close()
+
+    elif tech == 'NR':
+        for ws_name in wb.sheetnames:
+            if 'Raw_Data' in ws_name:
+                logger.info(f'========={ws_name}==========')
+                ws = wb[ws_name]
+                ws_dashboard = wb['Dashboard_' + ws_name[9:]]
+
+                if ws_dashboard._charts:  # if there is charts, delete it
+                    ws_dashboard._charts.clear()
+
+                logger.info('----------Power---------')
+                chart = LineChart()
+                chart.title = 'Power'
+                chart.y_axis.title = 'Power(dBm)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=6, min_row=1, max_col=6, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A1")
+
+                logger.info('----------ACLR---------')
+                chart = LineChart()
+                chart.title = 'ACLR'
+                chart.y_axis.title = 'ACLR(dB)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+                chart.y_axis.scaling.min = -60
+                chart.y_axis.scaling.max = -20
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=7, min_row=1, max_col=12, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'triangle'  # for EUTRA_-1
+                chart.series[0].marker.size = 10
+                chart.series[1].marker.symbol = 'circle'  # for EUTRA_+1
+                chart.series[1].marker.size = 10
+                chart.series[2].graphicalProperties.line.width = 50000  # for UTRA_-1
+                chart.series[3].graphicalProperties.line.width = 50000  # for UTRA_+1
+                chart.series[4].graphicalProperties.line.dashStyle = 'dash'  # for UTRA_-2
+                chart.series[5].graphicalProperties.line.dashStyle = 'dash'  # for UTRA_+2
+
+                ws_dashboard.add_chart(chart, "A41")
+
+                logger.info('----------EVM---------')
+                chart = LineChart()
+                chart.title = 'EVM'
+                chart.y_axis.title = 'EVM(%)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=13, min_row=1, max_col=13, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A81")
+
+                logger.info('----------Current---------')
+                chart = LineChart()
+                chart.title = 'Current'
+                chart.y_axis.title = 'Current(mA)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=25, min_row=1, max_col=25, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A121")
+
+        wb.save(file_path)
+        wb.close()
+
+    elif tech == 'WCDMA':
+        for ws_name in wb.sheetnames:
+            if 'Raw_Data' in ws_name:
+                logger.info(f'========={ws_name}==========')
+                ws = wb[ws_name]
+                ws_dashboard = wb['Dashboard']
+
+                if ws_dashboard._charts:  # if there is charts, delete it
+                    ws_dashboard._charts.clear()
+
+                logger.info('----------Power---------')
+                chart = LineChart()
+                chart.title = 'Power'
+                chart.y_axis.title = 'Power(dBm)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=6, min_row=1, max_col=6, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A1")
+
+                logger.info('----------ACLR---------')
+                chart = LineChart()
+                chart.title = 'ACLR'
+                chart.y_axis.title = 'ACLR(dB)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+                chart.y_axis.scaling.min = -60
+                chart.y_axis.scaling.max = -20
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=7, min_row=1, max_col=10, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'triangle'  # for UTRA_-1
+                chart.series[0].marker.size = 10
+                chart.series[1].marker.symbol = 'circle'  # for UTRA_+1
+                chart.series[1].marker.size = 10
+                chart.series[2].graphicalProperties.line.width = 50000  # for UTRA_-2
+                chart.series[3].graphicalProperties.line.width = 50000  # for UTRA_+2
+
+                ws_dashboard.add_chart(chart, "A41")
+
+                logger.info('----------EVM---------')
+                chart = LineChart()
+                chart.title = 'EVM'
+                chart.y_axis.title = 'EVM(%)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=12, min_row=1, max_col=12, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A81")
+
+                logger.info('----------Current---------')
+                chart = LineChart()
+                chart.title = 'Current'
+                chart.y_axis.title = 'Current(mA)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=17, min_row=1, max_col=17, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A121")
+
+        wb.save(file_path)
+        wb.close()
+    elif tech == 'GSM':
+        for ws_name in wb.sheetnames:
+            if 'Raw_Data' in ws_name:
+                logger.info(f'========={ws_name}==========')
+                ws = wb[ws_name]
+                ws_dashboard = wb['Dashboard_' + ws_name[9:]]
+
+                if ws_dashboard._charts:  # if there is charts, delete it
+                    ws_dashboard._charts.clear()
+
+                logger.info('----------Power---------')
+                chart = LineChart()
+                chart.title = 'Power'
+                chart.y_axis.title = 'Power(dBm)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=6, min_row=1, max_col=6, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
+                chart.series[0].marker.size = 10
+
+                ws_dashboard.add_chart(chart, "A1")
+
+                logger.info('----------ORFS_MOD---------')
+                chart = LineChart()
+                chart.title = 'ORFS_MOD'
+                chart.y_axis.title = 'ORFS_MOD(dB)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+                chart.y_axis.scaling.min = -80
+                chart.y_axis.scaling.max = -20
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=10, min_row=1, max_col=15, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[2].marker.symbol = 'triangle'  # for ORFS_-400
+                chart.series[2].marker.size = 10
+                chart.series[3].marker.symbol = 'circle'  # for ORFS_+400
+                chart.series[3].marker.size = 10
+                chart.series[0].graphicalProperties.line.width = 50000  # for ORFS_-200
+                chart.series[1].graphicalProperties.line.width = 50000  # for ORFS_+200
+                chart.series[4].graphicalProperties.line.dashStyle = 'dash'  # for ORFS_-600
+                chart.series[5].graphicalProperties.line.dashStyle = 'dash'  # for ORFS_+600
+
+                ws_dashboard.add_chart(chart, "A41")
+
+                logger.info('----------ORFS_SW---------')
+                chart = LineChart()
+                chart.title = 'ORFS_SW'
+                chart.y_axis.title = 'ORFS_SW(dBm)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
+                chart.y_axis.scaling.min = -80
+                chart.y_axis.scaling.max = -20
+
+                chart.height = 20
+                chart.width = 32
+
+                y_data = Reference(ws, min_col=16, min_row=1, max_col=21, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
+
+                chart.series[2].marker.symbol = 'triangle'  # for ORFS_-400
+                chart.series[2].marker.size = 10
+                chart.series[3].marker.symbol = 'circle'  # for ORFS_+400
+                chart.series[3].marker.size = 10
+                chart.series[0].graphicalProperties.line.width = 50000  # for ORFS_-600
+                chart.series[1].graphicalProperties.line.width = 50000  # for ORFS_+600
+                chart.series[4].graphicalProperties.line.dashStyle = 'dash'  # for ORFS_-1200
+                chart.series[5].graphicalProperties.line.dashStyle = 'dash'  # for ORFS_+1200
+
+                ws_dashboard.add_chart(chart, "A81")
+
+                if 'GMSK' in ws_name:
+                    logger.info('----------PHASE_RMS---------')
                     chart = LineChart()
-                    chart.title = 'Power'
-                    chart.y_axis.title = 'Power(dBm)'
+                    chart.title = 'PHASE'
+                    chart.y_axis.title = 'PHASE(degree)'
                     chart.x_axis.title = 'Band'
                     chart.x_axis.tickLblPos = 'low'
 
                     chart.height = 20
                     chart.width = 32
 
-                    y_data = Reference(ws, min_col=6, min_row=1, max_col=6, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
+                    y_data = Reference(ws, min_col=7, min_row=1, max_col=7, max_row=ws.max_row)
+                    x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
                     chart.add_data(y_data, titles_from_data=True)
                     chart.set_categories(x_data)
 
                     chart.series[0].marker.symbol = 'circle'
                     chart.series[0].marker.size = 10
 
-                    ws_dashboard.add_chart(chart, "A1")
+                    ws_dashboard.add_chart(chart, "A115")
 
-                    logger.info('----------ACLR---------')
-                    chart = LineChart()
-                    chart.title = 'ACLR'
-                    chart.y_axis.title = 'ACLR(dB)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-                    chart.y_axis.scaling.min = -60
-                    chart.y_axis.scaling.max = -20
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=7, min_row=1, max_col=12, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'triangle'  # for EUTRA_-1
-                    chart.series[0].marker.size = 10
-                    chart.series[1].marker.symbol = 'circle'  # for EUTRA_+1
-                    chart.series[1].marker.size = 10
-                    chart.series[2].graphicalProperties.line.width = 50000  # for UTRA_-1
-                    chart.series[3].graphicalProperties.line.width = 50000  # for UTRA_+1
-                    chart.series[4].graphicalProperties.line.dashStyle = 'dash'  # for UTRA_-2
-                    chart.series[5].graphicalProperties.line.dashStyle = 'dash'  # for UTRA_+2
-
-                    ws_dashboard.add_chart(chart, "A41")
-
-                    logger.info('----------EVM---------')
+                elif 'EPSK' in ws_name:
+                    logger.info('----------EVM_RMS---------')
                     chart = LineChart()
                     chart.title = 'EVM'
                     chart.y_axis.title = 'EVM(%)'
@@ -1100,229 +1450,7 @@ def txp_aclr_evm_current_plot_ftm(file_path, parameters_dict):
                     chart.height = 20
                     chart.width = 32
 
-                    y_data = Reference(ws, min_col=13, min_row=1, max_col=13, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A81")
-
-                    logger.info('----------Current---------')
-                    chart = LineChart()
-                    chart.title = 'Current'
-                    chart.y_axis.title = 'Current(mA)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=23, min_row=1, max_col=23, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'circle'
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A121")
-                else:
-                    pass
-
-            wb.save(file_path)
-            wb.close()
-
-        elif tech == 'FR1':
-            for ws_name in wb.sheetnames:
-                if 'Raw_Data' in ws_name:
-                    logger.info(f'========={ws_name}==========')
-                    ws = wb[ws_name]
-                    ws_dashboard = wb['Dashboard_' + ws_name[9:]]
-
-                    if ws_dashboard._charts:  # if there is charts, delete it
-                        ws_dashboard._charts.clear()
-
-                    logger.info('----------Power---------')
-                    chart = LineChart()
-                    chart.title = 'Power'
-                    chart.y_axis.title = 'Power(dBm)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=6, min_row=1, max_col=6, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A1")
-
-                    logger.info('----------ACLR---------')
-                    chart = LineChart()
-                    chart.title = 'ACLR'
-                    chart.y_axis.title = 'ACLR(dB)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-                    chart.y_axis.scaling.min = -60
-                    chart.y_axis.scaling.max = -20
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=7, min_row=1, max_col=12, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'triangle'  # for EUTRA_-1
-                    chart.series[0].marker.size = 10
-                    chart.series[1].marker.symbol = 'circle'  # for EUTRA_+1
-                    chart.series[1].marker.size = 10
-                    chart.series[2].graphicalProperties.line.width = 50000  # for UTRA_-1
-                    chart.series[3].graphicalProperties.line.width = 50000  # for UTRA_+1
-                    chart.series[4].graphicalProperties.line.dashStyle = 'dash'  # for UTRA_-2
-                    chart.series[5].graphicalProperties.line.dashStyle = 'dash'  # for UTRA_+2
-
-                    ws_dashboard.add_chart(chart, "A41")
-
-                    logger.info('----------EVM---------')
-                    chart = LineChart()
-                    chart.title = 'EVM'
-                    chart.y_axis.title = 'EVM(%)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=13, min_row=1, max_col=13, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A81")
-
-                    logger.info('----------Current---------')
-                    chart = LineChart()
-                    chart.title = 'Current'
-                    chart.y_axis.title = 'Current(mA)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=25, min_row=1, max_col=25, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=3, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'circle'
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A121")
-
-            wb.save(file_path)
-            wb.close()
-
-        elif tech == 'WCDMA':
-            for ws_name in wb.sheetnames:
-                if 'Raw_Data' in ws_name:
-                    logger.info(f'========={ws_name}==========')
-                    ws = wb[ws_name]
-                    ws_dashboard = wb['Dashboard']
-
-                    if ws_dashboard._charts:  # if there is charts, delete it
-                        ws_dashboard._charts.clear()
-
-                    logger.info('----------Power---------')
-                    chart = LineChart()
-                    chart.title = 'Power'
-                    chart.y_axis.title = 'Power(dBm)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=6, min_row=1, max_col=6, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A1")
-
-                    logger.info('----------ACLR---------')
-                    chart = LineChart()
-                    chart.title = 'ACLR'
-                    chart.y_axis.title = 'ACLR(dB)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-                    chart.y_axis.scaling.min = -60
-                    chart.y_axis.scaling.max = -20
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=7, min_row=1, max_col=10, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'triangle'  # for UTRA_-1
-                    chart.series[0].marker.size = 10
-                    chart.series[1].marker.symbol = 'circle'  # for UTRA_+1
-                    chart.series[1].marker.size = 10
-                    chart.series[2].graphicalProperties.line.width = 50000  # for UTRA_-2
-                    chart.series[3].graphicalProperties.line.width = 50000  # for UTRA_+2
-
-                    ws_dashboard.add_chart(chart, "A41")
-
-                    logger.info('----------EVM---------')
-                    chart = LineChart()
-                    chart.title = 'EVM'
-                    chart.y_axis.title = 'EVM(%)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=12, min_row=1, max_col=12, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A81")
-
-                    logger.info('----------Current---------')
-                    chart = LineChart()
-                    chart.title = 'Current'
-                    chart.y_axis.title = 'Current(mA)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=17, min_row=1, max_col=17, max_row=ws.max_row)
+                    y_data = Reference(ws, min_col=8, min_row=1, max_col=8, max_row=ws.max_row)
                     x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
                     chart.add_data(y_data, titles_from_data=True)
                     chart.set_categories(x_data)
@@ -1332,158 +1460,28 @@ def txp_aclr_evm_current_plot_ftm(file_path, parameters_dict):
 
                     ws_dashboard.add_chart(chart, "A121")
 
-            wb.save(file_path)
-            wb.close()
-        elif tech == 'GSM':
-            for ws_name in wb.sheetnames:
-                if 'Raw_Data' in ws_name:
-                    logger.info(f'========={ws_name}==========')
-                    ws = wb[ws_name]
-                    ws_dashboard = wb['Dashboard_' + ws_name[9:]]
+                logger.info('----------Current---------')
+                chart = LineChart()
+                chart.title = 'Current'
+                chart.y_axis.title = 'Current(mA)'
+                chart.x_axis.title = 'Band'
+                chart.x_axis.tickLblPos = 'low'
 
-                    if ws_dashboard._charts:  # if there is charts, delete it
-                        ws_dashboard._charts.clear()
+                chart.height = 20
+                chart.width = 32
 
-                    logger.info('----------Power---------')
-                    chart = LineChart()
-                    chart.title = 'Power'
-                    chart.y_axis.title = 'Power(dBm)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
+                y_data = Reference(ws, min_col=23, min_row=1, max_col=23, max_row=ws.max_row)
+                x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
+                chart.add_data(y_data, titles_from_data=True)
+                chart.set_categories(x_data)
 
-                    chart.height = 20
-                    chart.width = 32
+                chart.series[0].marker.symbol = 'circle'
+                chart.series[0].marker.size = 10
 
-                    y_data = Reference(ws, min_col=6, min_row=1, max_col=6, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
+                ws_dashboard.add_chart(chart, "A161")
 
-                    chart.series[0].marker.symbol = 'circle'  # for EUTRA_+1
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A1")
-
-                    logger.info('----------ORFS_MOD---------')
-                    chart = LineChart()
-                    chart.title = 'ORFS_MOD'
-                    chart.y_axis.title = 'ORFS_MOD(dB)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-                    chart.y_axis.scaling.min = -80
-                    chart.y_axis.scaling.max = -20
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=10, min_row=1, max_col=15, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[2].marker.symbol = 'triangle'  # for ORFS_-400
-                    chart.series[2].marker.size = 10
-                    chart.series[3].marker.symbol = 'circle'  # for ORFS_+400
-                    chart.series[3].marker.size = 10
-                    chart.series[0].graphicalProperties.line.width = 50000  # for ORFS_-200
-                    chart.series[1].graphicalProperties.line.width = 50000  # for ORFS_+200
-                    chart.series[4].graphicalProperties.line.dashStyle = 'dash'  # for ORFS_-600
-                    chart.series[5].graphicalProperties.line.dashStyle = 'dash'  # for ORFS_+600
-
-                    ws_dashboard.add_chart(chart, "A41")
-
-                    logger.info('----------ORFS_SW---------')
-                    chart = LineChart()
-                    chart.title = 'ORFS_SW'
-                    chart.y_axis.title = 'ORFS_SW(dBm)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-                    chart.y_axis.scaling.min = -80
-                    chart.y_axis.scaling.max = -20
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=16, min_row=1, max_col=21, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[2].marker.symbol = 'triangle'  # for ORFS_-400
-                    chart.series[2].marker.size = 10
-                    chart.series[3].marker.symbol = 'circle'  # for ORFS_+400
-                    chart.series[3].marker.size = 10
-                    chart.series[0].graphicalProperties.line.width = 50000  # for ORFS_-600
-                    chart.series[1].graphicalProperties.line.width = 50000  # for ORFS_+600
-                    chart.series[4].graphicalProperties.line.dashStyle = 'dash'  # for ORFS_-1200
-                    chart.series[5].graphicalProperties.line.dashStyle = 'dash'  # for ORFS_+1200
-
-                    ws_dashboard.add_chart(chart, "A81")
-
-                    if 'GMSK' in ws_name:
-                        logger.info('----------PHASE_RMS---------')
-                        chart = LineChart()
-                        chart.title = 'PHASE'
-                        chart.y_axis.title = 'PHASE(degree)'
-                        chart.x_axis.title = 'Band'
-                        chart.x_axis.tickLblPos = 'low'
-
-                        chart.height = 20
-                        chart.width = 32
-
-                        y_data = Reference(ws, min_col=7, min_row=1, max_col=7, max_row=ws.max_row)
-                        x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                        chart.add_data(y_data, titles_from_data=True)
-                        chart.set_categories(x_data)
-
-                        chart.series[0].marker.symbol = 'circle'
-                        chart.series[0].marker.size = 10
-
-                        ws_dashboard.add_chart(chart, "A115")
-
-                    elif 'EPSK' in ws_name:
-                        logger.info('----------EVM_RMS---------')
-                        chart = LineChart()
-                        chart.title = 'EVM'
-                        chart.y_axis.title = 'EVM(%)'
-                        chart.x_axis.title = 'Band'
-                        chart.x_axis.tickLblPos = 'low'
-
-                        chart.height = 20
-                        chart.width = 32
-
-                        y_data = Reference(ws, min_col=8, min_row=1, max_col=8, max_row=ws.max_row)
-                        x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                        chart.add_data(y_data, titles_from_data=True)
-                        chart.set_categories(x_data)
-
-                        chart.series[0].marker.symbol = 'circle'
-                        chart.series[0].marker.size = 10
-
-                        ws_dashboard.add_chart(chart, "A121")
-
-                    logger.info('----------Current---------')
-                    chart = LineChart()
-                    chart.title = 'Current'
-                    chart.y_axis.title = 'Current(mA)'
-                    chart.x_axis.title = 'Band'
-                    chart.x_axis.tickLblPos = 'low'
-
-                    chart.height = 20
-                    chart.width = 32
-
-                    y_data = Reference(ws, min_col=23, min_row=1, max_col=23, max_row=ws.max_row)
-                    x_data = Reference(ws, min_col=1, min_row=2, max_col=2, max_row=ws.max_row)
-                    chart.add_data(y_data, titles_from_data=True)
-                    chart.set_categories(x_data)
-
-                    chart.series[0].marker.symbol = 'circle'
-                    chart.series[0].marker.size = 10
-
-                    ws_dashboard.add_chart(chart, "A161")
-
-            wb.save(file_path)
-            wb.close()
+        wb.save(file_path)
+        wb.close()
 
 
 def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
@@ -1499,7 +1497,7 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
     mcs = parameters_dict['mcs']
     tx_path = parameters_dict['tx_path']
     rx_path = parameters_dict['rx_path']
-    if tech in ['FR1', 'LTE']:
+    if tech in ['NR', 'LTE']:
         rb_size = parameters_dict['rb_size']
         rb_start = parameters_dict['rb_start']
 
@@ -1561,7 +1559,7 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
                 ws['D1'] = 'Diff'
                 ws['E1'] = 'TX_Path'
 
-            elif tech == 'FR1':
+            elif tech == 'NR':
                 # create the title and sheet for TxManx and -10dBm
                 wb.create_sheet(f'Raw_Data_{mcs}_TxMax')
                 wb.create_sheet(f'Raw_Data_{mcs}_-10dBm')
@@ -1651,7 +1649,7 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
         if tech == 'LTE':
             sheetname = f'Raw_Data_{mcs}_TxMax' if tx_level > 0 else f'Raw_Data_{mcs}_-10dBm'
             ws = wb[sheetname]
-        elif tech == 'FR1':
+        elif tech == 'NR':
             sheetname = f'Raw_Data_{mcs}_TxMax' if tx_level > 0 else f'Raw_Data_{mcs}_-10dBm'
             ws = wb[sheetname]
         elif tech == 'WCDMA':
@@ -1689,13 +1687,13 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
                 ws.cell(row, 21).value = bw
                 ws.cell(row, 22).value = rb_size
                 ws.cell(row, 23).value = rb_start
-                ws.cell(row, 24).value = ext_pmt.condition
+                ws.cell(row, 24).value = STATE_DICT_EXCEL['condition']
                 ws.cell(row, 25).value = measured_data[5][0]  # thermister 0
                 ws.cell(row, 26).value = measured_data[5][1]  # thermister 1
 
                 row += 1
 
-        elif tech == 'FR1':
+        elif tech == 'NR':
             max_row = ws.max_row
             row = max_row + 1  # skip title
             for tx_freq, measured_data in data.items():
@@ -1723,7 +1721,7 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
                 ws.cell(row, 21).value = bw
                 ws.cell(row, 22).value = rb_size
                 ws.cell(row, 23).value = rb_start
-                ws.cell(row, 24).value = ext_pmt.condition
+                ws.cell(row, 24).value = STATE_DICT_EXCEL['condition']
                 ws.cell(row, 25).value = measured_data[5][0]  # thermister 0
                 ws.cell(row, 26).value = measured_data[5][1]  # thermister 1
 
@@ -1944,7 +1942,7 @@ def rxs_relative_plot_ftm(file_path, parameters_dict):
             wb.save(file_path)
             wb.close()
 
-        elif tech == 'FR1':
+        elif tech == 'NR':
             ws_dashboard = wb[f'Dashboard']
             ws_desens = wb[f'Desens_{mcs}']
             ws_txmax = wb[f'Raw_Data_{mcs}_TxMax']
@@ -2283,7 +2281,7 @@ def rx_power_relative_test_export_excel_sig(data, parameters_dict):
         ws.cell(row, 9).value = bw
         ws.cell(row, 10).value = rb_size
         ws.cell(row, 11).value = rb_start
-        ws.cell(row, 12).value = ext_pmt.condition
+        ws.cell(row, 12).value = STATE_DICT_EXCEL['condition']
         ws.cell(row, 13).value = thermal[0]  # thermister 0
         ws.cell(row, 14).value = thermal[1]  # thermister 1
 
@@ -2303,7 +2301,7 @@ def rx_power_relative_test_export_excel_sig(data, parameters_dict):
         ws.cell(row, 5).value = tx_level  # freq_tx
         ws.cell(row, 6).value = data[0]  # measured Power
         ws.cell(row, 7).value = data[1]  # Rx level
-        ws.cell(row, 8).value = ext_pmt.condition
+        ws.cell(row, 8).value = STATE_DICT_EXCEL['condition']
         ws.cell(row, 9).value = thermal[0]  # thermister 0
         ws.cell(row, 10).value = thermal[1]  # thermister 1
         row += 1
@@ -2440,7 +2438,7 @@ def rx_freq_sweep_power_relative_test_export_excel_sig(data, parameters_dict):
         ws.cell(row, 9).value = bw
         ws.cell(row, 10).value = rb_size
         ws.cell(row, 11).value = rb_start
-        ws.cell(row, 12).value = ext_pmt.condition
+        ws.cell(row, 12).value = STATE_DICT_EXCEL['condition']
         ws.cell(row, 13).value = thermal[0]  # thermister 0
         ws.cell(row, 14).value = thermal[1]  # thermister 1
 
@@ -2460,7 +2458,7 @@ def rx_freq_sweep_power_relative_test_export_excel_sig(data, parameters_dict):
         ws.cell(row, 5).value = tx_level  # freq_tx
         ws.cell(row, 6).value = data[0]  # measured Power
         ws.cell(row, 7).value = data[1]  # Rx level
-        ws.cell(row, 8).value = ext_pmt.condition
+        ws.cell(row, 8).value = STATE_DICT_EXCEL['condition']
         ws.cell(row, 9).value = thermal[0]  # thermister 0
         ws.cell(row, 10).value = thermal[1]  # thermister 1
         row += 1
@@ -2675,7 +2673,7 @@ def tx_power_relative_test_export_excel_sig(data, parameters_dict):
             ws.cell(row, 2).value = bw
             ws.cell(row, 3).value = tx_freq  # this freq_lte
             ws.cell(row, 4).value = chan  # LMH
-            ws.cell(row, 5).value = ext_pmt.tx_level
+            ws.cell(row, 5).value = STATE_DICT_EXCEL['tx_level']
             ws.cell(row, 6).value = measured_items[0]  # measured power
             ws.cell(row, 7).value = measured_items[1][0] if mcs != 'Q_1' else None  # 'E_-1'
             ws.cell(row, 8).value = measured_items[1][1] if mcs != 'Q_1' else None  # 'E_+1'
@@ -2694,7 +2692,7 @@ def tx_power_relative_test_export_excel_sig(data, parameters_dict):
             ws.cell(row, 21).value = None  # sync_path
             ws.cell(row, 22).value = None  # asw_srs_path
             ws.cell(row, 23).value = None  # current
-            ws.cell(row, 24).value = ext_pmt.condition
+            ws.cell(row, 24).value = STATE_DICT_EXCEL['condition']
             ws.cell(row, 25).value = thermal[0]  # 'Temp0'
             ws.cell(row, 26).value = thermal[1]  # 'Temp1'
             row += 1
@@ -2710,7 +2708,7 @@ def tx_power_relative_test_export_excel_sig(data, parameters_dict):
             ws.cell(row, 2).value = cm_pmt_ftm.transfer_chan_rx2tx_wcdma(band, dl_ch)  # this channel
             ws.cell(row, 3).value = chan  # LMH
             ws.cell(row, 4).value = tx_freq
-            ws.cell(row, 5).value = ext_pmt.tx_level  # this tx_level
+            ws.cell(row, 5).value = STATE_DICT_EXCEL['tx_level']  # this tx_level
             ws.cell(row, 6).value = data[0]  # 'Measured_Power'
             ws.cell(row, 7).value = data[1][0]  # U_-1
             ws.cell(row, 8).value = data[1][1]  # U_+1
@@ -2723,7 +2721,7 @@ def tx_power_relative_test_export_excel_sig(data, parameters_dict):
             ws.cell(row, 15).value = None  # 'Tx_Path'
             ws.cell(row, 16).value = None  # 'AS_Path'
             ws.cell(row, 17).value = None  # 'Current(mA)'
-            ws.cell(row, 18).value = ext_pmt.condition  # 'Condition'
+            ws.cell(row, 18).value = STATE_DICT_EXCEL['condition']  # 'Condition'
             ws.cell(row, 19).value = thermal[0]  # 'Temp0'
             ws.cell(row, 20).value = thermal[1]  # 'Temp1'
             ws.cell(row, 21).value = None  # subtest
@@ -2739,7 +2737,7 @@ def tx_power_relative_test_export_excel_sig(data, parameters_dict):
                 ws.cell(row, 2).value = cm_pmt_ftm.transfer_chan_rx2tx_wcdma(band, dl_ch)  # this channel
                 ws.cell(row, 3).value = chan  # LMH
                 ws.cell(row, 4).value = tx_freq
-                ws.cell(row, 5).value = ext_pmt.tx_level  # this tx_level
+                ws.cell(row, 5).value = STATE_DICT_EXCEL['tx_level']  # this tx_level
                 ws.cell(row, 6).value = data[0]  # 'Measured_Power'
                 ws.cell(row, 7).value = data[1][0]  # U_-1
                 ws.cell(row, 8).value = data[1][1]  # U_+1
@@ -2752,7 +2750,7 @@ def tx_power_relative_test_export_excel_sig(data, parameters_dict):
                 ws.cell(row, 15).value = None  # 'Tx_Path'
                 ws.cell(row, 16).value = None  # 'AS_Path'
                 ws.cell(row, 17).value = None  # 'Current(mA)'
-                ws.cell(row, 18).value = ext_pmt.condition  # 'Condition'
+                ws.cell(row, 18).value = STATE_DICT_EXCEL['condition']  # 'Condition'
                 ws.cell(row, 19).value = thermal[0]  # 'Temp0'
                 ws.cell(row, 20).value = thermal[1]  # 'Temp1'
                 ws.cell(row, 21).value = subtest  # subtest
@@ -2784,7 +2782,7 @@ def tx_power_relative_test_export_excel_sig(data, parameters_dict):
             ws.cell(row, 2).value = cm_pmt_ftm.transfer_chan_rx2tx_wcdma(band, dl_ch)  # this channel
             ws.cell(row, 3).value = chan  # LMH
             ws.cell(row, 4).value = tx_freq
-            ws.cell(row, 5).value = ext_pmt.tx_level  # this tx_level
+            ws.cell(row, 5).value = STATE_DICT_EXCEL['tx_level']  # this tx_level
             ws.cell(row, 6).value = measured_items[0]  # 'Measured_Power'
             ws.cell(row, 7).value = measured_items[1][0]  # U_-1
             ws.cell(row, 8).value = measured_items[1][1]  # U_+1
@@ -2797,7 +2795,7 @@ def tx_power_relative_test_export_excel_sig(data, parameters_dict):
             ws.cell(row, 15).value = None  # 'Tx_Path'
             ws.cell(row, 16).value = None  # 'AS_Path'
             ws.cell(row, 17).value = None  # 'Current(mA)'
-            ws.cell(row, 18).value = ext_pmt.condition  # 'Condition'
+            ws.cell(row, 18).value = STATE_DICT_EXCEL['condition']  # 'Condition'
             ws.cell(row, 19).value = thermal[0]  # 'Temp0'
             ws.cell(row, 20).value = thermal[1]  # 'Temp1'
             row += 1
@@ -2929,7 +2927,7 @@ def txp_aclr_evm_current_plot_sig(standard, file_path):
         wb.save(file_path)
         wb.close()
 
-    elif tech == 'FR1':
+    elif tech == 'NR':
         for ws_name in wb.sheetnames:
             if 'Raw_Data' in ws_name:
                 logger.info(f'========={ws_name}==========')
@@ -3331,7 +3329,7 @@ def rxs_relative_plot_sig(file_path, parameters_dict):
         wb.save(file_path)
         wb.close()
 
-    elif tech == 'FR1':  # not yet have this function
+    elif tech == 'NR':  # not yet have this function
         ws_dashboard = wb[f'Dashboard']
         ws_desens = wb[f'Desens_{mcs}']
         ws_txmax = wb[f'Raw_Data_{mcs}_TxMax']
@@ -3506,7 +3504,7 @@ def rxs_freq_relative_plot_sig(file_path, parameters_dict):
         wb.save(file_path)
         wb.close()
 
-    elif tech == 'FR1':  # not yet has this function
+    elif tech == 'NR':  # not yet has this function
         ws_dashboard = wb[f'Dashboard']
         ws_desens = wb[f'Desens_{mcs}']
         ws_txmax = wb[f'Raw_Data_{mcs}_TxMax']
@@ -3688,8 +3686,8 @@ def color_format_nr_aclr_ftm(file_path):
     """
     # import yaml file
     color_codes = import_aclr_limits()
-    aclr_red_usl = color_codes['FR1']['e_utra_color_red_usl']
-    aclr_yellow_usl = color_codes['FR1']['e_utra_color_yellow_usl']
+    aclr_red_usl = color_codes['NR']['e_utra_color_red_usl']
+    aclr_yellow_usl = color_codes['NR']['e_utra_color_yellow_usl']
 
     # define the color of fill and font
     fill_red = PatternFill(start_color='FFC7CE', end_color='FFC7CE')
@@ -4032,7 +4030,7 @@ def color_format_nr_evm_ftm(file_path):
         ws = wb[sheetname]
         if ws.max_row > 1:  # if not only the header, this step can continue to be activated
             mod = sheetname.split('_')[-1]  # split to get modulation
-            rule_red, rule_yellow = color_rule_evm('FR1', mod)
+            rule_red, rule_yellow = color_rule_evm('NR', mod)
             # ws.conditional_formatting = ConditionalFormattingList()  # clear pattern from entire format
             ws.conditional_formatting.add(f'M2:M{ws.max_row}', rule_red)  # Apply to range M:M
             ws.conditional_formatting.add(f'M2:M{ws.max_row}', rule_yellow)  # Apply to range M:M
@@ -4230,10 +4228,10 @@ def color_format_gsm_evm_ftm(file_path):
 
 def color_rule_sens_fr1_ftm(band, bw) -> dict:
     # import yaml file
-    sens_crit = sensitivity_criteria_fr1(band, 30, bw)
+    sens_crit = sensitivity_criteria_nr(band, 30, bw)
     margin = import_sens_limits()
-    sens_red_usl = sens_crit - margin['FR1']['sens_color_red_margin']
-    sens_yellow_usl = sens_crit - margin['FR1']['sens_color_yellow_margin']
+    sens_red_usl = sens_crit - margin['NR']['sens_color_red_margin']
+    sens_yellow_usl = sens_crit - margin['NR']['sens_color_yellow_margin']
 
     # define the color of fill and font
     fill_red = PatternFill(start_color='FFC7CE', end_color='FFC7CE', fill_type='solid')

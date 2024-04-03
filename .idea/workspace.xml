@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_8 for endc bands">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_8 update layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/mega_v2_8.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/mega_v2_8.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ui_mega_v2_5.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ui_mega_v2_6.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ui_mega_v2_8.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui_mega_v2_8.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,14 +41,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python.Main_UI.executor": "Run",
+    "Python.Main_UI.executor": "Debug",
     "Python.ui_mega_v2_2.executor": "Run",
     "Python.ui_test_v2_1.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/pricewu/Documents/pyside_learning/ui",
-    "settings.editor.selected.configurable": "preferences.externalTools"
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -291,7 +293,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712052192094</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="update ui test version v2_8 update layout">
+      <option name="closed" value="true" />
+      <created>1712052796836</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1712052796836</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -322,6 +332,48 @@
     <MESSAGE value="update ui test version v2_7 for BW MCS" />
     <MESSAGE value="update ui test version v2_7 for progressbar" />
     <MESSAGE value="update ui test version v2_8 for endc bands" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_8 for endc bands" />
+    <MESSAGE value="update ui test version v2_8 update layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_8 update layout" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Main_UI.py</url>
+          <line>1746</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Main_UI.py</url>
+          <line>1750</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Main_UI.py</url>
+          <line>1721</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Main_UI.py</url>
+          <line>1699</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Main_UI.py</url>
+          <line>1716</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py</url>
+          <line>274</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
+          <line>1029</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

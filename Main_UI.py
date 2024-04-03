@@ -3,8 +3,17 @@ from PySide6.QtCore import QThread, Slot, QSize
 import sys
 import time
 import threading
-
+import pathlib
+import signal
+import os
+import yaml
 from ui_mega_v2_8 import Ui_MainWindow
+from utils.log_init import log_set, log_clear
+from utils.adb_handler import get_serial_devices
+from utils.excel_handler import excel_folder_create
+from equipments.power_supply import Psu
+from equipments.temp_chamber import TempChamber
+from utils.regy_handler import regy_replace, regy_extract, regy_extract_2
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -31,6 +40,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def init_show(self):
         print(f'Equipment: {self.equipments_comboBox.currentText()}')
         print(f'Tx port: {self.tx_port_comboBox.currentText()}')
+        print(f'Techs: {self.tech_selected()}')
+        print(f'Channels: {self.channel_selected()}')
         print(f'NR bands: {self.nr_bands_selected()}')
         print(f'LTE bands: {self.lte_bands_selected()}')
         print(f'WCDMA bands: {self.wcdma_bands_selected()}')
@@ -44,9 +55,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print(f'NR MCS: {self.nr_mcs_selected()}')
         print(f'LTE RB allocation: {self.lte_rb_allocation_selected()}')
         print(f'LTE MCS: {self.lte_mcs_selected()}')
+        print(f'GSM modulation: {self.gsm_modulation_switch()}')
         print(f'ULCA LTE RB allocation: {self.ulca_lte_rb_allocation_selected()}')
         print(f'ULCA LTE MCS: {self.lte_mcs_selected()}')
-        print(f'ULCA LTE criteria: {self.ulca_lte_critera_selected()}')
+        print(f'ULCA LTE criteria: {self.ulca_lte_critera_switch()}')
+
 
     def init_hidden(self):
         match self.equipments_comboBox.currentText():
@@ -81,6 +94,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.hsdpa_tech.setChecked(False)
 
     def selected_show(self):
+        print(f'Equipment: {self.equipments_comboBox.currentText()}')
+        print(f'Tx port: {self.tx_port_comboBox.currentText()}')
+        print(f'Techs: {self.tech_selected()}')
+        print(f'Channels: {self.channel_selected()}')
         print(f'NR bands: {self.nr_bands_selected()}')
         print(f'LTE bands: {self.lte_bands_selected()}')
         print(f'WCDMA bands: {self.wcdma_bands_selected()}')
@@ -94,9 +111,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print(f'NR MCS: {self.nr_mcs_selected()}')
         print(f'LTE RB allocation: {self.lte_rb_allocation_selected()}')
         print(f'LTE MCS: {self.lte_mcs_selected()}')
+        print(f'GSM modulation: {self.gsm_modulation_switch()}')
         print(f'ULCA LTE RB allocation: {self.ulca_lte_rb_allocation_selected()}')
         print(f'ULCA LTE MCS: {self.lte_mcs_selected()}')
-        print(f'ULCA LTE criteria: {self.ulca_lte_critera_selected()}')
+        print(f'ULCA LTE criteria: {self.ulca_lte_critera_switch()}')
 
     def srs_unchecked(self, checked):
         # if self.as_path_en.isChecked():
@@ -147,8 +165,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['srs_path_en'] = self.srs_path_en.isChecked()
         state_dict['srs_path'] = self.srs_path_comboBox.currentText()
         state_dict['tx_level'] = self.tx_level_spinBox.value()
-        state_dict['pcl_lb_level'] = self.pcl_lb_level_combo.currentText()
-        state_dict['pcl_mb_level'] = self.pcl_mb_level_combo.currentText()
+        state_dict['pcl_lb_level'] = int(self.pcl_lb_level_combo.currentText())
+        state_dict['pcl_mb_level'] = int(self.pcl_mb_level_combo.currentText())
+        state_dict['gmsk_mod'] = self.gmsk_radioButton.isChecked()
+        state_dict['epsk_mod'] = self.epsk_radioButton.isChecked()
         state_dict['sync_path_endc'] = self.sync_path_comboBox_endc.currentText()
         state_dict['as_path_en_endc'] = self.as_path_en_endc.isChecked()
         state_dict['as_path_endc'] = self.as_path_comboBox_endc.currentText()
@@ -369,6 +389,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['nv_en'] = self.nv_en.isChecked()
         state_dict['lv_en'] = self.lv_en.isChecked()
         state_dict['odpm2_en'] = self.odpm2_en.isChecked()
+        state_dict['current_count'] = self.count_spinBox.value()
         state_dict['ht_value'] = self.ht_spinBox.value()
         state_dict['nt_value'] = self.nt_spinBox.value()
         state_dict['lt_value'] = self.lt_spinBox.value()
@@ -377,7 +398,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['lv_value'] = self.lv_doubleSpinBox.value()
         state_dict['input_level_sig_anritsu'] = self.input_level_sig_anritsu_spinBox.value()
         state_dict['rfout_port_sig_anritsu'] = self.rfout_port_sig_anritsu_comboBox.currentText()
-        state_dict['progress_bar'] = 0  # special item for input and output small funciton
+        state_dict['progressBar_progress'] = 0  # special item for input and output small funciton
+        state_dict['nr_mcs_list'] = self.nr_mcs_selected()
+        state_dict['lte_mcs_list'] = self.lte_mcs_selected()
+        state_dict['nr_rb_allocation_list'] = self.nr_rb_allocation_selected()
+        state_dict['lte_rb_allocation_list'] = self.lte_rb_allocation_selected()
+        state_dict['ulca_lte_rb_allocation_list'] = self.ulca_lte_rb_allocation_selected()
+        state_dict['tech_list'] = self.tech_selected()
+        state_dict['channel_str'] = self.channel_selected()
+        state_dict['tx_path_list'] = self.tx_path_selected()
+        state_dict['rx_path_list'] = self.rx_path_selected()
+        state_dict['nr_bw_list'] = self.nr_bw_selected()
+        state_dict['lte_bw_list'] = self.lte_bw_selected()
+        state_dict['ulca_lte_bw_list'] = self.ulca_lte_bw_selected()
+        state_dict['nr_bands_list'] = self.nr_bands_selected()
+        state_dict['lte_bands_list'] = self.lte_bands_selected()
+        state_dict['wcdma_bands_list'] = self.wcdma_bands_selected()
+        state_dict['gsm_bands_list'] = self.gsm_bands_selected()
+        state_dict['nr_type_list'] = self.nr_type_selected()
+        state_dict['gsm_modulation'] = self.gsm_modulation_switch()
+        state_dict['ulca_lte_criteria'] = self.ulca_lte_critera_switch()
 
         return state_dict
 
@@ -416,8 +456,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.srs_path_en.setChecked(state_dict['srs_path_en'])
         self.srs_path_comboBox.setCurrentText(state_dict['srs_path'])
         self.tx_level_spinBox.setValue(state_dict['tx_level'])
-        self.pcl_lb_level_combo.setCurrentText(state_dict['pcl_lb_level'])
-        self.pcl_mb_level_combo.setCurrentText(state_dict['pcl_mb_level'])
+        self.pcl_lb_level_combo.setCurrentText(str(state_dict['pcl_lb_level']))
+        self.pcl_mb_level_combo.setCurrentText(str(state_dict['pcl_mb_level']))
+        self.gmsk_radioButton.setChecked(state_dict['gmsk_mod'])
+        self.epsk_radioButton.setChecked(state_dict['epsk_mod'])
         self.sync_path_comboBox_endc.setCurrentText(state_dict['sync_path_endc'])
         self.as_path_en_endc.setChecked(state_dict['as_path_en_endc'])
         self.as_path_comboBox_endc.setCurrentText(state_dict['as_path_endc'])
@@ -638,6 +680,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.nv_en.setChecked(state_dict['nv_en'])
         self.lv_en.setChecked(state_dict['lv_en'])
         self.odpm2_en.setChecked(state_dict['odpm2_en'])
+        self.count_spinBox.setValue(state_dict['current_count'])
         self.ht_spinBox.setValue(state_dict['ht_value'])
         self.nt_spinBox.setValue(state_dict['nt_value'])
         self.lt_spinBox.setValue(state_dict['lt_value'])
@@ -705,6 +748,64 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def equipment_show(self):
         print(f'Equipment: {self.equipments_comboBox.currentText()}')
+
+    def tx_path_selected(self):
+        tx_path_list = []
+        if self.tx1.isChecked():
+            tx_path_list.append('TX1')
+        if self.tx2.isChecked():
+            tx_path_list.append('TX2')
+
+        return tx_path_list
+
+    def rx_path_selected(self):
+        rx_path_list = []
+        if self.rx0.isChecked():
+            rx_path_list.append(2)
+        if self.rx1.isChecked():
+            rx_path_list.append(1)
+        if self.rx2.isChecked():
+            rx_path_list.append(4)
+        if self.rx3.isChecked():
+            rx_path_list.append(8)
+        if self.rx0_rx1.isChecked():
+            rx_path_list.append(3)
+        if self.rx2_rx3.isChecked():
+            rx_path_list.append(12)
+        if self.rx_all_path.isChecked():
+            rx_path_list.append(5)
+
+        return rx_path_list
+
+    def tech_selected(self):
+        tech_list = []
+        if self.nr_tech.isChecked():
+            tech_list.append('NR')
+        if self.lte_tech.isChecked():
+            tech_list.append('LTE')
+        if self.wcdma_tech.isChecked():
+            tech_list.append('WCDMA')
+        if self.gsm_tech.isChecked():
+            tech_list.append('GSM')
+        if self.ulca_lte_tech.isChecked():
+            tech_list.append('ULCA_LTE')
+        if self.hsupa_tech.isChecked():
+            tech_list.append('HSUPA')
+        if self.hsdpa_tech.isChecked():
+            tech_list.append('HSDPA')
+
+        return tech_list
+
+    def channel_selected(self):
+        channels_str = ''
+        if self.lch.isChecked():
+            channels_str += 'L'
+        if self.mch.isChecked():
+            channels_str += 'M'
+        if self.hch.isChecked():
+            channels_str += 'H'
+
+        return channels_str
 
     def nr_bands_selected(self):
         nr_bands_list = []
@@ -1040,6 +1141,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         return mcs_lte_list
 
+    def gsm_modulation_switch(self):
+        if self.gmsk_radioButton.isChecked():
+            return 'GMSK'
+        elif self.epsk_radioButton.isChecked():
+            return 'EPSK'
+
     def nr_rb_allocation_selected(self):
         allocation_nr_list = []
         if self.inner_full_nr.isChecked():
@@ -1093,7 +1200,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         return allocation_ulca_lte_list
 
-    def ulca_lte_critera_selected(self):
+    def ulca_lte_critera_switch(self):
         if self.criteria_ulca_lte_fcc_radioButton.isChecked():
             return 'FCC'
         elif self.criteria_ulca_lte_3gpp_radioButton.isChecked():
@@ -1591,7 +1698,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 volt_count += 1
 
         count_total = tx_test_items_ns_count_nr * tx_path_count * nr_tech_count * channel_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count * rb_nr_count + \
-                      tx_test_items_ns_count_lte * tx_path_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count * mcs_lte_count * rb_nr_count + \
+                      tx_test_items_ns_count_lte * tx_path_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count * mcs_lte_count * rb_lte_count + \
                       tx_test_items_ns_count_wcdma * wcdma_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_ns_count_gsm * gsm_tech_count * channel_count * band_gsm_count + \
                       tx_test_items_ns_count_ulca_lte * ulca_lte_tech_count * channel_count * band_ulca_lte_count * bw_ulca_lte_count + \
@@ -1613,6 +1720,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.run_button.setEnabled(False)
         state_dict = self.gui_state_get()
         self.counts = self.items_counts(state_dict)
+        self.progressBar.reset()
         self.progressBar.setMaximum(self.counts)
         # for i in range(78):
         #     print(i)
@@ -1625,20 +1733,40 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print('measure...')
         match state_dict['equipment']:
             case 'Cmw100':
-                # import somthing
+                from test_scripts.cmw100_items.tx_lmh import TxTestGenre
+                from test_scripts.cmw100_items.rx_lmh import RxTestGenre
+                from test_scripts.cmw100_items.tx_level_sweep import TxTestLevelSweep
+                from test_scripts.cmw100_items.tx_freq_sweep import TxTestFreqSweep
+                from test_scripts.cmw100_items.tx_1rb_sweep import TxTest1RbSweep
+                from test_scripts.cmw100_items.tx_power_fcc_ce import TxTestFccCe
+                from test_scripts.cmw100_items.tx_ulca_combo import TxTestCa
+                from test_scripts.cmw100_items.apt_sweep_search import AptSweep
+                from test_scripts.cmw100_items.apt_sweep_search_v2 import AptSweepV2
+
+                # First step to create a foldr to storage the files
+                excel_folder_create()
 
                 if state_dict['tx_lmh_ns']:
-                    ...
+                    inst = TxTestGenre(state_dict, self.progressBar)
+                    inst.run()
+                    inst.ser.com_close()
+
                 if state_dict['tx_level_sweep_ns']:
-                    print('tx_level_sweep_ns')
+                    ...
                 if state_dict['tx_freq_sweep_ns']:
                     ...
                 if state_dict['tx_1rb_sweep_ns']:
                     ...
                 if state_dict['tx_fcc_power_ns']:
-                    ...
+                    inst = TxTestFccCe()
+                    inst.run_fcc()
+                    inst.ser.com_close()
+
                 if state_dict['tx_ce_power_ns']:
-                    ...
+                    inst = TxTestFccCe()
+                    inst.run_ce()
+                    inst.ser.com_close()
+
                 if state_dict['tx_ulca_lte_ns']:
                     ...
                 if state_dict['rx_normal_ns']:
@@ -1649,7 +1777,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     ...
 
             case 'Cmw100+Fsw':
-                # import somthing
+                from test_scripts.harmonics_cbe.tx_harmonics import TxHarmonics
+                from test_scripts.harmonics_cbe.tx_cbe import TxCBE
+                from test_scripts.harmonics_cbe.tx_ulca_cbe import TxTestCaCBE
+
                 if state_dict['tx_harmonics_ns']:
                     ...
                 if state_dict['tx_cbe_ns']:
@@ -1658,7 +1789,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     ...
 
             case 'Anritsu8820':
-                # import somthing
+                from test_scripts.anritsu_items.mt8820_tx_lmh import TxTestGenre
+                from test_scripts.anritsu_items.mt8820_rx import RxTestGenre
+                from test_scripts.anritsu_items.mt8820_rx_freq_sweep import RxTestFreqSweep
+
+                excel_folder_create()
                 if state_dict['tx_lmh_s']:
                     ...
                 if state_dict['rx_normal_s']:
@@ -1666,7 +1801,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if state_dict['rxs_sweep_s']:
                     ...
             case 'Anritsu8821':
-                # import somthing
+                from test_scripts.anritsu_items.mt8821_tx_lmh import TxTestGenre
+                from test_scripts.anritsu_items.mt8821_rx import RxTestGenre
+                from test_scripts.anritsu_items.mt8821_rx_freq_sweep import RxTestFreqSweep
+
                 if state_dict['tx_lmh_s']:
                     ...
                 if state_dict['rx_normal_s']:
@@ -1674,16 +1812,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if state_dict['rxs_sweep_s']:
                     ...
 
+            case 'Agilent8960':
+                pass
+
     def run_start(self):
-        print('run')
         t = threading.Thread(target=self.measure, daemon=True)
         t.start()
 
-    def therm_charge_dis(self):
-        print('therm dis')
+    @staticmethod
+    def therm_charge_dis():
+        from utils.adb_handler import thermal_charger_disable
+        thermal_charger_disable()
 
     def stop(self):
-        print('stop')
+        self.close()
 
 
 def main():

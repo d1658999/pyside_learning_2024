@@ -30,7 +30,7 @@ class AtCmd:
         self.band_wcdma = None
         self.band_gsm = None
         self.tx_level = None
-        self.rx_level = ext_pmt.init_rx_sync_level
+        self.rx_level = -70
         self.pcl = None
         self.pwr_init_gsm = None
         self.loss_tx = None

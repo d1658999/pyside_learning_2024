@@ -8,7 +8,7 @@ import pathlib
 import signal
 import os
 import yaml
-from ui_mega_v2_8 import Ui_MainWindow
+from ui_mega_v2_9 import Ui_MainWindow
 from utils.log_init import log_set, log_clear
 from utils.adb_handler import get_serial_devices
 from utils.excel_handler import excel_folder_create
@@ -279,6 +279,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['n256_nr'] = self.n256_nr.isChecked()
         state_dict['n77_nr'] = self.n77_nr.isChecked()
         state_dict['n78_nr'] = self.n78_nr.isChecked()
+        state_dict['n48_nr'] = self.n48_nr.isChecked()
         state_dict['n79_nr'] = self.n79_nr.isChecked()
         state_dict['b5_lte'] = self.b5_lte.isChecked()
         state_dict['b8_lte'] = self.b8_lte.isChecked()
@@ -432,8 +433,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['hv_value'] = self.hv_doubleSpinBox.value()
         state_dict['nv_value'] = self.nv_doubleSpinBox.value()
         state_dict['lv_value'] = self.lv_doubleSpinBox.value()
-        state_dict['input_level_sig_anritsu'] = self.input_level_sig_anritsu_spinBox.value()
+        state_dict['outer_loop'] = self.outer_loop_spinBox.value()
+        state_dict['init_rx_sync_level'] = self.init_rx_sync_level_spinBox.value()
+        state_dict['et_tracker'] = self.et_tracker_comboBox.currentText()
         state_dict['rfout_port_sig_anritsu'] = self.rfout_port_sig_anritsu_comboBox.currentText()
+        state_dict['input_level_sig_anritsu'] = self.input_level_sig_anritsu_spinBox.value()
         state_dict['progressBar_progress'] = 0  # special item for input and output small funciton
         state_dict['nr_mcs_list'] = self.nr_mcs_selected()
         state_dict['lte_mcs_list'] = self.lte_mcs_selected()
@@ -459,6 +463,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['devices_serial'] = get_serial_devices()
         state_dict['condition'] = self.condition
         state_dict['volt_type'] = self.volt
+
 
         return state_dict
 
@@ -575,6 +580,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.n256_nr.setChecked(state_dict['n256_nr'])
         self.n77_nr.setChecked(state_dict['n77_nr'])
         self.n78_nr.setChecked(state_dict['n78_nr'])
+        self.n48_nr.setChecked(state_dict['n48_nr'])
         self.n79_nr.setChecked(state_dict['n79_nr'])
         self.b5_lte.setChecked(state_dict['b5_lte'])
         self.b8_lte.setChecked(state_dict['b8_lte'])
@@ -728,6 +734,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.hv_doubleSpinBox.setValue(state_dict['hv_value'])
         self.nv_doubleSpinBox.setValue(state_dict['nv_value'])
         self.lv_doubleSpinBox.setValue(state_dict['lv_value'])
+        self.outer_loop_spinBox.setValue(state_dict['outer_loop'])
+        self.init_rx_sync_level_spinBox.setValue(state_dict['init_rx_sync_level'])
+        self.et_tracker_comboBox.setCurrentText(state_dict['et_tracker'])
         self.input_level_sig_anritsu_spinBox.setValue(state_dict['input_level_sig_anritsu'])
         self.rfout_port_sig_anritsu_comboBox.setCurrentText(state_dict['rfout_port_sig_anritsu'])
 
@@ -1779,7 +1788,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       tx_test_items_ns_count_nr_fcc * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count + \
                       tx_test_items_ns_count_nr_ce * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count
 
-        return count_total
+        count_total_outer_loop = count_total * state_dict['outer_loop']
+
+        return count_total_outer_loop
 
     def measure(self):
         start = datetime.datetime.now()
@@ -1830,7 +1841,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.progressBar.reset()
         if counts_total != 0:
             self.progressBar.setMaximum(counts_total)
-        self.measure_base(state_dict)
+            self.progressBar.setValue(0)
+        for loop in range(state_dict['outer_loop']):
+            self.measure_base(state_dict)
 
     def measure_base(self, state_dict):
         logger.info('Measure...')
@@ -1855,7 +1868,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     inst.ser.com_close()
 
                 if state_dict['tx_level_sweep_ns']:
-                    ...
+                    inst = TxTestLevelSweep(state_dict, self.progressBar)
+                    inst.run()
+                    inst.ser.com_close()
+
                 if state_dict['tx_freq_sweep_ns']:
                     ...
                 if state_dict['tx_1rb_sweep_ns']:

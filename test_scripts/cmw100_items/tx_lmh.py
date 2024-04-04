@@ -46,6 +46,7 @@ class TxTestGenre(AtCmd, CMW100):
         self.port_table = None
         self.get_temp_en = self.state_dict['get_temp_en']
         self.mipi_usid_addr_series = None  # this should have other function
+        self.rx_level = self.rx_level = self.state_dict['init_rx_sync_level']
 
     def port_table_selector(self, band, tx_path='TX1'):
         """
@@ -102,7 +103,7 @@ class TxTestGenre(AtCmd, CMW100):
 
     def volt_mipi_handler(self, tech, band, tx_path):
         if self.state_dict['volt_mipi_en']:
-            volt_mipi_handler = self.query_voltage_collection(ext_pmt.et_tracker)
+            volt_mipi_handler = self.query_voltage_collection(self.state_dict['et_tracker'])
             return volt_mipi_handler(tech, band, tx_path)
         else:
             return [None]
@@ -436,6 +437,7 @@ class TxTestGenre(AtCmd, CMW100):
         self.file_path = tx_power_relative_test_export_excel_ftm(data_chan, self.parameters)  # mode=1: LMH mode
         self.set_test_end_gsm()
 
+
     def tx_power_aclr_evm_lmh_subprocess_nr(self):
         self.data_freq = data_freq = {}
         self.rx_freq_nr = cm_pmt_ftm.transfer_freq_tx2rx_nr(self.band_nr, self.tx_freq_nr)  # temp
@@ -616,10 +618,10 @@ class TxTestGenre(AtCmd, CMW100):
 
     def run(self):
         for tech in self.state_dict['tech_list']:
-            if tech == 'LTE':
-                self.tx_power_aclr_evm_lmh_pipeline_lte()
-            elif tech == 'NR':
+            if tech == 'NR':
                 self.tx_power_aclr_evm_lmh_pipeline_nr()
+            elif tech == 'LTE':
+                self.tx_power_aclr_evm_lmh_pipeline_lte()
             elif tech == 'WCDMA':
                 self.tx_power_aclr_evm_lmh_pipeline_wcdma()
             elif tech == 'GSM':

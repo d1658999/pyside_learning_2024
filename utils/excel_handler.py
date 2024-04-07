@@ -8,7 +8,7 @@ from utils.log_init import log_set
 import utils.parameters.common_parameters_ftm as cm_pmt_ftm
 import utils.parameters.common_parameters_anritsu as cm_pmt_anritsu
 # import utils.parameters.external_paramters as ext_pmt
-from utils.channel_handler import chan_judge_fr1, chan_judge_lte, chan_judge_wcdma, chan_judge_gsm
+from utils.channel_handler import chan_judge_nr, chan_judge_lte, chan_judge_wcdma, chan_judge_gsm
 from exception.custom_exception import FileNotFoundException
 from openpyxl.styles import PatternFill, Font, Color
 from openpyxl.formatting.rule import CellIsRule, FormulaRule, ColorScaleRule
@@ -47,7 +47,7 @@ rx_path_lte_dict = {
     12: 'RX2+RX3',
     15: 'ALL PATH',
 }
-rx_path_fr1_dict = {
+rx_path_nr_dict = {
     2: 'RX0',
     1: 'RX1',
     4: 'RX2',
@@ -791,7 +791,7 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
         row = max_row + 1
         if tx_freq_level >= 100:  # level_sweep
             for tx_level, measured_data in data.items():
-                chan = chan_judge_fr1(band, bw, tx_freq_level)
+                chan = chan_judge_nr(band, bw, tx_freq_level)
                 ws.cell(row, 1).value = band
                 ws.cell(row, 2).value = bw
                 ws.cell(row, 3).value = tx_freq_level  # this freq_fr1
@@ -833,7 +833,7 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
 
         elif tx_freq_level <= 100:  # 1rb_sweep, lmh, freq_sweep, cbe
             for tx_freq, measured_data in data.items():
-                chan = chan_judge_fr1(band, bw, tx_freq) if test_item != 'freq_sweep' else None
+                chan = chan_judge_nr(band, bw, tx_freq) if test_item != 'freq_sweep' else None
                 ws.cell(row, 1).value = band
                 ws.cell(row, 2).value = bw
                 ws.cell(row, 3).value = tx_freq
@@ -1697,9 +1697,9 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
             max_row = ws.max_row
             row = max_row + 1  # skip title
             for tx_freq, measured_data in data.items():
-                chan = chan_judge_fr1(band, bw, tx_freq)
+                chan = chan_judge_nr(band, bw, tx_freq)
                 ws.cell(row, 1).value = band
-                ws.cell(row, 2).value = rx_path_fr1_dict[rx_path]
+                ws.cell(row, 2).value = rx_path_nr_dict[rx_path]
                 ws.cell(row, 3).value = chan  # LMH
                 ws.cell(row, 4).value = tx_freq
                 ws.cell(row, 5).value = tx_level  # this tx level
@@ -4226,7 +4226,7 @@ def color_format_gsm_evm_ftm(file_path):
     wb.save(file_path)
 
 
-def color_rule_sens_fr1_ftm(band, bw) -> dict:
+def color_rule_sens_nr_ftm(band, bw) -> dict:
     # import yaml file
     sens_crit = sensitivity_criteria_nr(band, 30, bw)
     margin = import_sens_limits()
@@ -4301,7 +4301,7 @@ def color_rule_sens_lte_ftm(band, bw) -> dict:
 
 
 
-def color_format_fr1_sens_ftm(file_path):
+def color_format_nr_sens_ftm(file_path):
     logger.info('========== Color code judge for Sensitivity ==========')
     wb = openpyxl.load_workbook(file_path)
     for sheetname in wb.sheetnames:
@@ -4317,7 +4317,7 @@ def color_format_fr1_sens_ftm(file_path):
                     bw = ws.cell(row, 21).value
 
                     # get the red and yellow pattern
-                    pattern_red, pattern_yellow, pattern_none = color_rule_sens_fr1_ftm(band, bw)
+                    pattern_red, pattern_yellow, pattern_none = color_rule_sens_nr_ftm(band, bw)
 
                     # start to judge and give pattern
                     if  pattern_red['sens_red_usl'] >= ws.cell(row, 7).value > pattern_yellow['sens_yellow_usl']:

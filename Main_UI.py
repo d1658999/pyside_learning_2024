@@ -1289,6 +1289,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tx_test_items_ns_count_wcdma = 0
         tx_test_items_ns_count_gsm = 0
         tx_test_items_ns_count_ulca_lte = 0
+        tx_test_items_ns_count_nr_freq_sweep = 0
+        tx_test_items_ns_count_lte_freq_sweep  = 0
+        tx_test_items_ns_count_wcdma_freq_sweep  = 0
+        tx_test_items_ns_count_gsm_freq_sweep  = 0
         tx_test_items_ns_count_nr_fcc = 0
         tx_test_items_ns_count_nr_ce = 0
         rx_test_items_ns_count_nr = 0
@@ -1339,10 +1343,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 tx_test_items_ns_count_wcdma += 1
                 tx_test_items_ns_count_gsm += 1
             if key == 'tx_freq_sweep_ns' and value:
-                tx_test_items_ns_count_nr += 1
-                tx_test_items_ns_count_lte += 1
-                tx_test_items_ns_count_wcdma += 1
-                tx_test_items_ns_count_gsm += 1
+                tx_test_items_ns_count_nr_freq_sweep += 1
+                tx_test_items_ns_count_lte_freq_sweep += 1
+                tx_test_items_ns_count_wcdma_freq_sweep += 1
+                tx_test_items_ns_count_gsm_freq_sweep += 1
             if key == 'tx_1rb_sweep_ns' and value:
                 tx_test_items_ns_count_nr += 1
                 tx_test_items_ns_count_lte += 1
@@ -1774,6 +1778,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       tx_test_items_ns_count_wcdma * wcdma_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_ns_count_gsm * gsm_tech_count * channel_count * band_gsm_count + \
                       tx_test_items_ns_count_ulca_lte * ulca_lte_tech_count * channel_count * band_ulca_lte_count * bw_ulca_lte_count + \
+                      tx_test_items_ns_count_nr_freq_sweep * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count * rb_nr_count + \
+                      tx_test_items_ns_count_lte_freq_sweep * tx_path_count * lte_tech_count * band_lte_count * bw_lte_count * mcs_lte_count * rb_lte_count + \
+                      tx_test_items_ns_count_wcdma_freq_sweep * wcdma_tech_count * band_wcdma_count + \
+                      tx_test_items_ns_count_gsm_freq_sweep * gsm_tech_count * band_gsm_count + \
                       rx_test_items_ns_count_nr * rx_path_count * channel_count * band_nr_count * bw_nr_count * ue_power_count + \
                       rx_test_items_ns_count_lte * rx_path_count * channel_count * band_lte_count * bw_lte_count * ue_power_count + \
                       rx_test_items_ns_count_wcdma * rx_path_count * channel_count * band_wcdma_count * ue_power_count + \
@@ -1873,7 +1881,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     inst.ser.com_close()
 
                 if state_dict['tx_freq_sweep_ns']:
-                    ...
+                    inst = TxTestFreqSweep(state_dict, self.progressBar)
+                    inst.run()
+                    inst.ser.com_close()
                 if state_dict['tx_1rb_sweep_ns']:
                     ...
                 if state_dict['tx_fcc_power_ns']:
@@ -1943,8 +1953,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         from utils.adb_handler import thermal_charger_disable
         thermal_charger_disable()
 
-    def stop(self):
-        self.close()
+    @staticmethod
+    def stop():
+        sys.exit()
 
 
 def main():

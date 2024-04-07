@@ -42,7 +42,7 @@ def chan_judge_lte(band_lte, bw_lte, tx_freq_lte):
         return 'ch2'
 
 
-def chan_judge_fr1(band_fr1, bw_fr1, tx_freq_fr1):
+def chan_judge_nr(band_fr1, bw_fr1, tx_freq_fr1):
     rx_freq_fr1 = cm_pmt_ftm.transfer_freq_tx2rx_nr(band_fr1, tx_freq_fr1)
     if rx_freq_fr1 < cm_pmt_ftm.dl_freq_selected('NR', band_fr1, bw_fr1)[1]:
         return 'ch0'

@@ -449,8 +449,6 @@ class TxTestLevelSweep(AtCmd, CMW100):
                         self.aclr_mod_current_results.append(self.measure_current(self.band_lte))
                         data[tx_level] = self.results_combination_nlw()
 
-                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                        self.state_dict['progressBar_progress'] += 1
                     logger.debug(data)
                     self.parameters = {
                         'script': self.script,
@@ -471,6 +469,9 @@ class TxTestLevelSweep(AtCmd, CMW100):
                         'test_item': 'level_sweep',
                     }
                     self.file_path = tx_power_relative_test_export_excel_ftm(data, self.parameters)
+
+                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                    self.state_dict['progressBar_progress'] += 1
         self.set_test_end_lte()
 
     def tx_level_sweep_process_wcdma(self):
@@ -545,8 +546,6 @@ class TxTestLevelSweep(AtCmd, CMW100):
                 self.aclr_mod_current_results.append(self.measure_current(self.band_wcdma))
                 data[tx_level] = self.results_combination_nlw()
 
-                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                self.state_dict['progressBar_progress'] += 1
             logger.debug(data)
             self.parameters = {
                 'script': self.script,
@@ -567,6 +566,10 @@ class TxTestLevelSweep(AtCmd, CMW100):
                 'test_item': 'level_sweep',
             }
             self.file_path = tx_power_relative_test_export_excel_ftm(data, self.parameters)
+
+            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+            self.state_dict['progressBar_progress'] += 1
+
         self.set_test_end_wcdma()
 
     def tx_level_sweep_process_gsm(self):
@@ -625,8 +628,6 @@ class TxTestLevelSweep(AtCmd, CMW100):
                 mod_orfs_current_results.append(self.measure_current(self.band_gsm))
                 data[tx_pcl] = mod_orfs_current_results + self.get_temperature()
 
-                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                self.state_dict['progressBar_progress'] += 1
             logger.debug(data)
             self.parameters = {
                 'script': self.script,
@@ -647,6 +648,9 @@ class TxTestLevelSweep(AtCmd, CMW100):
                 'test_item': 'level_sweep',
             }
             self.file_path = tx_power_relative_test_export_excel_ftm(data, self.parameters)
+
+            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+            self.state_dict['progressBar_progress'] += 1
         self.set_test_end_gsm()
 
     def tx_level_sweep_subprocess_nr(self):

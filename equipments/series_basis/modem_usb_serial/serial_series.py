@@ -1,7 +1,7 @@
 import time
 
 from utils.log_init import log_set
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 from connection_interface.connection_serial import ModemComport
 from utils.parameters.common_parameters_ftm import TDD_BANDS, NTN_BANDS
 import utils.parameters.rssi_parameters as rssi
@@ -9,6 +9,7 @@ from utils.regy_handler import regy_parser, regy_parser_v2
 from exception.custom_exception import DictionaryException
 
 logger = log_set('AtCmd')
+STATE_SERIAL = {}
 
 
 class AtCmd:
@@ -56,10 +57,10 @@ class AtCmd:
         self.mod_gsm = None
         self.asw_on_off = 0  # 1: AS ON, 0: AS OFF
         self.asw_tech = None
-        self.sync_path = ext_pmt.sync_path
+        self.sync_path = STATE_SERIAL['sync_path']
         self.asw_srs_path = None
-        self.asw_path = ext_pmt.asw_path
-        self.srs_path = ext_pmt.srs_path
+        self.asw_path = STATE_SERIAL['as_path']
+        self.srs_path = STATE_SERIAL['srs_path']
         self.tx_path = None
         self.rx_path_nr = None
         self.rx_path_lte = None
@@ -67,7 +68,8 @@ class AtCmd:
         self.rx_path_gsm = None
         self.sync_mode = 0  # 0: MAIN , 1: 4RX, 2: 6RX
         self.rx_chan_wcdma = None
-        self.sa_nsa_mode = ext_pmt.sa_nsa
+        self.sa_nsa_mode = None
+        self.duty_cycle = 100 # 100 for NR TDD PC3, 50: for NR TDD PC2, but easy setting by 100
         self.ul_symbol = None
         self.ul_slot = None
         self.dl_symbol = None
@@ -480,13 +482,13 @@ class AtCmd:
         logger.info(f'Band: {self.band_gsm}, Modulation: {self.mod_gsm}, Chan: {self.rx_chan_gsm}, PCL: {self.pcl}')
 
     def set_duty_cycle(self):
-        logger.info(f'----------Set duty cycle: {ext_pmt.duty_cycle}----------')
+        logger.info(f'----------Set duty cycle: {self.duty_cycle}----------')
         if self.band_nr in TDD_BANDS:
-            self.uldl_period = self.duty_cycle_dict[ext_pmt.duty_cycle][0]
-            self.dl_slot = self.duty_cycle_dict[ext_pmt.duty_cycle][1]
-            self.dl_symbol = self.duty_cycle_dict[ext_pmt.duty_cycle][2]
-            self.ul_slot = self.duty_cycle_dict[ext_pmt.duty_cycle][3]
-            self.ul_symbol = self.duty_cycle_dict[ext_pmt.duty_cycle][4]
+            self.uldl_period = self.duty_cycle_dict[self.duty_cycle][0]
+            self.dl_slot = self.duty_cycle_dict[self.duty_cycle][1]
+            self.dl_symbol = self.duty_cycle_dict[self.duty_cycle][2]
+            self.ul_slot = self.duty_cycle_dict[self.duty_cycle][3]
+            self.ul_symbol = self.duty_cycle_dict[self.duty_cycle][4]
             logger.info('---TDD, so need to set the duty cycle---')
             logger.debug(f'Duty Cycle setting: {self.uldl_period}, {self.dl_slot}, {self.dl_symbol}, {self.ul_slot}, '
                          f'{self.ul_symbol}')
@@ -511,7 +513,7 @@ class AtCmd:
         logger.info(
             f'TX_PATH: {self.tx_path}, BW: {self.bw_nr}, TX_FREQ: {self.tx_freq_nr}, RB_SIZE: {self.rb_size_nr}, '
             f'RB_OFFSET: {self.rb_start_nr}, MCS: {self.mcs_nr}, TX_LEVEL: {self.tx_level}, '
-            f'Duty cycle: {ext_pmt.duty_cycle} %')
+            f'Duty cycle: {self.duty_cycle} %')
 
     def antenna_switch(self):  # 1: AS ON, 0: AS OFF, this is old version, please use v2
         logger.info('---------Antenna Switch----------')
@@ -531,7 +533,7 @@ class AtCmd:
         tech:
         ant_path:
         """
-        asw_en = ext_pmt.asw_path_enable
+        asw_en = STATE_SERIAL['as_path_en']
         if asw_en:
             self.asw_tech = self.tech
             logger.info('---------Antenna Switch----------')
@@ -1525,7 +1527,7 @@ class AtCmd:
         """
         Get the FBRX power, only support for nr, LTE
         """
-        if ext_pmt.fbrx_en:
+        if STATE_SERIAL['fbrx_en']:
             logger.info(f'----------Get {tech} FBRX power----------')
             res = self.command(f'AT+PDREAD={self.pdread_dict[tech]}, 0')
             for line in res:
@@ -1563,7 +1565,7 @@ class AtCmd:
         2,5,0:0,4,0:1,5,2
         use colon to seperate it
         """
-        if ext_pmt.mipi_read_en and mipi_usid_addr_series:
+        if STATE_SERIAL['mipi_read_en'] and mipi_usid_addr_series:
             logger.info(f'========== MIPI READING is starting ==========')
             res_series_list = []
             mipi_list = mipi_usid_addr_series.strip().split(":")

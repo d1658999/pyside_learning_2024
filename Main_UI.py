@@ -1840,10 +1840,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def measure_process(self):
         import utils.excel_handler as excel_hdl
         import utils.adb_handler as adb_hdl
+        import equipments.series_basis.modem_usb_serial.serial_series as ss
 
         self.export_gui_setting_yaml()  # export state_dict to yaml file
         state_dict = self.gui_state_get()
-        adb_hdl.STATE_ADB = excel_hdl.STATE_DICT_EXCEL = state_dict
+        ss.STATE_SERIAL = adb_hdl.STATE_ADB = excel_hdl.STATE_DICT_EXCEL = state_dict
         counts_total = self.items_counts(state_dict)
         self.progressBar.reset()
         if counts_total != 0:

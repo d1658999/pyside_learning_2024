@@ -36,7 +36,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../.designer/Wave.ico</normaloff>../../../.designer/Wave.ico</iconset>
+    <normaloff>../../../../.designer/Wave.ico</normaloff>../../../../.designer/Wave.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="enabled">
@@ -4478,11 +4478,11 @@ Disable</string>
    <hints>
     <hint type="sourcelabel">
      <x>364</x>
-     <y>172</y>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>387</x>
-     <y>190</y>
+     <y>208</y>
     </hint>
    </hints>
   </connection>

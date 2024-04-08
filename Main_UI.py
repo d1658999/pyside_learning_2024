@@ -49,6 +49,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def custom_signal_slot(self):
         self.as_path_en.toggled.connect(self.srs_unchecked)
         self.srs_path_en.toggled.connect(self.as_unchecked)
+        self.rx_normal_ns.toggled.connect(self.rx_quick_unchecked)
+        self.rx_quick_ns.toggled.connect(self.rx_normal_unchecked)
         self.run_button.clicked.connect(self.run_start)
         self.therm_charge_dis_button.clicked.connect(self.therm_charge_dis)
         self.stop_button.clicked.connect(self.stop)
@@ -148,6 +150,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #     self.as_path_en.setChecked(False)
         if checked:
             self.as_path_en.setChecked(False)
+
+    def rx_normal_unchecked(self, checked):
+        if checked:
+            self.rx_normal_ns.setChecked(False)
+    def rx_quick_unchecked(self, checked):
+        if checked:
+            self.rx_quick_ns.setChecked(False)
 
     def export_gui_setting_yaml(self):
         logger.info('Export ui setting')
@@ -1826,7 +1835,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                 self.measure_process()
 
-        else:  # wtihout temp chamber and psu controlled
+        else:  # without temp chamber and psu controlled
             self.condition = None
             self.volt = 3.8
 
@@ -1902,10 +1911,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                 if state_dict['tx_ulca_lte_ns']:
                     ...
-                if state_dict['rx_normal_ns']:
-                    ...
-                if state_dict['rx_quick_ns']:
-                    ...
+                if state_dict['rx_normal_ns'] or state_dict['rx_quick_ns']:
+                    inst = RxTestGenre()
+                    inst.run()
+                    inst.ser.com_close()
                 if state_dict['rx_endc_desense_ns']:
                     ...
 

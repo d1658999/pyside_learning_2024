@@ -1,0 +1,44 @@
+NR:
+  QPSK:
+    evm_color_red_usl: 10
+    evm_color_yellow_usl: 5
+  Q16:
+    evm_color_red_usl: 10
+    evm_color_yellow_usl: 5
+  Q64:
+    evm_color_red_usl: 8
+    evm_color_yellow_usl: 5
+  Q256:
+    evm_color_red_usl: 3
+    evm_color_yellow_usl: 2.5
+  BPSK:
+    Q16:
+      evm_color_red_usl: 10
+      evm_color_yellow_usl: 5
+
+LTE:
+  QPSK:
+    evm_color_red_usl: 10
+    evm_color_yellow_usl: 5
+  Q16:
+    evm_color_red_usl: 10
+    evm_color_yellow_usl: 5
+  Q64:
+    evm_color_red_usl: 8
+    evm_color_yellow_usl: 5
+  Q256:
+    evm_color_red_usl: 3
+    evm_color_yellow_usl: 2.5
+
+WCDMA:
+  QPSK:
+    evm_color_red_usl: 10
+    evm_color_yellow_usl: 5
+
+GSM:
+  GMSK:
+    evm_color_red_usl: 10
+    evm_color_yellow_usl: 5
+  EPSK:
+    evm_color_red_usl: 10
+    evm_color_yellow_usl: 5

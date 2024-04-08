@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for freq sweep and level sweep">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for 1rb sweep on NR">
+      <change afterPath="$PROJECT_DIR$/spec_limits/Sens_fdd_nr.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spec_limits/Sens_gsm.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spec_limits/Sens_lte.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spec_limits/Sens_tdd_nr.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spec_limits/Sens_wcdma.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spec_limits/aclr_color_code.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spec_limits/evm_color_code.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spec_limits/power_limits.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spec_limits/sensitivity_color_code.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_1rb_sweep.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_1rb_sweep.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui_mega_v2_9.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui_mega_v2_9.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +59,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python.Main_UI.executor": "Debug",
+    "Python.Main_UI.executor": "Run",
     "Python.ui_mega_v2_2.executor": "Run",
     "Python.ui_test_v2_1.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -342,7 +351,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712508494874</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="update ui test version v2_9 for 1rb sweep on NR">
+      <option name="closed" value="true" />
+      <created>1712511334671</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1712511334671</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -378,7 +395,8 @@
     <MESSAGE value="update ui test version v2_8 fcc_ce but total has weird symptom" />
     <MESSAGE value="update ui test version v2_8 for fcc/ce/level_sweep and fix n48 is not introduced" />
     <MESSAGE value="update ui test version v2_9 for freq sweep and level sweep" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for freq sweep and level sweep" />
+    <MESSAGE value="update ui test version v2_9 for 1rb sweep on NR" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for 1rb sweep on NR" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

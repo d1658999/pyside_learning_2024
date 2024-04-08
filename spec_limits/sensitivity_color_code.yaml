@@ -1,0 +1,15 @@
+NR:
+  sens_color_red_margin: 1
+  sens_color_yellow_margin: 3
+
+LTE:
+  sens_color_red_margin: 1
+  sens_color_yellow_margin: 3
+
+WCDMA:
+  sens_color_red_margin: 1
+  sens_color_yellow_margin: 3
+
+GSM:
+  sens_color_red_margin: 1
+  sens_color_yellow_margin: 3

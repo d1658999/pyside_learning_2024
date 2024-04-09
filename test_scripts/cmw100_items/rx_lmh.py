@@ -4,7 +4,7 @@ import math
 from equipments.series_basis.modem_usb_serial.serial_series import AtCmd
 from equipments.cmw100 import CMW100
 from utils.log_init import log_set
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 import utils.parameters.common_parameters_ftm as cm_pmt_ftm
 import utils.parameters.rb_parameters as scrpt_set
 from utils.loss_handler import get_loss
@@ -21,27 +21,28 @@ SDL_BANDS = [29, 32, 46, 75, 76]
 
 
 class RxTestGenre(AtCmd, CMW100):
-    def __init__(self):
+    def __init__(self, state_dict, obj_progressbar):
         AtCmd.__init__(self)
         CMW100.__init__(self)
+        self.state_dict = state_dict
+        self.progressBar = obj_progressbar
         self.power_endc_lte = None
         self.port_mimo_tx2 = None
         self.port_mimo_tx1 = None
-        self.sa_nsa_mode = ext_pmt.sa_nsa
-        self.rx_fast_test_enable = ext_pmt.rx_fast_test_enable
+        self.sa_nsa_mode = None
+        self.rx_quick_test_enable = state_dict['rx_quick_ns']
         self.tx_freq_wcdma = None
         self.file_path = None
         self.power_monitor_endc_lte = None
-        self.power_endc_fr1 = None
+        self.power_endc_nr = None
         self.chan_rb = None
         self.band_combo = None
-        self.port_tx_fr1 = None
+        self.port_tx_nr = None
         self.port_tx_lte = None
-        self.tx_level_endc_fr1 = None
+        self.tx_level_endc_nr = None
         self.tx_level_endc_lte = None
         self.mcs_wcdma = None
         self.ue_power_bool = None
-        self.script = None
         self.chan = None
         self.resolution = None
         self.port_table = None
@@ -52,19 +53,18 @@ class RxTestGenre(AtCmd, CMW100):
         """
         try:
             if self.port_table is None:  # to initial port table at first time
-                if ext_pmt.asw_path_enable is False:
+                if not self.state_dict['as_path_en']:
                     txas_select = 0
                     self.port_table = self.port_tx_table(txas_select)
                 else:
                     self.port_table = self.port_tx_table(self.asw_path)
 
-            if ext_pmt.port_table_en and tx_path in ['TX1', 'TX2']:
+            if self.state_dict['tx_port_table_en'] and tx_path in ['TX1', 'TX2']:
                 self.port_tx = int(self.port_table[tx_path][str(band)])
 
-            elif ext_pmt.port_table_en and tx_path in ['MIMO']:
+            elif self.state_dict['tx_port_table_en'] and tx_path in ['MIMO']:
                 self.port_mimo_tx1 = int(self.port_table['MIMO_TX1'][str(band)])
                 self.port_mimo_tx2 = int(self.port_table['MIMO_TX2'][str(band)])
-
             else:
                 pass
 
@@ -109,22 +109,22 @@ class RxTestGenre(AtCmd, CMW100):
         self.query_agc_lte()
         self.get_esens_lte()
 
-    def query_rx_measure_fr1(self):
-        self.query_rsrp_cinr_fr1()
-        self.query_agc_fr1()
-        self.get_esens_fr1()
+    def query_rx_measure_nr(self):
+        self.query_rsrp_cinr_nr()
+        self.query_agc_nr()
+        self.get_esens_nr()
 
     def query_fer_measure_gsm(self):
         self.sig_gen_gsm()
         self.sync_gsm()
         self.query_rssi_measure_gsm()
 
-    def search_process_fr1(self):
-        self.query_fer_measure_fr1()
+    def search_process_nr(self):
+        self.query_fer_measure_nr()
         while self.fer < 500:
             self.rx_level = round(self.rx_level - self.resolution, 1)  # to reduce a unit
             self.set_rx_level_search()
-            self.query_fer_measure_fr1()
+            self.query_fer_measure_nr()
             # self.command_cmw100_query('*OPC?')
 
     def search_process_lte(self):
@@ -154,7 +154,7 @@ class RxTestGenre(AtCmd, CMW100):
         return rssi
         # self.command_cmw100_query('*OPC?')
 
-    def search_sensitivity_fr1(self):
+    def search_sensitivity_nr(self):
         reset_rx_level = -80
         self.rx_level = reset_rx_level
         coarse_1 = 2
@@ -162,19 +162,19 @@ class RxTestGenre(AtCmd, CMW100):
         fine = 0.2
         logger.info('----------Search RX Level----------')
         self.resolution = coarse_1
-        self.search_process_fr1()  # first time by coarse_1
+        self.search_process_nr()  # first time by coarse_1
         logger.info('Second time to search')
         self.rx_level += coarse_1 * 2
         logger.info(f'==========Back to Search: {self.rx_level} dBm==========')
         self.set_rx_level_search()
         self.resolution = coarse_2
-        self.search_process_fr1()  # second time by coarse_2
+        self.search_process_nr()  # second time by coarse_2
         logger.info('Third time to search')
         self.rx_level += coarse_2 * 2
         logger.info(f'==========Back to Search: {self.rx_level} dBm==========')
         self.set_rx_level_search()
         self.resolution = fine
-        self.search_process_fr1()  # second time by fine
+        self.search_process_nr()  # second time by fine
         self.rx_level = round(self.rx_level + fine, 1)
         logger.info(f'Final Rx Level: {self.rx_level}')
 
@@ -257,46 +257,44 @@ class RxTestGenre(AtCmd, CMW100):
         logger.info(f'Final RSSI: {self.rssi}')
         self.command('AT+TESTRESET')
 
-    def search_sensitivity_pipline_fr1(self):
-        self.port_tx = ext_pmt.port_tx
-        self.chan = ext_pmt.channel
-        self.type_fr1 = 'DFTS'
-        self.script = 'GENERAL'
-        self.mcs_fr1 = 'QPSK'
+    def search_sensitivity_pipline_nr(self):
+        self.port_tx = self.state_dict['tx_port']
+        self.chan = self.state_dict['channel_str']
+        self.type_nr = 'DFTS'
+        self.mcs_nr = 'QPSK'
         items = [
             (tech, tx_path, bw, ue_power_bool, band)
-            for tech in ext_pmt.tech
-            for tx_path in ext_pmt.tx_paths
-            for bw in ext_pmt.fr1_bandwidths
-            for band in ext_pmt.fr1_bands
-            for ue_power_bool in ext_pmt.tx_max_pwr_sensitivity
+            for tech in self.state_dict['tech_list']
+            for tx_path in self.state_dict['tx_path_list']
+            for bw in self.state_dict['nr_bw_list']
+            for band in self.state_dict['nr_bands_list']
+            for ue_power_bool in self.state_dict['ue_power_list']
         ]
         for item in items:
-            if item[0] == 'FR1' and ext_pmt.fr1_bands != []:
+            if item[0] == 'NR' and self.state_dict['nr_bands_list'] != []:
                 self.tech = item[0]
                 self.tx_path = item[1]
-                self.bw_fr1 = item[2]
+                self.bw_nr = item[2]
                 self.ue_power_bool = item[3]
-                self.tx_level = ext_pmt.tx_level_spin if self.ue_power_bool == 1 else -10
-                self.band_fr1 = item[4]
-                self.port_table_selector(self.band_fr1, self.tx_path)
+                self.tx_level = self.state_dict['tx_level'] if self.ue_power_bool == 1 else -10
+                self.band_nr = item[4]
+                self.port_table_selector(self.band_nr, self.tx_path)
 
-                if self.bw_fr1 in cm_pmt_ftm.bandwidths_selected_nr(self.band_fr1):
-                    self.search_sensitivity_lmh_process_fr1()
+                if self.bw_nr in cm_pmt_ftm.bandwidths_selected_nr(self.band_nr):
+                    self.search_sensitivity_lmh_process_nr()
                 else:
-                    logger.info(f'B{self.band_fr1} does not have BW {self.bw_fr1}MHZ')
+                    logger.info(f'B{self.band_nr} does not have BW {self.bw_nr}MHZ')
 
-        for bw in ext_pmt.fr1_bandwidths:
+        for bw in self.state_dict['nr_bw_list']:
             try:
                 parameters = {
-                    'script': self.script,
-                    'tech': 'FR1',
-                    'mcs': self.mcs_fr1,
+                    'tech': 'NR',
+                    'mcs': self.mcs_nr,
                 }
-                # self.bw_fr1 = bw
-                file_name = select_file_name_rx_ftm(bw, 'FR1')
+                # self.bw_nr = bw
+                file_name = select_file_name_rx_ftm(bw, 'NR')
                 file_path = Path(excel_folder_path()) / Path(file_name)
-                rx_desense_process_ftm(file_path, self.mcs_fr1)
+                rx_desense_process_ftm(file_path, self.mcs_nr)
                 rxs_relative_plot_ftm(file_path, parameters)
                 color_format_nr_sens_ftm(file_path)
 
@@ -307,31 +305,30 @@ class RxTestGenre(AtCmd, CMW100):
             except KeyError as err:
                 logger.debug(err)
                 logger.info(
-                    f"{self.band_fr1} doesn't have this {self.bw_fr1}, so desens progress cannot run")
+                    f"{self.band_nr} doesn't have this {self.bw_nr}, so desens progress cannot run")
             except FileNotFoundError as err:
                 logger.debug(err)
                 logger.info(f"There is not file to plot BW{bw}")
 
     def search_sensitivity_pipline_lte(self):
-        self.port_tx = ext_pmt.port_tx
-        self.chan = ext_pmt.channel
+        self.port_tx = self.state_dict['tx_port']
+        self.chan = self.state_dict['channel_str']
         self.mcs_lte = 'QPSK'
-        self.script = 'GENERAL'
         items = [
             (tech, tx_path, bw, ue_power_bool, band)
-            for tech in ext_pmt.tech
-            for tx_path in ext_pmt.tx_paths
-            for bw in ext_pmt.lte_bandwidths
-            for band in ext_pmt.lte_bands
-            for ue_power_bool in ext_pmt.tx_max_pwr_sensitivity
+            for tech in self.state_dict['tech_list']
+            for tx_path in self.state_dict['tx_path_list']
+            for bw in self.state_dict['lte_bw_list']
+            for band in self.state_dict['lte_bands_list']
+            for ue_power_bool in self.state_dict['ue_power_list']
         ]
         for item in items:
-            if item[0] == 'LTE' and ext_pmt.lte_bands != []:
+            if item[0] == 'LTE' and self.state_dict['lte_bands_list'] != []:
                 self.tech = item[0]
                 self.tx_path = item[1]
                 self.bw_lte = item[2]
                 self.ue_power_bool = item[3]
-                self.tx_level = ext_pmt.tx_level_spin if self.ue_power_bool == 1 else -10
+                self.tx_level = self.state_dict['tx_level'] if self.ue_power_bool == 1 else -10
                 self.band_lte = item[4]
                 self.port_table_selector(self.band_lte, self.tx_path)
 
@@ -340,11 +337,9 @@ class RxTestGenre(AtCmd, CMW100):
                 else:
                     logger.info(f'B{self.band_lte} does not have BW {self.bw_lte}MHZ')
 
-
-        for bw in ext_pmt.lte_bandwidths:
+        for bw in self.state_dict['lte_bw_list']:
             try:
                 parameters = {
-                    'script': self.script,
                     'tech': 'LTE',
                     'mcs': self.mcs_lte,
                 }
@@ -368,18 +363,18 @@ class RxTestGenre(AtCmd, CMW100):
                 logger.info(f"There is not file to plot BW{bw}")
 
     def search_sensitivity_pipline_wcdma(self):
-        self.port_tx = ext_pmt.port_tx
-        self.chan = ext_pmt.channel
+        self.port_tx = self.state_dict['tx_port']
+        self.chan = self.state_dict['channel_str']
         self.mcs_wcdma = 'QPSK'
         self.script = 'GENERAL'
         items = [
             (tech, tx_path, band)
-            for tech in ext_pmt.tech
-            for tx_path in ext_pmt.tx_paths
-            for band in ext_pmt.wcdma_bands
+            for tech in self.state_dict['tech_list']
+            for tx_path in self.state_dict['tx_path_list']
+            for band in self.state_dict['wcdma_bands_list']
         ]
         for item in items:
-            if item[0] == 'WCDMA' and ext_pmt.wcdma_bands != []:
+            if item[0] == 'WCDMA' and self.state_dict['wcdma_bands_list'] != []:
                 self.tech = item[0]
                 self.tx_path = item[1]
                 self.band_wcdma = item[2]
@@ -388,106 +383,103 @@ class RxTestGenre(AtCmd, CMW100):
         # file_name = f'Sensitivty_5MHZ_{self.tech}_LMH.xlsx'
         # file_path = Path(excel_folder_path()) / Path(file_name)
         parameters = {
-            'script': self.script,
             'tech': self.tech,
             'mcs': self.mcs_wcdma,
         }
         rxs_relative_plot_ftm(self.file_path, parameters)
 
     def search_sensitivity_pipline_gsm(self):
-        self.port_tx = ext_pmt.port_tx
-        self.chan = ext_pmt.channel
-        self.mod_gsm = ext_pmt.mod_gsm
-        self.script = 'GENERAL'
+        self.port_tx = self.state_dict['tx_port']
+        self.chan = self.state_dict['channel_str']
+        self.mod_gsm = self.state_dict['gsm_modulation']
         items = [
             (tech, band)
-            for tech in ext_pmt.tech
-            for band in ext_pmt.gsm_bands
+            for tech in self.state_dict['tech_list']
+            for band in self.state_dict['gsm_bands_list']
         ]
         for item in items:
-            if item[0] == 'GSM' and ext_pmt.gsm_bands != []:
+            if item[0] == 'GSM' and self.state_dict['gsm_bands_list'] != []:
                 self.tech = item[0]
                 self.band_gsm = item[1]
                 self.port_table_selector(self.band_gsm)
-                self.pcl = ext_pmt.tx_pcl_lb if self.band_gsm in [850, 900] else ext_pmt.tx_pcl_mb
+                self.pcl = self.state_dict['pcl_lb_level'] if self.band_gsm in [850, 900] else self.state_dict['pcl_mb_level']
                 self.search_sensitivity_lmh_process_gsm()
         # file_name = f'Sensitivty_0MHZ_{self.tech}_LMH.xlsx'
         # file_path = Path(excel_folder_path()) / Path(file_name)
         parameters = {
-            'script': self.script,
             'tech': self.tech,
             'mcs': 'GMSK',
         }
         rxs_relative_plot_ftm(self.file_path, parameters)
 
     def search_sensitivity_pipline_endc(self):
-        self.tx_level_endc_lte = ext_pmt.tx_level_endc_lte
-        self.tx_level_endc_fr1 = ext_pmt.tx_level_endc_fr1
-        self.port_tx_lte = ext_pmt.port_tx_lte
-        self.port_tx_fr1 = ext_pmt.port_tx_fr1
-        self.type_fr1 = 'DFTS'
-        self.mcs_lte = self.mcs_fr1 = 'QPSK'
+        self.tx_level_endc_lte = self.state_dict['tx_level_lte_endc']
+        self.tx_level_endc_nr = self.state_dict['tx_level_nr_endc']
+        self.port_tx_lte = self.state_dict['tx_port_endc_lte']
+        self.port_tx_nr = self.state_dict['tx_port']
+        self.type_nr = 'DFTS'
+        self.mcs_lte = self.mcs_nr = 'QPSK'
         self.tx_path = None
         self.rx_path_lte = None
-        self.rx_path_fr1 = None
+        self.rx_path_nr = None
         file_path = None
 
         items = [
-            ('ENDC', band_combo, bw_lte, bw_fr1, chan_rb, ue_power_bool, rx_path_lte, rx_path_fr1)
+            ('ENDC', band_combo, bw_lte, bw_nr, chan_rb, ue_power_bool, rx_path_lte, rx_path_nr)
             # for tech in ext_pmt.tech
-            for band_combo in ext_pmt.endc_bands
+            for band_combo in self.state_dict['endc_bands_list']
             for bw_lte in scrpt_set.ENDC[band_combo]
-            for bw_fr1 in scrpt_set.ENDC[band_combo][bw_lte]
-            for chan_rb in scrpt_set.ENDC[band_combo][bw_lte][bw_fr1]
-            for rx_path_lte in ext_pmt.rx_paths_endc_lte
-            for rx_path_fr1 in ext_pmt.rx_paths_endc_fr1
-            for ue_power_bool in ext_pmt.tx_max_pwr_sensitivity
+            for bw_nr in scrpt_set.ENDC[band_combo][bw_lte]
+            for chan_rb in scrpt_set.ENDC[band_combo][bw_lte][bw_nr]
+            for rx_path_lte in self.state_dict['endc_lte_rx_path_list']
+            for rx_path_nr in self.state_dict['endc_nr_rx_path_list']
+            for ue_power_bool in self.state_dict['ue_power_list']
         ]
         # data = []
         for item in items:
             self.band_combo = item[1]
             self.bw_lte = item[2]
-            self.bw_fr1 = item[3]
+            self.bw_nr = item[3]
             self.chan_rb = item[4]
             self.ue_power_bool = item[5]
             self.rx_path_lte = item[6]
-            self.rx_path_fr1 = item[7]
-            [band_lte_str, band_fr1_str] = self.band_combo.split('_')
+            self.rx_path_nr = item[7]
+            [band_lte_str, band_nr_str] = self.band_combo.split('_')
             self.band_lte = int(band_lte_str)
-            self.band_fr1 = int(band_fr1_str)
-            (self.tx_freq_lte, self.tx_freq_fr1) = self.chan_rb[0]
+            self.band_nr = int(band_nr_str)
+            (self.tx_freq_lte, self.tx_freq_nr) = self.chan_rb[0]
             (self.rb_size_lte, self.rb_start_lte) = self.chan_rb[1]
-            (self.rb_size_fr1, self.rb_start_fr1) = self.chan_rb[2]
+            (self.rb_size_nr, self.rb_start_nr) = self.chan_rb[2]
             self.tx_freq_lte = int(self.tx_freq_lte * 1000)
-            self.tx_freq_fr1 = int(self.tx_freq_fr1 * 1000)
-            loss_tx_lte = self.loss_selector(self.tx_freq_lte, ext_pmt.fdc_en)
-            loss_tx_fr1 = self.loss_selector(self.tx_freq_fr1, ext_pmt.fdc_en)
-            self.rx_freq_fr1 = cm_pmt_ftm.transfer_freq_tx2rx_nr(self.band_fr1, self.tx_freq_fr1)
+            self.tx_freq_nr = int(self.tx_freq_nr * 1000)
+            loss_tx_lte = self.loss_selector(self.tx_freq_lte, self.state_dict['fdc_en'])
+            loss_tx_nr = self.loss_selector(self.tx_freq_nr, self.state_dict['fdc_en'])
+            self.rx_freq_nr = cm_pmt_ftm.transfer_freq_tx2rx_nr(self.band_nr, self.tx_freq_nr)
             self.rx_freq_lte = cm_pmt_ftm.transfer_freq_tx2rx_lte(self.band_lte, self.tx_freq_lte)
             self.preset_instrument()
 
             # set end at initial
             self.set_test_end_lte(delay=0.5)
-            self.set_test_end_fr1(delay=0.5)
-            self.rx_level = ext_pmt.init_rx_sync_level
+            self.set_test_end_nr(delay=0.5)
+            self.rx_level = self.state_dict['init_rx_sync_level']
 
             # sync lte
             self.set_test_mode_lte()
-            self.loss_rx = self.loss_selector(self.rx_freq_lte, ext_pmt.fdc_en)
+            self.loss_rx = self.loss_selector(self.rx_freq_lte, self.state_dict['fdc_en'])
             self.sig_gen_lte()
             self.sync_lte()
 
             # sync fr1
-            self.set_test_mode_fr1()
-            self.loss_rx = self.loss_selector(self.rx_freq_fr1, ext_pmt.fdc_en)
-            self.sig_gen_fr1()
-            self.sync_fr1()
+            self.set_test_mode_nr()
+            self.loss_rx = self.loss_selector(self.rx_freq_nr, self.state_dict['fdc_en'])
+            self.sig_gen_nr()
+            self.sync_nr()
 
             # set LTE power
             self.tx_level = self.tx_level_endc_lte if self.ue_power_bool == 1 else -10
             self.loss_tx = loss_tx_lte
             self.port_tx = self.port_tx_lte
-            self.tx_path = ext_pmt.tx_path_endc_lte
+            self.tx_path = self.state_dict['endc_lte_tx_path']
             self.tx_set_lte()
             self.tech = 'LTE'
             self.antenna_switch_v2()
@@ -495,31 +487,31 @@ class RxTestGenre(AtCmd, CMW100):
 
             # lte tx measurement
             self.port_tx = self.port_tx_lte
-            ext_pmt.fbrx_en = True
+            self.state_dict['fbrx_en'] = True
             self.power_endc_lte = round(self.query_fbrx_power('LTE')[0], 2)  # modulation power
             logger.info(f'LTE FBRX Power: {self.power_endc_lte}')
 
             # set FR1 power
-            self.tx_level = self.tx_level_endc_fr1
-            self.loss_tx = loss_tx_fr1
-            self.port_tx = self.port_tx_fr1
-            self.tx_path = ext_pmt.tx_path_endc_fr1
-            self.tx_set_fr1()
-            self.tech = 'FR1'
+            self.tx_level = self.tx_level_endc_nr
+            self.loss_tx = loss_tx_nr
+            self.port_tx = self.port_tx_nr
+            self.tx_path = self.state_dict['endc_nr_tx_path']
+            self.tx_set_nr()
+            self.tech = 'NR'
             self.antenna_switch_v2()
-            self.rx_path_setting_fr1()
+            self.rx_path_setting_nr()
 
             # FR1 tx measurement
-            self.port_tx = self.port_tx_fr1
-            fbrx_power_fr1 = self.query_fbrx_power('FR1')[0]
-            logger.debug(fbrx_power_fr1)
-            logger.info(f'FR1 FBRX Power: {fbrx_power_fr1}')  # modulation power
-            self.power_endc_fr1 = round(fbrx_power_fr1, 2)
+            self.port_tx = self.port_tx_nr
+            fbrx_power_nr = self.query_fbrx_power('NR')[0]
+            logger.debug(fbrx_power_nr)
+            logger.info(f'FR1 FBRX Power: {fbrx_power_nr}')  # modulation power
+            self.power_endc_nr = round(fbrx_power_nr, 2)
 
             # FR1 RxS
-            # rxs_fr1 = self.search_sensitivity_fr1()
-            self.query_rx_measure_fr1()
-            rxs_fr1 = self.esens_list  # [rx0, rx1,rx2, rx3]
+            # rxs_nr = self.search_sensitivity_nr()
+            self.query_rx_measure_nr()
+            rxs_nr = self.esens_list  # [rx0, rx1,rx2, rx3]
             # # set LTE power and get ENDC power for LTE
             # self.tx_level = ext_pmt.tx_level_endc_lte if self.ue_power_bool == 1 else -10
             # self.loss_tx = loss_tx_lte
@@ -528,45 +520,45 @@ class RxTestGenre(AtCmd, CMW100):
 
             # LTE sync2
             self.rx_level = -70
-            self.loss_rx = self.loss_selector(self.rx_freq_lte, ext_pmt.fdc_en)
+            self.loss_rx = self.loss_selector(self.rx_freq_lte, self.state_dict['fdc_en'])
             self.sig_gen_lte()
             self.sync_lte()
 
             # FR1 tx set
-            self.tx_path = ext_pmt.tx_path_endc_fr1
-            self.tx_level = self.tx_level_endc_fr1
-            self.tx_set_fr1()
-            self.tech = 'FR1'
+            self.tx_path = self.state_dict['endc_nr_tx_path']
+            self.tx_level = self.tx_level_endc_nr
+            self.tx_set_nr()
+            self.tech = 'NR'
             self.antenna_switch_v2()
-            self.rx_path_setting_fr1()
+            self.rx_path_setting_nr()
 
             # LTE tx set
             self.tx_level = self.tx_level_endc_lte if self.ue_power_bool == 1 else -10
             self.loss_tx = loss_tx_lte
             self.port_tx = self.port_tx_lte
-            self.tx_path = ext_pmt.tx_path_endc_lte
+            self.tx_path = self.state_dict['endc_lte_tx_path']
             self.tx_set_lte()
             self.tech = 'LTE'
             self.antenna_switch_v2()
             self.rx_path_setting_lte()
 
             # LTE RxS
-            rxs_lte = self.sensitivity_solution_select_fr1()
+            rxs_lte = self.sensitivity_solution_select_nr()
 
             # save data to excel
             data = [
-                int(self.band_lte), int(self.band_fr1),
-                self.power_endc_lte, self.power_endc_fr1,
-                rxs_lte, rxs_fr1[0], rxs_fr1[1], rxs_fr1[2], rxs_fr1[3],
-                self.bw_lte, self.bw_fr1,
-                self.tx_freq_lte, self.tx_freq_fr1,
-                self.tx_level_endc_lte, self.tx_level_endc_fr1,
+                int(self.band_lte), int(self.band_nr),
+                self.power_endc_lte, self.power_endc_nr,
+                rxs_lte, rxs_nr[0], rxs_nr[1], rxs_nr[2], rxs_nr[3],
+                self.bw_lte, self.bw_nr,
+                self.tx_freq_lte, self.tx_freq_nr,
+                self.tx_level_endc_lte, self.tx_level_endc_nr,
                 self.rb_size_lte, self.rb_start_lte,
-                self.rb_size_fr1, self.rb_start_fr1,
+                self.rb_size_nr, self.rb_start_nr,
                 self.rx_path_lte_dict[self.rx_path_lte],
             ]
 
-            self.set_test_end_fr1(delay=0.5)
+            self.set_test_end_nr(delay=0.5)
             self.set_test_end_lte(delay=0.5)
             if data:
                 file_path = rx_power_endc_test_export_excel_ftm(data)
@@ -578,60 +570,59 @@ class RxTestGenre(AtCmd, CMW100):
         else:
             logger.info('please check the test items that are not selected')
 
-    def search_sensitivity_lmh_process_fr1(self):
+    def search_sensitivity_lmh_process_nr(self):
         # [L_rx_freq, M_rx_ferq, H_rx_freq]
-        rx_freq_list = cm_pmt_ftm.dl_freq_selected('FR1', self.band_fr1, self.bw_fr1)
+        rx_freq_list = cm_pmt_ftm.dl_freq_selected('NR', self.band_nr, self.bw_nr)
 
         rx_freq_select_list = sorted(set(channel_freq_select(self.chan, rx_freq_list)))
 
-        for rx_path in ext_pmt.rx_paths:
-            self.rx_path_fr1 = rx_path
+        for rx_path in self.state_dict['rx_path_list']:
+            self.rx_path_nr = rx_path
             data = {}
             for rx_freq in rx_freq_select_list:
                 # self.rx_level = -70
-                self.rx_level_select_fr1()  # this is determination of rx if fast test is enable
-                self.rx_freq_fr1 = rx_freq
-                self.tx_freq_fr1 = cm_pmt_ftm.transfer_freq_rx2tx_nr(self.band_fr1, self.rx_freq_fr1)
-                self.loss_rx = self.loss_selector(self.rx_freq_fr1, ext_pmt.fdc_en)
-                self.loss_tx = self.loss_selector(self.tx_freq_fr1, ext_pmt.fdc_en)
+                self.rx_level_select_nr()  # this is determination of rx if fast test is enable
+                self.rx_freq_nr = rx_freq
+                self.tx_freq_nr = cm_pmt_ftm.transfer_freq_rx2tx_nr(self.band_nr, self.rx_freq_nr)
+                self.loss_rx = self.loss_selector(self.rx_freq_nr, self.state_dict['fdc_en'])
+                self.loss_tx = self.loss_selector(self.tx_freq_nr, self.state_dict['fdc_en'])
                 logger.info('----------Test LMH progress---------')
                 self.preset_instrument()
-                self.set_test_end_fr1()
-                self.set_test_mode_fr1()
+                self.set_test_end_nr()
+                self.set_test_mode_nr()
                 # self.command_cmw100_query('*OPC?')
-                self.sig_gen_fr1()
-                self.sync_fr1()
-                self.rx_path_setting_fr1()
-                if self.band_fr1 not in SDL_BANDS:
-                    self.rb_size_fr1, self.rb_start_fr1 = cm_pmt_ftm.special_uplink_config_sensitivity_nr(
-                        self.band_fr1,
+                self.sig_gen_nr()
+                self.sync_nr()
+                self.rx_path_setting_nr()
+                if self.band_nr not in SDL_BANDS:
+                    self.rb_size_nr, self.rb_start_nr = cm_pmt_ftm.special_uplink_config_sensitivity_nr(
+                        self.band_nr,
                         self.scs,
-                        self.bw_fr1)  # for RB set(including special tx setting)
+                        self.bw_nr)  # for RB set(including special tx setting)
                     self.antenna_switch_v2()
-                    self.tx_set_fr1()
+                    self.tx_set_nr()
                     # aclr_results + mod_results  # U_-2, U_-1, E_-1, Pwr, E_+1, U_+1, U_+2, EVM, Freq_Err, IQ_OFFSET
-                    aclr_mod_results = self.tx_measure_fr1()
+                    aclr_mod_results = self.tx_measure_nr()
                     measured_power = round(aclr_mod_results[3], 1)
                 else:
                     measured_power = None
                 # self.command_cmw100_query('*OPC?')
-                self.sensitivity_solution_select_fr1()
+                self.sensitivity_solution_select_nr()
                 logger.info(f'Power: {measured_power}, Sensitivity: {self.rx_level}')
                 # measured_power, measured_rx_level, rsrp_list, cinr_list, agc_list, thermistor_list
-                data[self.tx_freq_fr1] = [measured_power, self.rx_level, self.rsrp_list, self.cinr_list,
+                data[self.tx_freq_nr] = [measured_power, self.rx_level, self.rsrp_list, self.cinr_list,
                                           self.agc_list, self.get_temperature()]
-                self.set_test_end_fr1()
+                self.set_test_end_nr()
             parameters = {
-                'script': self.script,
                 'tech': self.tech,
-                'band': self.band_fr1,
-                'bw': self.bw_fr1,
+                'band': self.band_nr,
+                'bw': self.bw_nr,
                 'tx_level': self.tx_level,
-                'mcs': self.mcs_fr1,
+                'mcs': self.mcs_nr,
                 'tx_path': self.tx_path,
                 'rx_path': rx_path,
-                'rb_size': self.rb_size_fr1,
-                'rb_start': self.rb_start_fr1,
+                'rb_size': self.rb_size_nr,
+                'rb_start': self.rb_start_nr,
             }
             self.file_path = rx_power_relative_test_export_excel_ftm(data, parameters)
 
@@ -641,7 +632,7 @@ class RxTestGenre(AtCmd, CMW100):
 
         rx_freq_select_list = sorted(set(channel_freq_select(self.chan, rx_freq_list)))
 
-        for rx_path in ext_pmt.rx_paths:
+        for rx_path in self.state_dict['rx_path_list']:
             self.rx_path_lte = rx_path
             data = {}
             for rx_freq in rx_freq_select_list:
@@ -649,8 +640,8 @@ class RxTestGenre(AtCmd, CMW100):
                 self.rx_level_select_lte()  # this is determination of rx if fast test is enable
                 self.rx_freq_lte = rx_freq
                 self.tx_freq_lte = cm_pmt_ftm.transfer_freq_rx2tx_lte(self.band_lte, self.rx_freq_lte)
-                self.loss_rx = self.loss_selector(self.rx_freq_lte, ext_pmt.fdc_en)
-                self.loss_tx = self.loss_selector(self.tx_freq_lte, ext_pmt.fdc_en)
+                self.loss_rx = self.loss_selector(self.rx_freq_lte, self.state_dict['fdc_en'])
+                self.loss_tx = self.loss_selector(self.tx_freq_lte, self.state_dict['fdc_en'])
                 logger.info('----------Test LMH progress---------')
                 self.preset_instrument()
                 self.set_test_end_lte()
@@ -680,7 +671,6 @@ class RxTestGenre(AtCmd, CMW100):
                                           self.agc_list, self.get_temperature()]
                 self.set_test_end_lte()
             parameters = {
-                'script': self.script,
                 'tech': self.tech,
                 'band': self.band_lte,
                 'bw': self.bw_lte,
@@ -701,7 +691,7 @@ class RxTestGenre(AtCmd, CMW100):
         tx_rx_chan_select_list = channel_freq_select(self.chan, tx_rx_chan_list)
 
         self.preset_instrument()
-        for rx_path in ext_pmt.rx_paths:
+        for rx_path in self.state_dict['rx_path_list']:
             self.rx_path_wcdma = rx_path
             if self.rx_path_wcdma in [1, 2, 3, 15]:
                 data = {}
@@ -714,8 +704,8 @@ class RxTestGenre(AtCmd, CMW100):
                                                                              'rx')
                     self.tx_freq_wcdma = cm_pmt_ftm.transfer_chan2freq_wcdma(self.band_wcdma, self.tx_chan_wcdma,
                                                                              'tx')
-                    self.loss_rx = self.loss_selector(self.rx_freq_wcdma, ext_pmt.fdc_en)
-                    self.loss_tx = self.loss_selector(self.tx_freq_wcdma, ext_pmt.fdc_en)
+                    self.loss_rx = self.loss_selector(self.rx_freq_wcdma, self.state_dict['fdc_en'])
+                    self.loss_tx = self.loss_selector(self.tx_freq_wcdma, self.state_dict['fdc_en'])
                     self.set_test_end_wcdma()
                     self.set_test_mode_wcdma()
                     self.cmw_query('*OPC?')
@@ -737,7 +727,6 @@ class RxTestGenre(AtCmd, CMW100):
                     #                           , cinr_list, agc_list
                     self.set_test_end_wcdma()
                 parameters = {
-                    'script': self.script,
                     'tech': self.tech,
                     'band': self.band_wcdma,
                     'bw': 5,
@@ -760,7 +749,7 @@ class RxTestGenre(AtCmd, CMW100):
         self.set_test_mode_gsm()
         self.set_test_end_gsm()
 
-        for rx_path in ext_pmt.rx_paths:
+        for rx_path in self.state_dict['rx_path_list']:
             self.rx_path_gsm = rx_path
             if self.rx_path_gsm in [1, 2]:
                 data = {}
@@ -770,8 +759,8 @@ class RxTestGenre(AtCmd, CMW100):
                     self.rx_chan_gsm = rx_chan_gsm
                     self.rx_freq_gsm = cm_pmt_ftm.transfer_chan2freq_gsm(self.band_gsm, self.rx_chan_gsm, 'rx')
                     self.tx_freq_gsm = cm_pmt_ftm.transfer_chan2freq_gsm(self.band_gsm, self.rx_chan_gsm, 'tx')
-                    self.loss_rx = self.loss_selector(self.rx_freq_gsm, ext_pmt.fdc_en)
-                    self.loss_tx = self.loss_selector(self.tx_freq_gsm, ext_pmt.fdc_en)
+                    self.loss_rx = self.loss_selector(self.rx_freq_gsm, self.state_dict['fdc_en'])
+                    self.loss_tx = self.loss_selector(self.tx_freq_gsm, self.state_dict['fdc_en'])
                     self.set_test_mode_gsm()
                     self.rx_path_setting_gsm()
                     self.sig_gen_gsm()
@@ -785,7 +774,6 @@ class RxTestGenre(AtCmd, CMW100):
                     #                           , cinr_list, agc_list
                     self.set_test_end_gsm()
                 parameters = {
-                    'script': self.script,
                     'tech': self.tech,
                     'band': self.band_gsm,
                     'bw': 0,
@@ -798,17 +786,17 @@ class RxTestGenre(AtCmd, CMW100):
             else:
                 logger.info(f"GSM doesn't have this RX path {self.rx_path_gsm_dict[self.rx_path_gsm]}")
 
-    def rx_level_select_fr1(self):
-        if not self.rx_fast_test_enable:
+    def rx_level_select_nr(self):
+        if not self.rx_quick_test_enable:
             self.rx_level = -70
         else:
-            if self.bw_fr1 in [5]:
+            if self.bw_nr in [5]:
                 self.rx_level = -100
             else:
                 self.rx_level = -80
 
     def rx_level_select_lte(self):
-        if not self.rx_fast_test_enable:
+        if not self.rx_quick_test_enable:
             self.rx_level = -70
         else:
             if self.bw_lte in [10, 15, 20]:
@@ -816,17 +804,17 @@ class RxTestGenre(AtCmd, CMW100):
             elif self.bw_lte in [1.4, 3, 5]:
                 self.rx_level = -100
 
-    def sensitivity_solution_select_fr1(self):
+    def sensitivity_solution_select_nr(self):
         try:
-            if not self.rx_fast_test_enable:
-                self.search_sensitivity_fr1()
-                self.query_rx_measure_fr1()
+            if not self.rx_quick_test_enable:
+                self.search_sensitivity_nr()
+                self.query_rx_measure_nr()
             else:
-                self.query_rx_measure_fr1()
+                self.query_rx_measure_nr()
                 real_sens_list = [sens for sens in self.esens_list if -55 > sens > -150]
                 if not real_sens_list:  # if sometimes test error for rx measure, then test it again
                     logger.info('========== repeat test ==========')
-                    self.query_rx_measure_fr1()
+                    self.query_rx_measure_nr()
                     real_sens_list = [sens for sens in self.esens_list if -55 > sens > -150]
                 self.rx_level = self.sens_calculation(real_sens_list)
         except Exception as err:
@@ -838,7 +826,7 @@ class RxTestGenre(AtCmd, CMW100):
 
     def sensitivity_solution_select_lte(self):
         try:
-            if not self.rx_fast_test_enable:
+            if not self.rx_quick_test_enable:
                 self.search_sensitivity_lte()
                 self.query_rx_measure_lte()
             else:
@@ -894,22 +882,21 @@ class RxTestGenre(AtCmd, CMW100):
         #     sens_sum = round(-10 * math.log10(sum_sens_sqrt), 1)
         #     return sens_sum
 
-    def run(self):
-        for tech in ext_pmt.tech:
-            for script in ext_pmt.scripts:
-                if script == 'GENERAL' and self.sa_nsa_mode == 0:
-                    if tech == 'LTE':
-                        self.search_sensitivity_pipline_lte()
-                    elif tech == 'FR1':
-                        self.search_sensitivity_pipline_fr1()
-                    elif tech == 'WCDMA':
-                        self.search_sensitivity_pipline_wcdma()
-                    elif tech == 'GSM':
-                        self.search_sensitivity_pipline_gsm()
+    def run_genre(self):
+        self.sa_nsa_mode = 0
+        for tech in self.state_dict['tech_list']:
+            if tech == 'NR':
+                self.search_sensitivity_pipline_nr()
+            elif tech == 'LTE':
+                self.search_sensitivity_pipline_lte()
+            elif tech == 'WCDMA':
+                self.search_sensitivity_pipline_wcdma()
+            elif tech == 'GSM':
+                self.search_sensitivity_pipline_gsm()
 
-                elif script == 'ENDC' and self.sa_nsa_mode == 1:
-                    if tech == 'FR1':
-                        self.search_sensitivity_pipline_endc()
+    def run_endc(self):
+        self.sa_nsa_mode = 1
+        self.search_sensitivity_pipline_endc()
 
 
 def main():

@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for CA_36508.xlsx">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for rx_normal and rx_quick in sustom_signal_slot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/mega_v2_9.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/mega_v2_9.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui_init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gui_init.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/excel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/excel_handler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -374,7 +376,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712572654262</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="update ui test version v2_9 for rx_normal and rx_quick in sustom_signal_slot">
+      <option name="closed" value="true" />
+      <created>1712574489788</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1712574489788</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -389,7 +399,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="initial" />
     <MESSAGE value="test" />
     <MESSAGE value="gitigore" />
     <MESSAGE value="update requirements.txt" />
@@ -414,19 +423,15 @@
     <MESSAGE value="update ui test version v2_9 for yaml file" />
     <MESSAGE value="update ui test version v2_9 for serial_series.py" />
     <MESSAGE value="update ui test version v2_9 for CA_36508.xlsx" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for CA_36508.xlsx" />
+    <MESSAGE value="update ui test version v2_9 for rx_normal and rx_quick in sustom_signal_slot" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for rx_normal and rx_quick in sustom_signal_slot" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1879</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1782</line>
+          <line>1851</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -441,7 +446,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1808</line>
+          <line>1877</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -466,18 +471,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1883</line>
-          <option name="timeStamp" value="54" />
+          <line>1986</line>
+          <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1888</line>
-          <option name="timeStamp" value="55" />
+          <line>1982</line>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1893</line>
-          <option name="timeStamp" value="56" />
+          <line>1984</line>
+          <option name="timeStamp" value="59" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

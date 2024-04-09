@@ -35,7 +35,7 @@ b3_lte: false
 b40_lte: false
 b41_lte: false
 b42_lte: false
-b48_lte: false
+b48_lte: true
 b4_lte: false
 b4_wcdma: false
 b5_lte: false
@@ -51,15 +51,15 @@ b71_lte: false
 b7_lte: false
 b8_lte: false
 b8_wcdma: false
-bands_toolBox_index: 0
+bands_toolBox_index: 1
 bpsk_nr: false
-bw100_nr: false
+bw100_nr: true
 bw10_10: false
 bw10_15: false
 bw10_20: false
 bw10_5: false
 bw10_lte: false
-bw10_nr: false
+bw10_nr: true
 bw15_10: false
 bw15_15: false
 bw15_20: false
@@ -80,7 +80,7 @@ bw3_lte: false
 bw40: false
 bw40_nr: false
 bw45_nr: false
-bw50_nr: false
+bw50_nr: true
 bw5_10: false
 bw5_15: false
 bw5_20: false
@@ -91,7 +91,7 @@ bw70_nr: false
 bw80_nr: false
 bw90_nr: false
 cbe_margin: 1.5
-channel_str: ''
+channel_str: LMH
 condition: null
 cp_nr: false
 criteria_ulca_lte_3gpp: false
@@ -103,6 +103,11 @@ edge_1rb_left_nr: false
 edge_1rb_right_nr: false
 edge_full_left_nr: false
 edge_full_right_nr: false
+endc_bands_list: []
+endc_lte_rx_path_list: []
+endc_lte_tx_path: TX1
+endc_nr_rx_path_list: []
+endc_nr_tx_path: TX1
 endc_tx1_path_lte: true
 endc_tx1_path_nr: true
 endc_tx2_path_lte: false
@@ -127,7 +132,7 @@ gsm900: false
 gsm_bands_list: []
 gsm_modulation: GMSK
 gsm_tech: false
-hch: false
+hch: true
 hsdpa_tech: false
 hsupa_tech: false
 ht_value: 55
@@ -140,11 +145,12 @@ inner_1rb_left_nr: false
 inner_1rb_right_nr: false
 inner_full_nr: false
 input_level_sig_anritsu: 28
-lch: false
+lch: true
 level_sweep_start: -20
 level_sweep_stop: 26
 lt_value: -10
-lte_bands_list: []
+lte_bands_list:
+- 48
 lte_bw_list: []
 lte_mcs_list: []
 lte_rb_allocation_list: []
@@ -153,7 +159,7 @@ lthv_en: false
 ltlv_en: false
 lv_en: false
 lv_value: 3.6
-mch: false
+mch: true
 mimo: false
 mipi_read_en: false
 n12_nr: false
@@ -178,7 +184,7 @@ n39_nr: false
 n3_nr: false
 n40_nr: false
 n41_nr: false
-n48_nr: false
+n48_nr: true
 n4_nr: false
 n5_nr: false
 n66_nr: false
@@ -191,11 +197,15 @@ n78_nr: false
 n79_nr: false
 n7_nr: false
 n8_nr: false
-nr_bands_list: []
-nr_bw_list: []
+nr_bands_list:
+- 48
+nr_bw_list:
+- 10
+- 50
+- 100
 nr_mcs_list: []
 nr_rb_allocation_list: []
-nr_tech: false
+nr_tech: true
 nr_type_list: []
 nt_value: 25
 ntnv_en: false
@@ -226,19 +236,24 @@ q64_nr: false
 qpsk_lte: false
 qpsk_nr: false
 rfout_port_sig_anritsu: MAIN
-rx0: false
-rx0rx1: false
-rx1: false
-rx2: false
+rx0: true
+rx0rx1: true
+rx1: true
+rx2: true
 rx2rx3: false
 rx3: false
-rx_all_path: false
+rx_all_path: true
 rx_all_path_endc_lte: false
 rx_all_path_endc_nr: false
 rx_endc_desense_ns: false
-rx_normal_ns: false
+rx_normal_ns: true
 rx_normal_s: false
-rx_path_list: []
+rx_path_list:
+- 2
+- 1
+- 4
+- 3
+- 15
 rx_quick_ns: false
 rxs_sweep_s: false
 srs_path: '0'
@@ -246,12 +261,13 @@ srs_path_en: false
 sync_path: Main
 sync_path_endc: Main
 sync_path_toolBox_index: 0
-tabWidget_index: 0
-tech_list: []
+tabWidget_index: 1
+tech_list:
+- NR
 temp_volts_list: []
 test_items_toolbox_index: 0
 tmpchmb_en: false
-tx1: false
+tx1: true
 tx2: false
 tx_1rb_sweep_ns: false
 tx_cbe_ns: false
@@ -265,13 +281,17 @@ tx_level_nr_endc: 20
 tx_level_sweep_ns: false
 tx_lmh_ns: false
 tx_lmh_s: false
-tx_path_list: []
+tx_path_list:
+- TX1
 tx_port: '1'
 tx_port_endc_lte: '1'
-tx_port_table_en: false
+tx_port_table_en: true
 tx_ulca_lte_cbe_ns: false
 tx_ulca_lte_ns: false
-txrx_path_toolBox_index: 0
+txrx_path_toolBox_index: 1
+ue_power_list:
+- 1
+- 0
 ue_txlow: true
 ue_txmax: true
 ulca_1c: false
@@ -285,6 +305,7 @@ ulca_5b: false
 ulca_66b: false
 ulca_66c: false
 ulca_7c: false
+ulca_lte_band_list: []
 ulca_lte_bw_list: []
 ulca_lte_criteria: FCC
 ulca_lte_rb_allocation_list: []

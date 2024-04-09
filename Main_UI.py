@@ -457,6 +457,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['channel_str'] = self.channel_selected()
         state_dict['tx_path_list'] = self.tx_path_selected()
         state_dict['rx_path_list'] = self.rx_path_selected()
+        state_dict['endc_lte_tx_path'] = self.endc_lte_tx_path_switch()
+        state_dict['endc_nr_tx_path'] = self.endc_nr_tx_path_switch()
+        state_dict['endc_lte_rx_path_list'] = self.endc_lte_rx_path_selected()
+        state_dict['endc_nr_rx_path_list'] = self.endc_nr_rx_path_selected()
+        state_dict['ue_power_list'] = self.ue_power_selected()
         state_dict['nr_bw_list'] = self.nr_bw_selected()
         state_dict['lte_bw_list'] = self.lte_bw_selected()
         state_dict['ulca_lte_bw_list'] = self.ulca_lte_bw_selected()
@@ -464,6 +469,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['lte_bands_list'] = self.lte_bands_selected()
         state_dict['wcdma_bands_list'] = self.wcdma_bands_selected()
         state_dict['gsm_bands_list'] = self.gsm_bands_selected()
+        state_dict['ulca_lte_band_list'] = self.ulca_lte_bands_selected()
+        state_dict['endc_bands_list'] = self.endc_bands_selected()
         state_dict['nr_type_list'] = self.nr_type_selected()
         state_dict['gsm_modulation'] = self.gsm_modulation_switch()
         state_dict['ulca_lte_criteria'] = self.ulca_lte_critera_switch()
@@ -472,7 +479,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['devices_serial'] = get_serial_devices()
         state_dict['condition'] = self.condition
         state_dict['volt_type'] = self.volt
-
 
         return state_dict
 
@@ -844,6 +850,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return tx_path_list
 
     def rx_path_selected(self):
+        """
+        0: default(free run) | 1: DRX_ONLY | 2: PRX ONLY | 3: PRX+DRX | 4: 4RX_PRX(RX2) ONLY | 8: 4RX_DRX(RX3) ONLY | 12: 4RX_PRX(RX2) + 4RX_DRX(RX3) | 15: ALL PATH
+        """
         rx_path_list = []
         if self.rx0.isChecked():
             rx_path_list.append(2)
@@ -858,9 +867,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.rx2_rx3.isChecked():
             rx_path_list.append(12)
         if self.rx_all_path.isChecked():
-            rx_path_list.append(5)
+            rx_path_list.append(15)
 
         return rx_path_list
+
+    def endc_lte_tx_path_switch(self):
+        if self.endc_tx1_path_lte_radioButton.isChecked():
+            return 'TX1'
+        elif self.endc_tx2_path_lte_radioButton.isChecked():
+            return 'TX2'
+
+    def endc_nr_tx_path_switch(self):
+        if self.endc_tx1_path_nr_radioButton.isChecked():
+            return 'TX1'
+        elif self.endc_tx2_path_nr_radioButton.isChecked():
+            return 'TX2'
+
+    def endc_lte_rx_path_selected(self):
+        endc_lte_rx_path_list = []
+        if self.rx_all_path_endc_nr.isChecked():
+            endc_lte_rx_path_list.append(15)
+
+        return endc_lte_rx_path_list
+
+    def endc_nr_rx_path_selected(self):
+        endc_nr_rx_path_list = []
+        if self.rx_all_path_endc_nr.isChecked():
+            endc_nr_rx_path_list.append(15)
+
+        return endc_nr_rx_path_list
+
+    def ue_power_selected(self):
+        ue_power_list = []
+        if self.ue_txmax.isChecked():
+            ue_power_list.append(1)
+        if self.ue_txlow.isChecked():
+            ue_power_list.append(0)
+
+        return ue_power_list
 
     def tech_selected(self):
         tech_list = []
@@ -1099,6 +1143,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # logger.info(f'ULCA LTE bands: {ulca_lte_bands_list}')
         return ulca_lte_bands_list
+
+    def endc_bands_selected(self):
+        endc_bands_list = []
+        if self.b3_n78.isChecked():
+            endc_bands_list.append('3_78')
+        if self.b2_n77.isChecked():
+            endc_bands_list.append('2_77')
+        if self.b66_n77.isChecked():
+            endc_bands_list.append('66_77')
+        if self.b66_n2.isChecked():
+            endc_bands_list.append('66_2')
+        if self.b66_n5.isChecked():
+            endc_bands_list.append('66_5')
+        if self.b12_n78.isChecked():
+            endc_bands_list.append('12_78')
+        if self.b5_n78.isChecked():
+            endc_bands_list.append('5_78')
+        if self.b28_n78.isChecked():
+            endc_bands_list.append('28_78')
+        if self.b5_n77.isChecked():
+            endc_bands_list.append('5_77')
+        if self.b13_n5.isChecked():
+            endc_bands_list.append('13_5')
+
+        return endc_bands_list
 
     def nr_bw_selected(self):
         bw_nr_list = []
@@ -1912,11 +1981,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if state_dict['tx_ulca_lte_ns']:
                     ...
                 if state_dict['rx_normal_ns'] or state_dict['rx_quick_ns']:
-                    inst = RxTestGenre()
-                    inst.run()
+                    inst = RxTestGenre(state_dict, self.progressBar)
+                    inst.run_genre()
                     inst.ser.com_close()
                 if state_dict['rx_endc_desense_ns']:
-                    ...
+                    inst = RxTestGenre(state_dict, self.progressBar)
+                    inst.run_endc()
+                    inst.ser.com_close()
 
             case 'Cmw100+Fsw':
                 from test_scripts.harmonics_cbe.tx_harmonics import TxHarmonics

@@ -60,7 +60,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rx_endc_desense_ns.stateChanged.connect(self.tx_port_endc_lte_state)
         self.equipments_comboBox.textActivated.connect(self.showout_en)
         self.run_button.clicked.connect(self.selected_show)
-        self.rx_quick_ns.toggled.connect(self.rx_path_cumtom_disabled)
+        self.rx_quick_ns.toggled.connect(self.rx_path_custom_disabled)
 
     def init_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
@@ -117,7 +117,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.hsupa_tech.setChecked(False)
                 self.hsdpa_tech.setChecked(False)
 
-    def rx_path_cumtom_disabled(self):
+    def rx_path_custom_disabled(self):
         if self.rx_quick_ns.isChecked():
             self.rx0.setDisabled(True)
             self.rx1.setDisabled(True)

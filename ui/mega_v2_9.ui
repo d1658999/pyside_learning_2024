@@ -74,7 +74,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="page_nr">
        <property name="geometry">
@@ -2747,7 +2747,7 @@ Disable</string>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tx_path">
          <property name="geometry">
@@ -3553,7 +3553,7 @@ Disable</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="general_sync">
       <property name="geometry">

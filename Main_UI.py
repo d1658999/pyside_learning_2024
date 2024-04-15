@@ -60,6 +60,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rx_endc_desense_ns.stateChanged.connect(self.tx_port_endc_lte_state)
         self.equipments_comboBox.textActivated.connect(self.showout_en)
         self.run_button.clicked.connect(self.selected_show)
+        self.rx_quick_ns.toggled.connect(self.rx_path_cumtom_disabled)
 
     def init_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
@@ -115,6 +116,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.ulca_lte_tech.setChecked(False)
                 self.hsupa_tech.setChecked(False)
                 self.hsdpa_tech.setChecked(False)
+
+    def rx_path_cumtom_disabled(self):
+        if self.rx_quick_ns.isChecked():
+            self.rx0.setDisabled(True)
+            self.rx1.setDisabled(True)
+            self.rx2.setDisabled(True)
+            self.rx3.setDisabled(True)
+            self.rx0_rx1.setDisabled(True)
+            self.rx2_rx3.setDisabled(True)
+            self.rx0.setChecked(False)
+            self.rx1.setChecked(False)
+            self.rx2.setChecked(False)
+            self.rx3.setChecked(False)
+            self.rx0_rx1.setChecked(False)
+            self.rx2_rx3.setChecked(False)
+
+        else:
+            self.rx0.setEnabled(True)
+            self.rx1.setEnabled(True)
+            self.rx2.setEnabled(True)
+            self.rx3.setEnabled(True)
+            self.rx0_rx1.setEnabled(True)
+            self.rx2_rx3.setEnabled(True)
 
     def selected_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')

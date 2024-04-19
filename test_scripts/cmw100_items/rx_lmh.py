@@ -435,6 +435,12 @@ class RxTestGenre(AtCmd, CMW100):
             for rx_path_nr in self.state_dict['endc_nr_rx_path_list']
             for ue_power_bool in self.state_dict['ue_power_list']
         ]
+
+        items_counts = len(items)
+        prog_max_value = self.progressBar.maximum()
+        new_prog_max_value = prog_max_value + items_counts - 1
+        self.progressBar.setMaximum(new_prog_max_value)
+
         # data = []
         for item in items:
             self.band_combo = item[1]
@@ -485,7 +491,7 @@ class RxTestGenre(AtCmd, CMW100):
             self.antenna_switch_v2()
             self.rx_path_setting_lte()
 
-            # lte tx measurement
+            # lte tx measurement by fbrx power
             self.port_tx = self.port_tx_lte
             self.state_dict['fbrx_en'] = True
             self.power_endc_lte = round(self.query_fbrx_power('LTE')[0], 2)  # modulation power
@@ -511,7 +517,7 @@ class RxTestGenre(AtCmd, CMW100):
             # FR1 RxS
             # rxs_nr = self.search_sensitivity_nr()
             self.query_rx_measure_nr()
-            rxs_nr = self.esens_list  # [rx0, rx1,rx2, rx3]
+            rxs_nr = self.esens_list  # [rx0, rx1, rx2, rx3]
             # # set LTE power and get ENDC power for LTE
             # self.tx_level = ext_pmt.tx_level_endc_lte if self.ue_power_bool == 1 else -10
             # self.loss_tx = loss_tx_lte
@@ -543,7 +549,8 @@ class RxTestGenre(AtCmd, CMW100):
             self.rx_path_setting_lte()
 
             # LTE RxS
-            rxs_lte = self.sensitivity_solution_select_nr()
+            self.query_rx_measure_lte()
+            rxs_lte = self.esens_list[0]  # [rx0, rx1, rx2, rx3]
 
             # save data to excel
             data = [
@@ -552,16 +559,21 @@ class RxTestGenre(AtCmd, CMW100):
                 rxs_lte, rxs_nr[0], rxs_nr[1], rxs_nr[2], rxs_nr[3],
                 self.bw_lte, self.bw_nr,
                 self.tx_freq_lte, self.tx_freq_nr,
-                self.tx_level_endc_lte, self.tx_level_endc_nr,
+                self.tx_level, self.tx_level_endc_nr,
                 self.rb_size_lte, self.rb_start_lte,
                 self.rb_size_nr, self.rb_start_nr,
-                self.rx_path_lte_dict[self.rx_path_lte],
+                'RX0',
+                # self.rx_path_lte_dict[self.rx_path_lte],
             ]
 
             self.set_test_end_nr(delay=0.5)
             self.set_test_end_lte(delay=0.5)
             if data:
                 file_path = rx_power_endc_test_export_excel_ftm(data)
+
+            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+            self.state_dict['progressBar_progress'] += 1
+
         # file_name = 'Sensitivty_ENDC.xlsx'
         # file_path = Path(excel_folder_path()) / Path(file_name)
         if file_path is not None:
@@ -578,7 +590,7 @@ class RxTestGenre(AtCmd, CMW100):
 
         for rx_path in self.state_dict['rx_path_list']:
             self.rx_path_nr = rx_path
-            data = {}
+
             for rx_freq in rx_freq_select_list:
                 # self.rx_level = -70
                 self.rx_level_select_nr()  # this is determination of rx if fast test is enable
@@ -609,22 +621,50 @@ class RxTestGenre(AtCmd, CMW100):
                 # self.command_cmw100_query('*OPC?')
                 self.sensitivity_solution_select_nr()
                 logger.info(f'Power: {measured_power}, Sensitivity: {self.rx_level}')
+
                 # measured_power, measured_rx_level, rsrp_list, cinr_list, agc_list, thermistor_list
-                data[self.tx_freq_nr] = [measured_power, self.rx_level, self.rsrp_list, self.cinr_list,
-                                          self.agc_list, self.get_temperature()]
-                self.set_test_end_nr()
-            parameters = {
-                'tech': self.tech,
-                'band': self.band_nr,
-                'bw': self.bw_nr,
-                'tx_level': self.tx_level,
-                'mcs': self.mcs_nr,
-                'tx_path': self.tx_path,
-                'rx_path': rx_path,
-                'rb_size': self.rb_size_nr,
-                'rb_start': self.rb_start_nr,
-            }
-            self.file_path = rx_power_relative_test_export_excel_ftm(data, parameters)
+                if self.rx_quick_test_enable:
+                    data_quick = {}
+                    for rp, esens in enumerate(self.esens_list):
+                        data_quick[self.tx_freq_nr] = [measured_power, esens, self.rsrp_list, self.cinr_list,
+                                                 self.agc_list, self.get_temperature()]
+                        parameters = {
+                            'tech': self.tech,
+                            'band': self.band_nr,
+                            'bw': self.bw_nr,
+                            'tx_level': self.tx_level,
+                            'mcs': self.mcs_nr,
+                            'tx_path': self.tx_path,
+                            'rx_path': f'RX{rp}',
+                            'rb_size': self.rb_size_nr,
+                            'rb_start': self.rb_start_nr,
+                        }
+                        self.file_path = rx_power_relative_test_export_excel_ftm(data_quick, parameters)
+
+                else:
+                    data_normal = {}
+                    rsrp_list = [None, None, None, None]
+                    cinr_list = [None, None, None, None]
+                    agc_list = [None, None, None, None]
+
+                    data_normal[self.tx_freq_nr] = [measured_power, self.rx_level, rsrp_list, cinr_list,
+                                          agc_list, self.get_temperature()]
+                    self.set_test_end_nr()
+                    parameters = {
+                        'tech': self.tech,
+                        'band': self.band_nr,
+                        'bw': self.bw_nr,
+                        'tx_level': self.tx_level,
+                        'mcs': self.mcs_nr,
+                        'tx_path': self.tx_path,
+                        'rx_path': rx_path,
+                        'rb_size': self.rb_size_nr,
+                        'rb_start': self.rb_start_nr,
+                    }
+                    self.file_path = rx_power_relative_test_export_excel_ftm(data_normal, parameters)
+
+                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                self.state_dict['progressBar_progress'] += 1
 
     def search_sensitivity_lmh_process_lte(self):
         rx_freq_list = cm_pmt_ftm.dl_freq_selected('LTE', self.band_lte,
@@ -634,7 +674,6 @@ class RxTestGenre(AtCmd, CMW100):
 
         for rx_path in self.state_dict['rx_path_list']:
             self.rx_path_lte = rx_path
-            data = {}
             for rx_freq in rx_freq_select_list:
                 # self.rx_level = -70
                 self.rx_level_select_lte()  # this is determination of rx if fast test is enable
@@ -666,22 +705,50 @@ class RxTestGenre(AtCmd, CMW100):
                 # self.query_rx_measure_lte()
                 self.sensitivity_solution_select_lte()
                 logger.info(f'Power: {measured_power}, Sensitivity: {self.rx_level}')
+
                 # measured_power, measured_rx_level, rsrp_list, cinr_list, agc_list, thermistor_list
-                data[self.tx_freq_lte] = [measured_power, self.rx_level, self.rsrp_list, self.cinr_list,
-                                          self.agc_list, self.get_temperature()]
-                self.set_test_end_lte()
-            parameters = {
-                'tech': self.tech,
-                'band': self.band_lte,
-                'bw': self.bw_lte,
-                'tx_level': self.tx_level,
-                'mcs': self.mcs_lte,
-                'tx_path': self.tx_path,
-                'rx_path': rx_path,
-                'rb_size': self.rb_size_lte,
-                'rb_start': self.rb_start_lte,
-            }
-            self.file_path = rx_power_relative_test_export_excel_ftm(data, parameters)
+                if self.rx_quick_test_enable:
+                    data_quick = {}
+                    for rp, esens in enumerate(self.esens_list):
+                        data_quick[self.tx_freq_lte] = [measured_power, esens, self.rsrp_list, self.cinr_list,
+                                                 self.agc_list, self.get_temperature()]
+                        parameters = {
+                            'tech': self.tech,
+                            'band': self.band_lte,
+                            'bw': self.bw_lte,
+                            'tx_level': self.tx_level,
+                            'mcs': self.mcs_lte,
+                            'tx_path': self.tx_path,
+                            'rx_path': f'RX{rp}',
+                            'rb_size': self.rb_size_lte,
+                            'rb_start': self.rb_start_lte,
+                        }
+                        self.file_path = rx_power_relative_test_export_excel_ftm(data_quick, parameters)
+
+                else:
+                    data_normal = {}
+                    rsrp_list = [None, None, None, None]
+                    cinr_list = [None, None, None, None]
+                    agc_list = [None, None, None, None]
+
+                    data_normal[self.tx_freq_lte] = [measured_power, self.rx_level, rsrp_list, cinr_list,
+                                          agc_list, self.get_temperature()]
+                    self.set_test_end_nr()
+                    parameters = {
+                        'tech': self.tech,
+                        'band': self.band_nr,
+                        'bw': self.bw_nr,
+                        'tx_level': self.tx_level,
+                        'mcs': self.mcs_nr,
+                        'tx_path': self.tx_path,
+                        'rx_path': rx_path,
+                        'rb_size': self.rb_size_nr,
+                        'rb_start': self.rb_start_nr,
+                    }
+                    self.file_path = rx_power_relative_test_export_excel_ftm(data_normal, parameters)
+
+                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                self.state_dict['progressBar_progress'] += 1
 
     def search_sensitivity_lmh_process_wcdma(self):
         rx_chan_list = cm_pmt_ftm.dl_chan_select_wcdma(self.band_wcdma)
@@ -787,8 +854,8 @@ class RxTestGenre(AtCmd, CMW100):
                 logger.info(f"GSM doesn't have this RX path {self.rx_path_gsm_dict[self.rx_path_gsm]}")
 
     def rx_level_select_nr(self):
-        if not self.rx_quick_test_enable:
-            self.rx_level = -70
+        if self.rx_quick_test_enable:
+            self.rx_level = self.state_dict['init_rx_sync_level']
         else:
             if self.bw_nr in [5]:
                 self.rx_level = -100
@@ -796,8 +863,8 @@ class RxTestGenre(AtCmd, CMW100):
                 self.rx_level = -80
 
     def rx_level_select_lte(self):
-        if not self.rx_quick_test_enable:
-            self.rx_level = -70
+        if self.rx_quick_test_enable:
+            self.rx_level = self.state_dict['init_rx_sync_level']
         else:
             if self.bw_lte in [10, 15, 20]:
                 self.rx_level = -80
@@ -808,41 +875,25 @@ class RxTestGenre(AtCmd, CMW100):
         try:
             if not self.rx_quick_test_enable:
                 self.search_sensitivity_nr()
-                self.query_rx_measure_nr()
             else:
                 self.query_rx_measure_nr()
-                real_sens_list = [sens for sens in self.esens_list if -55 > sens > -150]
-                if not real_sens_list:  # if sometimes test error for rx measure, then test it again
-                    logger.info('========== repeat test ==========')
-                    self.query_rx_measure_nr()
-                    real_sens_list = [sens for sens in self.esens_list if -55 > sens > -150]
-                self.rx_level = self.sens_calculation(real_sens_list)
+
         except Exception as err:
             logger.info(err)
             logger.info('Need to check the environments')
             self.rx_level = 0
-
-        return self.rx_level
 
     def sensitivity_solution_select_lte(self):
         try:
             if not self.rx_quick_test_enable:
                 self.search_sensitivity_lte()
-                self.query_rx_measure_lte()
             else:
                 self.query_rx_measure_lte()
-                real_sens_list = [sens for sens in self.esens_list if -55 > sens > -150]
-                if not real_sens_list:  # if sometimes test error for rx measure, then test it again
-                    logger.info('========== repeat test ==========')
-                    self.query_rx_measure_lte()
-                    real_sens_list = [sens for sens in self.esens_list if -55 > sens > -150]
-                self.rx_level = self.sens_calculation(real_sens_list)
+
         except Exception as err:
             logger.info(err)
             logger.info('Need to check the environments')
             self.rx_level = 0
-
-        return self.rx_level
 
     @staticmethod
     def sens_calculation(real_sens_list):

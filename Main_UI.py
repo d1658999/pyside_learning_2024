@@ -61,6 +61,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.equipments_comboBox.textActivated.connect(self.showout_en)
         self.run_button.clicked.connect(self.selected_show)
         self.rx_quick_ns.toggled.connect(self.rx_path_custom_disabled)
+        self.rx_endc_desense_ns.toggled.connect(self.endc_rx_path_enabled)
+        self.rx_endc_desense_ns.toggled.connect(self.endc_port_table_disabled)
+        self.rx_endc_desense_ns.toggled.connect(self.endc_other_test_items_unchecked)
 
     def init_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
@@ -178,6 +181,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def rx_normal_unchecked(self, checked):
         if checked:
             self.rx_normal_ns.setChecked(False)
+
     def rx_quick_unchecked(self, checked):
         if checked:
             self.rx_quick_ns.setChecked(False)
@@ -368,9 +372,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['ulca_41c'] = self.ulca_41c.isChecked()
         state_dict['ulca_42c'] = self.ulca_42c.isChecked()
         state_dict['ulca_48c'] = self.ulca_48c.isChecked()
-        state_dict['b3_78'] = self.b3_n78.isChecked()
-        state_dict['b2_77'] = self.b2_n77.isChecked()
-        state_dict['b66_77'] = self.b66_n77.isChecked()
+        state_dict['b3_n78'] = self.b3_n78.isChecked()
+        state_dict['b2_n77'] = self.b2_n77.isChecked()
+        state_dict['b66_n77'] = self.b66_n77.isChecked()
         state_dict['b66_n2'] = self.b66_n2.isChecked()
         state_dict['b66_n5'] = self.b66_n5.isChecked()
         state_dict['b12_n78'] = self.b12_n78.isChecked()
@@ -712,9 +716,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bw5_15.setChecked(state_dict['bw5_15'])
         self.bw15_5.setChecked(state_dict['bw15_5'])
         self.bw40.setChecked(state_dict['bw40'])
-        self.b3_n78.setChecked(state_dict['b3_78'])
-        self.b2_n77.setChecked(state_dict['b2_77'])
-        self.b66_n77.setChecked(state_dict['b66_77'])
+        self.b3_n78.setChecked(state_dict['b3_n78'])
+        self.b2_n77.setChecked(state_dict['b2_n77'])
+        self.b66_n77.setChecked(state_dict['b66_n77'])
         self.b66_n2.setChecked(state_dict['b66_n2'])
         self.b66_n5.setChecked(state_dict['b66_n5'])
         self.b12_n78.setChecked(state_dict['b12_n78'])
@@ -791,6 +795,65 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             logger.info(f'Endc LTE port Enabled')
         else:
             logger.info(f'Endc LTE port Disabled')
+
+    def endc_port_table_disabled(self, checked):
+        if checked:
+            self.port_table_en.setDisabled(True)
+            self.port_table_en.setChecked(False)
+        else:
+            self.port_table_en.setDisabled(False)
+
+    def endc_other_test_items_unchecked(self, checked):
+        if checked:
+            # unchecked
+            self.tx_lmh_ns.setChecked(False)
+            self.tx_level_sweep_ns.setChecked(False)
+            self.tx_freq_sweep_ns.setChecked(False)
+            self.tx_1rb_sweep_ns.setChecked(False)
+            self.tx_fcc_power_ns.setChecked(False)
+            self.tx_ce_power_ns.setChecked(False)
+            self.tx_harmonics_ns.setChecked(False)
+            self.tx_cbe_ns.setChecked(False)
+            self.tx_ulca_lte_ns.setChecked(False)
+            self.tx_ulca_lte_cbe_ns.setChecked(False)
+            self.rx_normal_ns.setChecked(False)
+            self.rx_quick_ns.setChecked(False)
+
+            # disabled
+            self.tx_lmh_ns.setEnabled(False)
+            self.tx_level_sweep_ns.setEnabled(False)
+            self.tx_freq_sweep_ns.setEnabled(False)
+            self.tx_1rb_sweep_ns.setEnabled(False)
+            self.tx_fcc_power_ns.setEnabled(False)
+            self.tx_ce_power_ns.setEnabled(False)
+            self.tx_harmonics_ns.setEnabled(False)
+            self.tx_cbe_ns.setEnabled(False)
+            self.tx_ulca_lte_ns.setEnabled(False)
+            self.tx_ulca_lte_cbe_ns.setEnabled(False)
+            self.rx_normal_ns.setEnabled(False)
+            self.rx_quick_ns.setEnabled(False)
+
+        else:
+            self.tx_lmh_ns.setEnabled(True)
+            self.tx_level_sweep_ns.setEnabled(True)
+            self.tx_freq_sweep_ns.setEnabled(True)
+            self.tx_1rb_sweep_ns.setEnabled(True)
+            self.tx_fcc_power_ns.setEnabled(True)
+            self.tx_ce_power_ns.setEnabled(True)
+            self.tx_harmonics_ns.setEnabled(True)
+            self.tx_cbe_ns.setEnabled(True)
+            self.tx_ulca_lte_ns.setEnabled(True)
+            self.tx_ulca_lte_cbe_ns.setEnabled(True)
+            self.rx_normal_ns.setEnabled(True)
+            self.rx_quick_ns.setEnabled(True)
+
+    def endc_rx_path_enabled(self, checked):
+        if checked:
+            self.rx_all_path_endc_nr.setChecked(True)
+            self.rx_all_path_endc_lte.setChecked(True)
+        else:
+            self.rx_all_path_endc_nr.setChecked(False)
+            self.rx_all_path_endc_lte.setChecked(False)
 
     def showout_en(self):
         match self.equipments_comboBox.currentText():
@@ -1702,26 +1765,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 band_ulca_lte_count += 1
             if key == 'ulca_48c' and value:
                 band_ulca_lte_count += 1
-            if key == 'b3_n78' and value:
-                band_endc_desense_count += 1
-            if key == 'b2_n77' and value:
-                band_endc_desense_count += 1
-            if key == 'b66_n77' and value:
-                band_endc_desense_count += 1
-            if key == 'b66_n2' and value:
-                band_endc_desense_count += 1
-            if key == 'b66_n5' and value:
-                band_endc_desense_count += 1
-            if key == 'b12_n78' and value:
-                band_endc_desense_count += 1
-            if key == 'b5_n78' and value:
-                band_endc_desense_count += 1
-            if key == 'b28_n78' and value:
-                band_endc_desense_count += 1
-            if key == 'b5_n77' and value:
-                band_endc_desense_count += 1
-            if key == 'b13_n5' and value:
-                band_endc_desense_count += 1
+            # if key == 'b3_n78' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b2_n77' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b66_n77' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b66_n2' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b66_n5' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b12_n78' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b5_n78' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b28_n78' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b5_n77' and value:
+            #     band_endc_desense_count += 1
+            # if key == 'b13_n5' and value:
+            #     band_endc_desense_count += 1
             if key == 'bw5_nr' and value:
                 bw_nr_count += 1
             if key == 'bw10_nr' and value:
@@ -1887,7 +1950,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       rx_test_items_ns_count_lte * rx_path_count * channel_count * band_lte_count * bw_lte_count * ue_power_count + \
                       rx_test_items_ns_count_wcdma * rx_path_count * channel_count * band_wcdma_count * ue_power_count + \
                       rx_test_items_ns_count_gsm * rx_path_count * channel_count * band_gsm_count + \
-                      rx_test_items_endc_ns_count * band_endc_desense_count * ue_power_count + \
+                      rx_test_items_endc_ns_count + \
                       tx_test_items_s_count * lte_tech_count * channel_count * band_lte_count + \
                       tx_test_items_s_count * wcdma_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_s_count * hsupa_tech_count * channel_count * band_wcdma_count + \

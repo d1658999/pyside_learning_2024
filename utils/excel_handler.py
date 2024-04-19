@@ -1,4 +1,6 @@
 import logging
+import math
+
 import openpyxl
 from openpyxl.chart import LineChart, Reference, BarChart, Series
 from pathlib import Path
@@ -417,12 +419,12 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
         ws.cell(row, 37).value = sub_info['temp0']  # Temp0
         ws.cell(row, 38).value = sub_info['temp1']  # Temp1
 
-    # elif tech == 'NR':  # this is not for FR1
+    # elif tech == 'NR':  # this is not for NR
     #     max_row = ws.max_row
     #     row = max_row + 1
     #
     #     for tx_freq, measured_data in data.items():
-    #         chan = chan_judge_fr1(band, bw, tx_freq) if test_item != 'freq_sweep' else None
+    #         chan = chan_judge_nr(band, bw, tx_freq) if test_item != 'freq_sweep' else None
     #         ws.cell(row, 1).value = band
     #         ws.cell(row, 2).value = bw
     #         ws.cell(row, 3).value = tx_freq
@@ -794,7 +796,7 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
                 chan = chan_judge_nr(band, bw, tx_freq_level)
                 ws.cell(row, 1).value = band
                 ws.cell(row, 2).value = bw
-                ws.cell(row, 3).value = tx_freq_level  # this freq_fr1
+                ws.cell(row, 3).value = tx_freq_level  # this freq_nr
                 ws.cell(row, 4).value = chan  # LMH
                 ws.cell(row, 5).value = tx_level
                 ws.cell(row, 6).value = measured_data[3]
@@ -1546,6 +1548,10 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
                     ws['X1'] = 'Condition'
                     ws['Y1'] = 'Temp0'
                     ws['Z1'] = 'Temp1'
+                    ws['AA1'] = 'RSSI_RX0'
+                    ws['AB1'] = 'RSSI_RX1'
+                    ws['AC1'] = 'RSSI_RX2'
+                    ws['AD1'] = 'RSSI_RX3'
                 else:
                     pass
 
@@ -1591,6 +1597,11 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
                     ws['X1'] = 'Condition'
                     ws['Y1'] = 'Temp0'
                     ws['Z1'] = 'Temp1'
+                    ws['AA1'] = 'RSSI_RX0'
+                    ws['AB1'] = 'RSSI_RX1'
+                    ws['AC1'] = 'RSSI_RX2'
+                    ws['AD1'] = 'RSSI_RX3'
+
                 else:
                     pass
 
@@ -1664,7 +1675,7 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
         for tx_freq, measured_data in data.items():
             chan = chan_judge_lte(band, bw, tx_freq)
             ws.cell(row, 1).value = band
-            ws.cell(row, 2).value = rx_path_lte_dict[rx_path]
+            ws.cell(row, 2).value = rx_path_lte_dict[rx_path] if not STATE_DICT_EXCEL['rx_quick_ns'] else rx_path
             ws.cell(row, 3).value = chan  # LMH
             ws.cell(row, 4).value = tx_freq
             ws.cell(row, 5).value = tx_level  # this tx level
@@ -1689,6 +1700,13 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
             ws.cell(row, 24).value = STATE_DICT_EXCEL['condition']
             ws.cell(row, 25).value = measured_data[5][0]  # thermister 0
             ws.cell(row, 26).value = measured_data[5][1]  # thermister 1
+
+            if STATE_DICT_EXCEL['rx_quick_ns']:
+                ws.cell(row, 27).value = ws.cell(row, 8).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX0
+                ws.cell(row, 28).value = ws.cell(row, 9).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX1
+                ws.cell(row, 29).value = ws.cell(row, 10).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX2
+                ws.cell(row, 30).value = ws.cell(row, 11).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX3
+
 
             row += 1
 
@@ -1698,7 +1716,7 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
         for tx_freq, measured_data in data.items():
             chan = chan_judge_nr(band, bw, tx_freq)
             ws.cell(row, 1).value = band
-            ws.cell(row, 2).value = rx_path_nr_dict[rx_path]
+            ws.cell(row, 2).value = rx_path_nr_dict[rx_path] if not STATE_DICT_EXCEL['rx_quick_ns'] else rx_path
             ws.cell(row, 3).value = chan  # LMH
             ws.cell(row, 4).value = tx_freq
             ws.cell(row, 5).value = tx_level  # this tx level
@@ -1723,6 +1741,12 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
             ws.cell(row, 24).value = STATE_DICT_EXCEL['condition']
             ws.cell(row, 25).value = measured_data[5][0]  # thermister 0
             ws.cell(row, 26).value = measured_data[5][1]  # thermister 1
+
+            if STATE_DICT_EXCEL['rx_quick_ns']:
+                ws.cell(row, 27).value = ws.cell(row, 8).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX0
+                ws.cell(row, 28).value = ws.cell(row, 9).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX1
+                ws.cell(row, 29).value = ws.cell(row, 10).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX2
+                ws.cell(row, 30).value = ws.cell(row, 11).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX3
 
             row += 1
 
@@ -1761,9 +1785,9 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
 
 def rx_power_endc_test_export_excel_ftm(data):
     """
-    :param data:  data = [int(band_lte), int(band_fr1), power_endc_lte, power_endc_fr1,
-    rxs_lte, rxs_fr1, bw_lte, bw_fr1, tx_freq_lte, tx_freq_fr1, tx_level_endc_lte,
-    tx_level_endc_fr1, rb_size_lte, rb_start_lte, rb_size_fr1, rb_start_fr1]
+    :param data:  data = [int(band_lte), int(band_nr), power_endc_lte, power_endc_nr,
+    rxs_lte, rxs_nr, bw_lte, bw_nr, tx_freq_lte, tx_freq_nr, tx_level_endc_lte,
+    tx_level_endc_nr, rb_size_lte, rb_start_lte, rb_size_nr, rb_start_nr]
     :return:
     """
     logger.info('----------save to excel----------')
@@ -1779,32 +1803,32 @@ def rx_power_endc_test_export_excel_ftm(data):
         wb.create_sheet(f'Dashboard')
 
         # create the title and sheet for TxManx and -10dBm
-        wb.create_sheet(f'Raw_Data_ENDC_FR1_TxMax')
-        wb.create_sheet(f'Raw_Data_ENDC_FR1_-10dBm')
+        wb.create_sheet(f'Raw_Data_ENDC_NR_TxMax')
+        wb.create_sheet(f'Raw_Data_ENDC_NR_-10dBm')
         for sheetname in wb.sheetnames:
             if 'Raw_Data' in sheetname:
                 ws = wb[sheetname]
                 ws['A1'] = 'Band_LTE'
-                ws['B1'] = 'Band_FR1'
-                ws['C1'] = 'Power_LTE_measured'
-                ws['D1'] = 'Power_FR1_measured'
-                ws['E1'] = 'Sensitivity_LTE'
-                ws['F1'] = 'Sensitivity_FR1_RX0'
-                ws['G1'] = 'Sensitivity_FR1_RX1'
-                ws['H1'] = 'Sensitivity_FR1_RX2'
-                ws['I1'] = 'Sensitivity_FR1_RX3'
+                ws['B1'] = 'Band_NR'
+                ws['C1'] = 'FBRX_LTE_measured'
+                ws['D1'] = 'Power_NR_measured'
+                ws['E1'] = 'Sens_LTE'
+                ws['F1'] = 'Sens_NR_RX0'
+                ws['G1'] = 'Sens_NR_RX1'
+                ws['H1'] = 'Sens_NR_RX2'
+                ws['I1'] = 'Sens_NR_RX3'
                 ws['J1'] = 'BW_LTE'
-                ws['K1'] = 'BW_FR1'
+                ws['K1'] = 'BW_NR'
                 ws['L1'] = 'Freq_tx_LTE'
-                ws['M1'] = 'Freq_tx_FR1'
+                ws['M1'] = 'Freq_tx_NR'
                 ws['N1'] = 'Tx_level_LTE'
-                ws['O1'] = 'Tx_level_FR1'
+                ws['O1'] = 'Tx_level_NR'
                 ws['P1'] = 'rb_size_LTE'
                 ws['Q1'] = 'rb_start_LTE'
-                ws['R1'] = 'rb_size_FR1'
-                ws['S1'] = 'rb_start_FR1'
+                ws['R1'] = 'rb_size_NR'
+                ws['S1'] = 'rb_start_NR'
                 ws['T1'] = 'LTE_RX_PATH'
-                # ws['U1'] = 'FR1_RX_PATH'
+                # ws['U1'] = 'NR_RX_PATH'
 
             else:
                 pass
@@ -1813,18 +1837,18 @@ def rx_power_endc_test_export_excel_ftm(data):
         wb.create_sheet(f'Desens_ENDC')
         ws = wb[f'Desens_ENDC']
         ws['A1'] = 'Band_LTE'
-        ws['B1'] = 'Band_FR1'
+        ws['B1'] = 'Band_NR'
         ws['C1'] = 'BW_LTE'
-        ws['D1'] = 'BW_FR1'
+        ws['D1'] = 'BW_NR'
         ws['E1'] = 'Freq_tx_LTE'
-        ws['F1'] = 'Freq_tx_FR1'
+        ws['F1'] = 'Freq_tx_NR'
         ws['G1'] = 'LTE_RX_PATH'
-        # ws['K1'] = 'FR1_TX_PATH'
+        # ws['K1'] = 'NR_TX_PATH'
         ws['H1'] = 'Diff_LTE'
-        ws['I1'] = 'Diff_FR1_RX0'
-        ws['J1'] = 'Diff_FR1_RX1'
-        ws['K1'] = 'Diff_FR1_RX2'
-        ws['L1'] = 'Diff_FR1_RX3'
+        ws['I1'] = 'Diff_NR_RX0'
+        ws['J1'] = 'Diff_NR_RX1'
+        ws['K1'] = 'Diff_NR_RX2'
+        ws['L1'] = 'Diff_NR_RX3'
 
         wb.save(file_path)
         wb.close()
@@ -1832,7 +1856,7 @@ def rx_power_endc_test_export_excel_ftm(data):
     logger.info('----------file exist----------')
     wb = openpyxl.load_workbook(file_path)
 
-    sheetname = f'Raw_Data_ENDC_FR1_TxMax' if data[2] > 0 else f'Raw_Data_ENDC_FR1_-10dBm'
+    sheetname = f'Raw_Data_ENDC_NR_TxMax' if data[2] > 0 else f'Raw_Data_ENDC_NR_-10dBm'
     ws = wb[sheetname]
     max_row = ws.max_row
     max_col = ws.max_column
@@ -1867,23 +1891,23 @@ def rx_desense_process_ftm(file_path, mcs):
 
 def rx_desense_endc_process_ftm(file_path):
     wb = openpyxl.load_workbook(file_path)
-    ws_txmax = wb[f'Raw_Data_ENDC_FR1_TxMax']
-    ws_txmin = wb[f'Raw_Data_ENDC_FR1_-10dBm']
+    ws_txmax = wb[f'Raw_Data_ENDC_NR_TxMax']
+    ws_txmin = wb[f'Raw_Data_ENDC_NR_-10dBm']
     ws_desens = wb[f'Desens_ENDC']
     for row in range(2, ws_txmax.max_row + 1):
         ws_desens.cell(row, 1).value = ws_txmax.cell(row, 1).value  # 'Band_LTE'
-        ws_desens.cell(row, 2).value = ws_txmax.cell(row, 2).value  # 'Band_FR1'
+        ws_desens.cell(row, 2).value = ws_txmax.cell(row, 2).value  # 'Band_NR'
         ws_desens.cell(row, 3).value = ws_txmax.cell(row, 10).value  # 'BW_LTE'
-        ws_desens.cell(row, 4).value = ws_txmax.cell(row, 11).value  # 'BW_FR1'
+        ws_desens.cell(row, 4).value = ws_txmax.cell(row, 11).value  # 'BW_NR'
         ws_desens.cell(row, 5).value = ws_txmax.cell(row, 12).value  # 'Freq_tx_LTE'
-        ws_desens.cell(row, 6).value = ws_txmax.cell(row, 13).value  # 'Freq_tx_FR1'
+        ws_desens.cell(row, 6).value = ws_txmax.cell(row, 13).value  # 'Freq_tx_NR'
         ws_desens.cell(row, 7).value = ws_txmax.cell(row, 20).value  # 'LTE_RX_PATH'
-        # ws_desens.cell(row, 8).value = ws_txmax.cell(row, 18).value  # 'FR1_RX_PATH'
+        # ws_desens.cell(row, 8).value = ws_txmax.cell(row, 18).value  # 'NR_RX_PATH'
         ws_desens.cell(row, 8).value = ws_txmax.cell(row, 5).value - ws_txmin.cell(row, 5).value  # desens lte
-        ws_desens.cell(row, 9).value = ws_txmax.cell(row, 6).value - ws_txmin.cell(row, 6).value  # desens fr1_rx0
-        ws_desens.cell(row, 10).value = ws_txmax.cell(row, 7).value - ws_txmin.cell(row, 7).value  # desens fr1_rx1
-        ws_desens.cell(row, 11).value = ws_txmax.cell(row, 8).value - ws_txmin.cell(row, 8).value  # desens fr1_rx2
-        ws_desens.cell(row, 12).value = ws_txmax.cell(row, 9).value - ws_txmin.cell(row, 9).value  # desens fr1_rx3
+        ws_desens.cell(row, 9).value = ws_txmax.cell(row, 6).value - ws_txmin.cell(row, 6).value  # desens nr_rx0
+        ws_desens.cell(row, 10).value = ws_txmax.cell(row, 7).value - ws_txmin.cell(row, 7).value  # desens nr_rx1
+        ws_desens.cell(row, 11).value = ws_txmax.cell(row, 8).value - ws_txmin.cell(row, 8).value  # desens nr_rx2
+        ws_desens.cell(row, 12).value = ws_txmax.cell(row, 9).value - ws_txmin.cell(row, 9).value  # desens nr_rx3
 
     wb.save(file_path)
     wb.close()
@@ -2042,8 +2066,8 @@ def rxs_endc_plot_ftm(file_path):
     wb = openpyxl.load_workbook(file_path)
     ws_dashboard = wb[f'Dashboard']
     ws_desens = wb[f'Desens_ENDC']
-    ws_txmax = wb[f'Raw_Data_ENDC_FR1_TxMax']
-    ws_txmin = wb[f'Raw_Data_ENDC_FR1_-10dBm']
+    ws_txmax = wb[f'Raw_Data_ENDC_NR_TxMax']
+    ws_txmin = wb[f'Raw_Data_ENDC_NR_-10dBm']
 
     if ws_dashboard._charts:  # if there is charts, delete it
         ws_dashboard._charts.clear()
@@ -2078,18 +2102,18 @@ def rxs_endc_plot_ftm(file_path):
 
     ws_dashboard.add_chart(chart1, "A40")
 
-    logger.info('----------Plot Chart ENDC FR1 ---------')
+    logger.info('----------Plot Chart ENDC NR ---------')
     # wb = openpyxl.load_workbook(file_path)
     # # ws_dashboard = wb[f'Dashboard']
     # ws_desens = wb[f'Desens_ENDC']
-    # ws_txmax = wb[f'Raw_Data_ENDC_FR1_TxMax']
-    # ws_txmin = wb[f'Raw_Data_ENDC_FR1_-10dBm']
+    # ws_txmax = wb[f'Raw_Data_ENDC_NR_TxMax']
+    # ws_txmin = wb[f'Raw_Data_ENDC_NR_-10dBm']
 
     # if ws_dashboard._charts:  # if there is charts, delete it
     #     ws_dashboard._charts.clear()
 
     chart1 = LineChart()
-    chart1.title = 'Sensitivity_FR1'
+    chart1.title = 'Sensitivity_NR'
     chart1.y_axis.title = 'Rx_Level(dBm)'
     chart1.x_axis.title = 'Band'
     chart1.x_axis.tickLblPos = 'low'

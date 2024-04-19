@@ -2082,11 +2082,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 from test_scripts.harmonics_cbe.tx_ulca_cbe import TxTestCaCBE
 
                 if state_dict['tx_harmonics_ns']:
-                    ...
+                    inst = TxHarmonics(state_dict, self.progressBar)
+                    inst.run()
+                    inst.ser.com_close()
                 if state_dict['tx_cbe_ns']:
-                    ...
+                    inst = TxCBE(state_dict, self.progressBar)
+                    inst.run()
+                    inst.ser.com_close()
                 if state_dict['tx_ulca_lte_cbe_ns']:
-                    ...
+                    inst = TxTestCaCBE(state_dict, self.progressBar)
+                    inst.run()
+                    inst.ser.com_close()
 
             case 'Anritsu8820':
                 from test_scripts.anritsu_items.mt8820_tx_lmh import TxTestGenre

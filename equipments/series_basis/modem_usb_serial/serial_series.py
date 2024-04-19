@@ -334,16 +334,6 @@ class AtCmd:
             'NR': 6,
         }
 
-    def select_scs_nr(self, band):
-        """
-        For now FDD is forced to 15KHz and TDD is to be 30KHz
-        """
-        if band in TDD_BANDS and band not in NTN_BANDS:
-            scs = 1
-        else:
-            scs = 0
-        self.scs = 15 * (2 ** scs)  # for now TDD only use 30KHz, FDD only use 15KHz
-
     def test_reset_gsm(self):
         print("----------EDGE Test Reset----------")
         self.command(f'AT+TESTRESET')

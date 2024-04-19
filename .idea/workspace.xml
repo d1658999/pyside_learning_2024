@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for rx_quick custom enabled method">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for rx_lmh and excel_handler">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui_init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gui_init.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/excel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/excel_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/harmonics_cbe/tx_harmonics.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/harmonics_cbe/tx_harmonics.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -408,7 +405,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713161695772</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="update ui test version v2_9 for rx_lmh and excel_handler">
+      <option name="closed" value="true" />
+      <created>1713532985605</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1713532985605</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -423,7 +428,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update requirements.txt" />
     <MESSAGE value="megav2_2" />
     <MESSAGE value="update ui" />
     <MESSAGE value="update test version v2_5" />
@@ -448,7 +452,8 @@
     <MESSAGE value="update ui test version v2_9 for rx_normal and rx_quick in sustom_signal_slot" />
     <MESSAGE value="update ui test version v2_9 for rx_lmh.py but not integrate progress" />
     <MESSAGE value="update ui test version v2_9 for rx_quick custom enabled method" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for rx_quick custom enabled method" />
+    <MESSAGE value="update ui test version v2_9 for rx_lmh and excel_handler" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for rx_lmh and excel_handler" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

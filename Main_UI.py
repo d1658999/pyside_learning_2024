@@ -881,7 +881,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.nr_tech.setHidden(True)
                 self.wcdma_tech.setHidden(False)
                 self.gsm_tech.setHidden(True)
-                self.ulca_lte_tech.setHidden(False)
+                self.ulca_lte_tech.setHidden(True)
                 self.hsupa_tech.setHidden(False)
                 self.hsdpa_tech.setHidden(False)
                 self.nr_tech.setChecked(False)

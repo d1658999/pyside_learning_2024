@@ -256,6 +256,10 @@ class TxTestCa(AtCmd, CMW100):
 
                                         self.set_rb_allocation(cc1, cc2)
                                         self.tx_power_aclr_ulca_process_lte()
+
+                                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                        self.state_dict['progressBar_progress'] += 1
+
                                     except Exception as err:
                                         logger.info(f'Exception message: {err}')
                                         logger.info(f"It might {band} doesn't have this combo {combo_rb}, {mcs}, "

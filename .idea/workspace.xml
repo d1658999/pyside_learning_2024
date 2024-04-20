@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for ulca and its cbe, I know there are some center freq issues on different bw combined" />
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for ulca and its cbe, re update some missed items" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -434,7 +434,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713586911327</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="update ui test version v2_9 for ulca and its cbe, re update some missed items">
+      <option name="closed" value="true" />
+      <created>1713590501630</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1713590501630</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -449,7 +457,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update test version v2_5 for endc lte" />
     <MESSAGE value="update ui test version v2_5 for temp odpm" />
     <MESSAGE value="update ui test version v2_5 for signaling tab" />
     <MESSAGE value="update ui test version v2_6 and Main_UI.py for gui state set/get, next step to add ULCA LTE band combo" />
@@ -474,7 +481,8 @@
     <MESSAGE value="update ui test version v2_9 for tx_harmonics.py" />
     <MESSAGE value="update ui test version v2_9 for tx_cbe.py" />
     <MESSAGE value="update ui test version v2_9 for ulca and its cbe, I know there are some center freq issues on different bw combined" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for ulca and its cbe, I know there are some center freq issues on different bw combined" />
+    <MESSAGE value="update ui test version v2_9 for ulca and its cbe, re update some missed items" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for ulca and its cbe, re update some missed items" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

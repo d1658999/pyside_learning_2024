@@ -64,8 +64,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rx_endc_desense_ns.toggled.connect(self.endc_rx_path_enabled)
         self.rx_endc_desense_ns.toggled.connect(self.port_table_disabled)
         self.rx_endc_desense_ns.toggled.connect(self.endc_other_test_items_unchecked)
-        self.tx_ulca_lte_ns.toggled.connect(self.port_table_disabled)
-        self.tx_ulca_lte_cbe_ns.toggled.connect(self.port_table_disabled)
+        # self.tx_ulca_lte_ns.toggled.connect(self.port_table_disabled)
+        # self.tx_ulca_lte_cbe_ns.toggled.connect(self.port_table_disabled)
 
     def init_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')

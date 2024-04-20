@@ -17,6 +17,7 @@ from utils.ca_combo_handler import ca_combo_load_excel
 from utils.parameters.rb_parameters import ULCA_3GPP_LTE
 from utils.parameters.rb_parameters import ulca_fcc_lte
 from utils.excel_handler import tx_ulca_power_relative_test_export_excel_ftm
+from exception.custom_exception import FileNotFoundException, PortTableException
 
 logger = log_set('tx_ulca_cbe')
 
@@ -49,6 +50,7 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
         self.rb_state = None
         self.script = None
         self.chan = None
+        self.port_table = None
 
     # def ca_bw_combo_seperate_lte(self, bw_cc1, bw_cc2):
     #     self.bw_cc1_lte = int(bw_cc1)
@@ -61,6 +63,30 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
     #         input(f'Stop, and press "Enter" key in CLI and keep going')
     #     else:
     #         pass
+
+    def port_table_selector(self, band, tx_path='TX1'):
+        """
+        This is used for multi-ports connection on Tx
+        """
+        try:
+            if self.port_table is None:  # to initial port table at first time
+                if not self.state_dict['as_path_en']:
+                    txas_select = 0
+                    self.port_table = self.port_tx_table(txas_select)
+                else:
+                    self.port_table = self.port_tx_table(self.asw_path)
+
+            if self.state_dict['tx_port_table_en'] and tx_path in ['TX1', 'TX2']:
+                self.port_tx = int(self.port_table[tx_path][str(band)])
+
+            elif self.state_dict['tx_port_table_en'] and tx_path in ['MIMO']:
+                self.port_mimo_tx1 = int(self.port_table['MIMO_TX1'][str(band)])
+                self.port_mimo_tx2 = int(self.port_table['MIMO_TX2'][str(band)])
+            else:
+                pass
+
+        except Exception as err:
+            raise PortTableException(f'Tx path {tx_path} and Band {band} not in port table') from err
 
     def get_temperature(self):
         """
@@ -245,6 +271,7 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
                     self.band_ulca_lte = band  # '7C'
                     self.band_lte = int(band[:-1])  # '7C' -> 7, '41C' -> 41
                     self.bw_lte = 10  # for sync
+                    self.port_table_selector(self.band_lte, self.tx_path)
                     # self.rx_freq_lte = cm_pmt_ftm.dl_freq_selected('LTE', self.band_lte, self.bw_lte)[1]  # for sync use
                     # self.loss_rx = get_loss(self.rx_freq_lte)  # for sync use
 

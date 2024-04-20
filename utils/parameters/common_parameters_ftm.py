@@ -290,9 +290,8 @@ def dl_freq_selected(standard, band, bw=5):
         }
 
         if standard == 'LTE':
-            if band == 28:
-                from utils.parameters.external_paramters import band_segment
-                return [int(freq * 1000) for freq in band_dl_freq_lte[f'B{band}{band_segment}']]
+            if isinstance(band, str):
+                return [int(freq * 1000) for freq in band_dl_freq_nr[f'N{band.upper()}']]
             else:
                 return [int(freq * 1000) for freq in band_dl_freq_lte[f'B{band}']]
         elif standard == 'WCDMA':
@@ -300,9 +299,8 @@ def dl_freq_selected(standard, band, bw=5):
         elif standard == 'GSM':
             return [int(freq * 1000) for freq in band_dl_freq_gsm[band]]
         elif standard == 'NR':
-            if band == 28:
-                from utils.parameters.external_paramters import band_segment_nr
-                return [int(freq * 1000) for freq in band_dl_freq_nr[f'N{band}{band_segment_nr}']]
+            if isinstance(band, str):
+                return [int(freq * 1000) for freq in band_dl_freq_nr[f'N{band.upper()}']]
             else:
                 return [int(freq * 1000) for freq in band_dl_freq_nr[f'N{band}']]
         elif 'GSM':

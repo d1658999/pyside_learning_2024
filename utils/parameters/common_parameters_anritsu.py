@@ -118,9 +118,8 @@ def dl_ch_selected(standard, band, bw=5):
     }
 
     if standard == 'LTE':
-        if band == 28:
-            from utils.parameters.external_paramters import band_segment
-            return band_dl_ch_lte[f'B{band}{band_segment}']
+        if isinstance(band, str):
+            return band_dl_ch_lte[f'B{band.upper()}']
         else:
             return band_dl_ch_lte[f'B{band}']
     elif standard == 'WCDMA':

@@ -2,7 +2,7 @@ import time
 
 from equipments.anritsu8821 import Anritsu8821
 from equipments.series_basis.modem_usb_serial.serial_series import AtCmd
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 import utils.parameters.common_parameters_anritsu as cm_pmt_anritsu
 from utils.channel_handler import channel_freq_select
 from utils.excel_handler import rx_freq_sweep_power_relative_test_export_excel_sig
@@ -13,10 +13,14 @@ logger = log_set('8821RxSig')
 
 
 class RxTestFreqSweep(AtCmd, Anritsu8821):
-    def __init__(self):
+    def __init__(self, state_dict, obj_progressbar):
         AtCmd.__init__(self)
-        self.ser.com_close()
         Anritsu8821.__init__(self)
+        self.ser.com_close()
+        self.state_dict = state_dict
+        self.progressBar = obj_progressbar
+        self.get_temp_en = self.get_temp_en = self.state_dict['get_temp_en']
+        self.rx_path = None
 
     def get_temperature(self):
         """
@@ -61,10 +65,10 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
 
         self.set_init_rx(standard)
 
-        for power_selected in ext_pmt.tx_max_pwr_sensitivity:
-            self.set_phone1_tx_out(1, ext_pmt.rfout_anritsu)
+        for power_selected in self.state_dict['ue_power_list']:
+            self.set_phone1_tx_out(1, self.state_dict['rfout_port_sig_anritsu'])
             if power_selected == 1:
-                self.tx_level = ext_pmt.tx_level
+                self.tx_level = self.state_dict['tx_level']
                 self.set_tpc('ALL1')
                 self.set_input_level(self.tx_level + 3)
 
@@ -82,7 +86,7 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
                     'bw': bw,
                     'band': band,
                     'dl_ch': dl_ch,
-                    'tx_level': ext_pmt.tx_level,
+                    'tx_level': self.tx_level,
                     'rx_path': self.rx_path,
                     'rb_size': self.get_ul_rb_size_query(standard),
                     'rb_start': self.get_ul_rb_start_query(standard),
@@ -130,20 +134,18 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
 
     def run(self):
         self.set_phone1_tx_out(1, 'MAIN')
-        for tech in ext_pmt.tech:
-            if tech == 'LTE' and ext_pmt.lte_bands != []:
+        for tech in self.state_dict['tech_list']:
+            if tech == 'LTE' and self.state_dict['lte_bands_list'] != []:
                 standard = self.set_switch_to_lte()
                 logger.info(standard)
                 self.chcoding = None
                 try:
-                    for bw in ext_pmt.lte_bandwidths:
-                        for band in ext_pmt.lte_bands:
-                            if ext_pmt.rx_paths:
-                                for rx_path in ext_pmt.rx_paths:
+                    for bw in self.state_dict['lte_bw_list']:
+                        for band in self.state_dict['lte_bands_list']:
+                            if self.state_dict['rx_path_list']:
+                                for rx_path in self.state_dict['rx_path_list']:
                                     self.rx_path = rx_path
                                     if bw in cm_pmt_anritsu.bandwidths_selected(band):
-                                        if band == 28:
-                                            self.band_segment = ext_pmt.band_segment
                                         self.set_test_parameter_normal()
                                         lch = cm_pmt_anritsu.dl_ch_selected(standard, band, bw)[0]  # lch
                                         hch = cm_pmt_anritsu.dl_ch_selected(standard, band, bw)[2]  # hch
@@ -155,12 +157,12 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
 
                                         for dl_ch in ch_list:
                                             self.rx_sweep_core(standard, band, dl_ch, bw)
+                                            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                            self.state_dict['progressBar_progress'] += 1
                                         time.sleep(1)
                             else:
-                                self.rx_path = ext_pmt.rfout_anritsu
+                                self.rx_path = self.state_dict['rfout_port_sig_anritsu']
                                 if bw in cm_pmt_anritsu.bandwidths_selected(band):
-                                    if band == 28:
-                                        self.band_segment = ext_pmt.band_segment
                                     self.set_test_parameter_normal()
                                     lch = cm_pmt_anritsu.dl_ch_selected(standard, band, bw)[0]  # lch
                                     hch = cm_pmt_anritsu.dl_ch_selected(standard, band, bw)[2]  # hch
@@ -172,6 +174,8 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
 
                                     for dl_ch in ch_list:
                                         self.rx_sweep_core(standard, band, dl_ch, bw)
+                                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                        self.state_dict['progressBar_progress'] += 1
                                     time.sleep(1)
 
                 except Exception as err:
@@ -184,13 +188,13 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
                     # rxs_relative_plot_sig(standard, self.excel_path, self.parameters_dict)
                     rxs_freq_relative_plot_sig(self.excel_path, self.parameters_dict)
 
-            elif tech == 'WCDMA' and ext_pmt.wcdma_bands != []:
+            elif tech == 'WCDMA' and self.state_dict['wcdma_bands_list'] != []:
                 standard = self.set_switch_to_wcdma()
                 self.chcoding = 'REFMEASCH'
                 try:
-                    for band in ext_pmt.wcdma_bands:
-                        if ext_pmt.rx_paths:
-                            for rx_path in ext_pmt.rx_paths:
+                    for band in self.state_dict['wcdma_bands_list']:
+                        if self.state_dict['rx_path_list']:
+                            for rx_path in self.state_dict['rx_path_list']:
                                 self.rx_path = rx_path
                                 lch = cm_pmt_anritsu.dl_ch_selected(standard, band)[0]  # lch
                                 hch = cm_pmt_anritsu.dl_ch_selected(standard, band)[2]  # hch
@@ -202,8 +206,10 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
 
                                 for dl_ch in ch_list:
                                     self.rx_sweep_core(standard, band, dl_ch, 5)
+                                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                    self.state_dict['progressBar_progress'] += 1
                         else:
-                            self.rx_path = ext_pmt.rfout_anritsu
+                            self.rx_path = self.state_dict['rfout_port_sig_anritsu']
                             lch = cm_pmt_anritsu.dl_ch_selected(standard, band)[0]  # lch
                             hch = cm_pmt_anritsu.dl_ch_selected(standard, band)[2]  # hch
                             step = cm_pmt_anritsu.SWEEP_STEP
@@ -214,6 +220,8 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
 
                             for dl_ch in ch_list:
                                 self.rx_sweep_core(standard, band, dl_ch, 5)
+                                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                self.state_dict['progressBar_progress'] += 1
 
                 except Exception as err:
                     logger.debug(err)
@@ -225,7 +233,7 @@ class RxTestFreqSweep(AtCmd, Anritsu8821):
                     # rxs_relative_plot_sig(standard, self.excel_path, self.parameters_dict)
                     rxs_freq_relative_plot_sig(self.excel_path, self.parameters_dict)
 
-            elif tech == ext_pmt.gsm_bands:
+            elif tech == 'GSM' and self.state_dict['gsm_bands_list'] != []:
                 pass
             else:
                 logger.info(f'Finished')

@@ -8,7 +8,7 @@ import pathlib
 import signal
 import os
 import yaml
-from ui_mega_v2_9 import Ui_MainWindow
+from ui_mega_v2_10 import Ui_MainWindow
 from utils.log_init import log_set, log_clear
 from utils.adb_handler import get_serial_devices
 from utils.excel_handler import excel_folder_create
@@ -31,10 +31,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tmpcmb = None
         log_clear()
         self.setupUi(self)
+        self.import_gui_setting_yaml()
         self.init_show()
         self.init_hidden()
         self.custom_signal_slot()
-        self.import_gui_setting_yaml()
         self.temp_dict = {
             'HT': self.ht_spinBox.value(),
             'NT': self.nt_spinBox.value(),
@@ -108,6 +108,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.hsupa_tech.setHidden(False)
                 self.hsdpa_tech.setHidden(False)
                 self.gsm_tech.setChecked(False)
+                self.q256_frb_lte_sig.setDisabled(True)
+                self.q256_frb_lte_sig.setChecked(False)
             case 'Anritsu8821':
                 self.nr_tech.setHidden(True)
                 self.wcdma_tech.setHidden(True)
@@ -121,6 +123,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.ulca_lte_tech.setChecked(False)
                 self.hsupa_tech.setChecked(False)
                 self.hsdpa_tech.setChecked(False)
+                self.q256_frb_lte_sig.setEnabled(True)
 
     def rx_path_custom_disabled(self):
         if self.rx_quick_ns.isChecked():
@@ -425,6 +428,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['q16_lte'] = self.q16_lte.isChecked()
         state_dict['q64_lte'] = self.q64_lte.isChecked()
         state_dict['q256_lte'] = self.q256_lte.isChecked()
+        state_dict['qpsk_1rb0_lte_sig'] = self.qpsk_1rb0_lte_sig.isChecked()
+        state_dict['qpsk_prb0_lte_sig'] = self.qpsk_prb0_lte_sig.isChecked()
+        state_dict['qpsk_frb_lte_sig'] = self.qpsk_frb_lte_sig.isChecked()
+        state_dict['q16_prb0_lte_sig'] = self.q16_prb0_lte_sig.isChecked()
+        state_dict['q16_frb_lte_sig'] = self.q16_frb_lte_sig.isChecked()
+        state_dict['q64_prb0_lte_sig'] = self.q64_prb0_lte_sig.isChecked()
+        state_dict['q64_frb_lte_sig'] = self.q64_frb_lte_sig.isChecked()
+        state_dict['256_frb_lte_sig'] = self.q256_frb_lte_sig.isChecked()
         state_dict['qpsk_nr'] = self.qpsk_nr.isChecked()
         state_dict['q16_nr'] = self.q16_nr.isChecked()
         state_dict['q64_nr'] = self.q64_nr.isChecked()
@@ -480,6 +491,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['progressBar_progress'] = 0  # special item for input and output small funciton
         state_dict['nr_mcs_list'] = self.nr_mcs_selected()
         state_dict['lte_mcs_list'] = self.lte_mcs_selected()
+        state_dict['lte_mcs_sig_list'] = self.lte_mcs_sig_selected()
         state_dict['nr_rb_allocation_list'] = self.nr_rb_allocation_selected()
         state_dict['lte_rb_allocation_list'] = self.lte_rb_allocation_selected()
         state_dict['ulca_lte_rb_allocation_list'] = self.ulca_lte_rb_allocation_selected()
@@ -732,6 +744,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.q16_lte.setChecked(state_dict['q16_lte'])
         self.q64_lte.setChecked(state_dict['q64_lte'])
         self.q256_lte.setChecked(state_dict['q256_lte'])
+        self.qpsk_1rb0_lte_sig.setChecked(state_dict['qpsk_1rb0_lte_sig'])
+        self.qpsk_prb0_lte_sig.setChecked(state_dict['qpsk_prb0_lte_sig'])
+        self.qpsk_frb_lte_sig.setChecked(state_dict['qpsk_frb_lte_sig'])
+        self.q16_prb0_lte_sig.setChecked(state_dict['q16_prb0_lte_sig'])
+        self.q16_frb_lte_sig.setChecked(state_dict['q16_frb_lte_sig'])
+        self.q64_prb0_lte_sig.setChecked(state_dict['q64_prb0_lte_sig'])
+        self.q64_frb_lte_sig.setChecked(state_dict['q64_frb_lte_sig'])
+        self.q256_frb_lte_sig.setChecked(state_dict['256_frb_lte_sig'])
         self.qpsk_nr.setChecked(state_dict['qpsk_nr'])
         self.q16_nr.setChecked(state_dict['q16_nr'])
         self.q64_nr.setChecked(state_dict['q64_nr'])
@@ -886,6 +906,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.hsdpa_tech.setHidden(False)
                 self.nr_tech.setChecked(False)
                 self.gsm_tech.setChecked(False)
+                self.q256_frb_lte_sig.setDisabled(True)
+                self.q256_frb_lte_sig.setChecked(False)
             case 'Anritsu8821':
                 self.nr_tech.setHidden(True)
                 self.wcdma_tech.setHidden(True)
@@ -899,6 +921,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.ulca_lte_tech.setChecked(False)
                 self.hsupa_tech.setChecked(False)
                 self.hsdpa_tech.setChecked(False)
+                self.q256_frb_lte_sig.setEnabled(True)
 
     def equipment_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
@@ -1046,9 +1069,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.n71_nr.isChecked():
             nr_bands_list.append(71)
         if self.n28_a_nr.isChecked():
-            nr_bands_list.append('28_a')
+            nr_bands_list.append('28a')
         if self.n28_b_nr.isChecked():
-            nr_bands_list.append('28_b')
+            nr_bands_list.append('28b')
         if self.n29_nr.isChecked():
             nr_bands_list.append(29)
         if self.n32_nr.isChecked():
@@ -1370,6 +1393,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             type_nr_list.append('CP')
 
         return type_nr_list
+
+    def lte_mcs_sig_selected(self):
+        mcs_lte_list_sig = []
+        if self.qpsk_1rb0_lte_sig.isChecked():
+            mcs_lte_list_sig.append('TX_MAXPWR_Q_1')
+        if self.qpsk_prb0_lte_sig.isChecked():
+            mcs_lte_list_sig.append('TX_MAXPWR_Q_P')
+        if self.qpsk_frb_lte_sig.isChecked():
+            mcs_lte_list_sig.append('TX_MAXPWR_Q_F')
+        if self.q16_prb0_lte_sig.isChecked():
+            mcs_lte_list_sig.append('TX_MAXPWR_16_P')
+        if self.q16_frb_lte_sig.isChecked():
+            mcs_lte_list_sig.append('TX_MAXPWR_16_F')
+        if self.q64_prb0_lte_sig.isChecked():
+            mcs_lte_list_sig.append('TX_MAXPWR_64_P')
+        if self.q64_frb_lte_sig.isChecked():
+            mcs_lte_list_sig.append('TX_MAXPWR_64_F')
+        if self.q256_frb_lte_sig.isChecked():
+            mcs_lte_list_sig.append('TX_MAXPWR_256_F')
+
+        return mcs_lte_list_sig
 
     def lte_mcs_selected(self):
         mcs_lte_list = []
@@ -2103,25 +2147,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 from test_scripts.anritsu_items.mt8820_tx_lmh import TxTestGenre
                 from test_scripts.anritsu_items.mt8820_rx import RxTestGenre
                 from test_scripts.anritsu_items.mt8820_rx_freq_sweep import RxTestFreqSweep
+                import equipments.anritsu8820 as anritsu8820
 
                 excel_folder_create()
+                anritsu8820.LTE_MODS = state_dict['lte_mcs_sig_list']
                 if state_dict['tx_lmh_s']:
-                    ...
+                    inst = TxTestGenre(state_dict, self.progressBar)
+                    inst.run()
                 if state_dict['rx_normal_s']:
-                    ...
+                    inst = RxTestGenre(state_dict, self.progressBar)
+                    inst.run()
                 if state_dict['rxs_sweep_s']:
-                    ...
+                    inst = RxTestFreqSweep(state_dict, self.progressBar)
+                    inst.run()
             case 'Anritsu8821':
                 from test_scripts.anritsu_items.mt8821_tx_lmh import TxTestGenre
                 from test_scripts.anritsu_items.mt8821_rx import RxTestGenre
                 from test_scripts.anritsu_items.mt8821_rx_freq_sweep import RxTestFreqSweep
+                import equipments.anritsu8821 as anritsu8821
 
+                excel_folder_create()
+                anritsu8821.LTE_MODS = state_dict['lte_mcs_sig_list']
                 if state_dict['tx_lmh_s']:
-                    ...
+                    inst = TxTestGenre(state_dict, self.progressBar)
+                    inst.run()
                 if state_dict['rx_normal_s']:
-                    ...
+                    inst = RxTestGenre(state_dict, self.progressBar)
+                    inst.run()
                 if state_dict['rxs_sweep_s']:
-                    ...
+                    inst = RxTestFreqSweep(state_dict, self.progressBar)
+                    inst.run()
 
             case 'Agilent8960':
                 pass

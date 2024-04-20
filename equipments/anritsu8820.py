@@ -9,13 +9,12 @@ import utils.parameters.external_paramters as ext_pmt
 from utils.fly_mode import FlyMode
 
 logger = log_set('Anritsu8820')
-
+LTE_MODS = []
 
 class Anritsu8820(Anritsu):
     def __init__(self, equipment='Anristu8820'):
         super().__init__(equipment)
         self.excel_path = None
-        self.band_segment = None
         self.mod = None
         self.evm = None
         self.aclr = None
@@ -1397,15 +1396,15 @@ class Anritsu8820(Anritsu):
             Q_P: [power, aclr, evm, (rb_size, rb_start)], ...}
             and ACLR format is [EUTRA-1, EUTRA+1, UTRA-1, URTA+1, UTRA-2, URTA+2,]
         """
-        want_mods = [
-            'TX_MAXPWR_Q_1',
-            'TX_MAXPWR_Q_P',
-            'TX_MAXPWR_Q_F',
-            'TX_MAXPWR_16_P',
-            'TX_MAXPWR_16_F',
-            'TX_MAXPWR_64_P',
-            'TX_MAXPWR_64_F',
-        ]
+        # want_mods = [
+        #     'TX_MAXPWR_Q_1',
+        #     'TX_MAXPWR_Q_P',
+        #     'TX_MAXPWR_Q_F',
+        #     'TX_MAXPWR_16_P',
+        #     'TX_MAXPWR_16_F',
+        #     'TX_MAXPWR_64_P',
+        #     'TX_MAXPWR_64_F',
+        # ]
 
         validation_dict = {}
 
@@ -1416,7 +1415,7 @@ class Anritsu8820(Anritsu):
         self.set_tpc('ALL3')
         self.anritsu_query('*OPC?')
 
-        for mod in want_mods:
+        for mod in LTE_MODS:
             self.mod = mod[18:]
             conn_state = int(self.get_calling_state_query())
             self.count = 5

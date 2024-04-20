@@ -1,6 +1,6 @@
 from equipments.anritsu8820 import Anritsu8820
 from equipments.series_basis.modem_usb_serial.serial_series import AtCmd
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 import utils.parameters.common_parameters_anritsu as cm_pmt_anritsu
 from utils.channel_handler import channel_freq_select
 from utils.excel_handler import tx_power_relative_test_export_excel_sig, txp_aclr_evm_current_plot_sig
@@ -10,11 +10,13 @@ logger = log_set('8820TxSig')
 
 
 class TxTestGenre(AtCmd, Anritsu8820):
-    def __init__(self):
+    def __init__(self, state_dict, obj_progressbar):
         AtCmd.__init__(self)
         self.ser.com_close()
         Anritsu8820.__init__(self)
-        self.get_temp_en = ext_pmt.get_temp_en
+        self.state_dict = state_dict
+        self.progressBar = obj_progressbar
+        self.get_temp_en = self.get_temp_en = self.state_dict['get_temp_en']
 
     def get_temperature(self):
         """
@@ -113,20 +115,18 @@ class TxTestGenre(AtCmd, Anritsu8820):
         self.excel_path = tx_power_relative_test_export_excel_sig(data, self.parameters)
 
     def run(self):
-        for tech in ext_pmt.tech:
-            if tech == 'LTE' and ext_pmt.lte_bands != []:
+        for tech in self.state_dict['tech_list']:
+            if tech == 'LTE' and self.state_dict['lte_bands_list'] != []:
                 standard = self.set_switch_to_lte()
                 self.anritsu_query('*OPC?')
                 logger.info(standard)
                 self.chcoding = None
-                for bw in ext_pmt.lte_bandwidths:
-                    for band in ext_pmt.lte_bands:
+                for bw in self.state_dict['lte_bw_list']:
+                    for band in self.state_dict['lte_bands_list']:
                         if bw in cm_pmt_anritsu.bandwidths_selected(band):
-                            if band == 28:
-                                self.band_segment = ext_pmt.band_segment
                             self.set_test_parameter_normal()
                             dl_chan_list = cm_pmt_anritsu.dl_ch_selected(standard, band, bw)
-                            ch_list = channel_freq_select(ext_pmt.channel, dl_chan_list)
+                            ch_list = channel_freq_select(self.state_dict['channel_str'], dl_chan_list)
                             self.m_dl_ch = dl_chan_list[1]  # this is used for the handover smoothly by Mch when calling
                             self.set_dl_chan(self.m_dl_ch)
                             logger.debug(f'Test Channel List: {band}, {bw}MHZ, downlink channel list:{ch_list}')
@@ -135,6 +135,9 @@ class TxTestGenre(AtCmd, Anritsu8820):
                                 self.set_test_parameter_normal()
                                 self.set_tpc('AUTO')
                                 self.set_input_level(5)
+                                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                self.state_dict['progressBar_progress'] += 1
+
                             self.set_dl_chan(self.m_dl_ch)
                         else:
                             logger.info(f'B{band} do not have BW {bw}MHZ')
@@ -142,7 +145,7 @@ class TxTestGenre(AtCmd, Anritsu8820):
                     txp_aclr_evm_current_plot_sig(standard, self.excel_path)
 
             elif (tech == 'WCDMA' or tech == 'HSUPA' or tech == 'HSDPA') and (
-                    ext_pmt.wcdma_bands != [] or ext_pmt.hsupa_bands != [] or ext_pmt.hsdpa_bands != []):
+                    self.state_dict['wcdma_bands_list'] != [] or self.state_dict['hsupa_bands_list'] != [] or self.state_dict['hsdpa_bands_list'] != []):
                 standard = self.set_switch_to_wcdma()
                 self.anritsu_query('*OPC?')
                 self.set_end()
@@ -162,30 +165,32 @@ class TxTestGenre(AtCmd, Anritsu8820):
 
                 bands = None
                 if self.chcoding == 'REFMEASCH':  # this is WCDMA
-                    bands = ext_pmt.wcdma_bands
+                    bands = self.state_dict['wcdma_bands_list']
                     logger.info(f'WCDMA Bands select: {bands}')
                 elif self.chcoding == 'EDCHTEST':  # this is HSUPA
-                    bands = ext_pmt.hsupa_bands
+                    bands = self.state_dict['hsupa_bands_list']
                     logger.info(f'HSUPA Bands select: {bands}')
                 elif self.chcoding == 'FIXREFCH':  # this is HSDPA
-                    bands = ext_pmt.hsdpa_bands
+                    bands = self.state_dict['hsdpa_bands_list']
                     logger.info(f'HSDPA Bands select: {bands}')
 
                 if bands:
                     for band in bands:
                         dl_chan_list = cm_pmt_anritsu.dl_ch_selected(standard, band)
-                        ch_list = channel_freq_select(ext_pmt.channel, dl_chan_list)
+                        ch_list = channel_freq_select(self.state_dict['channel_str'], dl_chan_list)
                         logger.debug(f'Test Channel List: {band}, downlink channel list:{ch_list}')
                         self.m_dl_ch = dl_chan_list[1]  # this is used for the handover smoothly by Mch when calling
                         self.set_dl_chan(self.m_dl_ch)
                         for dl_ch in ch_list:
                             self.tx_core(standard, band, dl_ch)
+                            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                            self.state_dict['progressBar_progress'] += 1
 
                     txp_aclr_evm_current_plot_sig(standard, self.excel_path)
                 else:
                     logger.info(f'==========Please check RATs select and related to bands==========')
 
-            elif tech == 'GSM' and ext_pmt.gsm_bands != []:
+            elif tech == 'GSM' and self.state_dict['gsm_bands_list'] != []:
                 pass
 
             else:

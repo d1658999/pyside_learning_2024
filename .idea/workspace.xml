@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for tx_harmonics.py">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for tx_cbe.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/equipments/series_basis/modem_usb_serial/serial_series.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/series_basis/modem_usb_serial/serial_series.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/harmonics_cbe/tx_cbe.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/harmonics_cbe/tx_cbe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_ulca_combo.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_ulca_combo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/harmonics_cbe/tx_ulca_cbe.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/harmonics_cbe/tx_ulca_cbe.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -423,7 +423,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713540106546</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="update ui test version v2_9 for tx_cbe.py">
+      <option name="closed" value="true" />
+      <created>1713543108107</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1713543108107</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -438,7 +446,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update ui" />
     <MESSAGE value="update test version v2_5" />
     <MESSAGE value="update test version v2_5 for endc lte" />
     <MESSAGE value="update ui test version v2_5 for temp odpm" />
@@ -463,14 +470,15 @@
     <MESSAGE value="update ui test version v2_9 for rx_quick custom enabled method" />
     <MESSAGE value="update ui test version v2_9 for rx_lmh and excel_handler" />
     <MESSAGE value="update ui test version v2_9 for tx_harmonics.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for tx_harmonics.py" />
+    <MESSAGE value="update ui test version v2_9 for tx_cbe.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for tx_cbe.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1938</line>
+          <line>1940</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -485,7 +493,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1964</line>
+          <line>1966</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -510,7 +518,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>2073</line>
+          <line>2078</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

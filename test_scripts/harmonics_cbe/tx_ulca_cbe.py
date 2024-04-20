@@ -4,7 +4,7 @@ from equipments.series_basis.modem_usb_serial.serial_series import AtCmd
 from equipments.cmw100 import CMW100
 from equipments.fsw50 import FSW50
 from utils.log_init import log_set
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 import utils.parameters.common_parameters_ftm as cm_pmt_ftm
 from utils.loss_handler import get_loss
 from utils.adb_handler import get_odpm_current, RecordCurrent
@@ -21,12 +21,13 @@ from utils.excel_handler import tx_ulca_power_relative_test_export_excel_ftm
 logger = log_set('tx_ulca_cbe')
 
 
-
 class TxTestCaCBE(AtCmd, CMW100, FSW50):
-    def __init__(self):
+    def __init__(self, state_dict, obj_progressbar):
         AtCmd.__init__(self)
         CMW100.__init__(self)
         FSW50.__init__(self)
+        self.state_dict = state_dict
+        self.progressBar = obj_progressbar
         self.alloc_cc = None
         self.bw_rb_cc2 = None
         self.bw_rb_cc1 = None
@@ -48,17 +49,18 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
         self.rb_state = None
         self.script = None
         self.chan = None
-        self.tx_level = ext_pmt.tx_level
 
     # def ca_bw_combo_seperate_lte(self, bw_cc1, bw_cc2):
     #     self.bw_cc1_lte = int(bw_cc1)
     #     self.bw_cc2_lte = int(bw_cc2)
-    @staticmethod
-    def debug_ulca():
-        if ext_pmt.debug_enable:
-            input(f'Stop, and press "Enter" key in CLI and keep going')
-        else:
-            pass
+
+    # Obsolete
+    # @staticmethod
+    # def debug_ulca():
+    #     if ext_pmt.debug_enable:
+    #         input(f'Stop, and press "Enter" key in CLI and keep going')
+    #     else:
+    #         pass
 
     def get_temperature(self):
         """
@@ -88,10 +90,10 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
         self.rb_size_cc2_lte, self.rb_start_cc2_lte = cc2
 
     def criteria_rb_selector_ulca_lte(self, combo_rb, mcs, allocation):
-        if ext_pmt.criteria_ulca_lte == 0:
+        if self.state_dict['ulca_lte_criteria'] == '3GPP':
             cc1, cc2 = ULCA_3GPP_LTE[combo_rb][mcs][allocation]
             return cc1, cc2
-        elif ext_pmt.criteria_ulca_lte == 1:
+        elif self.state_dict['ulca_lte_criteria'] == 'FCC':
             cc1, cc2 = ulca_fcc_lte(self.bw_cc1, self.bw_cc2, allocation)
             return cc1, cc2
 
@@ -208,8 +210,8 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
 
         logger.debug(ulca_results)
 
-        # debug use
-        self.debug_ulca()
+        # debug use, Obsolete
+        # self.debug_ulca()
 
         self.set_test_end_lte()
 
@@ -217,26 +219,27 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
         self.file_folder = Path(excel_folder_path())
         self.preset_instrument()
         self.set_test_end_lte()
-        self.port_tx = ext_pmt.port_tx
-        self.chan = ext_pmt.channel
-        self.rx_level = -70
+        self.port_tx = self.state_dict['tx_port']
+        self.chan = self.state_dict['channel_str']
+        self.rx_level = self.state_dict['init_rx_sync_level']
+        self.tx_level = self.state_dict['tx_level']
 
         # this is for now only 'LTE'
-        if ext_pmt.tech:
+        if self.state_dict['tech']:
             tech_list = ['LTE']
         else:
             tech_list = []
 
         for tech in tech_list:
             # this is for now only 'TX1'
-            if 'TX2' in ext_pmt.tx_paths:
-                tx_path_list = ext_pmt.tx_paths
+            if 'TX2' in self.state_dict['tx_path_list']:
+                tx_path_list = self.state_dict['tx_path_list']
                 tx_path_list.remove('TX2')
             else:
-                tx_path_list = ext_pmt.tx_paths
+                tx_path_list = self.state_dict['tx_path_list']
 
             for tx_path in tx_path_list:
-                for band in ext_pmt.lte_ca_bands:  # '7C'
+                for band in self.state_dict['ulca_lte_band_list']:  # '7C'
                     self.tech = tech
                     self.tx_path = tx_path
                     self.band_ulca_lte = band  # '7C'
@@ -250,11 +253,11 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
 
                     for chan in self.chan:  # L, M, H
                         self.chan_lmh = chan
-                        for combo_bw in ext_pmt.lte_bandwidths_ca_combo:  # bw '20+20'
+                        for combo_bw in self.state_dict['ulca_lte_bw_list']:  # bw '20+20'
                             self.bw_combo_lte = combo_bw
                             self.bw_cc1, self.bw_cc2 = combo_bw.split('+')  # '20', '20'
                             combo_rb = f'{int(self.bw_cc1) * 5}+{int(self.bw_cc2) * 5}'  # rb_combo '100+100'
-                            for mcs in ext_pmt.mcs_lte:
+                            for mcs in self.state_dict['lte_mcs_list']:
                                 self.mcs_cc1_lte = self.mcs_cc2_lte = mcs
                                 try:
                                     bw_rb_cc1, bw_rb_cc2, chan_cc1, chan_cc2 = self.combo_dict[chan][combo_rb]
@@ -267,7 +270,7 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
                                 self.band_cc1_channel_lte = chan_cc1
                                 self.band_cc2_channel_lte = chan_cc2
 
-                                for allocation in ext_pmt.rb_ftm_ulca_lte:
+                                for allocation in self.state_dict['ulca_lte_rb_allocation_list']:
                                     try:
                                         self.alloc_cc = allocation.split('_')
                                         # this is return rb allocation to cc1 and cc2
@@ -281,15 +284,16 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
                                                     f"{allocation}")
 
     def run(self):
-        for tech in ext_pmt.tech:
+        for tech in self.state_dict['tech_list']:
             if tech == 'LTE':
                 self.tx_power_aclr_ulca_pipline_lte()
         self.cmw_close()
 
 
 def main():
-    test = TxTestCa()
-    test.run()
+    # test = TxTestCa()
+    # test.run()
+    pass
 
 
 if __name__ == '__main__':

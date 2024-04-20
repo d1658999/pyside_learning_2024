@@ -62,8 +62,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.run_button.clicked.connect(self.selected_show)
         self.rx_quick_ns.toggled.connect(self.rx_path_custom_disabled)
         self.rx_endc_desense_ns.toggled.connect(self.endc_rx_path_enabled)
-        self.rx_endc_desense_ns.toggled.connect(self.endc_port_table_disabled)
+        self.rx_endc_desense_ns.toggled.connect(self.port_table_disabled)
         self.rx_endc_desense_ns.toggled.connect(self.endc_other_test_items_unchecked)
+        self.tx_ulca_lte_ns.toggled.connect(self.port_table_disabled)
+        self.tx_ulca_lte_cbe_ns.toggled.connect(self.port_table_disabled)
 
     def init_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
@@ -796,7 +798,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             logger.info(f'Endc LTE port Disabled')
 
-    def endc_port_table_disabled(self, checked):
+    def port_table_disabled(self, checked):
         if checked:
             self.port_table_en.setDisabled(True)
             self.port_table_en.setChecked(False)
@@ -2066,7 +2068,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     inst.ser.com_close()
 
                 if state_dict['tx_ulca_lte_ns']:
-                    ...
+                    inst = TxTestCa(state_dict, self.progressBar)
+                    inst.run()
+                    inst.ser.com_close()
+
                 if state_dict['rx_normal_ns'] or state_dict['rx_quick_ns']:
                     inst = RxTestGenre(state_dict, self.progressBar)
                     inst.run_genre()

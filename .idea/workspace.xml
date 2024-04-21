@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_10 for 8820/8821 and signaling test">
-      <change afterPath="$PROJECT_DIR$/ui/mega_v2_11.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui_mega_v2_11.py" afterDir="false" />
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_11 for regy parse tool">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gui_init.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +17,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="UML Sequence" />
+        <option value="UML Class" />
       </list>
     </option>
   </component>
@@ -52,6 +51,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultPlantUmlFileTemplate": "UML Class",
     "Python.Main_UI.executor": "Run",
     "Python.ui_mega_v2_2.executor": "Run",
     "Python.ui_test_v2_1.executor": "Run",
@@ -59,7 +59,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/pricewu/Documents/py2slide",
-    "settings.editor.selected.configurable": "Csv.Editor.Settings"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -472,7 +472,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713621176670</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="update ui test version v2_11 for regy parse tool">
+      <option name="closed" value="true" />
+      <created>1713689383474</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1713689383474</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -487,7 +495,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update ui test version v2_7" />
     <MESSAGE value="update ui test version v2_7 for bands show" />
     <MESSAGE value="update ui test version v2_7 for BW MCS" />
     <MESSAGE value="update ui test version v2_7 for progressbar" />
@@ -512,7 +519,8 @@
     <MESSAGE value="update ui test version v2_9 for ulca and its cbe, add progress" />
     <MESSAGE value="update ui test version v2_9 for 8820 hidden ULCA" />
     <MESSAGE value="update ui test version v2_10 for 8820/8821 and signaling test" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_10 for 8820/8821 and signaling test" />
+    <MESSAGE value="update ui test version v2_11 for regy parse tool" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_11 for regy parse tool" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

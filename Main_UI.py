@@ -1579,7 +1579,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         band_wcdma_count = 0
         band_gsm_count = 0
         band_ulca_lte_count = 0
-        band_endc_desense_count = 0
+        # band_endc_desense_count = 0
         bw_nr_count = 0
         bw_lte_count = 0
         bw_ulca_lte_count = 0
@@ -1591,6 +1591,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         rb_ulca_lte_count = 0
         temp_volt_count = 0
         volt_count = 0
+        mcs_rb_allocation_lte_s_count = 0
 
         for key, value in state_dict.items():
             if key == 'tx_lmh_ns' and value is True:
@@ -1976,6 +1977,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 mcs_lte_count += 1
             if key == 'q256_lte' and value:
                 mcs_lte_count += 1
+            if key == 'qpsk_1rb0_lte_sig' and value:
+                mcs_rb_allocation_lte_s_count += 1
+            if key == 'qpsk_prb0_lte_sig' and value:
+                mcs_rb_allocation_lte_s_count += 1
+            if key == 'qpsk_frb_lte_sig' and value:
+                mcs_rb_allocation_lte_s_count += 1
+            if key == 'q16_prb0_lte_sig' and value:
+                mcs_rb_allocation_lte_s_count += 1
+            if key == 'q16_frb_lte_sig' and value:
+                mcs_rb_allocation_lte_s_count += 1
+            if key == 'q64_prb0_lte_sig' and value:
+                mcs_rb_allocation_lte_s_count += 1
+            if key == 'q64_frb_lte_sig' and value:
+                mcs_rb_allocation_lte_s_count += 1
+            if key == '256_frb_lte_sig' and value:
+                mcs_rb_allocation_lte_s_count += 1
             if key == 'inner_full_nr' and value:
                 rb_nr_count += 1
             if key == 'outer_full_nr' and value:
@@ -2046,12 +2063,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       rx_test_items_ns_count_wcdma * rx_path_count * channel_count * band_wcdma_count * ue_power_count + \
                       rx_test_items_ns_count_gsm * rx_path_count * channel_count * band_gsm_count + \
                       rx_test_items_endc_ns_count + \
-                      tx_test_items_s_count * lte_tech_count * channel_count * band_lte_count + \
+                      tx_test_items_s_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count * mcs_rb_allocation_lte_s_count + \
                       tx_test_items_s_count * wcdma_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_s_count * hsupa_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_s_count * hsdpa_tech_count * channel_count * band_wcdma_count + \
-                      rx_test_items_s_count * channel_count * band_lte_count * ue_power_count + \
-                      rx_test_items_s_count * channel_count * band_wcdma_count * ue_power_count  + \
+                      rx_test_items_s_count * channel_count * band_lte_count * ue_power_count * bw_lte_count + \
+                      rx_test_items_s_count * channel_count * band_wcdma_count * ue_power_count + \
                       tx_test_items_ns_count_nr_fcc * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count + \
                       tx_test_items_ns_count_nr_ce * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count
 

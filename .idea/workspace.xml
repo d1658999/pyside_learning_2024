@@ -4,22 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_9 for 8820 hidden ULCA">
-      <change afterPath="$PROJECT_DIR$/ui/mega_v2_10.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui_mega_v2_10.py" afterDir="false" />
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_10 for 8820/8821 and signaling test">
+      <change afterPath="$PROJECT_DIR$/ui/mega_v2_11.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui_mega_v2_11.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/equipments/anritsu8820.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/anritsu8820.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/equipments/anritsu8821.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/anritsu8821.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gui_init.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8820_rx.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8820_rx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8820_rx_freq_sweep.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8820_rx_freq_sweep.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8820_tx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8820_tx_lmh.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8821_rx.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8821_rx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8821_rx_freq_sweep.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8821_rx_freq_sweep.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8821_tx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/anritsu_items/mt8821_tx_lmh.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/parameters/common_parameters_anritsu.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/common_parameters_anritsu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/parameters/common_parameters_ftm.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/common_parameters_ftm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -474,7 +464,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713590815627</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="update ui test version v2_10 for 8820/8821 and signaling test">
+      <option name="closed" value="true" />
+      <created>1713621176670</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1713621176670</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -489,7 +487,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update ui test version v2_6 and Main_UI.py for gui state set/get, next step to add ULCA LTE band combo" />
     <MESSAGE value="update ui test version v2_7" />
     <MESSAGE value="update ui test version v2_7 for bands show" />
     <MESSAGE value="update ui test version v2_7 for BW MCS" />
@@ -514,14 +511,15 @@
     <MESSAGE value="update ui test version v2_9 for ulca and its cbe, re update some missed items" />
     <MESSAGE value="update ui test version v2_9 for ulca and its cbe, add progress" />
     <MESSAGE value="update ui test version v2_9 for 8820 hidden ULCA" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_9 for 8820 hidden ULCA" />
+    <MESSAGE value="update ui test version v2_10 for 8820/8821 and signaling test" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_10 for 8820/8821 and signaling test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>1984</line>
+          <line>2033</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -536,7 +534,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>2010</line>
+          <line>2059</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

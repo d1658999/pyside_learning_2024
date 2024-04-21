@@ -8,7 +8,7 @@ import pathlib
 import signal
 import os
 import yaml
-from ui_mega_v2_10 import Ui_MainWindow
+from ui_mega_v2_11 import Ui_MainWindow
 from utils.log_init import log_set, log_clear
 from utils.adb_handler import get_serial_devices
 from utils.excel_handler import excel_folder_create
@@ -66,6 +66,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rx_endc_desense_ns.toggled.connect(self.endc_other_test_items_unchecked)
         # self.tx_ulca_lte_ns.toggled.connect(self.port_table_disabled)
         # self.tx_ulca_lte_cbe_ns.toggled.connect(self.port_table_disabled)
+        self.baseRegyFileUpdateButton.clicked.connect(self.openfile_baseregy_update)
+        self.changedRegyFileUpdateButton.clicked.connect(self.openfile_changedregy_update)
+        self.baseRegyFileSeparateButton.clicked.connect(self.openfile_baseregy_separate)
+        self.txtFileSeparateButton.clicked.connect(self.openfile_separatetxt_separate)
+        self.baseRegyFileParseButton.clicked.connect(self.openfile_baseregy_parse)
+        self.cfgFileParseButton.clicked.connect(self.openfile_cfg_parse)
+        self.mergeButton.clicked.connect(self.merge_nv)
+        self.seperateButton.clicked.connect(self.separate_nv)
+        self.parseButton.clicked.connect(self.separate_nv_cfg)
 
     def init_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
@@ -204,6 +213,46 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ui_init = yaml.safe_load(s)
 
         self.gui_state_set(ui_init)
+
+    def openfile_baseregy_update(self):
+        filename, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'Regy File(*.regy)')
+        self.baseRegyUpdatelineEdit.setText(filename)
+
+    def openfile_changedregy_update(self):
+        filename, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'Regy File(*.regy)')
+        self.changedRegyUpdatelineEdit.setText(filename)
+
+    def openfile_baseregy_separate(self):
+        filename, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'Regy File(*.regy)')
+        self.baseRegySeparatelineEdit.setText(filename)
+
+    def openfile_separatetxt_separate(self):
+        filename, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'TxT File(*.txt)')
+        self.txtSeparatelineEdit.setText(filename)
+
+    def openfile_baseregy_parse(self):
+        filename, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'Regy File(*.regy)')
+        self.baseRegyParselineEdit.setText(filename)
+
+    def openfile_cfg_parse(self):
+        filename, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'Cfg File(*.cfg)')
+        self.cfgFileParselineEdit.setText(filename)
+
+    def merge_nv(self):
+        output_path = pathlib.Path('regy_merge')
+        regy_replace(self.baseRegyUpdatelineEdit.text(), self.changedRegyUpdatelineEdit.text(), output_path)
+        logger.info('Merged Successfully')
+
+    def separate_nv(self):
+        output_path = pathlib.Path('regy_separate')
+        regy_extract(self.baseRegySeparatelineEdit.text(), self.txtSeparatelineEdit.text(), output_path)
+        logger.info('Separate Successfully')
+
+    def separate_nv_cfg(self):
+        output_path = pathlib.Path('regy_file_parse')
+        logger.info('Waiting...')
+        regy_extract_2(self.baseRegyParselineEdit.text(), self.cfgFileParselineEdit.text(), output_path)
+        logger.info('Separate Cfg Successfully')
 
     def gui_state_get(self, state_dict=None):
         if state_dict is None:

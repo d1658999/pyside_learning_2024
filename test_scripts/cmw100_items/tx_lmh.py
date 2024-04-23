@@ -52,6 +52,8 @@ class TxTestGenre(AtCmd, CMW100):
         """
         This is used for multi-ports connection on Tx
         """
+        if isinstance(band, str):
+            band = int(band[:-1])
         try:
             if self.port_table is None:  # to initial port table at first time
                 if not self.state_dict['as_path_en']:

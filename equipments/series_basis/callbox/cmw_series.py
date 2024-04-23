@@ -1170,6 +1170,8 @@ class CMW:
         OB77 | ... | OB84 | OB86 | OB89 | OB90 | OB95
         *RST:  OB1
         """
+        if isinstance(band, str):
+            band = band[:-1]
         self.cmw_write(f'CONFigure:NRSub:MEASurement:BAND OB{band}')
 
     def set_band_lte(self, band):
@@ -1187,6 +1189,8 @@ class CMW:
         <Band> OB1 to OB250, see list above
         *RST:  OB1 (OB33 for TDD UL, OB47 for sidelink)
         """
+        if isinstance(band, str):
+            band = band[:-1]
         self.cmw_write(f'CONFigure:LTE:MEASurement:BAND OB{band}')
 
     def set_cc_bw_lte(self, carrier_num, bw='5'):

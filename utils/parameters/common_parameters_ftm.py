@@ -7,7 +7,6 @@ NTN_BANDS = [23, 255, 256]
 # bandwidth index
 def bandwidths_selected_nr(band):
     try:
-        band = int(band)
         bandwidths = {
             'N1': [5, 10, 15, 20, 40, 50],  # remove 30
             'N2': [5, 10, 15, 20, 40, 50],
@@ -23,7 +22,8 @@ def bandwidths_selected_nr(band):
             'N24': [5, 10, ],
             'N25': [5, 10, 15, 20, 30, 40, 50, 35, ],
             'N26': [5, 10, 15, 20, ],  # remove 25, 30
-            'N28': [5, 10, 15, 20, ],
+            'N28A': [5, 10, 15, 20, ],
+            'N28B': [5, 10, 15, 20, ],
             'N29': [5, 10, ],
             'N30': [5, 10, ],
             'N34': [5, 10, 15, ],
@@ -44,7 +44,10 @@ def bandwidths_selected_nr(band):
             'N256': [10, 15, 20, ],
         }
 
-        return bandwidths[f'N{band}']
+        if isinstance(band, str):
+            return bandwidths[f'N{band.upper()}']
+        else:
+            return bandwidths[f'N{band}']
 
     except Exception:
         raise DictionaryException(f'Band {band} is not in bandwidths_selected_nr')
@@ -52,7 +55,6 @@ def bandwidths_selected_nr(band):
 
 def bandwidths_selected_lte(band):
     try:
-        band = int(band)
         bandwidths = {
             'B1': [5, 10, 15, 20],
             'B2': [1.4, 3, 5, 10, 15, 20],
@@ -73,7 +75,8 @@ def bandwidths_selected_lte(band):
             'B24': [5, 10],
             'B25': [1.4, 3, 5, 10, 15, 20],
             'B26': [1.4, 3, 5, 10, 15],
-            'B28': [3, 5, 10, 15],
+            'B28A': [3, 5, 10, 15],
+            'B28B': [3, 5, 10, 15],
             'B29': [3, 5, 10],
             'B30': [5, 10],
             'B32': [5, 10, 15, 20],
@@ -90,7 +93,10 @@ def bandwidths_selected_lte(band):
             'B75': [5, 10, 15, 20],
         }
 
-        return bandwidths[f'B{band}']
+        if isinstance(band, str):
+            return bandwidths[f'B{band.upper()}']
+        else:
+            return bandwidths[f'B{band}']
 
     except Exception:
         raise DictionaryException(f'Band {band} is not in bandwidths_selected_lte')
@@ -188,7 +194,6 @@ def bandwidths_selected_lte_ulca(band_combo):
 # DL Freq
 def dl_freq_selected(standard, band, bw=5):
     try:
-        band = int(band)
         band_dl_freq_nr = {
             'N1': [2110 + bw / 2, 2140, 2170 - bw / 2],
             'N2': [1930 + bw / 2, 1960, 1990 - bw / 2],
@@ -291,7 +296,7 @@ def dl_freq_selected(standard, band, bw=5):
 
         if standard == 'LTE':
             if isinstance(band, str):
-                return [int(freq * 1000) for freq in band_dl_freq_nr[f'N{band.upper()}']]
+                return [int(freq * 1000) for freq in band_dl_freq_lte[f'B{band.upper()}']]
             else:
                 return [int(freq * 1000) for freq in band_dl_freq_lte[f'B{band}']]
         elif standard == 'WCDMA':
@@ -512,7 +517,9 @@ def transfer_freq_tx2rx_gsm(band_gsm, freq):
 
 
 def transfer_freq_rx2tx_lte(band_lte, freq):
-    band_lte = int(band_lte)
+    if isinstance(band_lte, str):
+        band_lte = int(band_lte[:-1])
+
     if band_lte not in [38, 39, 40, 41, 42, 48]:
         spacing_lte = {
             1: -190000,
@@ -547,7 +554,9 @@ def transfer_freq_rx2tx_lte(band_lte, freq):
 
 
 def transfer_freq_tx2rx_lte(band_lte, freq):
-    band_lte = int(band_lte)
+    if isinstance(band_lte, str):
+        band_lte = int(band_lte[:-1])
+
     if band_lte not in [38, 39, 40, 41, 42, 48]:
         spacing_lte = {
             1: 190000,
@@ -582,7 +591,9 @@ def transfer_freq_tx2rx_lte(band_lte, freq):
 
 
 def transfer_freq_rx2tx_nr(band_nr, freq):
-    band_nr = int(band_nr)
+    if isinstance(band_nr, str):
+        band_nr = int(band_nr[:-1])
+
     if band_nr not in [34, 38, 39, 40, 41, 42, 48, 75, 76, 77, 78, 79]:
         spacing_nr = {
             1: -190000,
@@ -615,7 +626,9 @@ def transfer_freq_rx2tx_nr(band_nr, freq):
 
 
 def transfer_freq_tx2rx_nr(band_nr, freq):
-    band_nr = int(band_nr)
+    if isinstance(band_nr, str):
+        band_nr = int(band_nr[:-1])
+
     if band_nr not in [34, 38, 39, 40, 41, 42, 48, 75, 76, 77, 78, 79]:
         spacing_nr = {
             1: 190000,
@@ -647,41 +660,44 @@ def transfer_freq_tx2rx_nr(band_nr, freq):
 
 
 def special_uplink_config_sensitivity_lte(band, bw):
-    if (int(band) in [2, 3, 25]) and int(bw) == 15:
+    if isinstance(band, str):
+        band = int(band[:-1])
+
+    if (band in [2, 3, 25]) and int(bw) == 15:
         return 50, 25
-    elif (int(band) in [2, 3, 25]) and int(bw) == 20:
+    elif (band in [2, 3, 25]) and int(bw) == 20:
         return 50, 50
-    elif int(band) in [5, 8, 18, 19, 21, 26, 28, 30] and int(bw) == 10:
+    elif (band in [5, 8, 18, 19, 21, 26, 28, 30]) and int(bw) == 10:
         return 25, 25
-    elif int(band) == 7 and int(bw) == 20:
+    elif band == 7 and int(bw) == 20:
         return 75, 25
-    elif int(band) == 7 and int(bw) == 20:
+    elif band == 7 and int(bw) == 20:
         return 75, 25
-    elif int(band) in [12, 17] and int(bw) == 5:
+    elif (band in [12, 17]) and int(bw) == 5:
         return 20, 5
-    elif int(band) == 12 and int(bw) == 10:
+    elif band == 12 and int(bw) == 10:
         return 20, 30
-    elif int(band) == 13 and (int(bw) in [5, 10]):
+    elif band == 13 and (int(bw) in [5, 10]):
         return 20, 0
-    elif int(band) == 14 and (int(bw) in [5, 10]):
+    elif band == 14 and (int(bw) in [5, 10]):
         return 15, 0
-    elif int(band) == 17 and int(bw) == 10:
+    elif band == 17 and int(bw) == 10:
         return 20, 30
-    elif (int(band) == 18 in [18, 19, 21, 26, 28]) and int(bw) == 15:
+    elif (band == 18 in [18, 19, 21, 26, 28]) and int(bw) == 15:
         return 25, 50
-    elif int(band) == 20 and int(bw) == 10:
+    elif band == 20 and int(bw) == 10:
         return 20, 0
-    elif int(band) == 20 and int(bw) == 15:
+    elif band == 20 and int(bw) == 15:
         return 20, 11
-    elif int(band) == 20 and int(bw) == 20:
+    elif band == 20 and int(bw) == 20:
         return 20, 16
-    elif int(band) == 28 and int(bw) == 20:
+    elif band == 28 and int(bw) == 20:
         return 25, 75
-    elif int(band) == 71 and int(bw) == 10:
+    elif band == 71 and int(bw) == 10:
         return 25, 0
-    elif int(band) == 71 and int(bw) == 15:
+    elif band == 71 and int(bw) == 15:
         return 20, 0
-    elif int(band) == 71 and int(bw) == 20:
+    elif band == 71 and int(bw) == 20:
         return 20, 0
 
     else:
@@ -692,7 +708,10 @@ def special_uplink_config_sensitivity_lte(band, bw):
 
 
 def special_uplink_config_sensitivity_nr(band, scs, bw):
-    if int(band) == 1:
+    if isinstance(band, str):
+        band = int(band[:-1])
+
+    if band == 1:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -747,7 +766,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 50:
                 return 30, 35
 
-    elif int(band) == 2:
+    elif band == 2:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -792,7 +811,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 40:
                 return 10, 41
 
-    elif int(band) == 3:
+    elif band == 3:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -853,7 +872,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 50:
                 return 10, 55
 
-    elif int(band) == 5:
+    elif band == 5:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -871,7 +890,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 20:
                 return 10, 41
 
-    elif int(band) == 7:
+    elif band == 7:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -918,7 +937,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 50:
                 return 10, 55
 
-    elif int(band) == 8:
+    elif band == 8:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -936,7 +955,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 20:
                 return 10, 41
 
-    elif int(band) == 12:
+    elif band == 12:
         if scs == 15:
             if bw == 5:
                 return 20, 5
@@ -950,7 +969,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 15:
                 return 10, 28
 
-    elif int(band) == 13:
+    elif band == 13:
         if scs == 15:
             if bw == 5:
                 return 20, 0
@@ -960,7 +979,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             if bw == 10:
                 return 10, 0
 
-    elif int(band) == 14:
+    elif band == 14:
         if scs == 15:
             if bw == 5:
                 return 20, 0
@@ -970,7 +989,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             if bw == 10:
                 return 10, 0
 
-    # elif int(band) == 18:
+    # elif band == 18:
     #     if scs == 15:
     #         if bw == 5:
     #             return 20, 5
@@ -984,7 +1003,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
     #         elif bw == 15:
     #             return 10, 28
 
-    elif int(band) == 20:
+    elif band == 20:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1001,7 +1020,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 10, 6
             elif bw == 20:
                 return 10, 8
-    elif int(band) == 24:
+    elif band == 24:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1014,7 +1033,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             if bw == 10:
                 return 10, 0
 
-    elif int(band) == 25:
+    elif band == 25:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1057,7 +1076,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 40:
                 return 10, 41
 
-    elif int(band) == 26:
+    elif band == 26:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1075,7 +1094,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 15:
                 return 12, 39
 
-    elif int(band) == 28:
+    elif band == 28:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1097,7 +1116,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 30:
                 return 10, 68
 
-    elif int(band) == 30:
+    elif band == 30:
         if scs == 15:
             if bw == 5:
                 return 25, 5
@@ -1107,7 +1126,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             if bw == 10:
                 return 10, 14
 
-    elif int(band) == 34:
+    elif band == 34:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1126,50 +1145,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 15:
                 return 18, 0
 
-    elif int(band) == 38:
-        if scs == 15:
-            if bw == 5:
-                return 25, 0
-            elif bw == 10:
-                return 50, 0
-            elif bw == 15:
-                return 75, 0
-            elif bw == 20:
-                return 100, 0
-            elif bw == 25:
-                return 128, 0
-            elif bw == 30:
-                return 160, 0
-            elif bw == 40:
-                return 216, 0
-        elif scs == 30:
-            if bw == 10:
-                return 24, 0
-            elif bw == 15:
-                return 36, 0
-            elif bw == 20:
-                return 50, 0
-            elif bw == 25:
-                return 64, 0
-            elif bw == 30:
-                return 75, 0
-            elif bw == 40:
-                return 100, 0
-        elif scs == 60:
-            if bw == 10:
-                return 10, 0
-            elif bw == 15:
-                return 18, 0
-            elif bw == 20:
-                return 24, 0
-            elif bw == 25:
-                return 30, 0
-            elif bw == 30:
-                return 36, 0
-            elif bw == 40:
-                return 50, 0
-
-    elif int(band) == 39:
+    elif band == 38:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1212,7 +1188,50 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 40:
                 return 50, 0
 
-    elif int(band) == 40:
+    elif band == 39:
+        if scs == 15:
+            if bw == 5:
+                return 25, 0
+            elif bw == 10:
+                return 50, 0
+            elif bw == 15:
+                return 75, 0
+            elif bw == 20:
+                return 100, 0
+            elif bw == 25:
+                return 128, 0
+            elif bw == 30:
+                return 160, 0
+            elif bw == 40:
+                return 216, 0
+        elif scs == 30:
+            if bw == 10:
+                return 24, 0
+            elif bw == 15:
+                return 36, 0
+            elif bw == 20:
+                return 50, 0
+            elif bw == 25:
+                return 64, 0
+            elif bw == 30:
+                return 75, 0
+            elif bw == 40:
+                return 100, 0
+        elif scs == 60:
+            if bw == 10:
+                return 10, 0
+            elif bw == 15:
+                return 18, 0
+            elif bw == 20:
+                return 24, 0
+            elif bw == 25:
+                return 30, 0
+            elif bw == 30:
+                return 36, 0
+            elif bw == 40:
+                return 50, 0
+
+    elif band == 40:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1273,7 +1292,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 80:
                 return 100, 0
 
-    elif int(band) == 41:
+    elif band == 41:
         if scs == 15:
             if bw == 10:
                 return 50, 0
@@ -1332,7 +1351,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 100:
                 return 135, 0
 
-    elif int(band) == 48:
+    elif band == 48:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1399,7 +1418,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
             elif bw == 100:
                 return 135, 0
 
-    elif int(band) == 50:
+    elif band == 50:
         if scs == 15:
             if bw == 10:
                 return 50, 0
@@ -1441,11 +1460,11 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 75, 0
             elif bw == 80:  # note 3?
                 return 100, 0
-    elif int(band) == 51:
+    elif band == 51:
         if scs == 15:
             if bw == 5:
                 return 25, 0
-    elif int(band) == 53:
+    elif band == 53:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1457,7 +1476,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
         elif scs == 60:
             if bw == 10:
                 return 10, 0
-    elif int(band) == 65:
+    elif band == 65:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1479,7 +1498,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 10, 1
             elif bw == 15:
                 return 18, 0
-    elif int(band) == 66:
+    elif band == 66:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1521,7 +1540,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 36, 2
             elif bw == 40:
                 return 50, 1
-    elif int(band) == 70:
+    elif band == 70:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1551,7 +1570,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 24, 0  # note 3?
             elif bw == 25:
                 return 30, 1  # note 3?
-    elif int(band) == 71:
+    elif band == 71:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1568,7 +1587,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 10, 0
             elif bw == 20:
                 return 10, 0
-    elif int(band) == 74:
+    elif band == 74:
         if scs == 15:
             if bw == 5:
                 return 25, 0
@@ -1592,7 +1611,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 5, 13
             elif bw == 20:
                 return 5, 19
-    elif int(band) == 77:
+    elif band == 77:
         if scs == 15:
             if bw == 10:
                 return 50, 0
@@ -1652,7 +1671,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 120, 0
             elif bw == 100:
                 return 135, 0
-    elif int(band) == 78:
+    elif band == 78:
         if scs == 15:
             if bw == 10:
                 return 50, 0
@@ -1718,7 +1737,7 @@ def special_uplink_config_sensitivity_nr(band, scs, bw):
                 return 120, 0
             elif bw == 100:
                 return 135, 0
-    elif int(band) == 79:
+    elif band == 79:
         if scs == 15:
             if bw == 40:
                 return 216, 0

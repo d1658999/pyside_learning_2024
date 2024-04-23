@@ -347,6 +347,7 @@ class CMW100(CMW):
         """
         scs: FDD is forced to 15KHz and TDD is to be 30KHz
         """
+
         logger.info('----------Sig Gen for nr----------')
         self.select_scs_nr(self.band_nr)
         self.system_base_option_version_query('CMW_NRSub6G_Meas')
@@ -386,7 +387,7 @@ class CMW100(CMW):
         self.cmw_query('*OPC?')
         self.set_generator_base_band_mode_gprf('ARB')
         self.cmw_query('*OPC?')
-        self.band_lte = int(self.band_lte)
+        # self.band_lte = int(self.band_lte)
         self.set_waveform_lte(self.bw_lte)
         self.cmw_query('*OPC?')
         self.get_arb_file_query_gprf()
@@ -516,6 +517,9 @@ class CMW100(CMW):
         # self.command_cmw100_query('*OPC?')
 
     def select_mode_fdd_tdd(self, band):
+        if isinstance(band, str):
+            band = int(band[:-1])
+
         if self.tech == 'NR':
             if band in TDD_BANDS:
                 self.set_duplexer_mode_nr('TDD')

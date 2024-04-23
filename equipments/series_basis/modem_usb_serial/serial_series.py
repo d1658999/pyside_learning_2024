@@ -343,12 +343,20 @@ class AtCmd:
         SA: 0, NSA: 1
         """
         logger.info('----------Set Test Mode----------')
-        self.command(f'AT+NRFFINALSTART={self.band_nr},{self.sa_nsa_mode}')
+        if isinstance(self.band_nr, str):
+            band_nr = self.band_nr[:2]
+        else:
+            band_nr = self.band_nr
+        self.command(f'AT+NRFFINALSTART={band_nr},{self.sa_nsa_mode}')
         # self.command_cmw100_query('*OPC?')
 
     def set_test_mode_lte(self):
         logger.info('----------Set Test Mode----------')
-        self.command(f'AT+LRFFINALSTART=1,{self.band_lte}')
+        if isinstance(self.band_lte, str):
+            band_lte = self.band_lte[:2]
+        else:
+            band_lte = self.band_lte
+        self.command(f'AT+LRFFINALSTART=1,{band_lte}')
         self.command(f'AT+LMODETEST')
         # self.command_cmw100_query('*OPC?')
 
@@ -802,6 +810,8 @@ class AtCmd:
         mipi_num = None
         usid = None
         addr = None
+        if isinstance(band, str):
+            band = int(band[:-1])
 
         if tech in ['LTE', 'NR']:
             if tx_path == 'TX1':
@@ -831,6 +841,8 @@ class AtCmd:
         mipi_num = None
         usid = None
         addr = None
+        if isinstance(band, str):
+            band = int(band[:-1])
 
         if tech in ['LTE', 'NR']:
             if tx_path == 'TX1':
@@ -954,6 +966,9 @@ class AtCmd:
     def query_voltage_selector_sky51001(self, tech, band, tx_path):
         volt_lowest_list = [1.8384]
         count = 20
+        if isinstance(band, str):
+            band = int(band[:-1])
+
         if tech == 'NR':
             volt_list = self.query_voltage_nr_sky51001(band, tx_path)
             while volt_lowest_list == volt_list:
@@ -987,6 +1002,9 @@ class AtCmd:
     def query_voltage_selector_qm81052(self, tech, band, tx_path):
         volt_lowest_list = [0.4]
         count = 20
+        if isinstance(band, str):
+            band = int(band[:-1])
+
         if tech == 'NR':
             volt_list = self.query_voltage_nr_qm81052(band, tx_path)
             while volt_lowest_list == volt_list:
@@ -1192,6 +1210,8 @@ class AtCmd:
         mpr_index_value = None
         nv = None
         mpr_nv_dict = {}
+        if isinstance(band, str):
+            band = int(band[:-1])
 
         if mpr_nv == '!LTERF.TX.USER DSP MPR OFFSET TX':
             if tx_path == 'TX1':
@@ -1254,6 +1274,8 @@ class AtCmd:
         return mpr_nv_dict
 
     def mpr_nvs_check(self, band):
+        if isinstance(band, str):
+            band = int(band[:-1])
         used_band_tx1_index_lte = self.get_used_band_index("CAL.LTE.USED_RF_BAND")
         used_band_tx2_index_lte = self.get_used_band_index("CAL.LTE.USED_DUALTX_RF_BAND")
         used_band_tx1_index_nr = self.get_used_band_index("CAL.NR_SUB6.USED_RF_BAND")
@@ -1306,6 +1328,8 @@ class AtCmd:
         """
         Directly transfer all possible MPR NV with union all bands you select
         """
+        if isinstance(band, str):
+            band = int(band[:-1])
 
         mpr_nv_all_dict = {}
 
@@ -1325,6 +1349,8 @@ class AtCmd:
         """
         This is postcal for nr
         """
+        if isinstance(band, str):
+            band = int(band[:-1])
         self.command(f'AT+NPOSTCALSTART={band}')
 
     def set_rfcal_start_wcdma(self):
@@ -1390,6 +1416,8 @@ class AtCmd:
         mode = 0, which is APT mode
         mode = 1, which is ET/SAPT mode
         """
+        if isinstance(band, str):
+            band = int(band[:-1])
         pa_mode_dict = {
             0: 'APT',
             1: 'ET/SAPT',
@@ -1443,6 +1471,8 @@ class AtCmd:
         value_wanted: use decimal value or string
         """
         # query the used_band and get the band index
+        if isinstance(band, str):
+            band = int(band[:-1])
         used_band_index_nr = None
         if tx_path == 'TX1':
             used_band_index_nr = self.get_used_band_index('CAL.NR_SUB6.USED_RF_BAND')
@@ -1475,6 +1505,8 @@ class AtCmd:
         index_wanted: use integer or string 1, 2, 3,...
         value_wanted: use decimal value or string
         """
+        if isinstance(band, str):
+            band = int(band[:-1])
         # query the used_band and get the band index
         used_band_index_nr = self.get_used_band_index_by_path_nr(tx_path)
 
@@ -1494,6 +1526,8 @@ class AtCmd:
         index 1: max power level for apt nv -> index 34
         index 4: sw point power level for apt nv
         """
+        if isinstance(band, str):
+            band = int(band[:-1])
         used_band_index = self.get_used_band_index_by_path_nr(tx_path)
         pa_map_rise_nv = f'CAL.NR_SUB6.TX_PA_Range_Map_Rise_TX{self.tx_path_dict[self.tx_path]}' \
                          f'_N{str(used_band_index[band]).zfill(2)}'

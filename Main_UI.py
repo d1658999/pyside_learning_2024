@@ -8,7 +8,7 @@ import pathlib
 import signal
 import os
 import yaml
-from ui_mega_v2_11 import Ui_MainWindow
+from ui_mega_v2_12 import Ui_MainWindow
 from utils.log_init import log_set, log_clear
 from utils.adb_handler import get_serial_devices
 from utils.excel_handler import excel_folder_create
@@ -1196,9 +1196,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.b26_lte.isChecked():
             lte_bands_list.append(26)
         if self.b28_a_lte.isChecked():
-            lte_bands_list.append('28_a')
+            lte_bands_list.append('28a')
         if self.b28_b_lte.isChecked():
-            lte_bands_list.append('28_b')
+            lte_bands_list.append('28b')
         if self.b29_lte.isChecked():
             lte_bands_list.append(29)
         if self.b32_lte.isChecked():
@@ -1327,6 +1327,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             endc_bands_list.append('5_77')
         if self.b13_n5.isChecked():
             endc_bands_list.append('13_5')
+        if self.b7_n77.isChecked():
+            endc_bands_list.append('7_77')
 
         return endc_bands_list
 

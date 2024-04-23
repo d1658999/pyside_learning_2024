@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_11 for regy parse tool">
+      <change afterPath="$PROJECT_DIR$/ui/mega_v2_12.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pyside_learning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pyside_learning.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equipments/cmw100.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/cmw100.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equipments/series_basis/callbox/cmw_series.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/series_basis/callbox/cmw_series.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equipments/series_basis/modem_usb_serial/serial_series.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/series_basis/modem_usb_serial/serial_series.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gui_init.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/excel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/excel_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/parameters/common_parameters_ftm.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/common_parameters_ftm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/parameters/rb_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/rb_parameters.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +69,18 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/pricewu/Documents/py2slide",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/pricewu/Documents/pyside_learning/venv/Scripts/python.exe",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -81,11 +102,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (pyside_learning) (2)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main_UI.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -96,13 +117,6 @@
       <method v="2" />
     </configuration>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -111,6 +125,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1711358733838</updated>
+      <workItem from="1713701951531" duration="77000" />
+      <workItem from="1713702038693" duration="136000" />
+      <workItem from="1713702198413" duration="415000" />
+      <workItem from="1713702629679" duration="470000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -483,6 +501,9 @@
     <option name="localTasksCounter" value="47" />
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -495,7 +516,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update ui test version v2_7 for bands show" />
     <MESSAGE value="update ui test version v2_7 for BW MCS" />
     <MESSAGE value="update ui test version v2_7 for progressbar" />
     <MESSAGE value="update ui test version v2_8 for endc bands" />
@@ -520,72 +540,25 @@
     <MESSAGE value="update ui test version v2_9 for 8820 hidden ULCA" />
     <MESSAGE value="update ui test version v2_10 for 8820/8821 and signaling test" />
     <MESSAGE value="update ui test version v2_11 for regy parse tool" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_11 for regy parse tool" />
+    <MESSAGE value="update ui test version v2_11 for count total modified of signaling" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_11 for count total modified of signaling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>2033</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
-          <line>558</line>
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
-          <line>1238</line>
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>2059</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/tx_power_fcc_ce.py</url>
-          <line>226</line>
-          <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/tx_power_fcc_ce.py</url>
-          <line>227</line>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/adb_handler.py</url>
-          <line>42</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/adb_handler.py</url>
-          <line>29</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py</url>
-          <line>949</line>
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py</url>
-          <line>444</line>
-          <option name="timeStamp" value="60" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py</url>
-          <line>440</line>
-          <option name="timeStamp" value="63" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py</url>
-          <line>441</line>
-          <option name="timeStamp" value="64" />
+          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py</url>
+          <line>518</line>
+          <option name="timeStamp" value="65" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/pyside_learning$Main_UI.coverage" NAME="Main_UI Coverage Results" MODIFIED="1713702787332" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

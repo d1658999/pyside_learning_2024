@@ -305,7 +305,7 @@ class RxTestGenre(AtCmd, CMW100):
             except KeyError as err:
                 logger.debug(err)
                 logger.info(
-                    f"{self.band_nr} doesn't have this {self.bw_nr}, so desens progress cannot run")
+                    f"N{self.band_nr} doesn't have this BW{self.bw_nr}, so desens progress cannot run")
             except FileNotFoundError as err:
                 logger.debug(err)
                 logger.info(f"There is not file to plot BW{bw}")
@@ -357,7 +357,7 @@ class RxTestGenre(AtCmd, CMW100):
             except KeyError as err:
                 logger.debug(err)
                 logger.info(
-                    f"{self.band_lte} doesn't have this {self.bw_lte}, so desens progress cannot run")
+                    f"B{self.band_lte} doesn't have this BW{self.bw_lte}, so desens progress cannot run")
             except FileNotFoundError as err:
                 logger.debug(err)
                 logger.info(f"There is not file to plot BW{bw}")

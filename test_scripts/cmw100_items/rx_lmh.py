@@ -736,14 +736,14 @@ class RxTestGenre(AtCmd, CMW100):
                     self.set_test_end_nr()
                     parameters = {
                         'tech': self.tech,
-                        'band': self.band_nr,
-                        'bw': self.bw_nr,
+                        'band': self.band_lte,
+                        'bw': self.bw_lte,
                         'tx_level': self.tx_level,
-                        'mcs': self.mcs_nr,
+                        'mcs': self.mcs_lte,
                         'tx_path': self.tx_path,
                         'rx_path': rx_path,
-                        'rb_size': self.rb_size_nr,
-                        'rb_start': self.rb_start_nr,
+                        'rb_size': self.rb_size_lte,
+                        'rb_start': self.rb_start_lte,
                     }
                     self.file_path = rx_power_relative_test_export_excel_ftm(data_normal, parameters)
 

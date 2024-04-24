@@ -243,9 +243,9 @@ def csv_to_yaml_lte(csv_file_path, yaml_file_path, has_header=True):  # generate
         yaml.dump(yaml_dict, yaml_file, default_flow_style=False)
 
 
-
-def sensitivity_criteria_nr(band, scs, bw):
+def sensitivity_criteria_nr(band, bw):
     if band in TDD_BAND:
+        scs = 30
         with open(SENS_TDD_NR_YAML, 'r') as s:
             sens = yaml.safe_load(s)
 
@@ -254,6 +254,7 @@ def sensitivity_criteria_nr(band, scs, bw):
         return eval(formula)
 
     else:
+        scs = 15
         with open(SENS_FDD_NR_YAML, 'r') as s:
             sens = yaml.safe_load(s)
 
@@ -291,4 +292,7 @@ if __name__ == '__main__':
     # print(sensitivity_criteria_ftm(77, 30, 100))
     # csv_to_yaml(SENS_FDD_NR_PATH, SENS_FDD_NR_YAML)  # tranfer csv to yaml for fdd sens
     # csv_to_yaml_lte(SENS_LTE_PATH, SENS_LTE_YAML)
-    pass
+    with open('Sens_fdd_nr.yaml', 'r') as s:
+        sens = yaml.safe_load(s)
+
+    print(sens)

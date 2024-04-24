@@ -4253,7 +4253,7 @@ def color_rule_sens_nr_ftm(band, bw) -> dict:
     # import yaml file
     if isinstance(band, str):
         band = int(band[:-1])
-    sens_crit = sensitivity_criteria_nr(band, 30, bw)
+    sens_crit = sensitivity_criteria_nr(band, bw)
     margin = import_sens_limits()
     sens_red_usl = sens_crit - margin['NR']['sens_color_red_margin']
     sens_yellow_usl = sens_crit - margin['NR']['sens_color_yellow_margin']

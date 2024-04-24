@@ -33,6 +33,8 @@ def chan_judge_wcdma(band_wcdma, tx_freq_wcdma):
 
 
 def chan_judge_lte(band_lte, bw_lte, tx_freq_lte):
+    if isinstance(band_lte, str):
+        band_lte = int(band_lte[:-1])
     rx_freq_lte = cm_pmt_ftm.transfer_freq_tx2rx_lte(band_lte, tx_freq_lte)
     if rx_freq_lte < cm_pmt_ftm.dl_freq_selected('LTE', band_lte, bw_lte)[1]:
         return 'ch0'
@@ -42,13 +44,15 @@ def chan_judge_lte(band_lte, bw_lte, tx_freq_lte):
         return 'ch2'
 
 
-def chan_judge_nr(band_fr1, bw_fr1, tx_freq_fr1):
-    rx_freq_fr1 = cm_pmt_ftm.transfer_freq_tx2rx_nr(band_fr1, tx_freq_fr1)
-    if rx_freq_fr1 < cm_pmt_ftm.dl_freq_selected('NR', band_fr1, bw_fr1)[1]:
+def chan_judge_nr(band_nr, bw_nr, tx_freq_nr):
+    if isinstance(band_nr, str):
+        band_nr = int(band_nr[:-1])
+    rx_freq_nr = cm_pmt_ftm.transfer_freq_tx2rx_nr(band_nr, tx_freq_nr)
+    if rx_freq_nr < cm_pmt_ftm.dl_freq_selected('NR', band_nr, bw_nr)[1]:
         return 'ch0'
-    elif rx_freq_fr1 == cm_pmt_ftm.dl_freq_selected('NR', band_fr1, bw_fr1)[1]:
+    elif rx_freq_nr == cm_pmt_ftm.dl_freq_selected('NR', band_nr, bw_nr)[1]:
         return 'ch1'
-    elif rx_freq_fr1 > cm_pmt_ftm.dl_freq_selected('NR', band_fr1, bw_fr1)[1]:
+    elif rx_freq_nr > cm_pmt_ftm.dl_freq_selected('NR', band_nr, bw_nr)[1]:
         return 'ch2'
 
 

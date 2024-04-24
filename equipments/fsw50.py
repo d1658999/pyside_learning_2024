@@ -4,11 +4,11 @@ from test_scripts.cmw100_items.tx_lmh import TxTestGenre
 from equipments.series_basis.spectrum.fsw_series import FSW
 from utils.log_init import log_set
 from utils.loss_handler_harmonic import get_loss_spectrum
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 
 
 logger = log_set('FSW50')
-MARGIN = eval(ext_pmt.cbe_limit_margin)
+MARGIN = 0  # default
 
 
 class FSW50(FSW):
@@ -32,7 +32,8 @@ class FSW50(FSW):
         self.average_type()
         self.set_sweep_mode('OFF')  # single sweep
         self.fsw.query('*OPC?')
-        self.set_reference_level(-30 - MARGIN)
+        # self.set_reference_level(-30 - MARGIN)
+        self.set_reference_level(-30)
         self.set_measure()  # start to measure
 
         # mark the peak search

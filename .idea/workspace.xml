@@ -4,20 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_11 for regy parse tool">
-      <change afterPath="$PROJECT_DIR$/ui/mega_v2_12.ui" afterDir="false" />
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_12 for:&#10;export and import yaml">
       <change beforePath="$PROJECT_DIR$/.idea/pyside_learning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pyside_learning.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/equipments/cmw100.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/cmw100.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/equipments/series_basis/callbox/cmw_series.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/series_basis/callbox/cmw_series.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/equipments/series_basis/modem_usb_serial/serial_series.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/series_basis/modem_usb_serial/serial_series.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equipments/fsw50.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/fsw50.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gui_init.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec_limits/spec_limit_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/spec_limits/spec_limit_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/channel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/channel_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/excel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/excel_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/parameters/common_parameters_ftm.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/common_parameters_ftm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/parameters/rb_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/parameters/rb_parameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/port_table_txas_0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/port_table_txas_0.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,13 +61,14 @@
   "keyToString": {
     "DefaultPlantUmlFileTemplate": "UML Class",
     "Python.Main_UI.executor": "Run",
+    "Python.spec_limit_handler.executor": "Run",
     "Python.ui_mega_v2_2.executor": "Run",
     "Python.ui_test_v2_1.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/pricewu/Documents/pyside_learning/venv/Scripts/python.exe",
+    "last_opened_file_path": "C:/Users/pricewu/Documents/pyside_learning/spec_limits",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -85,6 +83,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pricewu\Documents\pyside_learning\spec_limits" />
       <recent name="C:\Users\pricewu\Documents\pyside_learning" />
       <recent name="C:\Users\pricewu\Documents\pyside_learning\ui" />
     </key>
@@ -498,7 +497,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713689383474</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="update ui test version v2_12 for:&#10;1. 28a 28b string band handling&#10;2. ENDC to add 7_77">
+      <option name="closed" value="true" />
+      <created>1713855312546</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1713855312546</updated>
+    </task>
+    <task id="LOCAL-00048" summary="update ui test version v2_12 for:&#10;export and import yaml">
+      <option name="closed" value="true" />
+      <created>1713855638229</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1713855638229</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -516,8 +531,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update ui test version v2_7 for BW MCS" />
-    <MESSAGE value="update ui test version v2_7 for progressbar" />
     <MESSAGE value="update ui test version v2_8 for endc bands" />
     <MESSAGE value="update ui test version v2_8 update layout" />
     <MESSAGE value="update ui test version v2_8 transplant meta tool files to mega tool, need to fix some problems, milestone: excel handler needs to be correct" />
@@ -541,7 +554,9 @@
     <MESSAGE value="update ui test version v2_10 for 8820/8821 and signaling test" />
     <MESSAGE value="update ui test version v2_11 for regy parse tool" />
     <MESSAGE value="update ui test version v2_11 for count total modified of signaling" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_11 for count total modified of signaling" />
+    <MESSAGE value="update ui test version v2_12 for:&#10;1. 28a 28b string band handling&#10;2. ENDC to add 7_77" />
+    <MESSAGE value="update ui test version v2_12 for:&#10;export and import yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_12 for:&#10;export and import yaml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -550,6 +565,41 @@
           <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/tx_lmh.py</url>
           <line>518</line>
           <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Main_UI.py</url>
+          <line>2054</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Main_UI.py</url>
+          <line>2080</line>
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/parameters/common_parameters_ftm.py</url>
+          <line>556</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>
+          <line>1675</line>
+          <option name="timeStamp" value="78" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py</url>
+          <line>747</line>
+          <option name="timeStamp" value="79" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/spec_limits/spec_limit_handler.py</url>
+          <line>260</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/spec_limits/spec_limit_handler.py</url>
+          <line>246</line>
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -2062,17 +2062,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       tx_test_items_ns_count_wcdma_freq_sweep * wcdma_tech_count * band_wcdma_count + \
                       tx_test_items_ns_count_gsm_freq_sweep * gsm_tech_count * band_gsm_count + \
                       tx_test_items_ns_count_nr_1rb_sweep * tx_path_count * nr_tech_count * channel_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count * rb_nr_count + \
-                      rx_test_items_ns_count_nr * rx_path_count * channel_count * band_nr_count * bw_nr_count * ue_power_count + \
-                      rx_test_items_ns_count_lte * rx_path_count * channel_count * band_lte_count * bw_lte_count * ue_power_count + \
-                      rx_test_items_ns_count_wcdma * rx_path_count * channel_count * band_wcdma_count * ue_power_count + \
-                      rx_test_items_ns_count_gsm * rx_path_count * channel_count * band_gsm_count + \
+                      rx_test_items_ns_count_nr * nr_tech_count * rx_path_count * channel_count * band_nr_count * bw_nr_count * ue_power_count + \
+                      rx_test_items_ns_count_lte * lte_tech_count * rx_path_count * channel_count * band_lte_count * bw_lte_count * ue_power_count + \
+                      rx_test_items_ns_count_wcdma * wcdma_tech_count * rx_path_count * channel_count * band_wcdma_count * ue_power_count + \
+                      rx_test_items_ns_count_gsm * gsm_tech_count * rx_path_count * channel_count * band_gsm_count + \
                       rx_test_items_endc_ns_count + \
                       tx_test_items_s_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count * mcs_rb_allocation_lte_s_count + \
                       tx_test_items_s_count * wcdma_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_s_count * hsupa_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_s_count * hsdpa_tech_count * channel_count * band_wcdma_count + \
-                      rx_test_items_s_count * channel_count * band_lte_count * ue_power_count * bw_lte_count + \
-                      rx_test_items_s_count * channel_count * band_wcdma_count * ue_power_count + \
+                      rx_test_items_s_count * lte_tech_count * channel_count * band_lte_count * ue_power_count * bw_lte_count + \
+                      rx_test_items_s_count * wcdma_tech_count * channel_count * band_wcdma_count * ue_power_count + \
                       tx_test_items_ns_count_nr_fcc * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count + \
                       tx_test_items_ns_count_nr_ce * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count
 
@@ -2199,12 +2199,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 from test_scripts.harmonics_cbe.tx_harmonics import TxHarmonics
                 from test_scripts.harmonics_cbe.tx_cbe import TxCBE
                 from test_scripts.harmonics_cbe.tx_ulca_cbe import TxTestCaCBE
+                import equipments.fsw50 as fsw50
 
                 if state_dict['tx_harmonics_ns']:
                     inst = TxHarmonics(state_dict, self.progressBar)
                     inst.run()
                     inst.ser.com_close()
                 if state_dict['tx_cbe_ns']:
+                    fsw50.MARGIN = state_dict['cbe_margin']
                     inst = TxCBE(state_dict, self.progressBar)
                     inst.run()
                     inst.ser.com_close()

@@ -1211,7 +1211,7 @@ class FSW:
             d = None
             if tech == 'LTE':
                 d = 0.4
-            elif tech == 'FR1':
+            elif tech == 'NR':
                 d = 0.2
             factor = round((10 * log10(1 / d)), 2)
             return factor

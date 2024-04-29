@@ -258,7 +258,7 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
         wb = openpyxl.Workbook()
         wb.remove(wb['Sheet'])
         # to create sheet
-        if tech == 'LTE':
+        if tech in ['LTE', 'ULCA_LTE']:
             # create dashboard
             for _ in ['QPSK', 'Q16', 'Q64', 'Q256']:  # some cmw100 might not have licesnse of Q256
                 wb.create_sheet(f'Dashboard_{_}')
@@ -370,13 +370,13 @@ def tx_ulca_power_relative_test_export_excel_ftm(tech, data, sub_info):
     logger.info('----------file exist----------')
     wb = openpyxl.load_workbook(file_path)
     ws = None
-    if tech == 'LTE':
+    if tech in ['LTE', 'ULCA_LTE']:
         mcs = data[27]
         ws = wb[f'Raw_Data_{mcs}']
     # elif tech == 'NR':  this is not use for ULCA
     #     ws = wb[f'Raw_Data_{mcs}']
 
-    if tech == 'LTE':
+    if tech in ['LTE', 'ULCA_LTE']:
         max_row = ws.max_row
         row = max_row + 1
 
@@ -498,7 +498,7 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
         wb = openpyxl.Workbook()
         wb.remove(wb['Sheet'])
         # to create sheet
-        if tech == 'LTE':
+        if tech in ['LTE', 'ULCA_LTE']:
             # create dashboard
             for _ in ['QPSK', 'Q16', 'Q64', 'Q256']:  # some cmw100 might not have licesnse of Q256
                 wb.create_sheet(f'Dashboard_{_}')
@@ -702,7 +702,7 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
     logger.info('----------file exist----------')
     wb = openpyxl.load_workbook(file_path)
     ws = None
-    if tech == 'LTE':
+    if tech in ['LTE', 'ULCA_LTE']:
         ws = wb[f'Raw_Data_{mcs}']
     elif tech == 'NR':
         ws = wb[f'Raw_Data_{mcs}']
@@ -711,7 +711,7 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
     elif tech == 'GSM':
         ws = wb[f'Raw_Data_{mod}']
 
-    if tech == 'LTE':
+    if tech in ['LTE', 'ULCA_LTE']:
         max_row = ws.max_row
         row = max_row + 1
         if tx_freq_level >= 100:  # level_sweep

@@ -20,26 +20,37 @@ def ca_combo_load_excel(band, file_path=FILE_PATH):
     chan_ca_combo_dict.setdefault('L', {})
     chan_ca_combo_dict.setdefault('M', {})
     chan_ca_combo_dict.setdefault('H', {})
+
+    freq_ca_combo_dict = {}
+    freq_ca_combo_dict.setdefault('L', {})
+    freq_ca_combo_dict.setdefault('M', {})
+    freq_ca_combo_dict.setdefault('H', {})
     if band in ['38C', '39C', '40C', '41C', '42C', '48C', ]:
         for row in range(3, max_row+1):
             chan = ws.cell(row, 1).value
             combo = ws.cell(row, 2).value
             bw_cc1 = ws.cell(row, 3).value
             chan_ul_cc1 = ws.cell(row, 4).value
+            freq_ul_cc1 = int(ws.cell(row, 5).value * 1000)
             bw_cc2 = ws.cell(row, 6).value
             chan_ul_cc2 = ws.cell(row, 7).value
+            freq_ul_cc2 = int(ws.cell(row, 8).value * 1000)
             chan_ca_combo_dict[chan][combo] = (bw_cc1, bw_cc2, chan_ul_cc1, chan_ul_cc2)
+            freq_ca_combo_dict[chan][combo] = (bw_cc1, bw_cc2, freq_ul_cc1, freq_ul_cc2)
     else:
         for row in range(3, max_row+1):
             chan = ws.cell(row, 1).value
             combo = ws.cell(row, 2).value
             bw_cc1 = ws.cell(row, 3).value
             chan_ul_cc1 = ws.cell(row, 4).value
+            freq_ul_cc1 = int(ws.cell(row, 5).value * 1000)
             bw_cc2 = ws.cell(row, 8).value
             chan_ul_cc2 = ws.cell(row, 9).value
+            freq_ul_cc2 = int(ws.cell(row, 10).value * 1000)
             chan_ca_combo_dict[chan][combo] = (bw_cc1, bw_cc2, chan_ul_cc1, chan_ul_cc2)
+            freq_ca_combo_dict[chan][combo] = (bw_cc1, bw_cc2, freq_ul_cc1, freq_ul_cc2)
 
-    return chan_ca_combo_dict
+    return chan_ca_combo_dict, freq_ca_combo_dict
 
 
 def main():

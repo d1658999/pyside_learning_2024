@@ -23,3 +23,15 @@ class PortTableException(Exception):
 
 class FileNotFoundException(Exception):
     pass
+
+
+class UlcaCombo3gppException(Exception):
+    pass
+
+
+class UlcaComboFccException(Exception):
+    pass
+
+
+class Ulca36508Exception(Exception):
+    pass

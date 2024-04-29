@@ -527,7 +527,7 @@ class CMW100(CMW):
             else:
                 self.set_duplexer_mode_nr('FDD')
                 logger.debug('========== Set FDD ==========')
-        elif self.tech == 'LTE':
+        elif self.tech == 'LTE' or self.tech == 'ULCA_LTE':
             if band in TDD_BANDS:
                 self.set_duplexer_mode_lte('TDD')
                 logger.debug('========== Set TDD ==========')

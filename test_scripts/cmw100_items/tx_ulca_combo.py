@@ -15,7 +15,7 @@ from utils.ca_combo_handler import ca_combo_load_excel
 from utils.parameters.rb_parameters import ULCA_3GPP_LTE
 from utils.parameters.rb_parameters import ulca_fcc_lte
 from utils.excel_handler import tx_ulca_power_relative_test_export_excel_ftm
-from exception.custom_exception import FileNotFoundException, PortTableException
+from exception.custom_exception import FileNotFoundException, PortTableException, UlcaComboFccException, UlcaCombo3gppException, Ulca36508Exception
 
 logger = log_set('tx_ulca_lmh')
 
@@ -30,10 +30,13 @@ class TxTestCa(AtCmd, CMW100):
         self.bw_rb_cc2 = None
         self.bw_rb_cc1 = None
         self.chan_lmh = None
-        self.combo_dict = None
+        self.chan_combo_dict = None
+        self.freq_combo_dict = None
         self.band_ulca_lte = None
         self.band_cc1_channel_lte = None
         self.band_cc2_channel_lte = None
+        self.band_cc1_freq_lte = None
+        self.band_cc2_freq_lte = None
         self.bw_cc2 = None
         self.bw_cc1 = None
         self.combo_list = None
@@ -113,11 +116,18 @@ class TxTestCa(AtCmd, CMW100):
 
     def criteria_rb_selector_ulca_lte(self, combo_rb, mcs, allocation):
         if self.state_dict['ulca_lte_criteria'] == '3GPP':
-            cc1, cc2 = ULCA_3GPP_LTE[combo_rb][mcs][allocation]
-            return cc1, cc2
+            try:
+                cc1, cc2 = ULCA_3GPP_LTE[combo_rb][mcs][allocation]
+                return cc1, cc2
+            except Exception as err:
+                raise UlcaCombo3gppException(f'There is not 3GPP combo for {err}')
+
         elif self.state_dict['ulca_lte_criteria'] == 'FCC':
-            cc1, cc2 = ulca_fcc_lte(self.bw_cc1, self.bw_cc2, allocation)
-            return cc1, cc2
+            try:
+                cc1, cc2 = ulca_fcc_lte(self.bw_cc1, self.bw_cc2, allocation)
+                return cc1, cc2
+            except Exception as err:
+                raise UlcaComboFccException(f'There is not FCC combo for {err}')
 
     def set_center_freq_tx_rx_loss(self):
         # this steps are to set on CMW100 and get center freq and then to give the parameter to AT CMD
@@ -140,6 +150,7 @@ class TxTestCa(AtCmd, CMW100):
 
     def tx_set_ulca_lte(self):
         # this is at command, real to tx set
+        self.tx_freq_lte = self.band_cc1_freq_lte
         self.set_ulca_combo_lte()
 
     def tx_power_aclr_ulca_process_lte(self):
@@ -202,8 +213,8 @@ class TxTestCa(AtCmd, CMW100):
         self.tx_level = self.state_dict['tx_level']
 
         # this is for now only 'LTE'
-        if self.state_dict['tech']:
-            tech_list = ['LTE']
+        if self.state_dict['tech_list']:
+            tech_list = ['ULCA_LTE']
         else:
             tech_list = []
 
@@ -227,7 +238,7 @@ class TxTestCa(AtCmd, CMW100):
                     # self.loss_rx = get_loss(self.rx_freq_lte)  # for sync use
 
                     # {chan: combo_rb: (cc1_rb_size, cc2_rb_size, cc1_chan, cc2_chan), ...}
-                    self.combo_dict = ca_combo_load_excel(band)
+                    self.chan_combo_dict,  self.freq_combo_dict = ca_combo_load_excel(band.upper())
 
                     for chan in self.chan:  # L, M, H
                         self.chan_lmh = chan
@@ -238,15 +249,21 @@ class TxTestCa(AtCmd, CMW100):
                             for mcs in self.state_dict['lte_mcs_list']:
                                 self.mcs_cc1_lte = self.mcs_cc2_lte = mcs
                                 try:
-                                    bw_rb_cc1, bw_rb_cc2, chan_cc1, chan_cc2 = self.combo_dict[chan][combo_rb]
+                                    bw_rb_cc1, bw_rb_cc2, chan_cc1, chan_cc2 = self.chan_combo_dict[chan][combo_rb]
+                                    bw_rb_cc1_, bw_rb_cc2_, freq_cc1, freq_cc2 = self.freq_combo_dict[chan][combo_rb]
                                 except KeyError:
-                                    logger.info(f"It might {band} doesn't have this combo {combo_rb}!")
+                                    logger.info(f"It might {band} doesn't have this combo {combo_rb} for 36508!")
                                     time.sleep(0.1)
+                                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                    self.state_dict['progressBar_progress'] += 1
                                     continue
+
                                 self.bw_rb_cc1 = bw_rb_cc1
                                 self.bw_rb_cc2 = bw_rb_cc2
                                 self.band_cc1_channel_lte = chan_cc1
                                 self.band_cc2_channel_lte = chan_cc2
+                                self.band_cc1_freq_lte = freq_cc1
+                                self.band_cc2_freq_lte = freq_cc2
 
                                 for allocation in self.state_dict['ulca_lte_rb_allocation_list']:
                                     try:
@@ -257,17 +274,17 @@ class TxTestCa(AtCmd, CMW100):
                                         self.set_rb_allocation(cc1, cc2)
                                         self.tx_power_aclr_ulca_process_lte()
 
-                                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                        self.state_dict['progressBar_progress'] += 1
-
                                     except Exception as err:
                                         logger.info(f'Exception message: {err}')
                                         logger.info(f"It might {band} doesn't have this combo {combo_rb}, {mcs}, "
                                                     f"{allocation}")
 
+                                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                self.state_dict['progressBar_progress'] += 1
+
     def run(self):
         for tech in self.state_dict['tech_list']:
-            if tech == 'LTE':
+            if tech == 'ULCA_LTE':
                 self.tx_power_aclr_ulca_pipline_lte()
         self.cmw_close()
 

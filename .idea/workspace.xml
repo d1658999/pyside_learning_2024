@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_12 for:&#10;fix some bugs for name from FR1 to NR">
-      <change afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_level_sweep.py" afterDir="false" />
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_13 init GUI setting">
       <change beforePath="$PROJECT_DIR$/.idea/pyside_learning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pyside_learning.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equipments/cmw100.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/cmw100.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equipments/series_basis/modem_usb_serial/serial_series.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/series_basis/modem_usb_serial/serial_series.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exception/custom_exception.py" beforeDir="false" afterPath="$PROJECT_DIR$/exception/custom_exception.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gui_init.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_ulca_combo.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/tx_ulca_combo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/ca_combo_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/ca_combo_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/excel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/excel_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/port_table_txas_0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/port_table_txas_0.txt" afterDir="false" />
     </list>
@@ -126,22 +130,6 @@
       <workItem from="1713702038693" duration="136000" />
       <workItem from="1713702198413" duration="415000" />
       <workItem from="1713702629679" duration="470000" />
-    </task>
-    <task id="LOCAL-00002" summary="initial">
-      <option name="closed" value="true" />
-      <created>1711359151197</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1711359151197</updated>
-    </task>
-    <task id="LOCAL-00003" summary="test">
-      <option name="closed" value="true" />
-      <created>1711359364289</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1711359364289</updated>
     </task>
     <task id="LOCAL-00004" summary="test">
       <option name="closed" value="true" />
@@ -519,7 +507,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714026593827</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="update ui test version v2_13 rx sweep">
+      <option name="closed" value="true" />
+      <created>1714382202753</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1714382202753</updated>
+    </task>
+    <task id="LOCAL-00052" summary="update ui test version v2_13 init GUI setting">
+      <option name="closed" value="true" />
+      <created>1714382941605</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1714382941605</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -530,15 +534,25 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update ui test version v2_8 transplant meta tool files to mega tool, need to fix some problems, milestone: excel handler needs to be correct" />
-    <MESSAGE value="update ui test version v2_8 fcc_ce but total has weird symptom" />
     <MESSAGE value="update ui test version v2_8 for fcc/ce/level_sweep and fix n48 is not introduced" />
     <MESSAGE value="update ui test version v2_9 for freq sweep and level sweep" />
     <MESSAGE value="update ui test version v2_9 for 1rb sweep on NR" />
@@ -562,7 +576,9 @@
     <MESSAGE value="update ui test version v2_12 for:&#10;export and import yaml" />
     <MESSAGE value="update ui test version v2_12 for:&#10;fix some bugs for sepc_limit, rx_lmh and fsw50.py" />
     <MESSAGE value="update ui test version v2_12 for:&#10;fix some bugs for name from FR1 to NR" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_12 for:&#10;fix some bugs for name from FR1 to NR" />
+    <MESSAGE value="update ui test version v2_13 rx sweep" />
+    <MESSAGE value="update ui test version v2_13 init GUI setting" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_13 init GUI setting" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -581,11 +597,6 @@
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
           <line>2085</line>
           <option name="timeStamp" value="76" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/parameters/common_parameters_ftm.py</url>
-          <line>556</line>
-          <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/excel_handler.py</url>

@@ -2061,7 +2061,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       tx_test_items_ns_count_lte * tx_path_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count * mcs_lte_count * rb_lte_count + \
                       tx_test_items_ns_count_wcdma * wcdma_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_ns_count_gsm * gsm_tech_count * channel_count * band_gsm_count + \
-                      tx_test_items_ns_count_ulca_lte * ulca_lte_tech_count * channel_count * band_ulca_lte_count * bw_ulca_lte_count + \
+                      tx_test_items_ns_count_ulca_lte * ulca_lte_tech_count * channel_count * band_ulca_lte_count * bw_ulca_lte_count * mcs_lte_count + \
                       tx_test_items_ns_count_nr_freq_sweep * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count * rb_nr_count + \
                       tx_test_items_ns_count_lte_freq_sweep * tx_path_count * lte_tech_count * band_lte_count * bw_lte_count * mcs_lte_count * rb_lte_count + \
                       tx_test_items_ns_count_wcdma_freq_sweep * wcdma_tech_count * band_wcdma_count + \

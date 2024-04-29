@@ -798,9 +798,29 @@ class AtCmd:
             '15+5': 20,
             '40': 21,
         }
+
+        freq_correction = {
+            '20+5': (9.4, -2.3),
+            '20+10': (9.6, -4.8),
+            '20+15': (9.8, -7.3),
+            '20+20': (9.9, -9.9),
+            '15+15': (7.5, -7.5),
+            '15+10': (7.2, -4.8),
+            '15+20': (7.3, -9.8),
+            '10+20': (4.8, -9.6),
+            '10+15': (4.8, -7.2),
+            '5+20': (2.3, -9.4),
+            '5+10': (2.4, -4.8),
+            '10+10': (5, -4.9),
+            '10+5': (4.8, -2.4),
+            '5+15': (2.3, -7),
+            '15+5': (7, -2.3),
+        }
+
+
         self.command(
             f'AT+LTXSENDREQSLOAPT={self.tx_path_dict[self.tx_path]},{bw_ca_index[self.bw_combo_lte]},'
-            f'{self.tx_freq_lte},'
+            f'{int(self.tx_freq_lte + freq_correction[self.bw_combo_lte][0] * 1000)},'
             f'{self.rb_size_cc1_lte},{self.rb_start_cc1_lte},{self.mcs_lte_dict[self.mcs_cc1_lte]},'
             f'{self.rb_size_cc2_lte},{self.rb_start_cc2_lte},{self.mcs_lte_dict[self.mcs_cc2_lte]},'
             f'2,2,{self.tx_level},0')

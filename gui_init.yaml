@@ -53,7 +53,7 @@ b7_lte: false
 b7_n77: false
 b8_lte: false
 b8_wcdma: false
-bands_toolBox_index: 1
+bands_toolBox_index: 0
 bpsk_nr: false
 bw100_nr: false
 bw10_10: false
@@ -145,7 +145,7 @@ hv_value: 4.4
 init_rx_sync_level: -70
 inner_1rb_left_nr: false
 inner_1rb_right_nr: false
-inner_full_nr: true
+inner_full_nr: false
 input_level_sig_anritsu: 28
 lch: false
 level_sweep_start: -20
@@ -202,8 +202,7 @@ n8_nr: false
 nr_bands_list: []
 nr_bw_list: []
 nr_mcs_list: []
-nr_rb_allocation_list:
-- INNER_FULL
+nr_rb_allocation_list: []
 nr_tech: false
 nr_type_list: []
 nt_value: 25
@@ -248,15 +247,14 @@ rx1: false
 rx2: false
 rx2rx3: false
 rx3: false
-rx_all_path: true
+rx_all_path: false
 rx_all_path_endc_lte: false
 rx_all_path_endc_nr: false
 rx_endc_desense_ns: false
 rx_level_sweep_ns: false
 rx_normal_ns: false
 rx_normal_s: false
-rx_path_list:
-- 15
+rx_path_list: []
 rx_quick_ns: false
 rxs_sweep_s: false
 srs_path: '0'

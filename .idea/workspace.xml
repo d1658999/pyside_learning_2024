@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_12 for:&#10;export and import yaml">
+    <list default="true" id="8142ef51-8be0-4df4-8280-e1a795f8f2e6" name="Changes" comment="update ui test version v2_12 for:&#10;fix some bugs for name from FR1 to NR">
+      <change afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_level_sweep.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/pyside_learning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pyside_learning.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/equipments/fsw50.py" beforeDir="false" afterPath="$PROJECT_DIR$/equipments/fsw50.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gui_init.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec_limits/spec_limit_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/spec_limits/spec_limit_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scripts/cmw100_items/rx_lmh.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/channel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/channel_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/excel_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/excel_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/port_table_txas_0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/port_table_txas_0.txt" afterDir="false" />
     </list>
@@ -68,7 +65,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/pricewu/Documents/pyside_learning/spec_limits",
+    "last_opened_file_path": "C:/Users/pricewu/Documents/pyside_learning/test_scripts/cmw100_items",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -83,6 +80,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pricewu\Documents\pyside_learning\test_scripts\cmw100_items" />
       <recent name="C:\Users\pricewu\Documents\pyside_learning\spec_limits" />
       <recent name="C:\Users\pricewu\Documents\pyside_learning" />
       <recent name="C:\Users\pricewu\Documents\pyside_learning\ui" />
@@ -128,14 +126,6 @@
       <workItem from="1713702038693" duration="136000" />
       <workItem from="1713702198413" duration="415000" />
       <workItem from="1713702629679" duration="470000" />
-    </task>
-    <task id="LOCAL-00001" summary="initial">
-      <option name="closed" value="true" />
-      <created>1711358946768</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1711358946768</updated>
     </task>
     <task id="LOCAL-00002" summary="initial">
       <option name="closed" value="true" />
@@ -513,7 +503,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713855638229</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="update ui test version v2_12 for:&#10;fix some bugs for sepc_limit, rx_lmh and fsw50.py">
+      <option name="closed" value="true" />
+      <created>1713971119331</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1713971119331</updated>
+    </task>
+    <task id="LOCAL-00050" summary="update ui test version v2_12 for:&#10;fix some bugs for name from FR1 to NR">
+      <option name="closed" value="true" />
+      <created>1714026593827</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1714026593827</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -531,8 +537,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update ui test version v2_8 for endc bands" />
-    <MESSAGE value="update ui test version v2_8 update layout" />
     <MESSAGE value="update ui test version v2_8 transplant meta tool files to mega tool, need to fix some problems, milestone: excel handler needs to be correct" />
     <MESSAGE value="update ui test version v2_8 fcc_ce but total has weird symptom" />
     <MESSAGE value="update ui test version v2_8 for fcc/ce/level_sweep and fix n48 is not introduced" />
@@ -556,7 +560,9 @@
     <MESSAGE value="update ui test version v2_11 for count total modified of signaling" />
     <MESSAGE value="update ui test version v2_12 for:&#10;1. 28a 28b string band handling&#10;2. ENDC to add 7_77" />
     <MESSAGE value="update ui test version v2_12 for:&#10;export and import yaml" />
-    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_12 for:&#10;export and import yaml" />
+    <MESSAGE value="update ui test version v2_12 for:&#10;fix some bugs for sepc_limit, rx_lmh and fsw50.py" />
+    <MESSAGE value="update ui test version v2_12 for:&#10;fix some bugs for name from FR1 to NR" />
+    <option name="LAST_COMMIT_MESSAGE" value="update ui test version v2_12 for:&#10;fix some bugs for name from FR1 to NR" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -568,12 +574,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>2054</line>
+          <line>2059</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Main_UI.py</url>
-          <line>2080</line>
+          <line>2085</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -600,6 +606,16 @@
           <url>file://$PROJECT_DIR$/spec_limits/spec_limit_handler.py</url>
           <line>246</line>
           <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/equipments/series_basis/spectrum/fsw_series.py</url>
+          <line>119</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test_scripts/cmw100_items/rx_level_sweep.py</url>
+          <line>371</line>
+          <option name="timeStamp" value="83" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

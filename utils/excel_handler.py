@@ -1701,7 +1701,7 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
             ws.cell(row, 25).value = measured_data[5][0]  # thermister 0
             ws.cell(row, 26).value = measured_data[5][1]  # thermister 1
 
-            if STATE_DICT_EXCEL['rx_quick_ns']:
+            if STATE_DICT_EXCEL['rx_quick_ns'] or STATE_DICT_EXCEL['rx_level_sweep_ns']:
                 ws.cell(row, 27).value = ws.cell(row, 8).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX0
                 ws.cell(row, 28).value = ws.cell(row, 9).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX1
                 ws.cell(row, 29).value = ws.cell(row, 10).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX2
@@ -1742,7 +1742,7 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
             ws.cell(row, 25).value = measured_data[5][0]  # thermister 0
             ws.cell(row, 26).value = measured_data[5][1]  # thermister 1
 
-            if STATE_DICT_EXCEL['rx_quick_ns']:
+            if STATE_DICT_EXCEL['rx_quick_ns'] or STATE_DICT_EXCEL['rx_level_sweep_ns']:
                 ws.cell(row, 27).value = ws.cell(row, 8).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX0
                 ws.cell(row, 28).value = ws.cell(row, 9).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX1
                 ws.cell(row, 29).value = ws.cell(row, 10).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX2

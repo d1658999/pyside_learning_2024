@@ -8,7 +8,7 @@ import pathlib
 import signal
 import os
 import yaml
-from ui_mega_v2_12 import Ui_MainWindow
+from ui_mega_v2_13 import Ui_MainWindow
 from utils.log_init import log_set, log_clear
 from utils.adb_handler import get_serial_devices
 from utils.excel_handler import excel_folder_create
@@ -279,6 +279,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['tx_ulca_lte_cbe_ns'] = self.tx_ulca_lte_cbe_ns.isChecked()
         state_dict['rx_normal_ns'] = self.rx_normal_ns.isChecked()
         state_dict['rx_quick_ns'] = self.rx_quick_ns.isChecked()
+        state_dict['rx_level_sweep_ns'] = self.rx_level_sweep_ns.isChecked()
         state_dict['rx_endc_desense_ns'] = self.rx_endc_desense_ns.isChecked()
         state_dict['tx_lmh_s'] = self.tx_lmh_s.isChecked()
         state_dict['rx_normal_s'] = self.rx_normal_s.isChecked()
@@ -597,6 +598,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tx_ulca_lte_cbe_ns.setChecked(state_dict['tx_ulca_lte_cbe_ns'])
         self.rx_normal_ns.setChecked(state_dict['rx_normal_ns'])
         self.rx_quick_ns.setChecked(state_dict['rx_quick_ns'])
+        self.rx_level_sweep_ns.setChecked(state_dict['rx_level_sweep_ns'])
         self.rx_endc_desense_ns.setChecked(state_dict['rx_endc_desense_ns'])
         self.tx_lmh_s.setChecked(state_dict['tx_lmh_s'])
         self.rx_normal_s.setChecked(state_dict['rx_normal_s'])
@@ -1641,6 +1643,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if key == 'rx_quick_ns' and value:
                 rx_test_items_ns_count_nr += 1
                 rx_test_items_ns_count_lte += 1
+            if key == 'rx_level_sweep_ns' and value:
+                rx_test_items_ns_count_nr += 1
+                rx_test_items_ns_count_lte += 1
             if key == 'rx_endc_desense_ns' and value:
                 rx_test_items_endc_ns_count += 1
             if key == 'tx_lmh_s' and value:
@@ -2147,6 +2152,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 from test_scripts.cmw100_items.tx_ulca_combo import TxTestCa
                 from test_scripts.cmw100_items.apt_sweep_search import AptSweep
                 from test_scripts.cmw100_items.apt_sweep_search_v2 import AptSweepV2
+                from test_scripts.cmw100_items.rx_level_sweep import RxLevelSweep
 
                 # First step to create a foldr to storage the files
                 excel_folder_create()
@@ -2190,6 +2196,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     inst = RxTestGenre(state_dict, self.progressBar)
                     inst.run_genre()
                     inst.ser.com_close()
+
+                if state_dict['rx_level_sweep_ns']:
+                    inst = RxLevelSweep(state_dict, self.progressBar)
+                    inst.run_rx_level_sweep()
+                    inst.ser.com_close()
+
                 if state_dict['rx_endc_desense_ns']:
                     inst = RxTestGenre(state_dict, self.progressBar)
                     inst.run_endc()

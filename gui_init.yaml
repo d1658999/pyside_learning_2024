@@ -20,7 +20,7 @@ b23_lte: false
 b24_lte: false
 b25_lte: false
 b26_lte: false
-b28_78: true
+b28_78: false
 b28_a_lte: false
 b28_b_lte: false
 b29_lte: false
@@ -36,11 +36,11 @@ b3_n78: false
 b40_lte: false
 b41_lte: false
 b42_lte: false
-b48_lte: true
+b48_lte: false
 b4_lte: false
 b4_wcdma: false
 b5_lte: false
-b5_n77: true
+b5_n77: false
 b5_n78: false
 b5_wcdma: false
 b66_lte: false
@@ -50,17 +50,18 @@ b66_n77: false
 b6_wcdma: false
 b71_lte: false
 b7_lte: false
+b7_n77: false
 b8_lte: false
 b8_wcdma: false
-bands_toolBox_index: 5
+bands_toolBox_index: 1
 bpsk_nr: false
 bw100_nr: false
 bw10_10: false
 bw10_15: false
 bw10_20: false
 bw10_5: false
-bw10_lte: true
-bw10_nr: true
+bw10_lte: false
+bw10_nr: false
 bw15_10: false
 bw15_15: false
 bw15_20: false
@@ -92,21 +93,19 @@ bw70_nr: false
 bw80_nr: false
 bw90_nr: false
 cbe_margin: 1.5
-channel_str: M
+channel_str: ''
 condition: null
 cp_nr: false
 criteria_ulca_lte_3gpp: false
 criteria_ulca_lte_fcc: true
 current_count: 5
-devices_serial: 43011FDAS0002Q
-dfts_nr: true
+devices_serial: 41121FDAS000BZ
+dfts_nr: false
 edge_1rb_left_nr: false
 edge_1rb_right_nr: false
 edge_full_left_nr: false
 edge_full_right_nr: false
-endc_bands_list:
-- '28_78'
-- '5_77'
+endc_bands_list: []
 endc_lte_rx_path_list: []
 endc_lte_tx_path: TX1
 endc_nr_rx_path_list: []
@@ -115,8 +114,8 @@ endc_tx1_path_lte: true
 endc_tx1_path_nr: true
 endc_tx2_path_lte: false
 endc_tx2_path_nr: false
-epsk_mod: false
-equipment: Anritsu8820
+epsk_mod: true
+equipment: Cmw100
 et_tracker: sky51001
 fbrx_en: false
 fdc_en: false
@@ -127,13 +126,13 @@ freq_sweep_start: 0
 freq_sweep_step: 1000
 freq_sweep_stop: 0
 get_temp_en: false
-gmsk_mod: true
+gmsk_mod: false
 gsm1800: false
 gsm1900: false
 gsm850: false
 gsm900: false
 gsm_bands_list: []
-gsm_modulation: GMSK
+gsm_modulation: EPSK
 gsm_tech: false
 hch: false
 hsdpa_tech: false
@@ -152,20 +151,17 @@ lch: false
 level_sweep_start: -20
 level_sweep_stop: 26
 lt_value: -10
-lte_bands_list:
-- 48
-lte_bw_list:
-- 10
+lte_bands_list: []
+lte_bw_list: []
 lte_mcs_list: []
-lte_mcs_sig_list:
-- TX_MAXPWR_64_F
+lte_mcs_sig_list: []
 lte_rb_allocation_list: []
 lte_tech: false
 lthv_en: false
 ltlv_en: false
 lv_en: false
 lv_value: 3.6
-mch: true
+mch: false
 mimo: false
 mipi_read_en: false
 n12_nr: false
@@ -190,7 +186,7 @@ n39_nr: false
 n3_nr: false
 n40_nr: false
 n41_nr: false
-n48_nr: true
+n48_nr: false
 n4_nr: false
 n5_nr: false
 n66_nr: false
@@ -198,24 +194,18 @@ n70_nr: false
 n71_nr: false
 n75_nr: false
 n76_nr: false
-n77_nr: true
-n78_nr: true
+n77_nr: false
+n78_nr: false
 n79_nr: false
 n7_nr: false
 n8_nr: false
-nr_bands_list:
-- 48
-- 77
-- 78
-nr_bw_list:
-- 10
-nr_mcs_list:
-- QPSK
+nr_bands_list: []
+nr_bw_list: []
+nr_mcs_list: []
 nr_rb_allocation_list:
 - INNER_FULL
 nr_tech: false
-nr_type_list:
-- DFTS
+nr_type_list: []
 nt_value: 25
 ntnv_en: false
 nv_en: false
@@ -242,14 +232,14 @@ q16_nr: false
 q16_prb0_lte_sig: false
 q256_lte: false
 q256_nr: false
-q64_frb_lte_sig: true
+q64_frb_lte_sig: false
 q64_lte: false
 q64_nr: false
 q64_prb0_lte_sig: false
 qpsk_1rb0_lte_sig: false
 qpsk_frb_lte_sig: false
 qpsk_lte: false
-qpsk_nr: true
+qpsk_nr: false
 qpsk_prb0_lte_sig: false
 rfout_port_sig_anritsu: MAIN
 rx0: false
@@ -262,6 +252,7 @@ rx_all_path: true
 rx_all_path_endc_lte: false
 rx_all_path_endc_nr: false
 rx_endc_desense_ns: false
+rx_level_sweep_ns: false
 rx_normal_ns: false
 rx_normal_s: false
 rx_path_list:
@@ -273,13 +264,13 @@ srs_path_en: false
 sync_path: Main
 sync_path_endc: Main
 sync_path_toolBox_index: 0
-tabWidget_index: 2
+tabWidget_index: 0
 tech_list: []
 temp_volts_list: []
 test_items_toolbox_index: 0
 tmpchmb_en: false
-tx1: true
-tx2: true
+tx1: false
+tx2: false
 tx_1rb_sweep_ns: false
 tx_cbe_ns: false
 tx_ce_power_ns: false
@@ -292,11 +283,9 @@ tx_level_nr_endc: 20
 tx_level_sweep_ns: false
 tx_lmh_ns: false
 tx_lmh_s: false
-tx_path_list:
-- TX1
-- TX2
-tx_port: '4'
-tx_port_endc_lte: '3'
+tx_path_list: []
+tx_port: '1'
+tx_port_endc_lte: '2'
 tx_port_table_en: false
 tx_ulca_lte_cbe_ns: false
 tx_ulca_lte_ns: false

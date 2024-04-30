@@ -15,7 +15,6 @@ from utils.channel_handler import channel_freq_select
 from exception.custom_exception import FileNotFoundException, PortTableException
 from utils.excel_handler import color_format_nr_sens_ftm, color_format_lte_sens_ftm
 
-
 logger = log_set('rx_lmh')
 SDL_BANDS = [29, 32, 46, 75, 76]
 
@@ -41,6 +40,7 @@ class RxLevelSweep(AtCmd, CMW100):
         self.chan = None
         self.resolution = None
         self.port_table = None
+        self.get_temp_en = self.state_dict['get_temp_en']
 
     def port_table_selector(self, band, tx_path='TX1'):
         """
@@ -66,12 +66,13 @@ class RxLevelSweep(AtCmd, CMW100):
         except Exception as err:
             raise PortTableException(f'Tx path {tx_path} and Band {band} not in port table') from err
 
-    def get_temperature(self, state=False):
+    def get_temperature(self):
         """
         for P22, AT+GOOGTHERMISTOR=1,1 for MHB LPAMid/ MHB Rx1 LFEM, AT+GOOGTHERMISTOR=0,1
         for LB LPAMid, MHB ENDC LPAMid, UHB(n77/n79 LPAF)
         :return:
         """
+        state = self.get_temp_en
         if state is True:
             res0 = self.query_thermister0()
             res1 = self.query_thermister1()
@@ -279,6 +280,10 @@ class RxLevelSweep(AtCmd, CMW100):
                     self.rx_level_sweep_process_nr()
                 else:
                     logger.info(f'B{self.band_nr} does not have BW {self.bw_nr}MHZ')
+                    skip_count = len(self.state_dict['rx_path_list']) * len(self.state_dict['channel_str']) * len(
+                        self.state_dict['ue_power_list'])
+                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                    self.state_dict['progressBar_progress'] += skip_count
 
         for bw in self.state_dict['nr_bw_list']:
             try:
@@ -331,6 +336,10 @@ class RxLevelSweep(AtCmd, CMW100):
                     self.rx_level_sweep_process_lte()
                 else:
                     logger.info(f'B{self.band_lte} does not have BW {self.bw_lte}MHZ')
+                    skip_count = len(self.state_dict['rx_path_list']) * len(self.state_dict['channel_str']) * len(
+                        self.state_dict['ue_power_list'])
+                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                    self.state_dict['progressBar_progress'] += skip_count
 
         for bw in self.state_dict['lte_bw_list']:
             try:
@@ -403,7 +412,7 @@ class RxLevelSweep(AtCmd, CMW100):
                     data_normal = {}
 
                     data_normal[self.tx_freq_nr] = [measured_power, self.rx_level, self.rsrp_list, self.cinr_list,
-                                          self.agc_list, self.get_temperature()]
+                                                    self.agc_list, self.get_temperature()]
                     self.set_test_end_nr()
                     parameters = {
                         'tech': self.tech,
@@ -471,7 +480,7 @@ class RxLevelSweep(AtCmd, CMW100):
                     agc_list = [None, None, None, None]
 
                     data_normal[self.tx_freq_lte] = [measured_power, self.rx_level, self.rsrp_list, self.cinr_list,
-                                          self.agc_list, self.get_temperature()]
+                                                     self.agc_list, self.get_temperature()]
                     self.set_test_end_nr()
                     parameters = {
                         'tech': self.tech,

@@ -15,7 +15,6 @@ import utils.parameters.rb_parameters as rb_pmt
 from utils.mipi_read_handler import mipi_settings_dict
 from exception.custom_exception import FileNotFoundException, PortTableException
 
-
 logger = log_set('level_sweep')
 
 
@@ -767,6 +766,11 @@ class TxTestLevelSweep(AtCmd, CMW100):
                     self.tx_level_sweep_process_nr()
                 else:
                     logger.info(f'NR B{self.band_nr} does not have BW {self.bw_nr}MHZ')
+                    skip_count = len(self.state_dict['nr_mcs_list']) * len(
+                        self.state_dict['nr_type_list']) * len(self.state_dict['nr_rb_allocation_list']) * len(
+                        self.state_dict['tx_path_list']) * len(self.state_dict['channel_str'])
+                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                    self.state_dict['progressBar_progress'] += skip_count
 
         for bw in self.state_dict['nr_bw_list']:
             try:
@@ -805,6 +809,11 @@ class TxTestLevelSweep(AtCmd, CMW100):
                         self.tx_level_sweep_process_lte()
                     else:
                         logger.info(f'B{self.band_lte} does not have BW {self.bw_lte}MHZ')
+                        skip_count = len(self.state_dict['lte_mcs_list']) * len(
+                            self.state_dict['lte_rb_allocation_list']) * len(
+                            self.state_dict['tx_path_list']) * len(self.state_dict['channel_str'])
+                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                        self.state_dict['progressBar_progress'] += skip_count
 
                 else:
                     logger.info(f'LTE Band {self.band_lte} does not have this tx path {self.tx_path}')
@@ -845,7 +854,8 @@ class TxTestLevelSweep(AtCmd, CMW100):
             if tech == 'GSM' and self.state_dict['gsm_bands_list'] != []:
                 self.tech = tech
                 for band in self.state_dict['gsm_bands_list']:
-                    self.pcl = self.state_dict['pcl_lb_level'] if band in [850, 900] else self.state_dict['pcl_mb_level']
+                    self.pcl = self.state_dict['pcl_lb_level'] if band in [850, 900] else self.state_dict[
+                        'pcl_mb_level']
                     self.band_gsm = band
                     self.port_table_selector(self.band_gsm)
                     self.tx_level_sweep_process_gsm()

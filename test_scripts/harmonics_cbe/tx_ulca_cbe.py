@@ -17,7 +17,8 @@ from utils.ca_combo_handler import ca_combo_load_excel
 from utils.parameters.rb_parameters import ULCA_3GPP_LTE
 from utils.parameters.rb_parameters import ulca_fcc_lte
 from utils.excel_handler import tx_ulca_power_relative_test_export_excel_ftm
-from exception.custom_exception import FileNotFoundException, PortTableException
+from exception.custom_exception import FileNotFoundException, PortTableException, UlcaComboFccException, \
+    UlcaCombo3gppException, Ulca36508Exception
 
 logger = log_set('tx_ulca_cbe')
 
@@ -37,6 +38,8 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
         self.band_ulca_lte = None
         self.band_cc1_channel_lte = None
         self.band_cc2_channel_lte = None
+        self.band_cc1_freq_lte = None
+        self.band_cc2_freq_lte = None
         self.bw_cc2 = None
         self.bw_cc1 = None
         self.combo_list = None
@@ -51,6 +54,7 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
         self.script = None
         self.chan = None
         self.port_table = None
+        self.get_temp_en = self.state_dict['get_temp_en']
 
     # def ca_bw_combo_seperate_lte(self, bw_cc1, bw_cc2):
     #     self.bw_cc1_lte = int(bw_cc1)
@@ -94,21 +98,27 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
         for LB LPAMid, MHB ENDC LPAMid, UHB(n77/n79 LPAF)
         :return:
         """
-        res0 = self.query_thermister0()
-        res1 = self.query_thermister1()
-        res_list = [res0, res1]
-        therm_list = []
-        for res in res_list:
-            for r in res:
-                if 'TEMPERATURE' in r.decode().strip():
-                    try:
-                        temp = eval(r.decode().strip().split(':')[1]) / 1000
-                        therm_list.append(temp)
-                    except Exception as err:
-                        logger.debug(err)
-                        therm_list.append(None)
-        logger.info(f'thermistor0 get temp: {therm_list[0]}')
-        logger.info(f'thermistor1 get temp: {therm_list[1]}')
+        state = self.get_temp_en
+        if state is True:
+            res0 = self.query_thermister0()
+            res1 = self.query_thermister1()
+            res_list = [res0, res1]
+            therm_list = []
+            for res in res_list:
+                for r in res:
+                    if 'TEMPERATURE' in r.decode().strip():
+                        try:
+                            temp = eval(r.decode().strip().split(':')[1]) / 1000
+                            therm_list.append(temp)
+                        except Exception as err:
+                            logger.debug(err)
+                            therm_list.append(None)
+            logger.info(f'thermistor0 get temp: {therm_list[0]}')
+            logger.info(f'thermistor1 get temp: {therm_list[1]}')
+
+        else:
+            therm_list = [None, None]
+
         return therm_list
 
     def set_rb_allocation(self, cc1, cc2):
@@ -117,11 +127,18 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
 
     def criteria_rb_selector_ulca_lte(self, combo_rb, mcs, allocation):
         if self.state_dict['ulca_lte_criteria'] == '3GPP':
-            cc1, cc2 = ULCA_3GPP_LTE[combo_rb][mcs][allocation]
-            return cc1, cc2
+            try:
+                cc1, cc2 = ULCA_3GPP_LTE[combo_rb][mcs][allocation]
+                return cc1, cc2
+            except Exception as err:
+                raise UlcaCombo3gppException(f'There is not 3GPP combo for {err}')
+
         elif self.state_dict['ulca_lte_criteria'] == 'FCC':
-            cc1, cc2 = ulca_fcc_lte(self.bw_cc1, self.bw_cc2, allocation)
-            return cc1, cc2
+            try:
+                cc1, cc2 = ulca_fcc_lte(self.bw_cc1, self.bw_cc2, allocation)
+                return cc1, cc2
+            except Exception as err:
+                raise UlcaComboFccException(f'There is not FCC combo for {err}')
 
     def set_center_freq_tx_rx_loss(self):
         # this steps are to set on CMW100 and get center freq and then to give the parameter to AT CMD
@@ -144,6 +161,7 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
 
     def tx_set_ulca_lte(self):
         # this is at command, real to tx set
+        self.tx_freq_lte = self.band_cc1_freq_lte
         self.set_ulca_combo_lte()
 
     def tx_power_aclr_ulca_process_lte(self):
@@ -276,7 +294,7 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
                     # self.loss_rx = get_loss(self.rx_freq_lte)  # for sync use
 
                     # {chan: combo_rb: (cc1_rb_size, cc2_rb_size, cc1_chan, cc2_chan), ...}
-                    self.combo_dict = ca_combo_load_excel(band)
+                    self.chan_combo_dict, self.freq_combo_dict = ca_combo_load_excel(band.upper())
 
                     for chan in self.chan:  # L, M, H
                         self.chan_lmh = chan
@@ -288,14 +306,19 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
                                 self.mcs_cc1_lte = self.mcs_cc2_lte = mcs
                                 try:
                                     bw_rb_cc1, bw_rb_cc2, chan_cc1, chan_cc2 = self.combo_dict[chan][combo_rb]
+                                    bw_rb_cc1_, bw_rb_cc2_, freq_cc1, freq_cc2 = self.freq_combo_dict[chan][combo_rb]
                                 except KeyError:
                                     logger.info(f"It might {band} doesn't have this combo {combo_rb}!")
                                     time.sleep(0.1)
+                                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                    self.state_dict['progressBar_progress'] += 1
                                     continue
                                 self.bw_rb_cc1 = bw_rb_cc1
                                 self.bw_rb_cc2 = bw_rb_cc2
                                 self.band_cc1_channel_lte = chan_cc1
                                 self.band_cc2_channel_lte = chan_cc2
+                                self.band_cc1_freq_lte = freq_cc1
+                                self.band_cc2_freq_lte = freq_cc2
 
                                 for allocation in self.state_dict['ulca_lte_rb_allocation_list']:
                                     try:
@@ -312,6 +335,9 @@ class TxTestCaCBE(AtCmd, CMW100, FSW50):
                                         logger.info(f'Exception message: {err}')
                                         logger.info(f"It might {band} doesn't have this combo {combo_rb}, {mcs}, "
                                                     f"{allocation}")
+
+                                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                                self.state_dict['progressBar_progress'] += 1
 
     def run(self):
         for tech in self.state_dict['tech_list']:

@@ -15,7 +15,8 @@ from utils.ca_combo_handler import ca_combo_load_excel
 from utils.parameters.rb_parameters import ULCA_3GPP_LTE
 from utils.parameters.rb_parameters import ulca_fcc_lte
 from utils.excel_handler import tx_ulca_power_relative_test_export_excel_ftm
-from exception.custom_exception import FileNotFoundException, PortTableException, UlcaComboFccException, UlcaCombo3gppException, Ulca36508Exception
+from exception.custom_exception import FileNotFoundException, PortTableException, UlcaComboFccException, \
+    UlcaCombo3gppException, Ulca36508Exception
 
 logger = log_set('tx_ulca_lmh')
 
@@ -50,6 +51,7 @@ class TxTestCa(AtCmd, CMW100):
         self.script = None
         self.chan = None
         self.port_table = None
+        self.get_temp_en = self.state_dict['get_temp_en']
 
     # def ca_bw_combo_seperate_lte(self, bw_cc1, bw_cc2):
     #     self.bw_cc1_lte = int(bw_cc1)
@@ -93,21 +95,27 @@ class TxTestCa(AtCmd, CMW100):
         for LB LPAMid, MHB ENDC LPAMid, UHB(n77/n79 LPAF)
         :return:
         """
-        res0 = self.query_thermister0()
-        res1 = self.query_thermister1()
-        res_list = [res0, res1]
-        therm_list = []
-        for res in res_list:
-            for r in res:
-                if 'TEMPERATURE' in r.decode().strip():
-                    try:
-                        temp = eval(r.decode().strip().split(':')[1]) / 1000
-                        therm_list.append(temp)
-                    except Exception as err:
-                        logger.debug(err)
-                        therm_list.append(None)
-        logger.info(f'thermistor0 get temp: {therm_list[0]}')
-        logger.info(f'thermistor1 get temp: {therm_list[1]}')
+        state = self.get_temp_en
+        if state is True:
+            res0 = self.query_thermister0()
+            res1 = self.query_thermister1()
+            res_list = [res0, res1]
+            therm_list = []
+            for res in res_list:
+                for r in res:
+                    if 'TEMPERATURE' in r.decode().strip():
+                        try:
+                            temp = eval(r.decode().strip().split(':')[1]) / 1000
+                            therm_list.append(temp)
+                        except Exception as err:
+                            logger.debug(err)
+                            therm_list.append(None)
+            logger.info(f'thermistor0 get temp: {therm_list[0]}')
+            logger.info(f'thermistor1 get temp: {therm_list[1]}')
+
+        else:
+            therm_list = [None, None]
+
         return therm_list
 
     def set_rb_allocation(self, cc1, cc2):

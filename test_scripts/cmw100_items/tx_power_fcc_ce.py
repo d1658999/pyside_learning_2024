@@ -88,6 +88,8 @@ class TxTestFccCe(AtCmd, CMW100):
 
                 except KeyError:
                     logger.info(f'NR Band {self.band_nr} does not have this tx path {self.tx_path}')
+                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                    self.state_dict['progressBar_progress'] += 1
 
     def tx_power_fcc_nr(self):
         rx_freq_list = cm_pmt_ftm.dl_freq_selected('NR', self.band_nr,
@@ -171,6 +173,8 @@ class TxTestFccCe(AtCmd, CMW100):
                         self.tx_power_ce_nr()
                     else:
                         logger.info(f'B{self.band_nr} does not have BW {self.bw_nr}MHZ')
+                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                        self.state_dict['progressBar_progress'] += 1
                 except KeyError:
                     logger.info(f'NR Band {self.band_nr} does not have this tx path {self.tx_path}')
 

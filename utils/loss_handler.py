@@ -12,11 +12,16 @@ fdc_loss_port = {
     8: 'fdc_loss_8.csv',
 }
 
+LOSS_FILE = None
+
 
 def read_loss_file():
     # file_path = Path('loss.csv')  # test use
     # file_path = Path.cwd().parents[1] / Path('utils') / Path('loss.csv')  # test use
-    file_path = Path('utils') / Path('loss.csv')
+    if LOSS_FILE:
+        file_path = LOSS_FILE
+    else:
+        file_path = Path('utils') / Path('loss.csv')
     with open(file_path, 'r') as csvfile:
         rows = csv.reader(csvfile)
         next(rows)  # skip the title

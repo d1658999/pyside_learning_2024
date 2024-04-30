@@ -16,6 +16,7 @@ from equipments.power_supply import Psu
 from equipments.temp_chamber import TempChamber
 from utils.regy_handler import regy_replace, regy_extract, regy_extract_2
 from utils.log_init import log_set, log_clear
+import utils.loss_handler as lh
 
 
 logger = log_set('GUI')
@@ -76,6 +77,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mergeButton.clicked.connect(self.merge_nv)
         self.seperateButton.clicked.connect(self.separate_nv)
         self.parseButton.clicked.connect(self.separate_nv_cfg)
+        self.actionLoad_file.triggered.connect(self.load_loss_file)
 
         # init disabled
         self.rx_path_custom_disabled()
@@ -219,6 +221,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ui_init = yaml.safe_load(s)
 
         self.gui_state_set(ui_init)
+
+    def load_loss_file(self):
+        filepath, _ = QFileDialog.getOpenFileName(self, 'Open file', './utils/', 'CSV File(*.csv)')
+        lh.LOSS_FILE = filepath
 
     def openfile_baseregy_update(self):
         filename, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'Regy File(*.regy)')

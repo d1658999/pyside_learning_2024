@@ -61,6 +61,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.equipments_comboBox.textActivated.connect(self.showout_en)
         self.run_button.clicked.connect(self.selected_show)
         self.rx_quick_ns.toggled.connect(self.rx_path_custom_disabled)
+        self.rx_level_sweep_ns.toggled.connect(self.rx_path_custom_disabled)
         self.rx_endc_desense_ns.toggled.connect(self.endc_rx_path_enabled)
         self.rx_endc_desense_ns.toggled.connect(self.port_table_disabled)
         self.rx_endc_desense_ns.toggled.connect(self.endc_other_test_items_unchecked)
@@ -75,6 +76,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mergeButton.clicked.connect(self.merge_nv)
         self.seperateButton.clicked.connect(self.separate_nv)
         self.parseButton.clicked.connect(self.separate_nv_cfg)
+
+        # init disabled
+        self.rx_path_custom_disabled()
+        self.port_table_disabled(self.rx_endc_desense_ns.isChecked())
+        self.endc_other_test_items_unchecked(self.rx_endc_desense_ns.isChecked())
 
     def init_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
@@ -135,7 +141,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.q256_frb_lte_sig.setEnabled(True)
 
     def rx_path_custom_disabled(self):
-        if self.rx_quick_ns.isChecked():
+        if self.rx_quick_ns.isChecked() or self.rx_level_sweep_ns.isChecked():
             self.rx0.setDisabled(True)
             self.rx1.setDisabled(True)
             self.rx2.setDisabled(True)
@@ -893,6 +899,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tx_ulca_lte_cbe_ns.setChecked(False)
             self.rx_normal_ns.setChecked(False)
             self.rx_quick_ns.setChecked(False)
+            self.rx_level_sweep_ns.setChecked(False)
 
             # disabled
             self.tx_lmh_ns.setEnabled(False)
@@ -907,6 +914,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tx_ulca_lte_cbe_ns.setEnabled(False)
             self.rx_normal_ns.setEnabled(False)
             self.rx_quick_ns.setEnabled(False)
+            self.rx_level_sweep_ns.setEnabled(False)
 
         else:
             self.tx_lmh_ns.setEnabled(True)
@@ -921,6 +929,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tx_ulca_lte_cbe_ns.setEnabled(True)
             self.rx_normal_ns.setEnabled(True)
             self.rx_quick_ns.setEnabled(True)
+            self.rx_level_sweep_ns.setEnabled(True)
 
     def endc_rx_path_enabled(self, checked):
         if checked:

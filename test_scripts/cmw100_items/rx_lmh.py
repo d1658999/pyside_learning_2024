@@ -342,7 +342,7 @@ class RxTestGenre(AtCmd, CMW100):
                     self.search_sensitivity_lmh_process_lte()
                 else:
                     logger.info(f'B{self.band_lte} does not have BW {self.bw_lte}MHZ')
-                    skip_count = len(self.state_dict['rx_path_list']) * len(self.state_dict['channel_str']) * len(self.state_dict['ue_power_list'])
+                    skip_count = len(self.state_dict['rx_path_list']) * len(self.state_dict['channel_str'])
                     self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
                     self.state_dict['progressBar_progress'] += skip_count
 

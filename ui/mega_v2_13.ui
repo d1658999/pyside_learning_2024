@@ -3515,7 +3515,7 @@ Disable</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>131</width>
+         <width>167</width>
          <height>381</height>
         </rect>
        </property>
@@ -3544,8 +3544,7 @@ Disable</string>
         <item>
          <widget class="QCheckBox" name="tx_1rb_sweep_ns">
           <property name="text">
-           <string>Tx_1RB_sweep
-(only for NR)</string>
+           <string>Tx_1RB_sweep(NR)</string>
           </property>
          </widget>
         </item>

@@ -96,8 +96,8 @@ cbe_margin: 1.5
 channel_str: ''
 condition: null
 cp_nr: false
-criteria_ulca_lte_3gpp: false
-criteria_ulca_lte_fcc: true
+criteria_ulca_lte_3gpp: true
+criteria_ulca_lte_fcc: false
 current_count: 5
 devices_serial: 41121FDAS000BZ
 dfts_nr: false
@@ -114,7 +114,7 @@ endc_tx1_path_lte: true
 endc_tx1_path_nr: true
 endc_tx2_path_lte: false
 endc_tx2_path_nr: false
-epsk_mod: true
+epsk_mod: false
 equipment: Cmw100
 et_tracker: sky51001
 fbrx_en: false
@@ -126,13 +126,13 @@ freq_sweep_start: 0
 freq_sweep_step: 1000
 freq_sweep_stop: 0
 get_temp_en: false
-gmsk_mod: false
+gmsk_mod: true
 gsm1800: false
 gsm1900: false
 gsm850: false
 gsm900: false
 gsm_bands_list: []
-gsm_modulation: EPSK
+gsm_modulation: GMSK
 gsm_tech: false
 hch: false
 hsdpa_tech: false
@@ -262,7 +262,7 @@ srs_path_en: false
 sync_path: Main
 sync_path_endc: Main
 sync_path_toolBox_index: 0
-tabWidget_index: 0
+tabWidget_index: 6
 tech_list: []
 temp_volts_list: []
 test_items_toolbox_index: 0
@@ -282,7 +282,7 @@ tx_level_sweep_ns: false
 tx_lmh_ns: false
 tx_lmh_s: false
 tx_path_list: []
-tx_port: '1'
+tx_port: '3'
 tx_port_endc_lte: '2'
 tx_port_table_en: false
 tx_ulca_lte_cbe_ns: false
@@ -306,7 +306,7 @@ ulca_66c: false
 ulca_7c: false
 ulca_lte_band_list: []
 ulca_lte_bw_list: []
-ulca_lte_criteria: FCC
+ulca_lte_criteria: 3GPP
 ulca_lte_rb_allocation_list: []
 ulca_lte_tech: false
 volt_mipi_en: false

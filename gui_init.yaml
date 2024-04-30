@@ -282,7 +282,7 @@ tx_level_sweep_ns: false
 tx_lmh_ns: false
 tx_lmh_s: false
 tx_path_list: []
-tx_port: '3'
+tx_port: '1'
 tx_port_endc_lte: '2'
 tx_port_table_en: false
 tx_ulca_lte_cbe_ns: false

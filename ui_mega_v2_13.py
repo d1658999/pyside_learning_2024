@@ -2135,7 +2135,7 @@ class Ui_MainWindow(object):
         self.non_sig.setGeometry(QRect(0, 0, 131, 471))
         self.layoutWidget_11 = QWidget(self.non_sig)
         self.layoutWidget_11.setObjectName(u"layoutWidget_11")
-        self.layoutWidget_11.setGeometry(QRect(0, 0, 131, 381))
+        self.layoutWidget_11.setGeometry(QRect(0, 0, 167, 381))
         self.verticalLayout_ns = QVBoxLayout(self.layoutWidget_11)
         self.verticalLayout_ns.setObjectName(u"verticalLayout_ns")
         self.verticalLayout_ns.setContentsMargins(0, 0, 0, 0)
@@ -3053,8 +3053,7 @@ class Ui_MainWindow(object):
         self.tx_lmh_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_LMH", None))
         self.tx_level_sweep_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_level_sweep", None))
         self.tx_freq_sweep_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_freq_sweep", None))
-        self.tx_1rb_sweep_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_1RB_sweep\n"
-"(only for NR)", None))
+        self.tx_1rb_sweep_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_1RB_sweep(NR)", None))
         self.tx_fcc_power_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_FCC_power", None))
         self.tx_ce_power_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_CE_power", None))
         self.tx_harmonics_ns.setText(QCoreApplication.translate("MainWindow", u"Tx_Harmonics", None))

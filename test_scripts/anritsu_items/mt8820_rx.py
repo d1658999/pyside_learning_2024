@@ -8,6 +8,7 @@ from utils.channel_handler import channel_freq_select
 from utils.excel_handler import rx_power_relative_test_export_excel_sig
 from utils.excel_handler import rx_desense_process_sig, rxs_relative_plot_sig
 from utils.log_init import log_set
+from exception.custom_exception import FileNotFoundException
 
 logger = log_set('8820RxSig')
 
@@ -28,9 +29,9 @@ class RxTestGenre(AtCmd, Anritsu8820):
         for LB LPAMid, MHB ENDC LPAMid, UHB(n77/n79 LPAF)
         :return:
         """
-        self.ser.com_open()
         state = self.get_temp_en
         if state is True:
+            self.ser.com_open()
             res0 = self.query_thermister0()
             res1 = self.query_thermister1()
             res_list = [res0, res1]
@@ -46,7 +47,7 @@ class RxTestGenre(AtCmd, Anritsu8820):
                             therm_list.append(None)
             logger.info(f'thermistor0 get temp: {therm_list[0]}')
             logger.info(f'thermistor1 get temp: {therm_list[1]}')
-
+            self.ser.com_close()
         else:
             therm_list = [None, None]
 
@@ -137,6 +138,9 @@ class RxTestGenre(AtCmd, Anritsu8820):
                 self.set_output_level(-70)
             self.set_rf_out_port('MAIN')
 
+            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+            self.state_dict['progressBar_progress'] += 1
+
     def run(self):
         self.set_rf_out_port('MAIN')
         for tech in self.state_dict['tech_list']:
@@ -163,11 +167,16 @@ class RxTestGenre(AtCmd, Anritsu8820):
                                                      f'downlink channel list:{ch_list}')
                                         for dl_ch in ch_list:
                                             self.rx_core(standard, band, dl_ch, bw)
-                                            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                            self.state_dict['progressBar_progress'] += 1
 
                                         self.set_dl_chan(self.m_dl_ch)
                                         time.sleep(1)
+                                    else:
+                                        logger.info(f'B{band} do not have BW {bw}MHZ')
+                                        skip_count = len(self.state_dict['channel_str']) * len(
+                                            self.state_dict['ue_power_list'])
+                                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                                        self.state_dict['progressBar_progress'] += skip_count
+
                             else:  # if rx path is not selected, default is all path
                                 self.rx_path = self.state_dict['rfout_port_sig_anritsu']
                                 if bw in cm_pmt_anritsu.bandwidths_selected(band):
@@ -183,13 +192,23 @@ class RxTestGenre(AtCmd, Anritsu8820):
                                                  f'downlink channel list:{ch_list}')
                                     for dl_ch in ch_list:
                                         self.rx_core(standard, band, dl_ch, bw)
-                                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                        self.state_dict['progressBar_progress'] += 1
 
                                     self.set_dl_chan(self.m_dl_ch)
                                     time.sleep(1)
-                        rx_desense_process_sig(standard, self.excel_path)
-                        rxs_relative_plot_sig(self.excel_path, self.parameters_dict)
+                                else:
+                                    logger.info(f'B{band} do not have BW {bw}MHZ')
+                                    skip_count = len(self.state_dict['channel_str']) * len(
+                                        self.state_dict['ue_power_list'])
+                                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                                    self.state_dict['progressBar_progress'] += skip_count
+
+                        try:
+                            rx_desense_process_sig(standard, self.excel_path)
+                            rxs_relative_plot_sig(self.excel_path, self.parameters_dict)
+
+                        except FileNotFoundException as err:
+                            logger.debbug(err)
+                            logger.info(f'there is not file to plot BW{bw} ')
 
                 except Exception as err:
                     logger.debug(err)
@@ -200,7 +219,7 @@ class RxTestGenre(AtCmd, Anritsu8820):
                 standard = self.set_switch_to_wcdma()
                 self.chcoding = 'REFMEASCH'
                 try:
-                    for band in self.state_dict['lte_bands_list']:
+                    for band in self.state_dict['wcdma_bands_list']:
                         if self.state_dict['rx_path_list']:
                             for rx_path in self.state_dict['rx_path_list']:
                                 self.rx_path = rx_path
@@ -209,8 +228,7 @@ class RxTestGenre(AtCmd, Anritsu8820):
                                 logger.debug(f'Test Channel List: {band}, downlink channel list:{ch_list}')
                                 for dl_ch in ch_list:
                                     self.rx_core(standard, band, dl_ch, 5)
-                                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                    self.state_dict['progressBar_progress'] += 1
+
                         else:
                             self.rx_path = self.state_dict['rfout_port_sig_anritsu']
                             band_ch_list = cm_pmt_anritsu.dl_ch_selected(standard, band)
@@ -218,8 +236,6 @@ class RxTestGenre(AtCmd, Anritsu8820):
                             logger.debug(f'Test Channel List: {band}, downlink channel list:{ch_list}')
                             for dl_ch in ch_list:
                                 self.rx_core(standard, band, dl_ch, 5)
-                                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                self.state_dict['progressBar_progress'] += 1
 
                 except Exception as err:
                     logger.debug(err)

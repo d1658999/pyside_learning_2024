@@ -8,6 +8,7 @@ from utils.channel_handler import channel_freq_select
 from utils.excel_handler import rx_power_relative_test_export_excel_sig
 from utils.excel_handler import rx_desense_process_sig, rxs_relative_plot_sig
 from utils.log_init import log_set
+from exception.custom_exception import FileNotFoundException
 
 logger = log_set('8821RxSig')
 
@@ -28,9 +29,10 @@ class RxTestGenre(AtCmd, Anritsu8821):
         for LB LPAMid, MHB ENDC LPAMid, UHB(n77/n79 LPAF)
         :return:
         """
-        self.ser.com_open()
+
         state = self.get_temp_en
         if state is True:
+            self.ser.com_open()
             res0 = self.query_thermister0()
             res1 = self.query_thermister1()
             res_list = [res0, res1]
@@ -46,6 +48,7 @@ class RxTestGenre(AtCmd, Anritsu8821):
                             therm_list.append(None)
             logger.info(f'thermistor0 get temp: {therm_list[0]}')
             logger.info(f'thermistor1 get temp: {therm_list[1]}')
+            self.ser.com_close()
 
         else:
             therm_list = [None, None]
@@ -134,8 +137,12 @@ class RxTestGenre(AtCmd, Anritsu8821):
                     'tx_freq': self.get_ul_freq_query(),
                 }
                 self.excel_path = rx_power_relative_test_export_excel_sig(sens_list, self.parameters_dict)
+
                 self.set_output_level(-70)
             self.set_phone1_tx_out(1, 'MAIN')
+
+            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+            self.state_dict['progressBar_progress'] += 1
 
     def run(self):
         self.set_phone1_tx_out(1, 'MAIN')
@@ -166,6 +173,14 @@ class RxTestGenre(AtCmd, Anritsu8821):
 
                                         self.set_dl_chan(self.m_dl_ch)
                                         time.sleep(1)
+
+                                    else:
+                                        logger.info(f'B{band} do not have BW {bw}MHZ')
+                                        skip_count = len(self.state_dict['channel_str']) * len(
+                                            self.state_dict['ue_power_list'])
+                                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                                        self.state_dict['progressBar_progress'] += skip_count
+
                             else:  # if rx path is not selected, default is all path
                                 self.rx_path = self.state_dict['rfout_port_sig_anritsu']
                                 if bw in cm_pmt_anritsu.bandwidths_selected(band):
@@ -184,8 +199,20 @@ class RxTestGenre(AtCmd, Anritsu8821):
 
                                     self.set_dl_chan(self.m_dl_ch)
                                     time.sleep(1)
-                        rx_desense_process_sig(standard, self.excel_path)
-                        rxs_relative_plot_sig(self.excel_path, self.parameters_dict)
+
+                                else:
+                                    logger.info(f'B{band} do not have BW {bw}MHZ')
+                                    skip_count = len(self.state_dict['channel_str']) * len(
+                                        self.state_dict['ue_power_list'])
+                                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                                    self.state_dict['progressBar_progress'] += skip_count
+                        try:
+                            rx_desense_process_sig(standard, self.excel_path)
+                            rxs_relative_plot_sig(self.excel_path, self.parameters_dict)
+
+                        except FileNotFoundException as err:
+                            logger.debug(err)
+                            logger.info(f'there is not file to plot BW{bw} ')
 
                 except Exception as err:
                     logger.debug(err)
@@ -205,6 +232,7 @@ class RxTestGenre(AtCmd, Anritsu8821):
                                 logger.debug(f'Test Channel List: {band}, downlink channel list:{ch_list}')
                                 for dl_ch in ch_list:
                                     self.rx_core(standard, band, dl_ch, 5)
+
                         else:
                             self.rx_path = self.state_dict['rfout_port_sig_anritsu']
                             band_ch_list = cm_pmt_anritsu.dl_ch_selected(standard, band)

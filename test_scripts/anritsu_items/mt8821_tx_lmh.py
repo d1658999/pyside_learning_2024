@@ -5,6 +5,7 @@ import utils.parameters.common_parameters_anritsu as cm_pmt_anritsu
 from utils.channel_handler import channel_freq_select
 from utils.excel_handler import tx_power_relative_test_export_excel_sig, txp_aclr_evm_current_plot_sig
 from utils.log_init import log_set
+from exception.custom_exception import FileNotFoundException
 
 logger = log_set('8821TxSig')
 
@@ -25,9 +26,10 @@ class TxTestGenre(AtCmd, Anritsu8821):
         for LB LPAMid, MHB ENDC LPAMid, UHB(n77/n79 LPAF)
         :return:
         """
-        self.ser.com_open()
+
         state = self.get_temp_en
         if state is True:
+            self.ser.com_open()
             res0 = self.query_thermister0()
             res1 = self.query_thermister1()
             res_list = [res0, res1]
@@ -43,7 +45,7 @@ class TxTestGenre(AtCmd, Anritsu8821):
                             therm_list.append(None)
             logger.info(f'thermistor0 get temp: {therm_list[0]}')
             logger.info(f'thermistor1 get temp: {therm_list[1]}')
-
+            self.ser.com_close()
         else:
             therm_list = [None, None]
 
@@ -117,6 +119,7 @@ class TxTestGenre(AtCmd, Anritsu8821):
 
     def run(self):
         for tech in self.state_dict['tech_list']:
+            self.input_level_sig = self.state_dict['input_level_sig_anritsu']
             if tech == 'LTE' and self.state_dict['lte_bands_list'] != []:
                 standard = self.set_switch_to_lte()
                 self.anritsu_query('*OPC?')
@@ -141,8 +144,16 @@ class TxTestGenre(AtCmd, Anritsu8821):
                             self.set_dl_chan(self.m_dl_ch)
                         else:
                             logger.info(f'B{band} do not have BW {bw}MHZ')
+                            skip_count = len(self.state_dict['channel_str'])
+                            self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                            self.state_dict['progressBar_progress'] += skip_count
 
-                    txp_aclr_evm_current_plot_sig(standard, self.excel_path)
+                    try:
+                        txp_aclr_evm_current_plot_sig(standard, self.excel_path)
+
+                    except FileNotFoundException as err:
+                        logger.info(err)
+                        logger.info(f'there is not file to plot BW{bw} ')
 
             elif (tech == 'WCDMA' or tech == 'HSUPA' or tech == 'HSDPA') and (
                     self.state_dict['wcdma_bands_list'] != [] or self.state_dict['hsupa_bands_list'] != [] or self.state_dict['hsdpa_bands_list'] != []):

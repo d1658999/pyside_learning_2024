@@ -9,7 +9,7 @@ from utils.excel_handler import rx_freq_sweep_power_relative_test_export_excel_s
 from utils.excel_handler import rxs_freq_relative_plot_sig
 from utils.log_init import log_set
 
-logger = log_set('8820RxSig')
+logger = log_set('8820RxSigSweep')
 
 
 class RxTestFreqSweep(AtCmd, Anritsu8820):
@@ -28,23 +28,29 @@ class RxTestFreqSweep(AtCmd, Anritsu8820):
         for LB LPAMid, MHB ENDC LPAMid, UHB(n77/n79 LPAF)
         :return:
         """
-        self.ser.com_open()
-        res0 = self.query_thermister0()
-        res1 = self.query_thermister1()
-        res_list = [res0, res1]
-        therm_list = []
-        for res in res_list:
-            for r in res:
-                if 'TEMPERATURE' in r.decode().strip():
-                    try:
-                        temp = eval(r.decode().strip().split(':')[1]) / 1000
-                        therm_list.append(temp)
-                    except Exception as err:
-                        logger.debug(err)
-                        therm_list.append(None)
-        logger.info(f'thermistor0 get temp: {therm_list[0]}')
-        logger.info(f'thermistor1 get temp: {therm_list[1]}')
-        self.ser.com_close()
+        state = self.get_temp_en
+        if state is True:
+            self.ser.com_open()
+            res0 = self.query_thermister0()
+            res1 = self.query_thermister1()
+            res_list = [res0, res1]
+            therm_list = []
+            for res in res_list:
+                for r in res:
+                    if 'TEMPERATURE' in r.decode().strip():
+                        try:
+                            temp = eval(r.decode().strip().split(':')[1]) / 1000
+                            therm_list.append(temp)
+                        except Exception as err:
+                            logger.debug(err)
+                            therm_list.append(None)
+            logger.info(f'thermistor0 get temp: {therm_list[0]}')
+            logger.info(f'thermistor1 get temp: {therm_list[1]}')
+            self.ser.com_close()
+
+        else:
+            therm_list = [None, None]
+
         return therm_list
 
     def rx_sweep_core(self, standard, band, dl_ch, bw=None):
@@ -132,6 +138,9 @@ class RxTestFreqSweep(AtCmd, Anritsu8820):
                 self.set_output_level(-70)
             self.set_rf_out_port('MAIN')
 
+            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+            self.state_dict['progressBar_progress'] += 1
+
     def run(self):
         self.set_rf_out_port('MAIN')
         for tech in self.state_dict['tech_list']:
@@ -157,8 +166,7 @@ class RxTestFreqSweep(AtCmd, Anritsu8820):
 
                                         for dl_ch in ch_list:
                                             self.rx_sweep_core(standard, band, dl_ch, bw)
-                                            self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                            self.state_dict['progressBar_progress'] += 1
+
                                         time.sleep(1)
                             else:
                                 self.rx_path = self.state_dict['rfout_port_sig_anritsu']
@@ -174,9 +182,15 @@ class RxTestFreqSweep(AtCmd, Anritsu8820):
 
                                     for dl_ch in ch_list:
                                         self.rx_sweep_core(standard, band, dl_ch, bw)
-                                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                        self.state_dict['progressBar_progress'] += 1
+
                                     time.sleep(1)
+
+                                else:
+                                    logger.info(f'B{band} do not have BW {bw}MHZ')
+                                    skip_count = len(self.state_dict['channel_str']) * len(
+                                        self.state_dict['ue_power_list'])
+                                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + skip_count)
+                                    self.state_dict['progressBar_progress'] += skip_count
 
                 except Exception as err:
                     logger.debug(err)
@@ -206,8 +220,7 @@ class RxTestFreqSweep(AtCmd, Anritsu8820):
 
                                 for dl_ch in ch_list:
                                     self.rx_sweep_core(standard, band, dl_ch, 5)
-                                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                    self.state_dict['progressBar_progress'] += 1
+
                         else:
                             self.rx_path = self.state_dict['rfout_port_sig_anritsu']
                             lch = cm_pmt_anritsu.dl_ch_selected(standard, band)[0]  # lch
@@ -220,8 +233,7 @@ class RxTestFreqSweep(AtCmd, Anritsu8820):
 
                             for dl_ch in ch_list:
                                 self.rx_sweep_core(standard, band, dl_ch, 5)
-                                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                                self.state_dict['progressBar_progress'] += 1
+
 
                 except Exception as err:
                     logger.debug(err)

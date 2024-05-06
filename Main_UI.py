@@ -2072,7 +2072,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if key == 'lv' and value:
                 volt_count += 1
 
-        count_total = tx_test_items_ns_count_nr * tx_path_count * nr_tech_count * channel_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count * rb_nr_count + \
+        count_total = 0
+
+        count_total_ns = tx_test_items_ns_count_nr * tx_path_count * nr_tech_count * channel_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count * rb_nr_count + \
                       tx_test_items_ns_count_lte * tx_path_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count * mcs_lte_count * rb_lte_count + \
                       tx_test_items_ns_count_wcdma * wcdma_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_ns_count_gsm * gsm_tech_count * channel_count * band_gsm_count + \
@@ -2087,14 +2089,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       rx_test_items_ns_count_wcdma * wcdma_tech_count * rx_path_count * channel_count * band_wcdma_count * ue_power_count + \
                       rx_test_items_ns_count_gsm * gsm_tech_count * rx_path_count * channel_count * band_gsm_count + \
                       rx_test_items_endc_ns_count + \
-                      tx_test_items_s_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count * mcs_rb_allocation_lte_s_count + \
+                      tx_test_items_ns_count_nr_fcc * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count + \
+                      tx_test_items_ns_count_nr_ce * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count
+
+        count_total_s = tx_test_items_s_count * lte_tech_count * channel_count * band_lte_count * bw_lte_count + \
                       tx_test_items_s_count * wcdma_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_s_count * hsupa_tech_count * channel_count * band_wcdma_count + \
                       tx_test_items_s_count * hsdpa_tech_count * channel_count * band_wcdma_count + \
                       rx_test_items_s_count * lte_tech_count * channel_count * band_lte_count * ue_power_count * bw_lte_count + \
-                      rx_test_items_s_count * wcdma_tech_count * channel_count * band_wcdma_count * ue_power_count + \
-                      tx_test_items_ns_count_nr_fcc * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count + \
-                      tx_test_items_ns_count_nr_ce * tx_path_count * nr_tech_count * band_nr_count * bw_nr_count * mcs_nr_count * type_nr_count
+                      rx_test_items_s_count * wcdma_tech_count * channel_count * band_wcdma_count * ue_power_count
+
+        if state_dict['equipment'] in ['Cmw100', 'Cmw100+Fsw']:
+            count_total = count_total_ns
+
+        elif state_dict['equipment'] in ['Anritsu8820', 'Anritsu8821']:
+            count_total = count_total_s
 
         count_total_outer_loop = count_total * state_dict['outer_loop']
 
@@ -2253,12 +2262,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if state_dict['tx_lmh_s']:
                     inst = TxTestGenre(state_dict, self.progressBar)
                     inst.run()
+                    inst.ser.com_close()
                 if state_dict['rx_normal_s']:
                     inst = RxTestGenre(state_dict, self.progressBar)
                     inst.run()
+                    inst.ser.com_close()
                 if state_dict['rxs_sweep_s']:
                     inst = RxTestFreqSweep(state_dict, self.progressBar)
                     inst.run()
+                    inst.ser.com_close()
             case 'Anritsu8821':
                 from test_scripts.anritsu_items.mt8821_tx_lmh import TxTestGenre
                 from test_scripts.anritsu_items.mt8821_rx import RxTestGenre
@@ -2270,12 +2282,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if state_dict['tx_lmh_s']:
                     inst = TxTestGenre(state_dict, self.progressBar)
                     inst.run()
+                    inst.ser.com_close()
                 if state_dict['rx_normal_s']:
                     inst = RxTestGenre(state_dict, self.progressBar)
                     inst.run()
+                    inst.ser.com_close()
                 if state_dict['rxs_sweep_s']:
                     inst = RxTestFreqSweep(state_dict, self.progressBar)
                     inst.run()
+                    inst.ser.com_close()
 
             case 'Agilent8960':
                 pass

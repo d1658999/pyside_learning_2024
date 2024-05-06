@@ -5,7 +5,7 @@ from equipments.series_basis.callbox.anritsu_series import Anritsu
 from utils.log_init import log_set
 from utils.loss_handler import read_loss_file
 import utils.parameters.common_parameters_anritsu as cm_pmt_anritsu
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 from utils.fly_mode import FlyMode
 
 logger = log_set('Anritsu8820')
@@ -24,6 +24,7 @@ class Anritsu8820(Anritsu):
         self.count = None
         self.chcoding = None
         self.std = None
+        self.input_level_sig = None
 
     @staticmethod
     def get_worse_phase_disc(phase_disc):
@@ -1322,7 +1323,7 @@ class Anritsu8820(Anritsu):
                     tpc_status = self.get_tpc_pattern_query()
                     self.set_tpc(tpc_status)
                     if tpc_status == 'ALL1':
-                        self.set_input_level(ext_pmt.tx_level + 3)
+                        self.set_input_level(self.input_level_sig + 3)
                     elif tpc_status == 'ILPC':
                         self.set_input_level(-10)
 
@@ -1341,13 +1342,12 @@ class Anritsu8820(Anritsu):
                     self.set_init_rx(self.std)
                     self.set_tpc(tpc_status)
                     if tpc_status == 'ALL1':
-                        self.set_input_level(ext_pmt.tx_level + 3)
+                        self.set_input_level(self.input_level_sig + 3)
                     elif tpc_status == 'ILPC':
                         self.set_input_level(-10)
 
                     self.set_ber_measure_on_off('ON')
                     self.set_power_measure_on_off('ON')
-
 
     def get_sensitivity(self, standard, band, dl_ch, bw=None):
         self.std = s = standard
@@ -1411,7 +1411,7 @@ class Anritsu8820(Anritsu):
         self.set_init_power()
         self.set_init_aclr('LTE')
         self.set_init_mod('LTE')
-        self.set_input_level(ext_pmt.tx_level)
+        self.set_input_level(self.input_level_sig)
         self.set_tpc('ALL3')
         self.anritsu_query('*OPC?')
 

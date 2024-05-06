@@ -35,6 +35,7 @@ class ModemComport:
 
     def com_close(self):
         self.ser.close()
+        logger.info('close modem comport')
 
     def begin_serial(self):
         self.ser = serial.Serial()

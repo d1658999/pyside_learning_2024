@@ -2154,8 +2154,12 @@ def rx_desense_process_sig(tech, file_path, mcs='QPSK'):
     ws_txmax = None
     ws_txmin = None
     ws_desens = None
-    wb = openpyxl.load_workbook(file_path)
+
     if tech == 'LTE':
+        try:
+            wb = openpyxl.load_workbook(file_path)
+        except Exception:
+            raise FileNotFoundException(f'Cannot find {file_path}')
         ws_txmax = wb[f'Raw_Data_{mcs}_TxMax']
         ws_txmin = wb[f'Raw_Data_{mcs}_-10dBm']
         ws_desens = wb[f'Desens_{mcs}']
@@ -2278,7 +2282,11 @@ def rx_power_relative_test_export_excel_sig(data, parameters_dict):
 
     # if the file exist
     logger.info('----------file exist----------')
-    wb = openpyxl.load_workbook(file_path)
+    try:
+        wb = openpyxl.load_workbook(file_path)
+    except Exception:
+        raise FileNotFoundException(f'Cannot find {file_path}')
+
     ws = None
     # to fetch the sheet name
     if tech == 'LTE':
@@ -2846,7 +2854,11 @@ def txp_aclr_evm_current_plot_sig(standard, file_path):
     # scs = parameters_dict['scs']
     # type_ = parameters_dict['type']
     logger.info('----------Plot Chart---------')
-    wb = openpyxl.load_workbook(file_path)
+    try:
+        wb = openpyxl.load_workbook(file_path)
+    except Exception:
+        raise FileNotFoundException(f'Cannot find {file_path}')
+
     if tech == 'LTE':
         for ws_name in wb.sheetnames:
             if 'Raw_Data' in ws_name:
@@ -3309,8 +3321,13 @@ def rxs_relative_plot_sig(file_path, parameters_dict):
     tech = parameters_dict['tech']
     mcs = parameters_dict['mcs']
 
-    wb = openpyxl.load_workbook(file_path)
+    try:
+        wb = openpyxl.load_workbook(file_path)
+    except Exception:
+        raise FileNotFoundException(f'Cannot find {file_path}')
+
     if tech == 'LTE':
+
         ws_dashboard = wb[f'Dashboard']
         ws_desens = wb[f'Desens_{mcs}']
         ws_txmax = wb[f'Raw_Data_{mcs}_TxMax']

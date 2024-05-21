@@ -313,11 +313,13 @@ class Uxm:
         self.set_bler_throughput_dl_bler_length(tech, length)
         self.set_bler_throughput_dl_bler_continue_all(tech, on_off)
         time.sleep(1)
+
         # perform the measurement
         self.set_bler_throughput_state(tech, state=1)
         time.sleep(5)
         result_dl = self.get_bler_throughput_dl_bler(tech)
         result_ul = self.get_bler_throughput_ul_bler(tech)
+
         # expect no error
         self.get_uxm_check_err()
 

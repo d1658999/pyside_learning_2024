@@ -5,3 +5,4 @@ __pycache__/
 .idea/
 *.yaml
 venv/
+Python312/

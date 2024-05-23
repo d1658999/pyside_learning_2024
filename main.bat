@@ -1,1 +1,1 @@
-start cmd /k .\venv\Scripts\python.exe .\Main_UI.py
+start cmd /k .\Python312\python.exe .\Main_UI.py

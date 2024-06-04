@@ -1,1 +1,1 @@
-start cmd /k ..\Python39\python.exe .\xl2csv.py
+start cmd /k ..\Python312\python.exe .\xl2csv.py

@@ -1,6 +1,6 @@
 import csv
 from pathlib import Path
-import utils.parameters.external_paramters as ext_pmt
+# import utils.parameters.external_paramters as ext_pmt
 from utils.log_init import log_set
 
 logger = log_set('Mipi Read')
@@ -21,9 +21,8 @@ def read_mipi_setting():
 
 def mipi_settings_dict(tx_path, tech, band):
     try:
-        if ext_pmt.mipi_read_en:
-            mipi_dicts = read_mipi_setting()
-            return mipi_dicts[f'{tx_path}_{tech}_{band}']
+        mipi_dicts = read_mipi_setting()
+        return mipi_dicts[f'{tx_path}_{tech}_{band}']
     except Exception as e:
         logger.info(f'There is not mipi setting for {e}, please check the mipi setting')
         return None

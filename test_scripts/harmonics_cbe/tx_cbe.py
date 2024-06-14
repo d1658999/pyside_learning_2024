@@ -38,28 +38,28 @@ class TxCBE(TxTestGenre, FSW50):
         ]
 
         for item in items:
-            if item[0] == 'FR1' and self.state_dict['nr_bands_list'] != []:
+            if item[0] == 'NR' and self.state_dict['nr_bands_list'] != []:
                 self.tech = item[0]
                 self.tx_path = item[1]
                 self.bw_nr = item[2]
                 self.band_nr = item[3]
                 self.type_nr = item[4]
                 if self.bw_nr in cm_pmt_ftm.bandwidths_selected_nr(self.band_nr):
-                    self.tx_cbe_process_fr1()
+                    self.tx_cbe_process_nr()
                 else:
                     logger.info(f'B{self.band_nr} does not have BW {self.bw_nr}MHZ')
         for bw in self.state_dict['nr_bw_list']:
             try:
-                file_name = select_file_name_genre_tx_ftm(bw, 'FR1', 'cbe')
+                file_name = select_file_name_genre_tx_ftm(bw, 'NR', 'cbe')
                 file_path = Path(excel_folder_path()) / Path(file_name)
-                txp_aclr_evm_current_plot_ftm(file_path, {'script': 'CSE', 'tech': 'FR1'})
+                txp_aclr_evm_current_plot_ftm(file_path, {'script': 'CSE', 'tech': 'NR'})
             except TypeError:
                 logger.info(f'there is no data to plot because the band does not have this BW ')
             except FileNotFoundError:
                 logger.info(f'there is not file to plot BW{bw} ')
 
-    def tx_cbe_process_fr1(self):
-        rx_freq_list = cm_pmt_ftm.dl_freq_selected('FR1', self.band_nr,
+    def tx_cbe_process_nr(self):
+        rx_freq_list = cm_pmt_ftm.dl_freq_selected('NR', self.band_nr,
                                                    self.bw_nr)  # [L_rx_freq, M_rx_ferq, H_rx_freq]
         self.rx_freq_nr = rx_freq_list[1]
         self.loss_rx = get_loss(rx_freq_list[1])
@@ -71,7 +71,7 @@ class TxCBE(TxTestGenre, FSW50):
         self.sig_gen_nr()
         self.sync_nr()
 
-        # scs = 1 if self.band_fr1 in [34, 38, 39, 40, 41, 42, 48, 77, 78,  # temp
+        # scs = 1 if self.band_nr in [34, 38, 39, 40, 41, 42, 48, 77, 78,  # temp
         #                              79] else 0  # for now FDD is forced to 15KHz and TDD is to be 30KHz  # temp
         # scs = 15 * (2 ** scs)  # temp
         # self.scs = scs  # temp
@@ -97,20 +97,20 @@ class TxCBE(TxTestGenre, FSW50):
                     rb_pmt.GENERAL_NR[self.bw_nr][self.scs][self.type_nr][self.rb_alloc_nr_dict[rb_ftm]]
                 self.rb_state = rb_ftm  # INNER_FULL, OUTER_FULL
                 data_freq = {}
-                for tx_freq_fr1 in tx_freq_select_list:
-                    self.tx_freq_nr = tx_freq_fr1
-                    self.rx_freq_nr = cm_pmt_ftm.transfer_freq_tx2rx_nr(self.band_nr, tx_freq_fr1)  # temp
+                for tx_freq_nr in tx_freq_select_list:
+                    self.tx_freq_nr = tx_freq_nr
+                    self.rx_freq_nr = cm_pmt_ftm.transfer_freq_tx2rx_nr(self.band_nr, tx_freq_nr)  # temp
                     self.loss_tx = get_loss(self.tx_freq_nr)
                     # self.loss_rx = get_loss(rx_freq_list[1])  # temp
-                    # self.set_test_end_fr1()  # temp
-                    # self.set_test_mode_fr1()  # temp
+                    # self.set_test_end_nr()  # temp
+                    # self.set_test_mode_nr()  # temp
                     # self.select_asw_srs_path() # temp
-                    # self.sig_gen_fr1()  # temp
-                    # self.sync_fr1()  # temp
+                    # self.sig_gen_nr()  # temp
+                    # self.sync_nr()  # temp
 
                     # spectrum setting for spurios emission
                     self.system_preset()
-                    self.set_reference_level_offset('FR1', self.band_nr, self.loss_tx)
+                    self.set_reference_level_offset('NR', self.band_nr, self.loss_tx)
                     self.set_spur_initial()
                     spur_state = self.set_spur_spec_limit_line(self.band_nr, zip_dict_chan[self.tx_freq_nr],
                                                                self.bw_nr)
@@ -153,6 +153,9 @@ class TxCBE(TxTestGenre, FSW50):
                                 f'.png'  # this is power level
                     local_file_path = self.file_folder / Path(file_name)
                     self.get_spur_screenshot(local_file_path)
+
+                    self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                    self.state_dict['progressBar_progress'] += 1
 
                 logger.debug(data_freq)
                 # ready to export to excel

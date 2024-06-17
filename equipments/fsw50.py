@@ -77,7 +77,84 @@ class FSW50(FSW):
             pass
 
         # the whole body
-        if band == 2:
+        if band == 1:
+            self.set_sweep_type('SWE')
+            # self.set_spur_list_range_delete(4)
+
+            # this only used by MPR, so it need to comparet to AMPR and use the right power to compare the CSE
+            # range
+            self.set_spur_list_range_freq_start(1, 0.96 * ghz)
+            self.set_spur_list_range_freq_stop(1, 1 * ghz)
+            self.set_spur_list_range_freq_stop(2, 1.476 * ghz)
+            self.set_spur_list_range_freq_stop(3, 1.511 * ghz)
+            self.set_spur_list_range_freq_stop(4, 1.805 * ghz)
+            self.set_spur_list_range_freq_stop(5, 1.845 * ghz)
+            self.set_spur_list_range_freq_stop(6, 1.880 * ghz)
+            self.set_spur_list_range_freq_stop(7, 1.885 * ghz)
+            self.set_spur_list_range_freq_stop(8, 1.916 * ghz)
+
+            # filter type
+            self.set_spur_list_range_filter_type(1, 'NORMal')
+            self.set_spur_list_range_filter_type(2, 'NORMal')
+            self.set_spur_list_range_filter_type(3, 'NORMal')
+            self.set_spur_list_range_filter_type(4, 'NORMal')
+            self.set_spur_list_range_filter_type(5, 'NORMal')
+            self.set_spur_list_range_filter_type(6, 'NORMal')
+            self.set_spur_list_range_filter_type(7, 'NORMal')
+            self.set_spur_list_range_filter_type(8, 'CFILter')
+
+            # rbw/vbw
+            self.set_spur_list_range_band_rbw(1, 100 * khz)
+            self.set_spur_list_range_band_vbw(1, 3 * 100 * khz)
+            self.set_spur_list_range_band_rbw(2, 1 * mhz)
+            self.set_spur_list_range_band_vbw(2, 3 * 1 * mhz)
+            self.set_spur_list_range_band_rbw(3, 1 * mhz)
+            self.set_spur_list_range_band_vbw(3, 3 * 1 * mhz)
+            self.set_spur_list_range_band_rbw(4, 1 * mhz)
+            self.set_spur_list_range_band_vbw(4, 3 * 1 * mhz)
+            self.set_spur_list_range_band_rbw(5, 1 * mhz)
+            self.set_spur_list_range_band_vbw(5, 3 * 1 * mhz)
+            self.set_spur_list_range_band_rbw(6, 1 * mhz)
+            self.set_spur_list_range_band_vbw(6, 3 * 1 * mhz)
+            self.set_spur_list_range_band_rbw(7, 1 * mhz)
+            self.set_spur_list_range_band_vbw(7, 3 * 1 * mhz)
+            self.set_spur_list_range_band_rbw(8, 300 * khz)
+            self.set_spur_list_range_band_vbw(8, 3 * 300 * khz)
+
+            # att
+            for r in range(8):
+                r_num = r + 1
+                self.set_spur_list_range_input_attenuation(r_num, 30)
+
+            # sweep points
+            self.set_spur_list_range_sweep_point(1, 2001)
+            self.set_spur_list_range_sweep_point(2, 2001)
+            self.set_spur_list_range_sweep_point(3, 2001)
+            self.set_spur_list_range_sweep_point(4, 2001)
+            self.set_spur_list_range_sweep_point(5, 2001)
+            self.set_spur_list_range_sweep_point(6, 2001)
+            self.set_spur_list_range_sweep_point(7, 2001)
+            self.set_spur_list_range_sweep_point(8, 2001)
+
+            # Abs Limit
+            self.set_spur_list_range_limit_start(1, -36 - MARGIN)
+            self.set_spur_list_range_limit_stop(1, -36 - MARGIN)
+            self.set_spur_list_range_limit_start(2, -30 - MARGIN)
+            self.set_spur_list_range_limit_stop(2, -30 - MARGIN)
+            self.set_spur_list_range_limit_start(3, -50 - MARGIN)
+            self.set_spur_list_range_limit_stop(3, -50 - MARGIN)
+            self.set_spur_list_range_limit_start(4, -30 - MARGIN)
+            self.set_spur_list_range_limit_stop(4, -30 - MARGIN)
+            self.set_spur_list_range_limit_start(5, -30 - MARGIN)
+            self.set_spur_list_range_limit_stop(5, -30 - MARGIN)
+            self.set_spur_list_range_limit_start(6, -50 - MARGIN)
+            self.set_spur_list_range_limit_stop(6, -50 - MARGIN)
+            self.set_spur_list_range_limit_start(7, -30 - MARGIN)
+            self.set_spur_list_range_limit_stop(7, -30 - MARGIN)
+            self.set_spur_list_range_limit_start(8, -41 - MARGIN)
+            self.set_spur_list_range_limit_stop(8, -41 - MARGIN)
+
+        elif band == 2:
             self.set_sweep_type('SWE')
             self.set_spur_list_range_delete(4)
             if chan == 'L':
@@ -514,6 +591,83 @@ class FSW50(FSW):
             else:
                 logger.info(f'Band{band} does not in FCC request for {chan}chan and BW {bw1 + bw2}')
                 return 1
+
+        elif band == 8:
+            self.set_sweep_type('SWE')
+            # self.set_spur_list_range_delete(4)
+
+            # this only used by MPR, so it need to comparet to AMPR and use the right power to compare the CSE
+            # range
+            self.set_spur_list_range_freq_start(1, 9 * khz)
+            self.set_spur_list_range_freq_stop(1, 150 * khz)
+            self.set_spur_list_range_freq_stop(2, 30 * mhz)
+            self.set_spur_list_range_freq_stop(3, 470 * mhz)
+            self.set_spur_list_range_freq_stop(4, 710 * mhz)
+            self.set_spur_list_range_freq_stop(5, 773 * mhz)
+            self.set_spur_list_range_freq_stop(6, 803 * mhz)
+            self.set_spur_list_range_freq_stop(7, 860 * mhz)
+            self.set_spur_list_range_freq_stop(8, 890 * mhz)
+
+            # filter type
+            self.set_spur_list_range_filter_type(1, 'NORMal')
+            self.set_spur_list_range_filter_type(2, 'NORMal')
+            self.set_spur_list_range_filter_type(3, 'NORMal')
+            self.set_spur_list_range_filter_type(4, 'NORMal')
+            self.set_spur_list_range_filter_type(5, 'NORMal')
+            self.set_spur_list_range_filter_type(6, 'NORMal')
+            self.set_spur_list_range_filter_type(7, 'NORMal')
+            self.set_spur_list_range_filter_type(8, 'CFILter')
+
+            # rbw/vbw
+            self.set_spur_list_range_band_rbw(1, 1 * khz)
+            self.set_spur_list_range_band_vbw(1, 3 * 1 * khz)
+            self.set_spur_list_range_band_rbw(2, 10 * khz)
+            self.set_spur_list_range_band_vbw(2, 3 * 10 * khz)
+            self.set_spur_list_range_band_rbw(3, 100 * khz)
+            self.set_spur_list_range_band_vbw(3, 3 * 100 * khz)
+            self.set_spur_list_range_band_rbw(4, 100 * khz)
+            self.set_spur_list_range_band_vbw(4, 3 * 100 * khz)
+            self.set_spur_list_range_band_rbw(5, 100 * khz)
+            self.set_spur_list_range_band_vbw(5, 3 * 100 * khz)
+            self.set_spur_list_range_band_rbw(6, 100 * khz)
+            self.set_spur_list_range_band_vbw(6, 3 * 100 * khz)
+            self.set_spur_list_range_band_rbw(7, 100 * khz)
+            self.set_spur_list_range_band_vbw(7, 3 * 100 * khz)
+            self.set_spur_list_range_band_rbw(8, 1 * mhz)
+            self.set_spur_list_range_band_vbw(8, 3 * 1 * mhz)
+
+            # att
+            for r in range(8):
+                r_num = r + 1
+                self.set_spur_list_range_input_attenuation(r_num, 30)
+
+            # sweep points
+            self.set_spur_list_range_sweep_point(1, 2001)
+            self.set_spur_list_range_sweep_point(2, 2001)
+            self.set_spur_list_range_sweep_point(3, 2001)
+            self.set_spur_list_range_sweep_point(4, 2001)
+            self.set_spur_list_range_sweep_point(5, 2001)
+            self.set_spur_list_range_sweep_point(6, 2001)
+            self.set_spur_list_range_sweep_point(7, 2001)
+            self.set_spur_list_range_sweep_point(8, 2001)
+
+            # Abs Limit
+            self.set_spur_list_range_limit_start(1, -36 - MARGIN)
+            self.set_spur_list_range_limit_stop(1, -36 - MARGIN)
+            self.set_spur_list_range_limit_start(2, -36 - MARGIN)
+            self.set_spur_list_range_limit_stop(2, -36 - MARGIN)
+            self.set_spur_list_range_limit_start(3, -36 - MARGIN)
+            self.set_spur_list_range_limit_stop(3, -36 - MARGIN)
+            self.set_spur_list_range_limit_start(4, -36 - MARGIN)
+            self.set_spur_list_range_limit_stop(4, -36 - MARGIN)
+            self.set_spur_list_range_limit_start(5, -36 - MARGIN)
+            self.set_spur_list_range_limit_stop(5, -36 - MARGIN)
+            self.set_spur_list_range_limit_start(6, -36 - MARGIN)
+            self.set_spur_list_range_limit_stop(6, -36 - MARGIN)
+            self.set_spur_list_range_limit_start(7, -36 - MARGIN)
+            self.set_spur_list_range_limit_stop(7, -36 - MARGIN)
+            self.set_spur_list_range_limit_start(8, -41 - MARGIN)
+            self.set_spur_list_range_limit_stop(8, -41 - MARGIN)
 
         elif band == 12:
             self.set_spur_list_range_delete(4)

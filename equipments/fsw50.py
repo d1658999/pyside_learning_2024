@@ -666,8 +666,8 @@ class FSW50(FSW):
             self.set_spur_list_range_limit_stop(6, -36 - MARGIN)
             self.set_spur_list_range_limit_start(7, -36 - MARGIN)
             self.set_spur_list_range_limit_stop(7, -36 - MARGIN)
-            self.set_spur_list_range_limit_start(8, -41 - MARGIN)
-            self.set_spur_list_range_limit_stop(8, -41 - MARGIN)
+            self.set_spur_list_range_limit_start(8, -40 - MARGIN)
+            self.set_spur_list_range_limit_stop(8, -40 - MARGIN)
 
         elif band == 12:
             self.set_spur_list_range_delete(4)

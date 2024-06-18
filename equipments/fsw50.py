@@ -602,6 +602,7 @@ class FSW50(FSW):
             self.set_spur_list_range_freq_stop(1, 150 * khz)
             self.set_spur_list_range_freq_stop(2, 30 * mhz)
             self.set_spur_list_range_freq_stop(3, 470 * mhz)
+            self.set_spur_list_range_freq_start(4, 470 * mhz)
             self.set_spur_list_range_freq_stop(4, 710 * mhz)
             self.set_spur_list_range_freq_stop(5, 773 * mhz)
             self.set_spur_list_range_freq_stop(6, 803 * mhz)

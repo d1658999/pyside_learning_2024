@@ -9,6 +9,8 @@ def bandwidths_selected_nr(band):
     try:
         bandwidths = {
             'N1': [5, 10, 15, 20, 40, 50],  # remove 30
+            'N1_KDDI': [5, 10, 15, 20],
+            'N1_DOCOMO': [5, 10, 15, 20],
             'N2': [5, 10, 15, 20, 40, 50],
             'N3': [5, 10, 15, 20, 25, 30, 40, 50],  # remove 30
             'N5': [5, 10, 15, 20, ],
@@ -57,12 +59,14 @@ def bandwidths_selected_lte(band):
     try:
         bandwidths = {
             'B1': [5, 10, 15, 20],
+            'B1_DOCOMO': [5, 10, 15, 20],
             'B2': [1.4, 3, 5, 10, 15, 20],
             'B3': [1.4, 3, 5, 10, 15, 20],
             'B4': [1.4, 3, 5, 10, 15, 20],
             'B5': [1.4, 3, 5, 10],
             'B7': [5, 10, 15, 20],
             'B8': [1.4, 3, 5, 10],
+            'B8_JRF': [5, 10],
             'B12': [1.4, 3, 5, 10],
             'B13': [5, 10],
             'B14': [5, 10],
@@ -196,6 +200,8 @@ def dl_freq_selected(standard, band, bw=5):
     try:
         band_dl_freq_nr = {
             'N1': [2110 + bw / 2, 2140, 2170 - bw / 2],
+            'N1_KODOMO': [2120 + bw / 2, 2135, 2150 - bw / 2],
+            'N1_KDDI': [2110 + bw / 2, 2120, 2130 - bw / 2],
             'N2': [1930 + bw / 2, 1960, 1990 - bw / 2],
             'N3': [1805 + bw / 2, 1842.5, 1880 - bw / 2],
             'N5': [869 + bw / 2, 881.5, 894 - bw / 2],
@@ -236,12 +242,14 @@ def dl_freq_selected(standard, band, bw=5):
 
         band_dl_freq_lte = {
             'B1': [2110 + bw / 2, 2140, 2170 - bw / 2],
+            'B1_DOCOMO': [2119.7 + bw / 2, 2144.9, 2170 - bw / 2],
             'B2': [1930 + bw / 2, 1960, 1990 - bw / 2],
             'B3': [1805 + bw / 2, 1842.5, 1880 - bw / 2],
             'B4': [2110 + bw / 2, 2132.5, 2155 - bw / 2],
             'B5': [869 + bw / 2, 881.5, 894 - bw / 2],
             'B7': [2620 + bw / 2, 2655, 2690 - bw / 2],
             'B8': [925 + bw / 2, 942.5, 960 - bw / 2],
+            'B8_JRF': [900 + bw / 2, 907.5, 915 - bw / 2],
             'B12': [729 + bw / 2, 737.5, 746 - bw / 2],
             'B13': [746 + bw / 2, 751, 756 - bw / 2],
             'B14': [758 + bw / 2, 763, 768 - bw / 2],
@@ -518,7 +526,10 @@ def transfer_freq_tx2rx_gsm(band_gsm, freq):
 
 def transfer_freq_rx2tx_lte(band_lte, freq):
     if isinstance(band_lte, str):
-        band_lte = int(band_lte[:-1])
+        if band_lte in ['28a','28b']:
+            band_lte = int(band_lte[:-1])
+        else:  # this if for 8_jrf, 1_docomo
+            band_lte = int(band_lte[0])
 
     if band_lte not in [38, 39, 40, 41, 42, 48]:
         spacing_lte = {
@@ -555,7 +566,10 @@ def transfer_freq_rx2tx_lte(band_lte, freq):
 
 def transfer_freq_tx2rx_lte(band_lte, freq):
     if isinstance(band_lte, str):
-        band_lte = int(band_lte[:-1])
+        if band_lte in ['28a','28b']:
+            band_lte = int(band_lte[:-1])
+        else:  # this if for 8_jrf, 1_docomo
+            band_lte = int(band_lte[0])
 
     if band_lte not in [38, 39, 40, 41, 42, 48]:
         spacing_lte = {
@@ -592,7 +606,10 @@ def transfer_freq_tx2rx_lte(band_lte, freq):
 
 def transfer_freq_rx2tx_nr(band_nr, freq):
     if isinstance(band_nr, str):
-        band_nr = int(band_nr[:-1])
+        if band_nr in ['28a','28b']:
+            band_nr = int(band_nr[:-1])
+        else:  # this if for 1_kddi, 1_docomo
+            band_nr = int(band_nr[0])
 
     if band_nr not in [34, 38, 39, 40, 41, 42, 48, 75, 76, 77, 78, 79]:
         spacing_nr = {
@@ -627,7 +644,10 @@ def transfer_freq_rx2tx_nr(band_nr, freq):
 
 def transfer_freq_tx2rx_nr(band_nr, freq):
     if isinstance(band_nr, str):
-        band_nr = int(band_nr[:-1])
+        if band_nr in ['28a','28b']:
+            band_nr = int(band_nr[:-1])
+        else:  # this if for 1_kddi, 1_docomo
+            band_nr = int(band_nr[0])
 
     if band_nr not in [34, 38, 39, 40, 41, 42, 48, 75, 76, 77, 78, 79]:
         spacing_nr = {
@@ -661,7 +681,10 @@ def transfer_freq_tx2rx_nr(band_nr, freq):
 
 def special_uplink_config_sensitivity_lte(band, bw):
     if isinstance(band, str):
-        band = int(band[:-1])
+        if band in ['28a','28b']:
+            band = int(band[:-1])
+        else:  # this if for 8_jrf, 1_docomo
+            band = int(band[0])
 
     if (band in [2, 3, 25]) and int(bw) == 15:
         return 50, 25
@@ -709,7 +732,10 @@ def special_uplink_config_sensitivity_lte(band, bw):
 
 def special_uplink_config_sensitivity_nr(band, scs, bw):
     if isinstance(band, str):
-        band = int(band[:-1])
+        if band in ['28a','28b']:
+            band = int(band[:-1])
+        else:  # this if for 1_kddi, 1_docomo
+            band = int(band[0])
 
     if band == 1:
         if scs == 15:

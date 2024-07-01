@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QSize(1491, 790))
         MainWindow.setMaximumSize(QSize(1491, 790))
         icon = QIcon()
-        icon.addFile(u"../../../../../.designer/Wave.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"./Wave.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionLoad_file = QAction(MainWindow)
         self.actionLoad_file.setObjectName(u"actionLoad_file")

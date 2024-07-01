@@ -8,7 +8,7 @@ import pathlib
 import signal
 import os
 import yaml
-from ui_mega_v2_13 import Ui_MainWindow
+from ui_mega_v2_14 import Ui_MainWindow
 from utils.log_init import log_set, log_clear
 from utils.adb_handler import get_serial_devices
 from utils.excel_handler import excel_folder_create
@@ -364,6 +364,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['n29_nr'] = self.n29_nr.isChecked()
         state_dict['n32_nr'] = self.n32_nr.isChecked()
         state_dict['n1_nr'] = self.n1_nr.isChecked()
+        state_dict['n1_docomo_nr'] = self.n1_docomo_nr.isChecked()
+        state_dict['n1_kddi_nr'] = self.n1_kddi_nr.isChecked()
         state_dict['n2_nr'] = self.n2_nr.isChecked()
         state_dict['n3_nr'] = self.n3_nr.isChecked()
         state_dict['n4_nr'] = self.n4_nr.isChecked()
@@ -387,6 +389,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['n79_nr'] = self.n79_nr.isChecked()
         state_dict['b5_lte'] = self.b5_lte.isChecked()
         state_dict['b8_lte'] = self.b8_lte.isChecked()
+        state_dict['b8_jrf_lte'] = self.b8_jrf_lte.isChecked()
         state_dict['b12_lte'] = self.b12_lte.isChecked()
         state_dict['b13_lte'] = self.b13_lte.isChecked()
         state_dict['b14_lte'] = self.b14_lte.isChecked()
@@ -402,6 +405,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['b71_lte'] = self.b71_lte.isChecked()
         state_dict['b24_lte'] = self.b24_lte.isChecked()
         state_dict['b1_lte'] = self.b1_lte.isChecked()
+        state_dict['b1_docomo_lte'] = self.b1_docomo_lte.isChecked()
         state_dict['b2_lte'] = self.b2_lte.isChecked()
         state_dict['b3_lte'] = self.b3_lte.isChecked()
         state_dict['b4_lte'] = self.b4_lte.isChecked()
@@ -682,6 +686,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.n29_nr.setChecked(state_dict['n29_nr'])
         self.n32_nr.setChecked(state_dict['n32_nr'])
         self.n1_nr.setChecked(state_dict['n1_nr'])
+        self.n1_docomo_nr.setChecked(state_dict['n1_docomo_nr'])
+        self.n1_kddi_nr.setChecked(state_dict['n1_kddi_nr'])
         self.n2_nr.setChecked(state_dict['n2_nr'])
         self.n3_nr.setChecked(state_dict['n3_nr'])
         self.n4_nr.setChecked(state_dict['n4_nr'])
@@ -705,6 +711,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.n79_nr.setChecked(state_dict['n79_nr'])
         self.b5_lte.setChecked(state_dict['b5_lte'])
         self.b8_lte.setChecked(state_dict['b8_lte'])
+        self.b8_jrf_lte.setChecked(state_dict['b8_jrf_lte'])
         self.b12_lte.setChecked(state_dict['b12_lte'])
         self.b13_lte.setChecked(state_dict['b13_lte'])
         self.b14_lte.setChecked(state_dict['b14_lte'])
@@ -720,6 +727,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.b71_lte.setChecked(state_dict['b71_lte'])
         self.b24_lte.setChecked(state_dict['b24_lte'])
         self.b1_lte.setChecked(state_dict['b1_lte'])
+        self.b1_docomo_lte.setChecked(state_dict['b1_docomo_lte'])
         self.b2_lte.setChecked(state_dict['b2_lte'])
         self.b3_lte.setChecked(state_dict['b3_lte'])
         self.b4_lte.setChecked(state_dict['b4_lte'])
@@ -1146,6 +1154,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             nr_bands_list.append(32)
         if self.n1_nr.isChecked():
             nr_bands_list.append(1)
+        if self.n1_docomo_nr.isChecked():
+            nr_bands_list.append('1_docomo')
+        if self.n1_kddi_nr.isChecked():
+            nr_bands_list.append('1_kddi')
         if self.n2_nr.isChecked():
             nr_bands_list.append(2)
         if self.n3_nr.isChecked():
@@ -1198,6 +1210,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             lte_bands_list.append(5)
         if self.b8_lte.isChecked():
             lte_bands_list.append(8)
+        if self.b8_jrf_lte.isChecked():
+            lte_bands_list.append('8_jrf')
         if self.b12_lte.isChecked():
             lte_bands_list.append(12)
         if self.b13_lte.isChecked():
@@ -1228,6 +1242,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             lte_bands_list.append(24)
         if self.b1_lte.isChecked():
             lte_bands_list.append(1)
+        if self.b1_docomo_lte.isChecked():
+            lte_bands_list.append('1_docomo')
         if self.b2_lte.isChecked():
             lte_bands_list.append(2)
         if self.b3_lte.isChecked():
@@ -1741,6 +1757,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 band_nr_count += 1
             if key == 'n1_nr' and value:
                 band_nr_count += 1
+            if key == 'n1_docomo_nr' and value:
+                band_nr_count += 1
+            if key == 'n1_kddi_nr' and value:
+                band_nr_count += 1
             if key == 'n2_nr' and value:
                 band_nr_count += 1
             if key == 'n3_nr' and value:
@@ -1787,6 +1807,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 band_lte_count += 1
             if key == 'b8_lte' and value:
                 band_lte_count += 1
+            if key == 'b8_jrf_lte' and value:
+                band_lte_count += 1
             if key == 'b12_lte' and value:
                 band_lte_count += 1
             if key == 'b13_lte' and value:
@@ -1816,6 +1838,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if key == 'b24_lte' and value:
                 band_lte_count += 1
             if key == 'b1_lte' and value:
+                band_lte_count += 1
+            if key == 'b1_docomo_lte' and value:
                 band_lte_count += 1
             if key == 'b2_lte' and value:
                 band_lte_count += 1

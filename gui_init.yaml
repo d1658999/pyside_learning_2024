@@ -12,6 +12,7 @@ b17_lte: false
 b18_lte: false
 b19_lte: false
 b19_wcdma: false
+b1_docomo_lte: false
 b1_lte: false
 b1_wcdma: false
 b20_lte: false
@@ -25,7 +26,7 @@ b28_a_lte: false
 b28_b_lte: false
 b29_lte: false
 b2_lte: false
-b2_n77: false
+b2_n77: true
 b2_wcdma: false
 b30_lte: false
 b32_lte: false
@@ -51,6 +52,7 @@ b6_wcdma: false
 b71_lte: false
 b7_lte: false
 b7_n77: false
+b8_jrf_lte: false
 b8_lte: false
 b8_wcdma: false
 bands_toolBox_index: 0
@@ -99,13 +101,14 @@ cp_nr: false
 criteria_ulca_lte_3gpp: true
 criteria_ulca_lte_fcc: false
 current_count: 5
-devices_serial: 41121FDAS000BZ
+devices_serial: ''
 dfts_nr: false
 edge_1rb_left_nr: false
 edge_1rb_right_nr: false
 edge_full_left_nr: false
 edge_full_right_nr: false
-endc_bands_list: []
+endc_bands_list:
+- '2_77'
 endc_lte_rx_path_list: []
 endc_lte_tx_path: TX1
 endc_nr_rx_path_list: []
@@ -115,7 +118,7 @@ endc_tx1_path_nr: true
 endc_tx2_path_lte: false
 endc_tx2_path_nr: false
 epsk_mod: false
-equipment: Cmw100
+equipment: Cmw100+Fsw
 et_tracker: sky51001
 fbrx_en: false
 fdc_en: false
@@ -167,6 +170,8 @@ mipi_read_en: false
 n12_nr: false
 n13_nr: false
 n14_nr: false
+n1_docomo_nr: false
+n1_kddi_nr: false
 n1_nr: false
 n20_nr: false
 n24_nr: false
@@ -241,7 +246,7 @@ qpsk_lte: false
 qpsk_nr: false
 qpsk_prb0_lte_sig: false
 rfout_port_sig_anritsu: MAIN
-rx0: false
+rx0: true
 rx0rx1: false
 rx1: false
 rx2: false
@@ -254,7 +259,8 @@ rx_endc_desense_ns: false
 rx_level_sweep_ns: false
 rx_normal_ns: false
 rx_normal_s: false
-rx_path_list: []
+rx_path_list:
+- 2
 rx_quick_ns: false
 rxs_sweep_s: false
 srs_path: '0'
@@ -283,28 +289,28 @@ tx_lmh_ns: false
 tx_lmh_s: false
 tx_path_list: []
 tx_port: '1'
-tx_port_endc_lte: '2'
+tx_port_endc_lte: '4'
 tx_port_table_en: false
 tx_ulca_lte_cbe_ns: false
 tx_ulca_lte_ns: false
 txrx_path_toolBox_index: 0
-ue_power_list:
-- 1
-- 0
-ue_txlow: true
-ue_txmax: true
+ue_power_list: []
+ue_txlow: false
+ue_txmax: false
 ulca_1c: false
 ulca_38c: false
 ulca_3c: false
 ulca_40c: false
-ulca_41c: false
-ulca_42c: false
+ulca_41c: true
+ulca_42c: true
 ulca_48c: false
 ulca_5b: false
 ulca_66b: false
 ulca_66c: false
 ulca_7c: false
-ulca_lte_band_list: []
+ulca_lte_band_list:
+- 41c
+- 42c
 ulca_lte_bw_list: []
 ulca_lte_criteria: 3GPP
 ulca_lte_rb_allocation_list: []

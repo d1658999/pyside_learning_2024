@@ -2817,7 +2817,7 @@ class Ui_MainWindow(object):
         self.b3_lte.setText(QCoreApplication.translate("MainWindow", u"B3", None))
         self.b23_lte.setText(QCoreApplication.translate("MainWindow", u"B23", None))
         self.b4_lte.setText(QCoreApplication.translate("MainWindow", u"B4", None))
-        self.b1_docomo_lte.setText(QCoreApplication.translate("MainWindow", u"B1_docomo", None))
+        self.b1_docomo_lte.setText(QCoreApplication.translate("MainWindow", u"B1_DOCOMO", None))
         self.groupBox_uhb_lte.setTitle(QCoreApplication.translate("MainWindow", u"UHB", None))
         self.b48_lte.setText(QCoreApplication.translate("MainWindow", u"B48", None))
         self.b42_lte.setText(QCoreApplication.translate("MainWindow", u"B42", None))

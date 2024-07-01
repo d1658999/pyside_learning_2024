@@ -301,16 +301,14 @@ ulca_1c: false
 ulca_38c: false
 ulca_3c: false
 ulca_40c: false
-ulca_41c: true
-ulca_42c: true
+ulca_41c: false
+ulca_42c: false
 ulca_48c: false
 ulca_5b: false
 ulca_66b: false
 ulca_66c: false
 ulca_7c: false
-ulca_lte_band_list:
-- 41c
-- 42c
+ulca_lte_band_list: []
 ulca_lte_bw_list: []
 ulca_lte_criteria: 3GPP
 ulca_lte_rb_allocation_list: []

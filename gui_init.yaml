@@ -118,7 +118,7 @@ endc_tx1_path_nr: true
 endc_tx2_path_lte: false
 endc_tx2_path_nr: false
 epsk_mod: false
-equipment: Cmw100+Fsw
+equipment: Cmw100
 et_tracker: sky51001
 fbrx_en: false
 fdc_en: false

@@ -518,7 +518,10 @@ class CMW100(CMW):
 
     def select_mode_fdd_tdd(self, band):
         if isinstance(band, str):
-            band = int(band[:-1])
+            if band in ['1_docomo', '1_kddi', '8_jrf']:
+                band = band[0]
+            else:
+                band = int(band[:-1])
 
         if self.tech == 'NR':
             if band in TDD_BANDS:

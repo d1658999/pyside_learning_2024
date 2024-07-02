@@ -21,6 +21,13 @@ def read_mipi_setting():
 
 def mipi_settings_dict(tx_path, tech, band):
     try:
+        # clean 1_docomo, 1_kddi, 8_jrf
+        if isinstance(band, str):
+            if band in ['1_docomo', '1_kddi', '8_jrf']:
+                band = band[0]
+            else:
+                band = int(band[:-1])
+
         mipi_dicts = read_mipi_setting()
         return mipi_dicts[f'{tx_path}_{tech}_{band}']
     except Exception as e:

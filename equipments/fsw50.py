@@ -17,6 +17,12 @@ class FSW50(FSW):
         self.system_preset()
 
     def get_level_harmonics(self, tech, band, harmonic_freq, loss):
+        if isinstance(band, str):
+            if band in ['1_docomo', '1_kddi', '8_jrf']:
+                band = band[0]
+            else:
+                band = int(band[:-1])
+
         # basic environment setting
         # self.set_reference_level(-30 - MARGIN)
         self.set_reference_level_offset(tech, band, loss)
@@ -46,6 +52,11 @@ class FSW50(FSW):
         return mark_x, mark_y
 
     def get_harmonics_order(self, tech, band, order, tx_freq):
+        if isinstance(band, str):
+            if band in ['1_docomo', '1_kddi', '8_jrf']:
+                band = band[0]
+            else:
+                band = int(band[:-1])
         tx_freq_order = int(tx_freq * order)
         loss = get_loss_spectrum(tx_freq_order)
         logger.info(f'This is {order} Harmonic')
@@ -63,6 +74,12 @@ class FSW50(FSW):
         self.get_spur_list_range_count()
 
     def set_spur_spec_limit_line(self, band, chan, bw1, bw2=0):  # bw2 is used for ULCA
+        if isinstance(band, str):
+            if band in ['1_docomo', '1_kddi', '8_jrf']:
+                band = band[0]
+            else:
+                band = int(band[:-1])
+
         logger.info('----------Set Limit Line----------')
         # common parameters
         ghz = 10 ** 9

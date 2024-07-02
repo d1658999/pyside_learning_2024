@@ -344,7 +344,10 @@ class AtCmd:
         """
         logger.info('----------Set Test Mode----------')
         if isinstance(self.band_nr, str):
-            band_nr = self.band_nr[:2]
+            if self.band_nr in ['1_docomo', '1_kddi', '8_jrf']:
+                band_nr = self.band_nr[0]
+            else:
+                band_nr = self.band_nr[:2]
         else:
             band_nr = self.band_nr
         self.command(f'AT+NRFFINALSTART={band_nr},{self.sa_nsa_mode}')
@@ -353,7 +356,10 @@ class AtCmd:
     def set_test_mode_lte(self):
         logger.info('----------Set Test Mode----------')
         if isinstance(self.band_lte, str):
-            band_lte = self.band_lte[:2]
+            if self.band_lte in ['1_docomo', '1_kddi', '8_jrf']:
+                band_lte = self.band_lte[0]
+            else:
+                band_lte = self.band_lte[:2]
         else:
             band_lte = self.band_lte
         self.command(f'AT+LRFFINALSTART=1,{band_lte}')

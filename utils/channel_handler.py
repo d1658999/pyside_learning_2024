@@ -34,7 +34,10 @@ def chan_judge_wcdma(band_wcdma, tx_freq_wcdma):
 
 def chan_judge_lte(band_lte, bw_lte, tx_freq_lte):
     if isinstance(band_lte, str):
-        band_lte = int(band_lte[:-1])
+        if band_lte in ['1_docomo', '1_kddi', '8_jrf']:
+            band_lte = band_lte[0]
+        else:
+            band_lte = int(band_lte[:-1])
     rx_freq_lte = cm_pmt_ftm.transfer_freq_tx2rx_lte(band_lte, tx_freq_lte)
     if rx_freq_lte < cm_pmt_ftm.dl_freq_selected('LTE', band_lte, bw_lte)[1]:
         return 'ch0'
@@ -46,7 +49,10 @@ def chan_judge_lte(band_lte, bw_lte, tx_freq_lte):
 
 def chan_judge_nr(band_nr, bw_nr, tx_freq_nr):
     if isinstance(band_nr, str):
-        band_nr = int(band_nr[:-1])
+        if band_nr in ['1_docomo', '1_kddi', '8_jrf']:
+            band_nr = band_nr[0]
+        else:
+            band_nr = int(band_nr[:-1])
     rx_freq_nr = cm_pmt_ftm.transfer_freq_tx2rx_nr(band_nr, tx_freq_nr)
     if rx_freq_nr < cm_pmt_ftm.dl_freq_selected('NR', band_nr, bw_nr)[1]:
         return 'ch0'

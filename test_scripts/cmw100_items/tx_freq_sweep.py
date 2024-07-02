@@ -37,6 +37,11 @@ class TxTestFreqSweep(AtCmd, CMW100):
         """
         This is used for multi-ports connection on Tx
         """
+        if isinstance(band, str):
+            if band in ['1_docomo', '1_kddi', '8_jrf']:
+                band = band[0]
+            else:
+                band = int(band[:-1])
         try:
             if self.port_table is None:  # to initial port table at first time
                 if not self.state_dict['as_path_en']:

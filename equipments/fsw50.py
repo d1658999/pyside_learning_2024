@@ -68,17 +68,12 @@ class FSW50(FSW):
         self.average_type()
         self.set_display_trace_mode()
         self.set_average_count(100)
-        self.set_reference_level(40)
+        self.set_reference_level(35)
         self.set_display_trace_mode()
         self.set_sweep_mode('OFF')
         self.get_spur_list_range_count()
 
     def set_spur_spec_limit_line(self, band, chan, bw1, bw2=0):  # bw2 is used for ULCA
-        if isinstance(band, str):
-            if band in ['1_docomo', '1_kddi', '8_jrf']:
-                band = band[0]
-            else:
-                band = int(band[:-1])
 
         logger.info('----------Set Limit Line----------')
         # common parameters
@@ -86,9 +81,12 @@ class FSW50(FSW):
         mhz = 10 ** 6
         khz = 10 ** 3
 
-        # do something process to tranfer string on ULCA
+        # do something process to tranfer string on ULCA and docomo/kddi
         if isinstance(band, str):
-            band = int(band[:-1])
+            if band in ['1_docomo', '1_kddi', '8_jrf']:
+                band = int(band[0])
+            else:
+                band = int(band[:-1])
 
         else:
             pass

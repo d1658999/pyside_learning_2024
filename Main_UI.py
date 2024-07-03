@@ -26,12 +26,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setupUi(self)
         self.volt = None
         self.condition = None
         self.psu = None
         self.tmpcmb = None
         log_clear()
-        self.setupUi(self)
         self.import_gui_setting_yaml()
         self.init_show()
         self.init_hidden()

@@ -52,6 +52,7 @@ class TxTestCa(AtCmd, CMW100):
         self.chan = None
         self.port_table = None
         self.get_temp_en = self.state_dict['get_temp_en']
+        self.fdc_en = self.state_dict['fdc_en']
 
     # def ca_bw_combo_seperate_lte(self, bw_cc1, bw_cc2):
     #     self.bw_cc1_lte = int(bw_cc1)

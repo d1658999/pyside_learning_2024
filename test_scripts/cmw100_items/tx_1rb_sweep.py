@@ -32,6 +32,7 @@ class TxTest1RbSweep(AtCmd, CMW100):
         self.chan = None
         self.port_table = None
         self.rx_level = self.state_dict['init_rx_sync_level']
+        self.fdc_en = self.state_dict['fdc_en']
 
     def port_table_selector(self, band, tx_path='TX1'):
         """

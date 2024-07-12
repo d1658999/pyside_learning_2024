@@ -157,7 +157,11 @@ def thermal_charger_disable():
 
 
 def get_serial_devices():
-    return sp.run(r'adb devices', capture_output=True).stdout.decode().split('\r\n')[1].split('\t')[0]
+    # serial = sp.run(r'adb devices', capture_output=True).stdout.decode().split('\r\n')[1].split('\t')[0]
+    compelted_process = sp.run(r'adb devices', shell=True, stdout=sp.PIPE, text=True, encoding='cp437')
+    serial = compelted_process.stdout.split('\\')[0].split('\n')[1].split('\t')[0]
+    serial_letter_num = re.sub(r"[^a-zA-Z0-9]+$", "", serial)
+    return serial_letter_num
 
 
 def reboot():

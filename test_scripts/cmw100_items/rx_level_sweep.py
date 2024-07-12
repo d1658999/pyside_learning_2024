@@ -41,6 +41,7 @@ class RxLevelSweep(AtCmd, CMW100):
         self.resolution = None
         self.port_table = None
         self.get_temp_en = self.state_dict['get_temp_en']
+        self.fdc_en = self.state_dict['fdc_en']
 
     def port_table_selector(self, band, tx_path='TX1'):
         """

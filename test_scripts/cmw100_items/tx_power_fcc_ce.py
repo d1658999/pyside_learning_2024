@@ -28,6 +28,7 @@ class TxTestFccCe(AtCmd, CMW100):
         self.port_table = None
         self.port_mimo_tx1 = None
         self.port_mimo_tx2 = None
+        self.fdc_en = self.state_dict['fdc_en']
 
     def port_table_selector(self, band, tx_path='TX1'):
         """

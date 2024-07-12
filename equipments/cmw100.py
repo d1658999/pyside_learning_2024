@@ -25,7 +25,7 @@ class CMW100(CMW):
         self.band_wcdma = None
         self.band_gsm = None
         self.tx_level = None
-        self.rx_level = ext_pmt.init_rx_sync_level
+        self.rx_level = None
         self.pcl = None
         self.pwr_init_gsm = None
         self.loss_tx = None
@@ -49,6 +49,7 @@ class CMW100(CMW):
         self.rb_start_lte = None
         self.tsc = None
         self.mod_gsm = None
+        self.fdc_en = False
 
     def preset_instrument(self):
         logger.info('----------Preset CMW----------')
@@ -60,7 +61,7 @@ class CMW100(CMW):
         self.system_err_all_query()
         self.cmw_write('*RST')
         self.cmw_query('*OPC?')
-        self.set_fdcorrection_create_activate_process(ext_pmt.fdc_en)
+        self.set_fdcorrection_create_activate_process()
 
     def set_measurement_group_gprf(self):
         if self.tech == 'NR':
@@ -820,11 +821,11 @@ class CMW100(CMW):
         table = port_tx_table_transfer(txas_select)
         return table
 
-    def set_fdcorrection_create_activate_process(self, fdc_en):
+    def set_fdcorrection_create_activate_process(self):
         """
         this is to create 8 tables for fd_correction and then set to activate the tables
         """
-        if fdc_en:
+        if self.fdc_en:
             for p in range(8):
                 self.set_fd_correction_create(p + 1, read_fdc_file(p + 1))
 

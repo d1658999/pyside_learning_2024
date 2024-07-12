@@ -43,6 +43,7 @@ class TxTestLevelSweep(AtCmd, CMW100):
         self.mipi_usid_addr_series = None  # this should have other function
         self.sa_nsa_mode = 0
         self.rx_level = self.state_dict['init_rx_sync_level']
+        self.fdc_en = self.state_dict['fdc_en']
 
     def port_table_selector(self, band, tx_path='TX1'):
         """

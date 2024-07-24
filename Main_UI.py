@@ -78,11 +78,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.seperateButton.clicked.connect(self.separate_nv)
         self.parseButton.clicked.connect(self.separate_nv_cfg)
         self.actionLoad_file.triggered.connect(self.load_loss_file)
+        self.tx_cbe_ns.clicked.connect(self.fdc_en_disabled_cbe_harm)
+        self.tx_harmonics_ns.clicked.connect(self.fdc_en_disabled_cbe_harm)
 
         # init disabled
         self.rx_path_custom_disabled()
         self.port_table_disabled(self.rx_endc_desense_ns.isChecked())
         self.endc_other_test_items_unchecked(self.rx_endc_desense_ns.isChecked())
+        self.fdc_en_disabled_cbe_harm(self.tx_cbe_ns.isChecked() or self.tx_harmonics_ns.isChecked())
+
 
     def init_show(self):
         logger.info(f'Equipment: {self.equipments_comboBox.currentText()}')
@@ -890,6 +894,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             logger.info(f'Endc LTE port Enabled')
         else:
             logger.info(f'Endc LTE port Disabled')
+
+    def fdc_en_disabled_cbe_harm(self, checked):
+        if checked:
+            self.fdc_en.setDisabled(True)
+            self.fdc_en.setChecked(False)
+        else:
+            self.fdc_en.setDisabled(False)
 
     def port_table_disabled(self, checked):
         if checked:

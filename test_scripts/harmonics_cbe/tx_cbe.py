@@ -264,6 +264,8 @@ class TxCBE(TxTestGenre, FSW50):
 
                     # if the bands cannot go with FCC request, then skip it
                     if spur_state == 1:
+                        self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
+                        self.state_dict['progressBar_progress'] += 1
                         continue
 
                     # start to set tx

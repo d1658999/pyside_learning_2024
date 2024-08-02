@@ -753,7 +753,7 @@ class AtCmd:
 
     def query_fer_measure_wcdma(self):
         logger.info('========== FER measure ==========')
-        res = self.command('AT+HGETSENSE=100', delay=2)
+        res = self.command('AT+HGETSENSE=100', delay=4)
         for line in res:
             if '+GETSENSE:' in line.decode():
                 self.fer = eval(line.decode().split(':')[1])

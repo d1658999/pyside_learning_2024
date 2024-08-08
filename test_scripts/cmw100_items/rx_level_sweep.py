@@ -480,7 +480,7 @@ class RxLevelSweep(AtCmd, CMW100):
 
                     data_normal[self.tx_freq_lte] = [measured_power, self.rx_level, self.rsrp_list, self.cinr_list,
                                                      self.agc_list, self.get_temperature()]
-                    self.set_test_end_nr()
+                    self.set_test_end_lte()
                     parameters = {
                         'tech': self.tech,
                         'band': self.band_lte,

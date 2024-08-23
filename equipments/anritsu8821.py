@@ -10,6 +10,8 @@ from utils.fly_mode import FlyMode
 
 logger = log_set('Anritsu8821')
 LTE_MODS = []
+AUTH_KEY = None
+
 
 class Anritsu8821(Anritsu):
     def __init__(self, equipment='Anristu8821'):
@@ -148,11 +150,11 @@ class Anritsu8821(Anritsu):
         if s == 'LTE':
             self.set_authentication('ON')
             self.set_authentication_algorithm()
-            self.set_authentication_key()
+            self.set_authentication_key(AUTH_KEY)
             self.set_opc()
         elif s == 'WCDMA':
             self.set_authentication_algorithm()
-            self.set_authentication_key()
+            self.set_authentication_key(AUTH_KEY)
             self.set_opc()
 
     def set_init_before_calling(self, standard, dl_ch, bw=5):

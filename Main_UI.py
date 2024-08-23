@@ -8,7 +8,7 @@ import pathlib
 import signal
 import os
 import yaml
-from ui_mega_v2_14 import Ui_MainWindow
+from ui_python.ui_mega_v2_15 import Ui_MainWindow
 from utils.log_init import log_set, log_clear
 from utils.adb_handler import get_serial_devices
 from utils.excel_handler import excel_folder_create
@@ -592,6 +592,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         state_dict['devices_serial'] = get_serial_devices()
         state_dict['condition'] = self.condition
         state_dict['volt_type'] = self.volt
+        state_dict['auth_key'] = self.auth_key.currentText()
 
         return state_dict
 
@@ -881,6 +882,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.et_tracker_comboBox.setCurrentText(state_dict['et_tracker'])
         self.input_level_sig_anritsu_spinBox.setValue(state_dict['input_level_sig_anritsu'])
         self.rfout_port_sig_anritsu_comboBox.setCurrentText(state_dict['rfout_port_sig_anritsu'])
+        self.auth_key.setCurrentText(state_dict['auth_key'])
 
     def tx_port_show(self):
         logger.info(f'Tx Port: {self.tx_port_comboBox.currentText()}')
@@ -2292,6 +2294,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 from test_scripts.anritsu_items.mt8820_rx_freq_sweep import RxTestFreqSweep
                 import equipments.anritsu8820 as anritsu8820
 
+                anritsu8820.AUTH_KEY = state_dict['auth_key']
                 excel_folder_create()
                 anritsu8820.LTE_MODS = state_dict['lte_mcs_sig_list']
                 if state_dict['tx_lmh_s']:
@@ -2312,6 +2315,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 from test_scripts.anritsu_items.mt8821_rx_freq_sweep import RxTestFreqSweep
                 import equipments.anritsu8821 as anritsu8821
 
+                anritsu8821.AUTH_KEY = state_dict['auth_key']
                 excel_folder_create()
                 anritsu8821.LTE_MODS = state_dict['lte_mcs_sig_list']
                 if state_dict['tx_lmh_s']:

@@ -10,6 +10,7 @@ from utils.fly_mode import FlyMode
 
 logger = log_set('Anritsu8820')
 LTE_MODS = []
+AUTH_KEY = None
 
 class Anritsu8820(Anritsu):
     def __init__(self, equipment='Anristu8820'):

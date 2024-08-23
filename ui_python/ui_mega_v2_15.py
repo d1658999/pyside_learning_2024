@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mega_v2_14.ui'
+## Form generated from reading UI file 'mega_v2_15.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -1689,9 +1689,18 @@ class Ui_MainWindow(object):
         self.rfout_port_sig_anritsu_comboBox.addItem("")
         self.rfout_port_sig_anritsu_comboBox.addItem("")
         self.rfout_port_sig_anritsu_comboBox.setObjectName(u"rfout_port_sig_anritsu_comboBox")
+        self.rfout_port_sig_anritsu_comboBox.setInsertPolicy(QComboBox.InsertAtBottom)
 
         self.verticalLayout_14.addWidget(self.rfout_port_sig_anritsu_comboBox)
 
+        self.groupBox_9 = QGroupBox(self.sig_extra_setting)
+        self.groupBox_9.setObjectName(u"groupBox_9")
+        self.groupBox_9.setGeometry(QRect(160, 10, 261, 141))
+        self.auth_key = QComboBox(self.groupBox_9)
+        self.auth_key.addItem("")
+        self.auth_key.addItem("")
+        self.auth_key.setObjectName(u"auth_key")
+        self.auth_key.setGeometry(QRect(10, 30, 241, 22))
         self.tabWidget.addTab(self.sig_extra_setting, "")
         self.regy_oper = QWidget()
         self.regy_oper.setObjectName(u"regy_oper")
@@ -2720,7 +2729,7 @@ class Ui_MainWindow(object):
 
         self.tabWidget.setCurrentIndex(0)
         self.bands_toolBox.setCurrentIndex(0)
-        self.txrx_path_toolBox.setCurrentIndex(2)
+        self.txrx_path_toolBox.setCurrentIndex(0)
         self.test_items_toolBox.setCurrentIndex(0)
         self.sync_path_toolBox.setCurrentIndex(0)
 
@@ -2729,7 +2738,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Mega_Tool", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MetaX_v2.15_20240823", None))
         self.actionLoad_file.setText(QCoreApplication.translate("MainWindow", u"Load file", None))
         self.groupBox_lb_nr.setTitle(QCoreApplication.translate("MainWindow", u"LB", None))
         self.n24_nr.setText(QCoreApplication.translate("MainWindow", u"N24", None))
@@ -3008,6 +3017,11 @@ class Ui_MainWindow(object):
         self.rfout_port_sig_anritsu_comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"MAIN", None))
         self.rfout_port_sig_anritsu_comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"AUX", None))
 
+        self.groupBox_9.setTitle(QCoreApplication.translate("MainWindow", u"Authorization Key", None))
+        self.auth_key.setItemText(0, QCoreApplication.translate("MainWindow", u"00112233,44556677,8899AABB,CCDDEEFF", None))
+        self.auth_key.setItemText(1, QCoreApplication.translate("MainWindow", u"00010203,04050607,08090A0B,0C0D0E0F", None))
+
+        self.auth_key.setCurrentText(QCoreApplication.translate("MainWindow", u"00112233,44556677,8899AABB,CCDDEEFF", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.sig_extra_setting), QCoreApplication.translate("MainWindow", u"Signaling", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Update to Base", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Base Regy", None))

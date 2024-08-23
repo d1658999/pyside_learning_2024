@@ -1,8 +1,9 @@
 256_frb_lte_sig: false
-as_path: '0'
+as_path: '1'
 as_path_en: false
 as_path_en_endc: false
 as_path_endc: '0'
+auth_key: 00112233,44556677,8899AABB,CCDDEEFF
 b12_lte: false
 b12_n78: false
 b13_lte: false

@@ -18,7 +18,6 @@ from openpyxl.formatting.formatting import ConditionalFormattingList
 from spec_limits.spec_limit_handler import import_aclr_limits, import_evm_limits, import_sens_limits
 from spec_limits.spec_limit_handler import sensitivity_criteria_nr, sensitivity_criteria_lte
 
-
 logger = log_set('excel_hdl')
 STATE_DICT_EXCEL = {}
 
@@ -58,6 +57,7 @@ rx_path_nr_dict = {
     12: 'RX2+RX3',
     15: 'ALL PATH',
 }
+
 
 def select_file_name_endc_ftm():
     if STATE_DICT_EXCEL['pn_name'] == "":
@@ -778,9 +778,11 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
                 ws.cell(row, 25).value = measured_data[11] if test_item in ['lmh', 'cbe'] else None
                 ws.cell(row, 26).value = measured_data[12] if test_item in ['lmh', 'cbe'] else None
                 if test_item != 'harmonics':
-                    ws.cell(row, 27).value = measured_data[13] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                    ws.cell(row, 27).value = measured_data[13] if STATE_DICT_EXCEL[
+                        'volt_mipi_en'] else None  # volt_mipi
                     ws.cell(row, 28).value = measured_data[14] if STATE_DICT_EXCEL['fbrx_en'] else None  # fbrx_power
-                    ws.cell(row, 29).value = measured_data[15] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                    ws.cell(row, 29).value = measured_data[15] if STATE_DICT_EXCEL[
+                        'mipi_read_en'] else None  # mipi_read
 
                 elif test_item == 'harmonics':
                     ws.cell(row, 27).value = measured_data[13][1]  # 2f0
@@ -823,9 +825,11 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
                 ws.cell(row, 27).value = measured_data[11]
                 ws.cell(row, 28).value = measured_data[12]
                 if parameters_dict['test_item'] != 'apt_sweep':
-                    ws.cell(row, 29).value = measured_data[13] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                    ws.cell(row, 29).value = measured_data[13] if STATE_DICT_EXCEL[
+                        'volt_mipi_en'] else None  # volt_mipi
                     ws.cell(row, 30).value = measured_data[14] if STATE_DICT_EXCEL['fbrx_en'] else None  # fbrx_power
-                    ws.cell(row, 31).value = measured_data[15] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                    ws.cell(row, 31).value = measured_data[15] if STATE_DICT_EXCEL[
+                        'mipi_read_en'] else None  # mipi_read
                 elif parameters_dict['test_item'] == 'apt_sweep':
                     ws.cell(row, 29).value = measured_data[11]  # vcc
                     ws.cell(row, 30).value = measured_data[12]  # bias0
@@ -865,9 +869,11 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
                 ws.cell(row, 27).value = measured_data[11] if test_item in ['lmh', 'cbe'] else None
                 ws.cell(row, 28).value = measured_data[12] if test_item in ['lmh', 'cbe'] else None
                 if test_item != 'harmonics':
-                    ws.cell(row, 29).value = measured_data[13] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
+                    ws.cell(row, 29).value = measured_data[13] if STATE_DICT_EXCEL[
+                        'volt_mipi_en'] else None  # volt_mipi
                     ws.cell(row, 30).value = measured_data[14] if STATE_DICT_EXCEL['fbrx_en'] else None  # fbrx_power
-                    ws.cell(row, 31).value = measured_data[15] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                    ws.cell(row, 31).value = measured_data[15] if STATE_DICT_EXCEL[
+                        'mipi_read_en'] else None  # mipi_read
                 elif test_item == 'harmonics':
                     ws.cell(row, 29).value = measured_data[13][1]  # 2f0
                     ws.cell(row, 30).value = measured_data[14][1]  # 3f0
@@ -929,8 +935,10 @@ def tx_power_relative_test_export_excel_ftm(data, parameters_dict):
                 ws.cell(row, 19).value = measured_data[10] if test_item == 'lmh' else None
                 ws.cell(row, 20).value = measured_data[11] if test_item == 'lmh' else None
                 if test_item != 'harmonics':
-                    ws.cell(row, 21).value = measured_data[12] if STATE_DICT_EXCEL['volt_mipi_en'] else None  # volt_mipi
-                    ws.cell(row, 22).value = measured_data[13] if STATE_DICT_EXCEL['mipi_read_en'] else None  # mipi_read
+                    ws.cell(row, 21).value = measured_data[12] if STATE_DICT_EXCEL[
+                        'volt_mipi_en'] else None  # volt_mipi
+                    ws.cell(row, 22).value = measured_data[13] if STATE_DICT_EXCEL[
+                        'mipi_read_en'] else None  # mipi_read
                 elif test_item == 'harmonics':
                     ws.cell(row, 21).value = measured_data[12][1]  # 2f0
                     ws.cell(row, 22).value = measured_data[13][1]  # 3f0
@@ -1334,6 +1342,7 @@ def txp_aclr_evm_current_plot_ftm(file_path, parameters_dict):
 
         wb.save(file_path)
         wb.close()
+
     elif tech == 'GSM':
         for ws_name in wb.sheetnames:
             if 'Raw_Data' in ws_name:
@@ -1702,11 +1711,14 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
             ws.cell(row, 26).value = measured_data[5][1]  # thermister 1
 
             if STATE_DICT_EXCEL['rx_quick_ns'] or STATE_DICT_EXCEL['rx_level_sweep_ns']:
-                ws.cell(row, 27).value = ws.cell(row, 8).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX0
-                ws.cell(row, 28).value = ws.cell(row, 9).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX1
-                ws.cell(row, 29).value = ws.cell(row, 10).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX2
-                ws.cell(row, 30).value = ws.cell(row, 11).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX3
-
+                ws.cell(row, 27).value = ws.cell(row, 8).value + 10 * math.log10(
+                    12 * ws.cell(row, 22).value)  # RSSI_RX0
+                ws.cell(row, 28).value = ws.cell(row, 9).value + 10 * math.log10(
+                    12 * ws.cell(row, 22).value)  # RSSI_RX1
+                ws.cell(row, 29).value = ws.cell(row, 10).value + 10 * math.log10(
+                    12 * ws.cell(row, 22).value)  # RSSI_RX2
+                ws.cell(row, 30).value = ws.cell(row, 11).value + 10 * math.log10(
+                    12 * ws.cell(row, 22).value)  # RSSI_RX3
 
             row += 1
 
@@ -1743,10 +1755,14 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
             ws.cell(row, 26).value = measured_data[5][1]  # thermister 1
 
             if STATE_DICT_EXCEL['rx_quick_ns'] or STATE_DICT_EXCEL['rx_level_sweep_ns']:
-                ws.cell(row, 27).value = ws.cell(row, 8).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX0
-                ws.cell(row, 28).value = ws.cell(row, 9).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX1
-                ws.cell(row, 29).value = ws.cell(row, 10).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX2
-                ws.cell(row, 30).value = ws.cell(row, 11).value + 10 * math.log10(12 * ws.cell(row, 22).value)  # RSSI_RX3
+                ws.cell(row, 27).value = ws.cell(row, 8).value + 10 * math.log10(
+                    12 * ws.cell(row, 22).value)  # RSSI_RX0
+                ws.cell(row, 28).value = ws.cell(row, 9).value + 10 * math.log10(
+                    12 * ws.cell(row, 22).value)  # RSSI_RX1
+                ws.cell(row, 29).value = ws.cell(row, 10).value + 10 * math.log10(
+                    12 * ws.cell(row, 22).value)  # RSSI_RX2
+                ws.cell(row, 30).value = ws.cell(row, 11).value + 10 * math.log10(
+                    12 * ws.cell(row, 22).value)  # RSSI_RX3
 
             row += 1
 
@@ -1754,13 +1770,14 @@ def rx_power_relative_test_export_excel_ftm(data, parameters_dict):
         max_row = ws.max_row
         row = max_row + 1  # skip title
         for rx_chan, rx_level in data.items():
-            tx_freq = cm_pmt_ftm.transfer_freq_rx2tx_wcdma(band, cm_pmt_ftm.transfer_chan2freq_wcdma(band, rx_chan, 'rx'))
+            tx_freq = cm_pmt_ftm.transfer_freq_rx2tx_wcdma(band,
+                                                           cm_pmt_ftm.transfer_chan2freq_wcdma(band, rx_chan, 'rx'))
             chan = chan_judge_wcdma(band, tx_freq)
             ws.cell(row, 1).value = band
             ws.cell(row, 2).value = rx_path_wcdma_dict[rx_path]
             ws.cell(row, 3).value = chan  # LMH
             ws.cell(row, 4).value = rx_chan  # channel
-            ws.cell(row, 5).value = tx_freq # freq_tx
+            ws.cell(row, 5).value = tx_freq  # freq_tx
             ws.cell(row, 6).value = rx_level
             row += 1
 
@@ -3162,6 +3179,7 @@ def txp_aclr_evm_current_plot_sig(standard, file_path):
 
         wb.save(file_path)
         wb.close()
+
     elif tech == 'GSM':
         for ws_name in wb.sheetnames:
             if 'Raw_Data' in ws_name:
@@ -3681,6 +3699,8 @@ def color_format_clear(file_path):  # clear all condition pattern
             ws.conditional_formatting = ConditionalFormattingList()  # clear pattern from entire format
 
     wb.save(file_path)
+    wb.close()
+
 
 def color_format_nr_aclr_ftm(file_path):
     """
@@ -3757,6 +3777,7 @@ def color_format_nr_aclr_ftm(file_path):
             pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_format_lte_aclr_ftm(file_path):
@@ -3834,6 +3855,7 @@ def color_format_lte_aclr_ftm(file_path):
             pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_format_wcdma_aclr_ftm(file_path):
@@ -3911,6 +3933,7 @@ def color_format_wcdma_aclr_ftm(file_path):
             pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_format_gsm_orfs_ftm(file_path):
@@ -3997,6 +4020,7 @@ def color_format_gsm_orfs_ftm(file_path):
             pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_rule_evm(tech, mod):
@@ -4027,7 +4051,7 @@ def color_format_nr_evm_ftm(file_path):
             'equal'
             'greaterThan'
             'greaterThanOrEqual'
-            'lessThan'
+            'lessThan'Color code judge for ACLR EUTRA
             'lessThanOrEqual'
             'notBetween'
             'notEqual'
@@ -4079,6 +4103,7 @@ def color_format_nr_evm_ftm(file_path):
             pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_format_lte_evm_ftm(file_path):
@@ -4141,6 +4166,7 @@ def color_format_lte_evm_ftm(file_path):
             pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_format_wcdma_evm_ftm(file_path):
@@ -4203,6 +4229,7 @@ def color_format_wcdma_evm_ftm(file_path):
             pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_format_gsm_evm_ftm(file_path):
@@ -4265,6 +4292,7 @@ def color_format_gsm_evm_ftm(file_path):
             pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_rule_sens_nr_ftm(band, bw) -> dict:
@@ -4345,7 +4373,6 @@ def color_rule_sens_lte_ftm(band, bw) -> dict:
     return red_pattern, yellow_pattern, none_pattern
 
 
-
 def color_format_nr_sens_ftm(file_path):
     logger.info('========== Color code judge for Sensitivity ==========')
     wb = openpyxl.load_workbook(file_path)
@@ -4356,7 +4383,7 @@ def color_format_nr_sens_ftm(file_path):
         if 'Raw_Data' in sheetname:
             ws = wb[sheetname]
             if ws.max_row > 1:  # if not only the header, this step can continue to be activated
-                for row in range(2, ws.max_row+1):
+                for row in range(2, ws.max_row + 1):
                     # get band and bw
                     band = ws.cell(row, 1).value
                     bw = ws.cell(row, 21).value
@@ -4365,7 +4392,7 @@ def color_format_nr_sens_ftm(file_path):
                     pattern_red, pattern_yellow, pattern_none = color_rule_sens_nr_ftm(band, bw)
 
                     # start to judge and give pattern
-                    if  pattern_red['sens_red_usl'] >= ws.cell(row, 7).value > pattern_yellow['sens_yellow_usl']:
+                    if pattern_red['sens_red_usl'] >= ws.cell(row, 7).value > pattern_yellow['sens_yellow_usl']:
                         ws.cell(row, 7).fill = pattern_yellow['fill_yellow']
                         ws.cell(row, 7).font = pattern_yellow['font_yellow']
 
@@ -4381,6 +4408,7 @@ def color_format_nr_sens_ftm(file_path):
                 pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def color_format_lte_sens_ftm(file_path):
@@ -4393,7 +4421,7 @@ def color_format_lte_sens_ftm(file_path):
         if 'Raw_Data' in sheetname:
             ws = wb[sheetname]
             if ws.max_row > 1:  # if not only the header, this step can continue to be activated
-                for row in range(2, ws.max_row+1):
+                for row in range(2, ws.max_row + 1):
                     # get band and bw
                     band = ws.cell(row, 1).value
                     bw = ws.cell(row, 21).value
@@ -4402,7 +4430,7 @@ def color_format_lte_sens_ftm(file_path):
                     pattern_red, pattern_yellow, pattern_none = color_rule_sens_lte_ftm(band, bw)
 
                     # start to judge and give pattern
-                    if  pattern_red['sens_red_usl'] >= ws.cell(row, 7).value > pattern_yellow['sens_yellow_usl']:
+                    if pattern_red['sens_red_usl'] >= ws.cell(row, 7).value > pattern_yellow['sens_yellow_usl']:
                         ws.cell(row, 7).fill = pattern_yellow['fill_yellow']
                         ws.cell(row, 7).font = pattern_yellow['font_yellow']
 
@@ -4418,6 +4446,7 @@ def color_format_lte_sens_ftm(file_path):
                 pass
 
     wb.save(file_path)
+    wb.close()
 
 
 def merge_same_cells(filepath, sheet_name):
@@ -4452,6 +4481,7 @@ def merge_same_cells(filepath, sheet_name):
                 start_row = row_num
 
     workbook.save(filepath)
+    workbook.close()
 
 
 if __name__ == '__main__':

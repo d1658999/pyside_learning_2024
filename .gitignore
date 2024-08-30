@@ -8,3 +8,5 @@ venv/
 Python312/
 output/
 transfer/
+regy_merge/
+regy_separate/

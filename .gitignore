@@ -5,6 +5,8 @@ __pycache__/
 .idea/
 *.yaml
 venv/
+.venv/
+.vscode/
 Python312/
 output/
 transfer/

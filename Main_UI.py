@@ -2147,6 +2147,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return count_total_outer_loop
 
     def measure(self):
+        self.temp_dict = {
+            'HT': self.ht_spinBox.value(),
+            'NT': self.nt_spinBox.value(),
+            'LT': self.lt_spinBox.value(),
+        }
+        self.volts_dict = {
+            'HV': self.hv_doubleSpinBox.value(),
+            'NV': self.nv_doubleSpinBox.value(),
+            'LV': self.lv_doubleSpinBox.value(),
+        }
+
         start = datetime.datetime.now()
 
         self.run_button.setEnabled(False)

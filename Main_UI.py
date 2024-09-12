@@ -2194,7 +2194,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         stop = datetime.datetime.now()
         logger.info(f'Timer: {stop - start}')
-
+                
     def measure_process(self):
         import utils.excel_handler as excel_hdl
         import utils.adb_handler as adb_hdl
@@ -2207,7 +2207,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.progressBar.reset()
         if counts_total != 0:
             self.progressBar.setMaximum(counts_total)
-            self.progressBar.setValue(0)
+            
+            # this thread is used for the crash in qt
+            p = threading.Thread(target=self.progressBar.setValue, daemon=True, args=(0,))
+            p.start()
+            # self.progressBar.setValue(0)
+            
         for loop in range(state_dict['outer_loop']):
             self.measure_base(state_dict)
 

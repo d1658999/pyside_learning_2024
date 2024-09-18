@@ -26,7 +26,7 @@ class VisaComport:
                 logger.info('Connect to CMW100')
                 logger.info('TCPIP0::127.0.0.1::INSTR')
 
-            self.inst.timeout = 5000  # set the default timeout
+            self.inst.timeout = 10000  # set the default timeout
 
         elif '8820' in equipment_name or '8821' in equipment_name:
             gpib_wanted = None

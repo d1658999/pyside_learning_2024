@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, Q
 from PySide6.QtCore import QThread, Slot, QSize
 import sys
 import time
+import gc
 import threading
 import pathlib
 import signal
@@ -2194,6 +2195,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         stop = datetime.datetime.now()
         logger.info(f'Timer: {stop - start}')
+
+        gc.collect()
                 
     def measure_process(self):
         import utils.excel_handler as excel_hdl

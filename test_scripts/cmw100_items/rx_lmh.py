@@ -742,7 +742,7 @@ class RxTestGenre(AtCmd, CMW100):
 
                     data_normal[self.tx_freq_lte] = [measured_power, self.rx_level, rsrp_list, cinr_list,
                                                      agc_list, self.get_temperature()]
-                    self.set_test_end_nr()
+                    self.set_test_end_lte()
                     parameters = {
                         'tech': self.tech,
                         'band': self.band_lte,

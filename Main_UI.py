@@ -81,6 +81,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionLoad_file.triggered.connect(self.load_loss_file)
         self.tx_cbe_ns.clicked.connect(self.fdc_en_disabled_cbe_harm)
         self.tx_harmonics_ns.clicked.connect(self.fdc_en_disabled_cbe_harm)
+        self.off_tmpchmb_pushButton.clicked.connect(self.tempchamber_off)
 
         # init disabled
         self.rx_path_custom_disabled()
@@ -2365,6 +2366,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     @staticmethod
     def stop():
         sys.exit()
+
+    def tempchamber_off(self):
+        if self.tmpcmb is None:
+            self.tmpcmb = TempChamber()
+        self.tmpcmb.power_off()
 
 
 def main():

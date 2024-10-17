@@ -1049,6 +1049,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             tx_path_list.append('TX1')
         if self.tx2.isChecked():
             tx_path_list.append('TX2')
+        if self.ulmimo.isChecked():
+            tx_path_list.append('MIMO')
 
         return tx_path_list
 

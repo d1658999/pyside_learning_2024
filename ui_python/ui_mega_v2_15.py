@@ -2738,7 +2738,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MetaX_v2.15_20240823", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MetaX_v2.15_20241001", None))
         self.actionLoad_file.setText(QCoreApplication.translate("MainWindow", u"Load file", None))
         self.groupBox_lb_nr.setTitle(QCoreApplication.translate("MainWindow", u"LB", None))
         self.n24_nr.setText(QCoreApplication.translate("MainWindow", u"N24", None))

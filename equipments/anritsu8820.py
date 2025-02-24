@@ -148,11 +148,11 @@ class Anritsu8820(Anritsu):
         if s == 'LTE':
             self.set_authentication('ON')
             self.set_authentication_algorithm()
-            self.set_authentication_key()
+            self.set_authentication_key(AUTH_KEY)
             self.set_opc()
         elif s == 'WCDMA':
             self.set_authentication_algorithm()
-            self.set_authentication_key()
+            self.set_authentication_key(AUTH_KEY)
             self.set_opc()
 
     def set_init_before_calling(self, standard, dl_ch, bw=5):

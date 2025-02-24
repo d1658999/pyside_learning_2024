@@ -142,7 +142,7 @@ class TxCBE(TxTestGenre, FSW50):
                         spec_state = 'FAIL'
 
                     # screenshot
-                    asw_path = 0 if self.asw_path != 1 else 1
+                    asw_path = 0 if self.asw_path != str(1) else 1
                     file_name = f'{self.tech}_Band{self.band_nr}_BE_{self.bw_nr}_' \
                                 f'{zip_dict_chan[self.tx_freq_nr]}_' \
                                 f'{self.type_nr}_{self.rb_state}_{self.mcs_nr}_ftm_' \
@@ -179,8 +179,6 @@ class TxCBE(TxTestGenre, FSW50):
                 }
                 self.file_path = tx_power_relative_test_export_excel_ftm(data_freq, self.parameters)
 
-                self.progressBar.setValue(self.state_dict['progressBar_progress'] + 1)
-                self.state_dict['progressBar_progress'] += 1
         self.set_test_end_nr()
 
     def tx_cbe_pipline_lte(self):
@@ -293,7 +291,7 @@ class TxCBE(TxTestGenre, FSW50):
                         spec_state = 'FAIL'
 
                     # screenshot
-                    asw_path = 0 if self.asw_path != 1 else 1
+                    asw_path = 0 if self.asw_path != str(1) else 1
                     file_name = f'{self.tech}_Band{self.band_lte}_BE_{self.bw_lte}_' \
                                 f'{zip_dict_chan[self.tx_freq_lte]}_' \
                                 f'{self.rb_state}_{self.mcs_lte}_ftm_' \
